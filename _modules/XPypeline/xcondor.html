@@ -1,0 +1,627 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>XPypeline.xcondor &mdash; XPypeline 0+untagged.26.g8de8be3.dirty documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/X-Pypeline-docs.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="XPypeline 0+untagged.26.g8de8be3.dirty documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> XPypeline
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.26.g8de8be3.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../command-line/index.html">Running <code class="docutils literal"><span class="pre">setupJobs</span></code> on the command line</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">XPypeline</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>XPypeline.xcondor</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for XPypeline.xcondor</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">glue</span> <span class="k">import</span> <span class="n">pipeline</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="c1"># -------------------------------------------------------------------------</span>
+<span class="c1">#      Define special job classes.</span>
+<span class="c1"># -------------------------------------------------------------------------</span>
+
+<div class="viewcode-block" id="XsearchJob"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XsearchJob">[docs]</a><span class="k">class</span> <span class="nc">XsearchJob</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGJob</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisJob</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An x search job</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        cp = ConfigParser object from which options are read.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># ---- Get path to executable from parameters file.</span>
+        <span class="c1"># self.__executable = cp.get(&#39;condor&#39;,&#39;xsearch&#39;)</span>
+        <span class="c1"># ---- Get path to executable.</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;which xdetection &gt; path_file.txt&#39;</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;path_file.txt&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">xdetectionstr</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;rm path_file.txt&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__executable</span> <span class="o">=</span> <span class="n">xdetectionstr</span>
+        <span class="c1"># ---- Get condor universe from parameters file.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__universe</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;universe&#39;</span><span class="p">)</span>
+        <span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGJob</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__universe</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__executable</span><span class="p">)</span>
+        <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisJob</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cp</span><span class="p">,</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__param_file</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># ---- Add required environment variables.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;environment&#39;</span><span class="p">,</span><span class="s2">&quot;USER=$ENV(USER);HOME=$ENV(HOME);&quot;</span> \
+            <span class="s2">&quot;LD_LIBRARY_PATH=$ENV(LD_LIBRARY_PATH);&quot;</span> \
+            <span class="s2">&quot;XPIPE_INSTALL_BIN=$ENV(XPIPE_INSTALL_BIN);&quot;</span> \
+            <span class="s2">&quot;PATH=/usr/bin:/bin&quot;</span><span class="p">)</span>
+
+        <span class="c1"># ----Add Accounting Group Flag</span>
+        <span class="n">grouptag</span> <span class="o">=</span> <span class="s1">&#39;ligo.&#39;</span> <span class="o">+</span> \
+                <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;ProdDevSim&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>\
+                <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;Era&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>\
+                <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;Group&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>\
+                <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;SearchType&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;accounting_group&#39;</span><span class="p">,</span><span class="n">grouptag</span><span class="p">)</span>
+
+        <span class="c1"># ----Add Username Flag</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;accounting_group_user&#39;</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;UserName&#39;</span><span class="p">))</span>
+
+        <span class="c1"># ---- Add priority specification</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span> <span class="s1">&#39;condorPriority&#39;</span><span class="p">))</span>
+
+        <span class="c1"># --- add minimal memory needed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;request_memory&#39;</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span> <span class="s1">&#39;minimalSearchJobCPUMem&#39;</span><span class="p">))</span>
+
+        <span class="c1"># ---- Path and file names for standard out, standard error for this job.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_stdout_file</span><span class="p">(</span><span class="s1">&#39;logs/xsearch-$(cluster)-$(process).out&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_stderr_file</span><span class="p">(</span><span class="s1">&#39;logs/xsearch-$(cluster)-$(process).err&#39;</span><span class="p">)</span>
+
+        <span class="c1"># If on Atlas, use getenv=true to pass variables</span>
+        <span class="c1">#if atlasFlag:</span>
+        <span class="c1">#   self.add_condor_cmd(&#39;getenv&#39;,&quot;true&quot;)</span>
+
+        <span class="c1"># ---- Name of condor job submission file to be written.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_sub_file</span><span class="p">(</span><span class="s1">&#39;xsearch.sub&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="XsearchGPUJob"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XsearchGPUJob">[docs]</a><span class="k">class</span> <span class="nc">XsearchGPUJob</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGJob</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisJob</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An x search job</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        cp = ConfigParser object from which options are read.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># FOR GPUS</span>
+
+        <span class="c1"># ---- Get path to executable from parameters file.</span>
+        <span class="c1"># self.__executable = cp.get(&#39;condor&#39;,&#39;xsearch&#39;)</span>
+        <span class="c1"># ---- Get path to executable.</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;which xdetection &gt; path_file.txt&#39;</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;path_file.txt&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">xdetectionstr</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;rm path_file.txt&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__executable</span> <span class="o">=</span> <span class="n">xdetectionstr</span>
+        <span class="c1"># ---- Get condor universe from parameters file.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__universe</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;universe&#39;</span><span class="p">)</span>
+        <span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGJob</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__universe</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__executable</span><span class="p">)</span>
+        <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisJob</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cp</span><span class="p">,</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__param_file</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># ---- Add required environment variables.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;environment&#39;</span><span class="p">,</span><span class="s2">&quot;USER=$ENV(USER);HOME=$ENV(HOME);&quot;</span> \
+            <span class="s2">&quot;LD_LIBRARY_PATH=$ENV(LD_LIBRARY_PATH);&quot;</span> \
+            <span class="s2">&quot;XPIPE_INSTALL_BIN=$ENV(XPIPE_INSTALL_BIN);&quot;</span> \
+            <span class="s2">&quot;PATH=/usr/bin:/bin&quot;</span><span class="p">)</span>
+
+        <span class="c1"># ----Add Accounting Group Flag</span>
+        <span class="n">grouptag</span> <span class="o">=</span> <span class="s1">&#39;ligo.&#39;</span> <span class="o">+</span> \
+                <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;ProdDevSim&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>\
+                <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;Era&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>\
+                <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;Group&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>\
+                <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;SearchType&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;accounting_group&#39;</span><span class="p">,</span><span class="n">grouptag</span><span class="p">)</span>
+
+        <span class="c1"># ----Add Username Flag</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;accounting_group_user&#39;</span><span class="p">,</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;UserName&#39;</span><span class="p">))</span>
+
+        <span class="c1"># ---- Add priority specification</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span> <span class="s1">&#39;condorPriority&#39;</span><span class="p">))</span>
+
+        <span class="c1"># --- add minimal memory needed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;request_memory&#39;</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span> <span class="s1">&#39;minimalSearchJobGPUMem&#39;</span><span class="p">))</span>
+
+        <span class="c1"># ---- Path and file names for standard out, standard error for this job.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_stdout_file</span><span class="p">(</span><span class="s1">&#39;logs/xsearch-$(cluster)-$(process).out&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_stderr_file</span><span class="p">(</span><span class="s1">&#39;logs/xsearch-$(cluster)-$(process).err&#39;</span><span class="p">)</span>
+
+        <span class="c1"># If on Atlas, use getenv=true to pass variables</span>
+        <span class="c1">#if atlasFlag:</span>
+        <span class="c1">#   self.add_condor_cmd(&#39;getenv&#39;,&quot;true&quot;)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;Requirements&#39;</span><span class="p">,</span><span class="s1">&#39;TARGET.WantGPU =?= True&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;+WantGPU&#39;</span><span class="p">,</span><span class="s1">&#39;True&#39;</span><span class="p">)</span>
+
+        <span class="c1"># ---- Name of condor job submission file to be written.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_sub_file</span><span class="p">(</span><span class="s1">&#39;xsearch_gpu.sub&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="XsearchNode"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XsearchNode">[docs]</a><span class="k">class</span> <span class="nc">XsearchNode</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGNode</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisNode</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    xsearch node</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">job</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        job = A CondorDAGJob.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGNode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">job</span><span class="p">)</span>
+        <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisNode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__x_jobnum</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__x_injnum</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># ---- Set parameters file.</span>
+<div class="viewcode-block" id="XsearchNode.set_param_file"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XsearchNode.set_param_file">[docs]</a>    <span class="k">def</span> <span class="nf">set_param_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__param_file</span> <span class="o">=</span> <span class="n">path</span></div>
+
+<div class="viewcode-block" id="XsearchNode.get_param_file"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XsearchNode.get_param_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_param_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__param_file</span></div>
+
+<div class="viewcode-block" id="XsearchNode.set_x_jobnum"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XsearchNode.set_x_jobnum">[docs]</a>    <span class="k">def</span> <span class="nf">set_x_jobnum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__x_jobnum</span> <span class="o">=</span> <span class="n">n</span></div>
+
+<div class="viewcode-block" id="XsearchNode.get_x_jobnum"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XsearchNode.get_x_jobnum">[docs]</a>    <span class="k">def</span> <span class="nf">get_x_jobnum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x_jobnum</span></div>
+
+<div class="viewcode-block" id="XsearchNode.set_output_dir"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XsearchNode.set_output_dir">[docs]</a>    <span class="k">def</span> <span class="nf">set_output_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__output_dir</span> <span class="o">=</span> <span class="n">path</span></div>
+
+<div class="viewcode-block" id="XsearchNode.get_output_dir"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XsearchNode.get_output_dir">[docs]</a>    <span class="k">def</span> <span class="nf">get_output_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">path</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__output_dir</span></div>
+
+<div class="viewcode-block" id="XsearchNode.set_x_injnum"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XsearchNode.set_x_injnum">[docs]</a>    <span class="k">def</span> <span class="nf">set_x_injnum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__x_injnum</span> <span class="o">=</span> <span class="n">n</span></div>
+
+<div class="viewcode-block" id="XsearchNode.get_x_injnum"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XsearchNode.get_x_injnum">[docs]</a>    <span class="k">def</span> <span class="nf">get_x_injnum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x_injnum</span></div></div>
+
+<div class="viewcode-block" id="XmergeJob"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XmergeJob">[docs]</a><span class="k">class</span> <span class="nc">XmergeJob</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGJob</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisJob</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An x merge job</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cp</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        cp = ConfigParser object from which options are read.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># ---- Get path to executable.</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;which xmergegrbresults &gt; path_file.txt&#39;</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;path_file.txt&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">xmergestr</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;rm path_file.txt&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__executable</span> <span class="o">=</span> <span class="n">xmergestr</span>
+        <span class="c1"># ---- Get condor universe from parameters file.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__universe</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;universe&#39;</span><span class="p">)</span>
+        <span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGJob</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__universe</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__executable</span><span class="p">)</span>
+        <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisJob</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cp</span><span class="p">,</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># ---- Add name of &#39;output&#39; directory as first argument.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_arg</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">)</span>
+        <span class="c1"># ---- Add required environment variables.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;environment&#39;</span><span class="p">,</span><span class="s2">&quot;USER=$ENV(USER);HOME=$ENV(HOME);&quot;</span> \
+            <span class="s2">&quot;LD_LIBRARY_PATH=$ENV(LD_LIBRARY_PATH)&quot;</span><span class="p">)</span>
+
+        <span class="c1"># ----Add Accounting Group Flag</span>
+        <span class="n">grouptag</span> <span class="o">=</span> <span class="s1">&#39;ligo.&#39;</span> <span class="o">+</span> \
+                <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;ProdDevSim&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>\
+                <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;Era&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>\
+                <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;Group&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>\
+                <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;SearchType&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;accounting_group&#39;</span><span class="p">,</span><span class="n">grouptag</span><span class="p">)</span>
+
+        <span class="c1"># ----Add Username Flag</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;accounting_group_user&#39;</span><span class="p">,</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;UserName&#39;</span><span class="p">))</span>
+
+        <span class="c1"># ---- Add priority specification</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span> <span class="s1">&#39;condorPriority&#39;</span><span class="p">))</span>
+
+        <span class="c1"># --- add minimal memory needed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;request_memory&#39;</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span> <span class="s1">&#39;minimalMergeJobMem&#39;</span><span class="p">))</span>
+
+        <span class="c1"># ---- Path and file names for standard out, standard error for this job.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_stdout_file</span><span class="p">(</span><span class="s1">&#39;logs/xmerge-$(cluster)-$(process).out&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_stderr_file</span><span class="p">(</span><span class="s1">&#39;logs/xmerge-$(cluster)-$(process).err&#39;</span><span class="p">)</span>
+
+        <span class="c1"># If on Atlas</span>
+        <span class="c1">#if atlasFlag:</span>
+        <span class="c1">#   self.add_condor_cmd(&#39;getenv&#39;,&quot;true&quot;)</span>
+
+        <span class="c1"># ---- Name of condor job submission file to be written.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_sub_file</span><span class="p">(</span><span class="s1">&#39;xmerge.sub&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="XmergeNode"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XmergeNode">[docs]</a><span class="k">class</span> <span class="nc">XmergeNode</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGNode</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisNode</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    merge results that were cut into blocks of less than maxInjNum jobs</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">job</span><span class="p">):</span>
+        <span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGNode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">job</span><span class="p">)</span>
+        <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisNode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="XmergeNode.set_dir_prefix"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XmergeNode.set_dir_prefix">[docs]</a>    <span class="k">def</span> <span class="nf">set_dir_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__dir_prefix</span> <span class="o">=</span> <span class="n">path</span></div>
+
+<div class="viewcode-block" id="XmergeNode.get_dir_prefix"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XmergeNode.get_dir_prefix">[docs]</a>    <span class="k">def</span> <span class="nf">get_dir_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dir_prefix</span></div>
+
+<div class="viewcode-block" id="XmergeNode.set_sn_flag"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XmergeNode.set_sn_flag">[docs]</a>    <span class="k">def</span> <span class="nf">set_sn_flag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__sn_flag</span> <span class="o">=</span> <span class="n">path</span></div>
+
+<div class="viewcode-block" id="XmergeNode.get_sn_flag"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XmergeNode.get_sn_flag">[docs]</a>    <span class="k">def</span> <span class="nf">get_sn_flag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sn_flag</span></div></div>
+
+
+<div class="viewcode-block" id="XmergeClusteredJob"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XmergeClusteredJob">[docs]</a><span class="k">class</span> <span class="nc">XmergeClusteredJob</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGJob</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisJob</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  An x merge clustered job</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cp</span><span class="p">,</span><span class="n">nDet</span><span class="p">):</span>
+    <span class="c1"># ---- Get path to executable.</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    cp = ConfigParser object from which options are read.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">nDet</span><span class="o">==</span><span class="mi">3</span><span class="p">:</span>
+      <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;which xmergegrbclusteredresults &gt; path_file.txt&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;which xmergegrbclusteredresultsTwoDets &gt; path_file.txt&#39;</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;path_file.txt&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">xmergestr</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;rm path_file.txt&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__executable</span> <span class="o">=</span> <span class="n">xmergestr</span>
+    <span class="c1"># ---- Get condor universe from parameters file.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__universe</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;universe&#39;</span><span class="p">)</span>
+    <span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGJob</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__universe</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__executable</span><span class="p">)</span>
+    <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisJob</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cp</span><span class="p">,</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># ---- Add name of &#39;output&#39; directory as first argument.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_arg</span><span class="p">(</span><span class="s1">&#39;output_clustered&#39;</span><span class="p">)</span>
+    <span class="c1"># ---- Add required environment variables.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;environment&#39;</span><span class="p">,</span><span class="s2">&quot;USER=$ENV(USER);HOME=$ENV(HOME);&quot;</span> \
+        <span class="s2">&quot;LD_LIBRARY_PATH=$ENV(LD_LIBRARY_PATH)&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ----Add Accounting Group Flag</span>
+    <span class="n">grouptag</span> <span class="o">=</span> <span class="s1">&#39;ligo.&#39;</span> <span class="o">+</span> \
+            <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;ProdDevSim&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>\
+            <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;Era&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>\
+            <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;Group&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>\
+            <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;SearchType&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;accounting_group&#39;</span><span class="p">,</span><span class="n">grouptag</span><span class="p">)</span>
+
+    <span class="c1"># ----Add Username Flag</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;accounting_group_user&#39;</span><span class="p">,</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;UserName&#39;</span><span class="p">))</span>
+
+    <span class="c1"># ---- Add priority specification.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span> <span class="s1">&#39;condorPriority&#39;</span><span class="p">))</span>
+
+    <span class="c1"># ---- Add minimal memory request. Note that with current default minimalMem</span>
+    <span class="c1">#      we never access the &quot;else&quot; statement below.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;request_memory&#39;</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span> <span class="s1">&#39;minimalMergeClusterJobMem&#39;</span><span class="p">))</span>
+
+    <span class="c1"># ---- Path and file names for standard out, standard error for this job.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_stdout_file</span><span class="p">(</span><span class="s1">&#39;logs/xmergeclustered-$(cluster)-$(process).out&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_stderr_file</span><span class="p">(</span><span class="s1">&#39;logs/xmergeclustered-$(cluster)-$(process).err&#39;</span><span class="p">)</span>
+
+    <span class="c1"># If on Atlas</span>
+    <span class="c1">#if atlasFlag:</span>
+    <span class="c1"># self.add_condor_cmd(&#39;getenv&#39;,&quot;true&quot;)</span>
+
+    <span class="c1"># ---- Name of condor job submission file to be written.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_sub_file</span><span class="p">(</span><span class="s1">&#39;xmergeclustered.sub&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="XmergeClusteredNode"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XmergeClusteredNode">[docs]</a><span class="k">class</span> <span class="nc">XmergeClusteredNode</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGNode</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisNode</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  cluster and merge results that were cut into blocks of less than maxInjNum jobs</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">job</span><span class="p">):</span>
+    <span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGNode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">job</span><span class="p">)</span>
+    <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisNode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="XmergeClusteredNode.set_dir_prefix"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XmergeClusteredNode.set_dir_prefix">[docs]</a>  <span class="k">def</span> <span class="nf">set_dir_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">path</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__dir_prefix</span> <span class="o">=</span> <span class="n">path</span></div>
+
+<div class="viewcode-block" id="XmergeClusteredNode.get_dir_prefix"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XmergeClusteredNode.get_dir_prefix">[docs]</a>  <span class="k">def</span> <span class="nf">get_dir_prefix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dir_prefix</span></div>
+
+<div class="viewcode-block" id="XmergeClusteredNode.set_sn_flag"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XmergeClusteredNode.set_sn_flag">[docs]</a>  <span class="k">def</span> <span class="nf">set_sn_flag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">path</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__sn_flag</span> <span class="o">=</span> <span class="n">path</span></div>
+
+<div class="viewcode-block" id="XmergeClusteredNode.get_sn_flag"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XmergeClusteredNode.get_sn_flag">[docs]</a>  <span class="k">def</span> <span class="nf">get_sn_flag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sn_flag</span></div>
+
+<div class="viewcode-block" id="XmergeClusteredNode.set_sc_flag"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XmergeClusteredNode.set_sc_flag">[docs]</a>  <span class="k">def</span> <span class="nf">set_sc_flag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">path</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__sc_flag</span> <span class="o">=</span> <span class="n">path</span></div>
+
+<div class="viewcode-block" id="XmergeClusteredNode.get_sc_flag"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XmergeClusteredNode.get_sc_flag">[docs]</a>  <span class="k">def</span> <span class="nf">get_sc_flag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__sc_flag</span></div></div>
+
+<div class="viewcode-block" id="XtmvaJob"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XtmvaJob">[docs]</a><span class="k">class</span> <span class="nc">XtmvaJob</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGJob</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisJob</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  An xtmva classification job.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cp</span><span class="p">,</span><span class="n">nDet</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    cp = ConfigParser object from which options are read.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># ---- Get path to executable.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__executable</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;/xtmvapy/xtmva.py </span><span class="se">\n</span><span class="s2">&quot;</span>
+    <span class="c1"># ---- Get condor universe from parameters file.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">__universe</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;universe&#39;</span><span class="p">)</span>
+    <span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGJob</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__universe</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__executable</span><span class="p">)</span>
+    <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisJob</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cp</span><span class="p">,</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># ---- Add name of &#39;output&#39; directory as first argument.</span>
+    <span class="n">cwdstr_split</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+    <span class="n">fdir</span> <span class="o">=</span> <span class="n">cwdstr_split</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">grbdir</span> <span class="o">=</span> <span class="n">cwdstr_split</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">argumentstr</span> <span class="o">=</span> <span class="s2">&quot; --fdir=&quot;</span> <span class="o">+</span> <span class="n">fdir</span> <span class="o">+</span> <span class="s2">&quot; --grbname=&quot;</span> <span class="o">+</span> <span class="n">grbdir</span> <span class="o">+</span> <span class="s2">&quot; --nifo=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">nDet</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; --cname=xtmva.ini &quot;</span>
+    <span class="nb">print</span> <span class="o">&gt;&gt;</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">argumentstr</span>
+    <span class="c1"># ---- Add name of &#39;output&#39; directory as first argument.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_arg</span><span class="p">(</span><span class="n">argumentstr</span><span class="p">)</span>
+    <span class="c1"># ---- Define environment variables that are needed by xtmva.py. We hard-code </span>
+    <span class="c1">#      most of them to avoid need to create a special gen-wrapper-script*.sh </span>
+    <span class="c1">#      script for this one function.</span>
+    <span class="n">envarstr</span> <span class="o">=</span> <span class="s2">&quot;USER=&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;USER&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span> \
+    <span class="o">+</span> <span class="s2">&quot;HOME=&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;HOME&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span> \
+    <span class="o">+</span> <span class="s2">&quot;LD_LIBRARY_PATH=&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;LD_LIBRARY_PATH&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span> \
+    <span class="o">+</span> <span class="s2">&quot;XPIPE_INSTALL_BIN=$ENV(XPIPE_INSTALL_BIN);&quot;</span> \
+    <span class="o">+</span> <span class="s2">&quot;PATH=&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ROOTSYS&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/bin:&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;XPIPE_INSTALL_BIN&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;:/usr/bin:/bin;&quot;</span> \
+    <span class="o">+</span> <span class="s2">&quot;LIBPATH=&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;LIBPATH&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span> \
+    <span class="o">+</span> <span class="s2">&quot;DYLD_LIBRARY_PATH=&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;DYLD_LIBRARY_PATH&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span> \
+    <span class="o">+</span> <span class="s2">&quot;PYTHONPATH=&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;PYTHONPATH&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span> \
+    <span class="o">+</span> <span class="s2">&quot;SHLIB_PATH=&quot;</span> <span class="o">+</span>  <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;SHLIB_PATH&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;;&quot;</span> \
+    <span class="o">+</span> <span class="s2">&quot;ROOTSYS=&quot;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;ROOTSYS&quot;</span><span class="p">)</span>
+    <span class="c1"># ---- Add required environment variables.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;environment&#39;</span><span class="p">,</span><span class="n">envarstr</span><span class="p">)</span>
+
+    <span class="c1"># ---- Add priority specification.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;priority&#39;</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span> <span class="s1">&#39;condorPriority&#39;</span><span class="p">))</span>
+
+    <span class="c1"># ---- Add minimal memory request. </span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;request_memory&#39;</span><span class="p">,</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span> <span class="s1">&#39;minimalXtmvaJobMem&#39;</span><span class="p">))</span>
+
+    <span class="c1"># ----Add Accounting Group Flag</span>
+    <span class="n">grouptag</span> <span class="o">=</span> <span class="s1">&#39;ligo.&#39;</span> <span class="o">+</span> \
+            <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;ProdDevSim&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>\
+            <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;Era&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>\
+            <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;Group&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span>\
+            <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;SearchType&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;accounting_group&#39;</span><span class="p">,</span><span class="n">grouptag</span><span class="p">)</span>
+
+    <span class="c1"># ----Add Username Flag</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;accounting_group_user&#39;</span><span class="p">,</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;UserName&#39;</span><span class="p">))</span>
+
+    <span class="c1"># ---- Path and file names for standard out, standard error for this job.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_stdout_file</span><span class="p">(</span><span class="s1">&#39;logs/xtmva-$(cluster)-$(process).out&#39;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_stderr_file</span><span class="p">(</span><span class="s1">&#39;logs/xtmva-$(cluster)-$(process).err&#39;</span><span class="p">)</span>
+
+    <span class="c1"># If on Atlas</span>
+    <span class="c1">#if atlasFlag:</span>
+    <span class="c1"># self.add_condor_cmd(&#39;getenv&#39;,&quot;true&quot;)</span>
+
+    <span class="c1"># ---- Name of condor job submission file to be written.</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_sub_file</span><span class="p">(</span><span class="s1">&#39;xtmva.sub&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="XtmvaNode"><a class="viewcode-back" href="../../api/XPypeline.xcondor.html#XPypeline.xcondor.XtmvaNode">[docs]</a><span class="k">class</span> <span class="nc">XtmvaNode</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGNode</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisNode</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  cluster and merge results that were cut into blocks of less than maxInjNum jobs</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">job</span><span class="p">):</span>
+    <span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGNode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">job</span><span class="p">)</span>
+    <span class="n">pipeline</span><span class="o">.</span><span class="n">AnalysisNode</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Scott Coughlin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0+untagged.26.g8de8be3.dirty',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

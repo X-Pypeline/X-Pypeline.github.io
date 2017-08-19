@@ -1,0 +1,4 @@
+.. automodule:: XPypeline.xdata
+    :members:
+    :undoc-members:
+    :show-inheritance:

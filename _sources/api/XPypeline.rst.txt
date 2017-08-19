@@ -1,0 +1,28 @@
+XPypeline package
+=================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    XPypeline.io
+    XPypeline.skyutils
+
+Submodules
+----------
+
+.. toctree::
+
+   XPypeline.xcondor
+   XPypeline.xdata
+   XPypeline.xparseoutputtype
+   XPypeline.xpype
+
+Module contents
+---------------
+
+.. automodule:: XPypeline
+    :members:
+    :undoc-members:
+    :show-inheritance:

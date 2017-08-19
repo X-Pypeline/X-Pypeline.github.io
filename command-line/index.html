@@ -1,0 +1,386 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Running setupJobs on the command line &mdash; XPypeline 0+untagged.26.g8de8be3.dirty documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/X-Pypeline-docs.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="XPypeline 0+untagged.26.g8de8be3.dirty documentation" href="../index.html"/>
+        <link rel="prev" title="Welcome to X-Pypeline’s documentation!" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> XPypeline
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.26.g8de8be3.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Running <code class="docutils literal"><span class="pre">setupJobs</span></code> on the command line</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-instructions">Basic instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#detailed-instructions">Detailed instructions</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">XPypeline</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Running <code class="docutils literal"><span class="pre">setupJobs</span></code> on the command line</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/command-line/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="running-setupjobs-on-the-command-line">
+<span id="command-line"></span><h1>Running <code class="docutils literal"><span class="pre">setupJobs</span></code> on the command line<a class="headerlink" href="#running-setupjobs-on-the-command-line" title="Permalink to this headline">¶</a></h1>
+<p>As described on the home page, the main interface to the setUpJobs algorithm is the command-line executable <code class="docutils literal"><span class="pre">setUpJobs</span></code>.</p>
+<div class="section" id="basic-instructions">
+<h2>Basic instructions<a class="headerlink" href="#basic-instructions" title="Permalink to this headline">¶</a></h2>
+<p>Basic instructions on running <code class="docutils literal"><span class="pre">setUpJobs</span></code> can be gained by looking at the <code class="docutils literal"><span class="pre">--help</span></code> menu:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>$ setUpJobs --help
+usage: setUpJobs [-h] -s SEARCH_TYPE -p PARAMS_FILE -n GRB_NAME -g
+                 TRIGGER_TIME -r RA -d DECL -i DETECTOR [DETECTOR ...]
+                 [--FAR FAR] [--FAP FAP] [-e SKY_POS_ERR] [-t GRID_TYPE]
+                 [--right-ascension2 RA2] [--declination2 DECL2]
+                 [--sky-pos-err2 SKY_POS_ERR2] [-f GRID_SIM_FILE]
+                 [--network-selection] [--injdistrib INJDISTRIB]
+                 [--injdistrib2 INJDISTRIB2] [--elognormal ELOGNORMAL]
+                 [--elognormal2 ELOGNORMAL2] [--priority CONDORPRIORITY]
+                 [--end-offset MANUALENDOFFSET] [-m MDC_PATH]
+                 [--disable-fast-injections] [-c CATALOG_DIR]
+                 [--big-mem MINIMALMEM] [--use-merging-cuts MERGINGCUTSPATH]
+                 [--reuse-inj] [--xtmva] [--off-source-inj] [--long-inj]
+                 [--smart-cluster] [-v | -q]
+
+Script for setting up X-Pipeline triggered search jobs.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --FAR FAR             To be used with the --search-type=allsky argument.
+                        This controls the number of background trials/jobs
+                        such that the desired FAR is achieved roughly exactly.
+                        Will warn and error if not enough coincident
+                        background to achieve desired FAR
+  --FAP FAP             To be used with the --search-type=sn or grb argument.
+                        This controls the number of background trials/jobs
+                        such that the desired FAP is achieved roughly exactly.
+                        Will warn and error if not enough coincident
+                        background to achieve desired FAP
+  -e SKY_POS_ERR, --sky-pos-err SKY_POS_ERR
+                        1-sigma uncertainty in sky position of GRB (degrees)
+                        or file name of sky position grid to be used with -t
+                        file option.
+  -t GRID_TYPE, --grid-type GRID_TYPE
+                        String. Determines what shape of sky position grid
+                        will be generated. Recognized values are &#39;circular&#39;
+                        (2-d grids constructed from concentric &#39;healpix&#39; (2-d
+                        grids constructed using the healpix algorithm), &#39;line&#39;
+                        (1-d arc grid), and &#39;file&#39; (user generated grid of
+                        point, given with -e option). &#39;timedelay&#39; (1-D arc
+                        that creates fixed time delay steps between base line
+                        of Dets Default &#39;circular&#39;.
+  --right-ascension2 RA2
+                        Right ascension of center of second trigger error
+                        circle (degrees, from 0 to 360). Intended for ANTARES
+                        HEN analysis.
+  --declination2 DECL2  Declination of center of second trigger error circle
+                        (degrees, from -90 to 90). Intended for ANTARES HEN
+                        analysis.
+  --sky-pos-err2 SKY_POS_ERR2
+                        1-sigma uncertainty in sky position of second trigger
+                        error circle (degrees).
+  -f GRID_SIM_FILE, --grid-sim-file GRID_SIM_FILE
+                        File which contains (R.A.,Dec) coordinates of
+                        simulated source positions. To be used with &#39;--grid-
+                        type file&#39; option.
+  --network-selection   If this flag is set we select the appropriate network
+                        of IFOs from the set specified using the --detector
+                        option using our data-quality selection criteria; see
+                        &lt;https://www.lsc-group.
+                        phys.uwm.edu/twiki/bin/view/Bursts/
+                        S5VSR1GRBNetworksV2pt5DQ&gt;
+  --injdistrib INJDISTRIB
+                        Tilde delimited string of parameters describin the
+                        injection distribution in the first circle Formats
+                        are: 1 parameter: 1-sigma containment of a fisher
+                        distribution 3 parameters: lognormal distribution in
+                        degrees 4 parameters: fisher distribution of
+                        statistical error and core + tail fisher distribution
+                        of systematic error. [stat_sigma sys_core_sigma
+                        fraction_core sys_tail_sigma] all sigma are in degrees
+  --injdistrib2 INJDISTRIB2
+                        Same as --injdistrib but for second error circle.
+  --elognormal ELOGNORMAL
+                        Same as --injdistrib
+  --elognormal2 ELOGNORMAL2
+                        Same as --injdistrib2
+  --priority CONDORPRIORITY
+                        Integer specifying the priority of condor jobs.
+                        Default value is 0, higher priority jobs are submitted
+                        first to the cluster.
+  --end-offset MANUALENDOFFSET
+                        Specify that the end offset of the onsource window
+                        should be greater or equal &lt;offset&gt;. The maximum of
+                        the end offset in the ini file and &lt;offset&gt; is used.
+  -m MDC_PATH, --mdc-path MDC_PATH
+                        Path to mdc parent dir If this option is used then the
+                        mdc log files for each GRB will be copied from &lt;mdc-
+                        path&gt;/GRB_&lt;grb-name&gt;/&lt;waveform&gt;/logs into the GRBs
+                        /input dir and renamed according to X-Pipeline
+                        conventions.
+  --disable-fast-injections
+                        If set disables the fast processing of injections time
+                        frequency map produced only for small window around
+                        injection time
+  -c CATALOG_DIR, --catalogdir CATALOG_DIR
+                        Specify location of waveform catalog files for
+                        astrophysical injections (e.g., supernovae)
+  --big-mem MINIMALMEM  Integer specifying the minimal memory requirement for
+                        condor jobs in MB.
+  --use-merging-cuts MERGINGCUTSPATH
+                        Specify the location of a post-processing directory
+                        from which coherent cuts should be read and applied to
+                        triggers at the the trigger collection stage
+  --reuse-inj           If --use-merging-cuts option also set will reuse the
+                        injection from the previous cut-tuning run. Use with
+                        caution no check is performed on consistency between
+                        provided and needed injections.
+  --xtmva               Perform XTMVA analysis.
+  --off-source-inj      If set perform injections into the off-source instead
+                        of the on-source region.
+  --long-inj            If specified, then when making injection dags a buffer
+                        will be used in comparing injection peak time to block
+                        interval to determine if an injection should be
+                        processed by multiple blocks. Works only for waveform
+                        sets with names beginning with adi-a, adi-b, adi-c,
+                        adi-d, adi-e, ebbh-a, ebbh-d, ebbh-e, mva. See code
+                        for details.
+  --smart-cluster       This will produce an extra set of DAGs that will run
+                        the smart clustering for large production analyses.
+  -v, --verbose
+  -q, --quiet
+
+required named arguments:
+  -s SEARCH_TYPE, --search-type SEARCH_TYPE
+                        Search Type you would like to perform
+  -p PARAMS_FILE, --params-file PARAMS_FILE
+                        Parameters (.ini) file
+  -n GRB_NAME, --grb-name GRB_NAME
+                        Name of GRB, e.g., GRB070201
+  -g TRIGGER_TIME, --grb-time TRIGGER_TIME
+                        GRB trigger time (GPS seconds)
+  -r RA, --right-ascension RA
+                        Right ascension of GRB (degrees, from 0 to 360)
+  -d DECL, --declination DECL
+                        Declination of GRB (degrees, from -90 to 90)
+  -i DETECTOR [DETECTOR ...], --detector DETECTOR [DETECTOR ...]
+                        Add detector to the network
+</pre></div>
+</div>
+</div>
+<div class="section" id="detailed-instructions">
+<h2>Detailed instructions<a class="headerlink" href="#detailed-instructions" title="Permalink to this headline">¶</a></h2>
+<p>A few of the command-line options require special formatting, use the reference below for more detailed info.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="Welcome to X-Pypeline’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Scott Coughlin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0+untagged.26.g8de8be3.dirty',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

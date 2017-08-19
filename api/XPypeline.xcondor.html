@@ -1,0 +1,2301 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>&lt;no title&gt; &mdash; XPypeline 0+untagged.26.g8de8be3.dirty documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/X-Pypeline-docs.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="XPypeline 0+untagged.26.g8de8be3.dirty documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> XPypeline
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.26.g8de8be3.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../command-line/index.html">Running <code class="docutils literal"><span class="pre">setupJobs</span></code> on the command line</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">XPypeline</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>&lt;no title&gt;</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/XPypeline.xcondor.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="module-XPypeline.xcondor"></span><dl class="class">
+<dt id="XPypeline.xcondor.XmergeClusteredJob">
+<em class="property">class </em><code class="descclassname">XPypeline.xcondor.</code><code class="descname">XmergeClusteredJob</code><span class="sig-paren">(</span><em>cp</em>, <em>nDet</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XmergeClusteredJob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XmergeClusteredJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.CondorDAGJob</span></code>, <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.AnalysisJob</span></code></p>
+<p>An x merge clustered job</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_arg</span></code>(arg)</td>
+<td>Add an argument to the executable.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_checkpoint_file</span></code>(filename)</td>
+<td>Add filename as a checkpoint file for this DAG job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_condor_cmd</span></code>(cmd,&nbsp;value)</td>
+<td>Add a Condor command to the submit file (e.g.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_arg</span></code>(filename)</td>
+<td>Add a file argument to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_opt</span></code>(opt,&nbsp;filename)</td>
+<td>Add a command line option to the executable.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_ini_opts</span></code>(cp,&nbsp;section)</td>
+<td>Parse command line options from a given section in an ini file and pass to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_input_file</span></code>(filename)</td>
+<td>Add filename as a necessary input file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_opt</span></code>(opt,&nbsp;value)</td>
+<td>Add a command line option to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_output_file</span></code>(filename)</td>
+<td>Add filename as a output file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_short_opt</span></code>(opt,&nbsp;value)</td>
+<td>Add a command line option to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_arg</span></code>(arg_index[,&nbsp;quote])</td>
+<td>Add a command to the submit file to allow variable (macro) arguments to be passed to the executable.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_condor_cmd</span></code>(command)</td>
+<td>Add a condor command to the submit file that allows variable (macro) arguments to be passes to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_opt</span></code>(opt[,&nbsp;short])</td>
+<td>Add a variable (or macro) option to the condor job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">channel</span></code>()</td>
+<td>Returns the name of the channel that this job is filtering.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">create_node</span></code>()</td>
+<td>Create a condor node from this job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_args</span></code>()</td>
+<td>Return the list of arguments that are to be passed to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_checkpoint_files</span></code>()</td>
+<td>Return a list of checkpoint files for this DAG node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_condor_cmds</span></code>()</td>
+<td>Return the dictionary of condor keywords to add to the job</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_config</span></code>(sec,&nbsp;opt)</td>
+<td>Get the configration variable in a particular section of this jobs ini file.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_dax_mpi_cluster</span></code>()</td>
+<td>Get the DAX collapse key for this node</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_executable</span></code>()</td>
+<td>Return the name of the executable for this job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_executable_installed</span></code>()</td>
+<td>return whether or not the executable is installed</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_scheduler</span></code>()</td>
+<td>Return the grid scheduler.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_server</span></code>()</td>
+<td>Return the grid server on which the job will run.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_site</span></code>()</td>
+<td>Return the grid site for this node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_type</span></code>()</td>
+<td>Return the grid type of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_input_files</span></code>()</td>
+<td>Return list of input files for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_opt</span></code>(opt)</td>
+<td>Returns the value associated with the given command line option.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_opts</span></code>()</td>
+<td>Return the dictionary of opts for the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_output_files</span></code>()</td>
+<td>Return list of output files for this DAG node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_short_opts</span></code>()</td>
+<td>Return the dictionary of short options for the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_stderr_file</span></code>()</td>
+<td>Get the file to which Condor directs the stderr of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_stdin_file</span></code>()</td>
+<td>Get the file from which Condor directs the stdin of the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_stdout_file</span></code>()</td>
+<td>Get the file to which Condor directs the stdout of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_sub_file</span></code>()</td>
+<td>Get the name of the file which the Condor submit file will be written to when write_sub_file() is called.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_universe</span></code>()</td>
+<td>Return the condor universe that the job will run in.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">is_dax</span></code>()</td>
+<td>Returns true if this job should behave as a DAX</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_channel</span></code>(channel)</td>
+<td>Set the name of the channel that this job is filtering.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_dax_mpi_cluster</span></code>(size)</td>
+<td>Set the DAX collapse key for this node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_executable</span></code>(executable)</td>
+<td>Set the name of the executable for this job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_executable_installed</span></code>(installed)</td>
+<td>If executable installed is true, then no copying of the executable is done.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_scheduler</span></code>(grid_scheduler)</td>
+<td>Set the grid scheduler.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_server</span></code>(grid_server)</td>
+<td>Set the grid server on which to run the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_site</span></code>(site)</td>
+<td>Set the grid site to run on.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_type</span></code>(grid_type)</td>
+<td>Set the type of grid resource for the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_log_file</span></code>(path)</td>
+<td>Set the Condor log file.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_notification</span></code>(value)</td>
+<td>Set the email address to send notification to.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_stderr_file</span></code>(path)</td>
+<td>Set the file to which Condor directs the stderr of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_stdin_file</span></code>(path)</td>
+<td>Set the file from which Condor directs the stdin of the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_stdout_file</span></code>(path)</td>
+<td>Set the file to which Condor directs the stdout of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_sub_file</span></code>(path)</td>
+<td>Set the name of the file to write the Condor submit file to when write_sub_file() is called.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_universe</span></code>(universe)</td>
+<td>Set the condor universe for the job to run in.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_sub_file</span></code>()</td>
+<td>Write a submit file for this Condor job.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="XPypeline.xcondor.XmergeClusteredNode">
+<em class="property">class </em><code class="descclassname">XPypeline.xcondor.</code><code class="descname">XmergeClusteredNode</code><span class="sig-paren">(</span><em>job</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XmergeClusteredNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XmergeClusteredNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.CondorDAGNode</span></code>, <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.AnalysisNode</span></code></p>
+<p>cluster and merge results that were cut into blocks of less than maxInjNum jobs</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_checkpoint_file</span></code>(filename)</td>
+<td>Add filename as a checkpoint file for this DAG node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_checkpoint_macro</span></code>(filename)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_arg</span></code>(filename)</td>
+<td>Add a variable (or macro) file name argument to the condor job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_opt</span></code>(opt,&nbsp;filename[,&nbsp;…])</td>
+<td>Add a variable (macro) option for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_input_file</span></code>(filename)</td>
+<td>Add filename as a necessary input file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_input_macro</span></code>(filename)</td>
+<td>Add a variable (macro) for storing the input files associated with this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_io_macro</span></code>(io,&nbsp;filename)</td>
+<td>Add a variable (macro) for storing the input/output files associated with this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_macro</span></code>(name,&nbsp;value)</td>
+<td>Add a variable (macro) for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_output_file</span></code>(filename)</td>
+<td>Add filename as a output file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_output_macro</span></code>(filename)</td>
+<td>Add a variable (macro) for storing the output files associated with this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_parent</span></code>(node)</td>
+<td>Add a parent to this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_pegasus_profile</span></code>(namespace,&nbsp;key,&nbsp;value)</td>
+<td>Add a Pegasus profile to this job which will be written to the dax as &lt;profile namespace=”NAMESPACE” key=”KEY”&gt;VALUE&lt;/profile&gt; This can be used to add classads to particular jobs in the DAX &#64;param namespace: A valid Pegasus namespace, e.g.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_post_script_arg</span></code>(arg)</td>
+<td>Adds an argument to the post script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_pre_script_arg</span></code>(arg)</td>
+<td>Adds an argument to the pre script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_arg</span></code>(arg[,&nbsp;quote])</td>
+<td>Add a variable (or macro) argument to the condor job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_condor_cmd</span></code>(command,&nbsp;value)</td>
+<td>Add a variable (macro) condor command for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_opt</span></code>(opt,&nbsp;value[,&nbsp;short])</td>
+<td>Add a variable (macro) option for this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">calibration</span></code>()</td>
+<td>Set the path to the calibration cache file for the given IFO.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">calibration_cache_path</span></code>()</td>
+<td>Determine the path to the correct calibration cache file to use.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">finalize</span></code>()</td>
+<td>The finalize method of a node is called before the node is</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_args</span></code>()</td>
+<td>Return the arguments for this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_calibration</span></code>()</td>
+<td>Return the calibration cache file to be used by the DAG.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_category</span></code>()</td>
+<td>Get the category for this node in the DAG.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_checkpoint_files</span></code>()</td>
+<td>Return a list of checkpoint files for this DAG node and its job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_cmd_line</span></code>()</td>
+<td>Return the full command line that will be used when this node is run by DAGman.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_cmd_tuple_list</span></code>()</td>
+<td>Return a list of tuples containg the command line arguments</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_data_end</span></code>()</td>
+<td>Get the GPS end time of the data needed by this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_data_start</span></code>()</td>
+<td>Get the GPS start time of the data needed by this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_dax_collapse</span></code>()</td>
+<td>Get the DAX collapse key for this node</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#XPypeline.xcondor.XmergeClusteredNode.get_dir_prefix" title="XPypeline.xcondor.XmergeClusteredNode.get_dir_prefix"><code class="xref py py-obj docutils literal"><span class="pre">get_dir_prefix</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_end</span></code>()</td>
+<td>Get the GPS end time of the node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_start</span></code>()</td>
+<td>Return the grid starter that pegasus will use.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_ifo</span></code>()</td>
+<td>Returns the two letter IFO code for this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_ifo_tag</span></code>()</td>
+<td>Returns the IFO tag string</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_input</span></code>()</td>
+<td>Get the file that will be passed as input.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_input_files</span></code>()</td>
+<td>Return list of input files for this DAG node and its job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_name</span></code>()</td>
+<td>Get the name for this node in the DAG.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_opts</span></code>()</td>
+<td>Return the opts for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_output</span></code>()</td>
+<td>Get the file that will be passed as output.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_output_files</span></code>()</td>
+<td>Return list of output files for this DAG node and its job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_pad_data</span></code>()</td>
+<td>Get the GPS start time of the data needed by this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_pegasus_profile</span></code>()</td>
+<td>Return the pegasus profile dictionary for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_post_script</span></code>()</td>
+<td>returns the name of the post script that is executed before the DAG node is</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_post_script_arg</span></code>()</td>
+<td>Returns and array of arguments to the post script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_priority</span></code>()</td>
+<td>Get the priority for this node in the DAG.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_retry</span></code>()</td>
+<td>Return the number of times that this node in the DAG should retry.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#XPypeline.xcondor.XmergeClusteredNode.get_sc_flag" title="XPypeline.xcondor.XmergeClusteredNode.get_sc_flag"><code class="xref py py-obj docutils literal"><span class="pre">get_sc_flag</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#XPypeline.xcondor.XmergeClusteredNode.get_sn_flag" title="XPypeline.xcondor.XmergeClusteredNode.get_sn_flag"><code class="xref py py-obj docutils literal"><span class="pre">get_sn_flag</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_start</span></code>()</td>
+<td>Get the GPS start time of the node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_trig_end</span></code>()</td>
+<td>Get the trig end time of the node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_trig_start</span></code>()</td>
+<td>Get the trig start time of the node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_user_tag</span></code>()</td>
+<td>Returns the usertag string</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_vds_group</span></code>()</td>
+<td>Returns the VDS group key for this node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">job</span></code>()</td>
+<td>Return the CondorJob that this node is associated with.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_cache</span></code>(filename)</td>
+<td>Set the LAL frame cache to to use.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_category</span></code>(category)</td>
+<td>Set the category for this node in the DAG.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_data_end</span></code>(time)</td>
+<td>Set the GPS end time of the data needed by this analysis node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_data_start</span></code>(time)</td>
+<td>Set the GPS start time of the data needed by this analysis node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_dax_collapse</span></code>(collapse)</td>
+<td>Set the DAX collapse key for this node</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#XPypeline.xcondor.XmergeClusteredNode.set_dir_prefix" title="XPypeline.xcondor.XmergeClusteredNode.set_dir_prefix"><code class="xref py py-obj docutils literal"><span class="pre">set_dir_prefix</span></code></a>(path)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_end</span></code>(time[,&nbsp;pass_to_command_line])</td>
+<td>Set the GPS end time of the analysis node by setting a –gps-end-time option to the node when it is executed.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_start</span></code>(gridstart)</td>
+<td>Set the grid starter that pegasus will use.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_ifo</span></code>(ifo)</td>
+<td>Set the ifo name to analyze.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_ifo_tag</span></code>(ifo_tag[,&nbsp;pass_to_command_line])</td>
+<td>Set the ifo tag that is passed to the analysis code.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_input</span></code>(filename[,&nbsp;pass_to_command_line])</td>
+<td>Add an input to the node by adding a –input option.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_log_file</span></code>(log)</td>
+<td>Set the Condor log file to be used by this CondorJob.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_name</span></code>(name)</td>
+<td>Set the name for this node in the DAG.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_output</span></code>(filename[,&nbsp;pass_to_command_line])</td>
+<td>Add an output to the node by adding a –output option.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_pad_data</span></code>(pad)</td>
+<td>Set the GPS start time of the data needed by this analysis node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_post_script</span></code>(script)</td>
+<td>Sets the name of the post script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_pre_script</span></code>(script)</td>
+<td>Sets the name of the pre script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_priority</span></code>(priority)</td>
+<td>Set the priority for this node in the DAG.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_retry</span></code>(retry)</td>
+<td>Set the number of times that this node in the DAG should retry.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#XPypeline.xcondor.XmergeClusteredNode.set_sc_flag" title="XPypeline.xcondor.XmergeClusteredNode.set_sc_flag"><code class="xref py py-obj docutils literal"><span class="pre">set_sc_flag</span></code></a>(path)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#XPypeline.xcondor.XmergeClusteredNode.set_sn_flag" title="XPypeline.xcondor.XmergeClusteredNode.set_sn_flag"><code class="xref py py-obj docutils literal"><span class="pre">set_sn_flag</span></code></a>(path)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_start</span></code>(time[,&nbsp;pass_to_command_line])</td>
+<td>Set the GPS start time of the analysis node by setting a –gps-start-time option to the node when it is executed.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_trig_end</span></code>(time[,&nbsp;pass_to_command_line])</td>
+<td>Set the trig end time of the analysis node by setting a –trig-end-time option to the node when it is executed.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_trig_start</span></code>(time[,&nbsp;pass_to_command_line])</td>
+<td>Set the trig start time of the analysis node by setting a –trig-start-time option to the node when it is executed.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_user_tag</span></code>(usertag[,&nbsp;pass_to_command_line])</td>
+<td>Set the user tag that is passed to the analysis code.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_vds_group</span></code>(group)</td>
+<td>Set the name of the VDS group key when generating a DAX</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_category</span></code>(fh)</td>
+<td>Write the DAG entry for this node’s category to the DAG file descriptor.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_input_files</span></code>(fh)</td>
+<td>Write as a comment into the DAG file the list of input files for this DAG node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_job</span></code>(fh)</td>
+<td>Write the DAG entry for this node’s job to the DAG file descriptor.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_output_files</span></code>(fh)</td>
+<td>Write as a comment into the DAG file the list of output files for this DAG node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_parents</span></code>(fh)</td>
+<td>Write the parent/child relations for this job to the DAG file descriptor.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_post_script</span></code>(fh)</td>
+<td>Write the post script for the job, if there is one &#64;param fh: descriptor of open DAG file.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_pre_script</span></code>(fh)</td>
+<td>Write the pre script for the job, if there is one &#64;param fh: descriptor of open DAG file.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_priority</span></code>(fh)</td>
+<td>Write the DAG entry for this node’s priority to the DAG file descriptor.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_vars</span></code>(fh)</td>
+<td>Write the variable (macro) options and arguments to the DAG file descriptor.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="XPypeline.xcondor.XmergeClusteredNode.get_dir_prefix">
+<code class="descname">get_dir_prefix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XmergeClusteredNode.get_dir_prefix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XmergeClusteredNode.get_dir_prefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="XPypeline.xcondor.XmergeClusteredNode.get_sc_flag">
+<code class="descname">get_sc_flag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XmergeClusteredNode.get_sc_flag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XmergeClusteredNode.get_sc_flag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="XPypeline.xcondor.XmergeClusteredNode.get_sn_flag">
+<code class="descname">get_sn_flag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XmergeClusteredNode.get_sn_flag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XmergeClusteredNode.get_sn_flag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="XPypeline.xcondor.XmergeClusteredNode.set_dir_prefix">
+<code class="descname">set_dir_prefix</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XmergeClusteredNode.set_dir_prefix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XmergeClusteredNode.set_dir_prefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="XPypeline.xcondor.XmergeClusteredNode.set_sc_flag">
+<code class="descname">set_sc_flag</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XmergeClusteredNode.set_sc_flag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XmergeClusteredNode.set_sc_flag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="XPypeline.xcondor.XmergeClusteredNode.set_sn_flag">
+<code class="descname">set_sn_flag</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XmergeClusteredNode.set_sn_flag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XmergeClusteredNode.set_sn_flag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="XPypeline.xcondor.XmergeJob">
+<em class="property">class </em><code class="descclassname">XPypeline.xcondor.</code><code class="descname">XmergeJob</code><span class="sig-paren">(</span><em>cp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XmergeJob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XmergeJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.CondorDAGJob</span></code>, <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.AnalysisJob</span></code></p>
+<p>An x merge job</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_arg</span></code>(arg)</td>
+<td>Add an argument to the executable.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_checkpoint_file</span></code>(filename)</td>
+<td>Add filename as a checkpoint file for this DAG job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_condor_cmd</span></code>(cmd,&nbsp;value)</td>
+<td>Add a Condor command to the submit file (e.g.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_arg</span></code>(filename)</td>
+<td>Add a file argument to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_opt</span></code>(opt,&nbsp;filename)</td>
+<td>Add a command line option to the executable.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_ini_opts</span></code>(cp,&nbsp;section)</td>
+<td>Parse command line options from a given section in an ini file and pass to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_input_file</span></code>(filename)</td>
+<td>Add filename as a necessary input file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_opt</span></code>(opt,&nbsp;value)</td>
+<td>Add a command line option to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_output_file</span></code>(filename)</td>
+<td>Add filename as a output file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_short_opt</span></code>(opt,&nbsp;value)</td>
+<td>Add a command line option to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_arg</span></code>(arg_index[,&nbsp;quote])</td>
+<td>Add a command to the submit file to allow variable (macro) arguments to be passed to the executable.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_condor_cmd</span></code>(command)</td>
+<td>Add a condor command to the submit file that allows variable (macro) arguments to be passes to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_opt</span></code>(opt[,&nbsp;short])</td>
+<td>Add a variable (or macro) option to the condor job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">channel</span></code>()</td>
+<td>Returns the name of the channel that this job is filtering.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">create_node</span></code>()</td>
+<td>Create a condor node from this job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_args</span></code>()</td>
+<td>Return the list of arguments that are to be passed to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_checkpoint_files</span></code>()</td>
+<td>Return a list of checkpoint files for this DAG node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_condor_cmds</span></code>()</td>
+<td>Return the dictionary of condor keywords to add to the job</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_config</span></code>(sec,&nbsp;opt)</td>
+<td>Get the configration variable in a particular section of this jobs ini file.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_dax_mpi_cluster</span></code>()</td>
+<td>Get the DAX collapse key for this node</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_executable</span></code>()</td>
+<td>Return the name of the executable for this job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_executable_installed</span></code>()</td>
+<td>return whether or not the executable is installed</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_scheduler</span></code>()</td>
+<td>Return the grid scheduler.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_server</span></code>()</td>
+<td>Return the grid server on which the job will run.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_site</span></code>()</td>
+<td>Return the grid site for this node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_type</span></code>()</td>
+<td>Return the grid type of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_input_files</span></code>()</td>
+<td>Return list of input files for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_opt</span></code>(opt)</td>
+<td>Returns the value associated with the given command line option.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_opts</span></code>()</td>
+<td>Return the dictionary of opts for the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_output_files</span></code>()</td>
+<td>Return list of output files for this DAG node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_short_opts</span></code>()</td>
+<td>Return the dictionary of short options for the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_stderr_file</span></code>()</td>
+<td>Get the file to which Condor directs the stderr of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_stdin_file</span></code>()</td>
+<td>Get the file from which Condor directs the stdin of the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_stdout_file</span></code>()</td>
+<td>Get the file to which Condor directs the stdout of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_sub_file</span></code>()</td>
+<td>Get the name of the file which the Condor submit file will be written to when write_sub_file() is called.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_universe</span></code>()</td>
+<td>Return the condor universe that the job will run in.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">is_dax</span></code>()</td>
+<td>Returns true if this job should behave as a DAX</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_channel</span></code>(channel)</td>
+<td>Set the name of the channel that this job is filtering.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_dax_mpi_cluster</span></code>(size)</td>
+<td>Set the DAX collapse key for this node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_executable</span></code>(executable)</td>
+<td>Set the name of the executable for this job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_executable_installed</span></code>(installed)</td>
+<td>If executable installed is true, then no copying of the executable is done.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_scheduler</span></code>(grid_scheduler)</td>
+<td>Set the grid scheduler.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_server</span></code>(grid_server)</td>
+<td>Set the grid server on which to run the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_site</span></code>(site)</td>
+<td>Set the grid site to run on.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_type</span></code>(grid_type)</td>
+<td>Set the type of grid resource for the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_log_file</span></code>(path)</td>
+<td>Set the Condor log file.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_notification</span></code>(value)</td>
+<td>Set the email address to send notification to.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_stderr_file</span></code>(path)</td>
+<td>Set the file to which Condor directs the stderr of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_stdin_file</span></code>(path)</td>
+<td>Set the file from which Condor directs the stdin of the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_stdout_file</span></code>(path)</td>
+<td>Set the file to which Condor directs the stdout of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_sub_file</span></code>(path)</td>
+<td>Set the name of the file to write the Condor submit file to when write_sub_file() is called.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_universe</span></code>(universe)</td>
+<td>Set the condor universe for the job to run in.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_sub_file</span></code>()</td>
+<td>Write a submit file for this Condor job.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="XPypeline.xcondor.XmergeNode">
+<em class="property">class </em><code class="descclassname">XPypeline.xcondor.</code><code class="descname">XmergeNode</code><span class="sig-paren">(</span><em>job</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XmergeNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XmergeNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.CondorDAGNode</span></code>, <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.AnalysisNode</span></code></p>
+<p>merge results that were cut into blocks of less than maxInjNum jobs</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_checkpoint_file</span></code>(filename)</td>
+<td>Add filename as a checkpoint file for this DAG node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_checkpoint_macro</span></code>(filename)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_arg</span></code>(filename)</td>
+<td>Add a variable (or macro) file name argument to the condor job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_opt</span></code>(opt,&nbsp;filename[,&nbsp;…])</td>
+<td>Add a variable (macro) option for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_input_file</span></code>(filename)</td>
+<td>Add filename as a necessary input file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_input_macro</span></code>(filename)</td>
+<td>Add a variable (macro) for storing the input files associated with this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_io_macro</span></code>(io,&nbsp;filename)</td>
+<td>Add a variable (macro) for storing the input/output files associated with this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_macro</span></code>(name,&nbsp;value)</td>
+<td>Add a variable (macro) for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_output_file</span></code>(filename)</td>
+<td>Add filename as a output file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_output_macro</span></code>(filename)</td>
+<td>Add a variable (macro) for storing the output files associated with this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_parent</span></code>(node)</td>
+<td>Add a parent to this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_pegasus_profile</span></code>(namespace,&nbsp;key,&nbsp;value)</td>
+<td>Add a Pegasus profile to this job which will be written to the dax as &lt;profile namespace=”NAMESPACE” key=”KEY”&gt;VALUE&lt;/profile&gt; This can be used to add classads to particular jobs in the DAX &#64;param namespace: A valid Pegasus namespace, e.g.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_post_script_arg</span></code>(arg)</td>
+<td>Adds an argument to the post script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_pre_script_arg</span></code>(arg)</td>
+<td>Adds an argument to the pre script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_arg</span></code>(arg[,&nbsp;quote])</td>
+<td>Add a variable (or macro) argument to the condor job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_condor_cmd</span></code>(command,&nbsp;value)</td>
+<td>Add a variable (macro) condor command for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_opt</span></code>(opt,&nbsp;value[,&nbsp;short])</td>
+<td>Add a variable (macro) option for this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">calibration</span></code>()</td>
+<td>Set the path to the calibration cache file for the given IFO.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">calibration_cache_path</span></code>()</td>
+<td>Determine the path to the correct calibration cache file to use.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">finalize</span></code>()</td>
+<td>The finalize method of a node is called before the node is</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_args</span></code>()</td>
+<td>Return the arguments for this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_calibration</span></code>()</td>
+<td>Return the calibration cache file to be used by the DAG.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_category</span></code>()</td>
+<td>Get the category for this node in the DAG.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_checkpoint_files</span></code>()</td>
+<td>Return a list of checkpoint files for this DAG node and its job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_cmd_line</span></code>()</td>
+<td>Return the full command line that will be used when this node is run by DAGman.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_cmd_tuple_list</span></code>()</td>
+<td>Return a list of tuples containg the command line arguments</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_data_end</span></code>()</td>
+<td>Get the GPS end time of the data needed by this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_data_start</span></code>()</td>
+<td>Get the GPS start time of the data needed by this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_dax_collapse</span></code>()</td>
+<td>Get the DAX collapse key for this node</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#XPypeline.xcondor.XmergeNode.get_dir_prefix" title="XPypeline.xcondor.XmergeNode.get_dir_prefix"><code class="xref py py-obj docutils literal"><span class="pre">get_dir_prefix</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_end</span></code>()</td>
+<td>Get the GPS end time of the node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_start</span></code>()</td>
+<td>Return the grid starter that pegasus will use.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_ifo</span></code>()</td>
+<td>Returns the two letter IFO code for this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_ifo_tag</span></code>()</td>
+<td>Returns the IFO tag string</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_input</span></code>()</td>
+<td>Get the file that will be passed as input.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_input_files</span></code>()</td>
+<td>Return list of input files for this DAG node and its job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_name</span></code>()</td>
+<td>Get the name for this node in the DAG.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_opts</span></code>()</td>
+<td>Return the opts for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_output</span></code>()</td>
+<td>Get the file that will be passed as output.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_output_files</span></code>()</td>
+<td>Return list of output files for this DAG node and its job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_pad_data</span></code>()</td>
+<td>Get the GPS start time of the data needed by this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_pegasus_profile</span></code>()</td>
+<td>Return the pegasus profile dictionary for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_post_script</span></code>()</td>
+<td>returns the name of the post script that is executed before the DAG node is</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_post_script_arg</span></code>()</td>
+<td>Returns and array of arguments to the post script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_priority</span></code>()</td>
+<td>Get the priority for this node in the DAG.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_retry</span></code>()</td>
+<td>Return the number of times that this node in the DAG should retry.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#XPypeline.xcondor.XmergeNode.get_sn_flag" title="XPypeline.xcondor.XmergeNode.get_sn_flag"><code class="xref py py-obj docutils literal"><span class="pre">get_sn_flag</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_start</span></code>()</td>
+<td>Get the GPS start time of the node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_trig_end</span></code>()</td>
+<td>Get the trig end time of the node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_trig_start</span></code>()</td>
+<td>Get the trig start time of the node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_user_tag</span></code>()</td>
+<td>Returns the usertag string</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_vds_group</span></code>()</td>
+<td>Returns the VDS group key for this node</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">job</span></code>()</td>
+<td>Return the CondorJob that this node is associated with.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_cache</span></code>(filename)</td>
+<td>Set the LAL frame cache to to use.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_category</span></code>(category)</td>
+<td>Set the category for this node in the DAG.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_data_end</span></code>(time)</td>
+<td>Set the GPS end time of the data needed by this analysis node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_data_start</span></code>(time)</td>
+<td>Set the GPS start time of the data needed by this analysis node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_dax_collapse</span></code>(collapse)</td>
+<td>Set the DAX collapse key for this node</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#XPypeline.xcondor.XmergeNode.set_dir_prefix" title="XPypeline.xcondor.XmergeNode.set_dir_prefix"><code class="xref py py-obj docutils literal"><span class="pre">set_dir_prefix</span></code></a>(path)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_end</span></code>(time[,&nbsp;pass_to_command_line])</td>
+<td>Set the GPS end time of the analysis node by setting a –gps-end-time option to the node when it is executed.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_start</span></code>(gridstart)</td>
+<td>Set the grid starter that pegasus will use.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_ifo</span></code>(ifo)</td>
+<td>Set the ifo name to analyze.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_ifo_tag</span></code>(ifo_tag[,&nbsp;pass_to_command_line])</td>
+<td>Set the ifo tag that is passed to the analysis code.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_input</span></code>(filename[,&nbsp;pass_to_command_line])</td>
+<td>Add an input to the node by adding a –input option.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_log_file</span></code>(log)</td>
+<td>Set the Condor log file to be used by this CondorJob.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_name</span></code>(name)</td>
+<td>Set the name for this node in the DAG.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_output</span></code>(filename[,&nbsp;pass_to_command_line])</td>
+<td>Add an output to the node by adding a –output option.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_pad_data</span></code>(pad)</td>
+<td>Set the GPS start time of the data needed by this analysis node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_post_script</span></code>(script)</td>
+<td>Sets the name of the post script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_pre_script</span></code>(script)</td>
+<td>Sets the name of the pre script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_priority</span></code>(priority)</td>
+<td>Set the priority for this node in the DAG.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_retry</span></code>(retry)</td>
+<td>Set the number of times that this node in the DAG should retry.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#XPypeline.xcondor.XmergeNode.set_sn_flag" title="XPypeline.xcondor.XmergeNode.set_sn_flag"><code class="xref py py-obj docutils literal"><span class="pre">set_sn_flag</span></code></a>(path)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_start</span></code>(time[,&nbsp;pass_to_command_line])</td>
+<td>Set the GPS start time of the analysis node by setting a –gps-start-time option to the node when it is executed.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_trig_end</span></code>(time[,&nbsp;pass_to_command_line])</td>
+<td>Set the trig end time of the analysis node by setting a –trig-end-time option to the node when it is executed.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_trig_start</span></code>(time[,&nbsp;pass_to_command_line])</td>
+<td>Set the trig start time of the analysis node by setting a –trig-start-time option to the node when it is executed.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_user_tag</span></code>(usertag[,&nbsp;pass_to_command_line])</td>
+<td>Set the user tag that is passed to the analysis code.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_vds_group</span></code>(group)</td>
+<td>Set the name of the VDS group key when generating a DAX</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_category</span></code>(fh)</td>
+<td>Write the DAG entry for this node’s category to the DAG file descriptor.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_input_files</span></code>(fh)</td>
+<td>Write as a comment into the DAG file the list of input files for this DAG node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_job</span></code>(fh)</td>
+<td>Write the DAG entry for this node’s job to the DAG file descriptor.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_output_files</span></code>(fh)</td>
+<td>Write as a comment into the DAG file the list of output files for this DAG node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_parents</span></code>(fh)</td>
+<td>Write the parent/child relations for this job to the DAG file descriptor.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_post_script</span></code>(fh)</td>
+<td>Write the post script for the job, if there is one &#64;param fh: descriptor of open DAG file.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_pre_script</span></code>(fh)</td>
+<td>Write the pre script for the job, if there is one &#64;param fh: descriptor of open DAG file.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_priority</span></code>(fh)</td>
+<td>Write the DAG entry for this node’s priority to the DAG file descriptor.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_vars</span></code>(fh)</td>
+<td>Write the variable (macro) options and arguments to the DAG file descriptor.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="XPypeline.xcondor.XmergeNode.get_dir_prefix">
+<code class="descname">get_dir_prefix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XmergeNode.get_dir_prefix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XmergeNode.get_dir_prefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="XPypeline.xcondor.XmergeNode.get_sn_flag">
+<code class="descname">get_sn_flag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XmergeNode.get_sn_flag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XmergeNode.get_sn_flag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="XPypeline.xcondor.XmergeNode.set_dir_prefix">
+<code class="descname">set_dir_prefix</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XmergeNode.set_dir_prefix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XmergeNode.set_dir_prefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="XPypeline.xcondor.XmergeNode.set_sn_flag">
+<code class="descname">set_sn_flag</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XmergeNode.set_sn_flag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XmergeNode.set_sn_flag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="XPypeline.xcondor.XsearchGPUJob">
+<em class="property">class </em><code class="descclassname">XPypeline.xcondor.</code><code class="descname">XsearchGPUJob</code><span class="sig-paren">(</span><em>cp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XsearchGPUJob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XsearchGPUJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.CondorDAGJob</span></code>, <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.AnalysisJob</span></code></p>
+<p>An x search job</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_arg</span></code>(arg)</td>
+<td>Add an argument to the executable.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_checkpoint_file</span></code>(filename)</td>
+<td>Add filename as a checkpoint file for this DAG job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_condor_cmd</span></code>(cmd,&nbsp;value)</td>
+<td>Add a Condor command to the submit file (e.g.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_arg</span></code>(filename)</td>
+<td>Add a file argument to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_opt</span></code>(opt,&nbsp;filename)</td>
+<td>Add a command line option to the executable.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_ini_opts</span></code>(cp,&nbsp;section)</td>
+<td>Parse command line options from a given section in an ini file and pass to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_input_file</span></code>(filename)</td>
+<td>Add filename as a necessary input file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_opt</span></code>(opt,&nbsp;value)</td>
+<td>Add a command line option to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_output_file</span></code>(filename)</td>
+<td>Add filename as a output file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_short_opt</span></code>(opt,&nbsp;value)</td>
+<td>Add a command line option to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_arg</span></code>(arg_index[,&nbsp;quote])</td>
+<td>Add a command to the submit file to allow variable (macro) arguments to be passed to the executable.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_condor_cmd</span></code>(command)</td>
+<td>Add a condor command to the submit file that allows variable (macro) arguments to be passes to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_opt</span></code>(opt[,&nbsp;short])</td>
+<td>Add a variable (or macro) option to the condor job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">channel</span></code>()</td>
+<td>Returns the name of the channel that this job is filtering.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">create_node</span></code>()</td>
+<td>Create a condor node from this job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_args</span></code>()</td>
+<td>Return the list of arguments that are to be passed to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_checkpoint_files</span></code>()</td>
+<td>Return a list of checkpoint files for this DAG node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_condor_cmds</span></code>()</td>
+<td>Return the dictionary of condor keywords to add to the job</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_config</span></code>(sec,&nbsp;opt)</td>
+<td>Get the configration variable in a particular section of this jobs ini file.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_dax_mpi_cluster</span></code>()</td>
+<td>Get the DAX collapse key for this node</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_executable</span></code>()</td>
+<td>Return the name of the executable for this job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_executable_installed</span></code>()</td>
+<td>return whether or not the executable is installed</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_scheduler</span></code>()</td>
+<td>Return the grid scheduler.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_server</span></code>()</td>
+<td>Return the grid server on which the job will run.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_site</span></code>()</td>
+<td>Return the grid site for this node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_type</span></code>()</td>
+<td>Return the grid type of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_input_files</span></code>()</td>
+<td>Return list of input files for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_opt</span></code>(opt)</td>
+<td>Returns the value associated with the given command line option.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_opts</span></code>()</td>
+<td>Return the dictionary of opts for the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_output_files</span></code>()</td>
+<td>Return list of output files for this DAG node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_short_opts</span></code>()</td>
+<td>Return the dictionary of short options for the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_stderr_file</span></code>()</td>
+<td>Get the file to which Condor directs the stderr of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_stdin_file</span></code>()</td>
+<td>Get the file from which Condor directs the stdin of the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_stdout_file</span></code>()</td>
+<td>Get the file to which Condor directs the stdout of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_sub_file</span></code>()</td>
+<td>Get the name of the file which the Condor submit file will be written to when write_sub_file() is called.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_universe</span></code>()</td>
+<td>Return the condor universe that the job will run in.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">is_dax</span></code>()</td>
+<td>Returns true if this job should behave as a DAX</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_channel</span></code>(channel)</td>
+<td>Set the name of the channel that this job is filtering.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_dax_mpi_cluster</span></code>(size)</td>
+<td>Set the DAX collapse key for this node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_executable</span></code>(executable)</td>
+<td>Set the name of the executable for this job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_executable_installed</span></code>(installed)</td>
+<td>If executable installed is true, then no copying of the executable is done.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_scheduler</span></code>(grid_scheduler)</td>
+<td>Set the grid scheduler.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_server</span></code>(grid_server)</td>
+<td>Set the grid server on which to run the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_site</span></code>(site)</td>
+<td>Set the grid site to run on.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_type</span></code>(grid_type)</td>
+<td>Set the type of grid resource for the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_log_file</span></code>(path)</td>
+<td>Set the Condor log file.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_notification</span></code>(value)</td>
+<td>Set the email address to send notification to.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_stderr_file</span></code>(path)</td>
+<td>Set the file to which Condor directs the stderr of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_stdin_file</span></code>(path)</td>
+<td>Set the file from which Condor directs the stdin of the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_stdout_file</span></code>(path)</td>
+<td>Set the file to which Condor directs the stdout of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_sub_file</span></code>(path)</td>
+<td>Set the name of the file to write the Condor submit file to when write_sub_file() is called.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_universe</span></code>(universe)</td>
+<td>Set the condor universe for the job to run in.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_sub_file</span></code>()</td>
+<td>Write a submit file for this Condor job.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="XPypeline.xcondor.XsearchJob">
+<em class="property">class </em><code class="descclassname">XPypeline.xcondor.</code><code class="descname">XsearchJob</code><span class="sig-paren">(</span><em>cp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XsearchJob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XsearchJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.CondorDAGJob</span></code>, <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.AnalysisJob</span></code></p>
+<p>An x search job</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_arg</span></code>(arg)</td>
+<td>Add an argument to the executable.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_checkpoint_file</span></code>(filename)</td>
+<td>Add filename as a checkpoint file for this DAG job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_condor_cmd</span></code>(cmd,&nbsp;value)</td>
+<td>Add a Condor command to the submit file (e.g.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_arg</span></code>(filename)</td>
+<td>Add a file argument to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_opt</span></code>(opt,&nbsp;filename)</td>
+<td>Add a command line option to the executable.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_ini_opts</span></code>(cp,&nbsp;section)</td>
+<td>Parse command line options from a given section in an ini file and pass to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_input_file</span></code>(filename)</td>
+<td>Add filename as a necessary input file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_opt</span></code>(opt,&nbsp;value)</td>
+<td>Add a command line option to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_output_file</span></code>(filename)</td>
+<td>Add filename as a output file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_short_opt</span></code>(opt,&nbsp;value)</td>
+<td>Add a command line option to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_arg</span></code>(arg_index[,&nbsp;quote])</td>
+<td>Add a command to the submit file to allow variable (macro) arguments to be passed to the executable.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_condor_cmd</span></code>(command)</td>
+<td>Add a condor command to the submit file that allows variable (macro) arguments to be passes to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_opt</span></code>(opt[,&nbsp;short])</td>
+<td>Add a variable (or macro) option to the condor job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">channel</span></code>()</td>
+<td>Returns the name of the channel that this job is filtering.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">create_node</span></code>()</td>
+<td>Create a condor node from this job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_args</span></code>()</td>
+<td>Return the list of arguments that are to be passed to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_checkpoint_files</span></code>()</td>
+<td>Return a list of checkpoint files for this DAG node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_condor_cmds</span></code>()</td>
+<td>Return the dictionary of condor keywords to add to the job</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_config</span></code>(sec,&nbsp;opt)</td>
+<td>Get the configration variable in a particular section of this jobs ini file.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_dax_mpi_cluster</span></code>()</td>
+<td>Get the DAX collapse key for this node</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_executable</span></code>()</td>
+<td>Return the name of the executable for this job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_executable_installed</span></code>()</td>
+<td>return whether or not the executable is installed</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_scheduler</span></code>()</td>
+<td>Return the grid scheduler.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_server</span></code>()</td>
+<td>Return the grid server on which the job will run.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_site</span></code>()</td>
+<td>Return the grid site for this node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_type</span></code>()</td>
+<td>Return the grid type of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_input_files</span></code>()</td>
+<td>Return list of input files for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_opt</span></code>(opt)</td>
+<td>Returns the value associated with the given command line option.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_opts</span></code>()</td>
+<td>Return the dictionary of opts for the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_output_files</span></code>()</td>
+<td>Return list of output files for this DAG node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_short_opts</span></code>()</td>
+<td>Return the dictionary of short options for the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_stderr_file</span></code>()</td>
+<td>Get the file to which Condor directs the stderr of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_stdin_file</span></code>()</td>
+<td>Get the file from which Condor directs the stdin of the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_stdout_file</span></code>()</td>
+<td>Get the file to which Condor directs the stdout of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_sub_file</span></code>()</td>
+<td>Get the name of the file which the Condor submit file will be written to when write_sub_file() is called.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_universe</span></code>()</td>
+<td>Return the condor universe that the job will run in.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">is_dax</span></code>()</td>
+<td>Returns true if this job should behave as a DAX</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_channel</span></code>(channel)</td>
+<td>Set the name of the channel that this job is filtering.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_dax_mpi_cluster</span></code>(size)</td>
+<td>Set the DAX collapse key for this node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_executable</span></code>(executable)</td>
+<td>Set the name of the executable for this job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_executable_installed</span></code>(installed)</td>
+<td>If executable installed is true, then no copying of the executable is done.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_scheduler</span></code>(grid_scheduler)</td>
+<td>Set the grid scheduler.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_server</span></code>(grid_server)</td>
+<td>Set the grid server on which to run the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_site</span></code>(site)</td>
+<td>Set the grid site to run on.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_type</span></code>(grid_type)</td>
+<td>Set the type of grid resource for the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_log_file</span></code>(path)</td>
+<td>Set the Condor log file.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_notification</span></code>(value)</td>
+<td>Set the email address to send notification to.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_stderr_file</span></code>(path)</td>
+<td>Set the file to which Condor directs the stderr of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_stdin_file</span></code>(path)</td>
+<td>Set the file from which Condor directs the stdin of the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_stdout_file</span></code>(path)</td>
+<td>Set the file to which Condor directs the stdout of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_sub_file</span></code>(path)</td>
+<td>Set the name of the file to write the Condor submit file to when write_sub_file() is called.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_universe</span></code>(universe)</td>
+<td>Set the condor universe for the job to run in.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_sub_file</span></code>()</td>
+<td>Write a submit file for this Condor job.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="XPypeline.xcondor.XsearchNode">
+<em class="property">class </em><code class="descclassname">XPypeline.xcondor.</code><code class="descname">XsearchNode</code><span class="sig-paren">(</span><em>job</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XsearchNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XsearchNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.CondorDAGNode</span></code>, <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.AnalysisNode</span></code></p>
+<p>xsearch node</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_checkpoint_file</span></code>(filename)</td>
+<td>Add filename as a checkpoint file for this DAG node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_checkpoint_macro</span></code>(filename)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_arg</span></code>(filename)</td>
+<td>Add a variable (or macro) file name argument to the condor job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_opt</span></code>(opt,&nbsp;filename[,&nbsp;…])</td>
+<td>Add a variable (macro) option for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_input_file</span></code>(filename)</td>
+<td>Add filename as a necessary input file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_input_macro</span></code>(filename)</td>
+<td>Add a variable (macro) for storing the input files associated with this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_io_macro</span></code>(io,&nbsp;filename)</td>
+<td>Add a variable (macro) for storing the input/output files associated with this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_macro</span></code>(name,&nbsp;value)</td>
+<td>Add a variable (macro) for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_output_file</span></code>(filename)</td>
+<td>Add filename as a output file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_output_macro</span></code>(filename)</td>
+<td>Add a variable (macro) for storing the output files associated with this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_parent</span></code>(node)</td>
+<td>Add a parent to this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_pegasus_profile</span></code>(namespace,&nbsp;key,&nbsp;value)</td>
+<td>Add a Pegasus profile to this job which will be written to the dax as &lt;profile namespace=”NAMESPACE” key=”KEY”&gt;VALUE&lt;/profile&gt; This can be used to add classads to particular jobs in the DAX &#64;param namespace: A valid Pegasus namespace, e.g.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_post_script_arg</span></code>(arg)</td>
+<td>Adds an argument to the post script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_pre_script_arg</span></code>(arg)</td>
+<td>Adds an argument to the pre script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_arg</span></code>(arg[,&nbsp;quote])</td>
+<td>Add a variable (or macro) argument to the condor job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_condor_cmd</span></code>(command,&nbsp;value)</td>
+<td>Add a variable (macro) condor command for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_opt</span></code>(opt,&nbsp;value[,&nbsp;short])</td>
+<td>Add a variable (macro) option for this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">calibration</span></code>()</td>
+<td>Set the path to the calibration cache file for the given IFO.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">calibration_cache_path</span></code>()</td>
+<td>Determine the path to the correct calibration cache file to use.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">finalize</span></code>()</td>
+<td>The finalize method of a node is called before the node is</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_args</span></code>()</td>
+<td>Return the arguments for this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_calibration</span></code>()</td>
+<td>Return the calibration cache file to be used by the DAG.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_category</span></code>()</td>
+<td>Get the category for this node in the DAG.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_checkpoint_files</span></code>()</td>
+<td>Return a list of checkpoint files for this DAG node and its job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_cmd_line</span></code>()</td>
+<td>Return the full command line that will be used when this node is run by DAGman.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_cmd_tuple_list</span></code>()</td>
+<td>Return a list of tuples containg the command line arguments</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_data_end</span></code>()</td>
+<td>Get the GPS end time of the data needed by this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_data_start</span></code>()</td>
+<td>Get the GPS start time of the data needed by this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_dax_collapse</span></code>()</td>
+<td>Get the DAX collapse key for this node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_end</span></code>()</td>
+<td>Get the GPS end time of the node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_start</span></code>()</td>
+<td>Return the grid starter that pegasus will use.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_ifo</span></code>()</td>
+<td>Returns the two letter IFO code for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_ifo_tag</span></code>()</td>
+<td>Returns the IFO tag string</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_input</span></code>()</td>
+<td>Get the file that will be passed as input.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_input_files</span></code>()</td>
+<td>Return list of input files for this DAG node and its job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_name</span></code>()</td>
+<td>Get the name for this node in the DAG.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_opts</span></code>()</td>
+<td>Return the opts for this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_output</span></code>()</td>
+<td>Get the file that will be passed as output.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#XPypeline.xcondor.XsearchNode.get_output_dir" title="XPypeline.xcondor.XsearchNode.get_output_dir"><code class="xref py py-obj docutils literal"><span class="pre">get_output_dir</span></code></a>(path)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_output_files</span></code>()</td>
+<td>Return list of output files for this DAG node and its job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_pad_data</span></code>()</td>
+<td>Get the GPS start time of the data needed by this node.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#XPypeline.xcondor.XsearchNode.get_param_file" title="XPypeline.xcondor.XsearchNode.get_param_file"><code class="xref py py-obj docutils literal"><span class="pre">get_param_file</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_pegasus_profile</span></code>()</td>
+<td>Return the pegasus profile dictionary for this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_post_script</span></code>()</td>
+<td>returns the name of the post script that is executed before the DAG node is</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_post_script_arg</span></code>()</td>
+<td>Returns and array of arguments to the post script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_priority</span></code>()</td>
+<td>Get the priority for this node in the DAG.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_retry</span></code>()</td>
+<td>Return the number of times that this node in the DAG should retry.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_start</span></code>()</td>
+<td>Get the GPS start time of the node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_trig_end</span></code>()</td>
+<td>Get the trig end time of the node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_trig_start</span></code>()</td>
+<td>Get the trig start time of the node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_user_tag</span></code>()</td>
+<td>Returns the usertag string</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_vds_group</span></code>()</td>
+<td>Returns the VDS group key for this node</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#XPypeline.xcondor.XsearchNode.get_x_injnum" title="XPypeline.xcondor.XsearchNode.get_x_injnum"><code class="xref py py-obj docutils literal"><span class="pre">get_x_injnum</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#XPypeline.xcondor.XsearchNode.get_x_jobnum" title="XPypeline.xcondor.XsearchNode.get_x_jobnum"><code class="xref py py-obj docutils literal"><span class="pre">get_x_jobnum</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">job</span></code>()</td>
+<td>Return the CondorJob that this node is associated with.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_cache</span></code>(filename)</td>
+<td>Set the LAL frame cache to to use.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_category</span></code>(category)</td>
+<td>Set the category for this node in the DAG.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_data_end</span></code>(time)</td>
+<td>Set the GPS end time of the data needed by this analysis node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_data_start</span></code>(time)</td>
+<td>Set the GPS start time of the data needed by this analysis node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_dax_collapse</span></code>(collapse)</td>
+<td>Set the DAX collapse key for this node</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_end</span></code>(time[,&nbsp;pass_to_command_line])</td>
+<td>Set the GPS end time of the analysis node by setting a –gps-end-time option to the node when it is executed.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_start</span></code>(gridstart)</td>
+<td>Set the grid starter that pegasus will use.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_ifo</span></code>(ifo)</td>
+<td>Set the ifo name to analyze.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_ifo_tag</span></code>(ifo_tag[,&nbsp;pass_to_command_line])</td>
+<td>Set the ifo tag that is passed to the analysis code.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_input</span></code>(filename[,&nbsp;pass_to_command_line])</td>
+<td>Add an input to the node by adding a –input option.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_log_file</span></code>(log)</td>
+<td>Set the Condor log file to be used by this CondorJob.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_name</span></code>(name)</td>
+<td>Set the name for this node in the DAG.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_output</span></code>(filename[,&nbsp;pass_to_command_line])</td>
+<td>Add an output to the node by adding a –output option.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#XPypeline.xcondor.XsearchNode.set_output_dir" title="XPypeline.xcondor.XsearchNode.set_output_dir"><code class="xref py py-obj docutils literal"><span class="pre">set_output_dir</span></code></a>(path)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_pad_data</span></code>(pad)</td>
+<td>Set the GPS start time of the data needed by this analysis node.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#XPypeline.xcondor.XsearchNode.set_param_file" title="XPypeline.xcondor.XsearchNode.set_param_file"><code class="xref py py-obj docutils literal"><span class="pre">set_param_file</span></code></a>(path)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_post_script</span></code>(script)</td>
+<td>Sets the name of the post script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_pre_script</span></code>(script)</td>
+<td>Sets the name of the pre script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_priority</span></code>(priority)</td>
+<td>Set the priority for this node in the DAG.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_retry</span></code>(retry)</td>
+<td>Set the number of times that this node in the DAG should retry.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_start</span></code>(time[,&nbsp;pass_to_command_line])</td>
+<td>Set the GPS start time of the analysis node by setting a –gps-start-time option to the node when it is executed.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_trig_end</span></code>(time[,&nbsp;pass_to_command_line])</td>
+<td>Set the trig end time of the analysis node by setting a –trig-end-time option to the node when it is executed.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_trig_start</span></code>(time[,&nbsp;pass_to_command_line])</td>
+<td>Set the trig start time of the analysis node by setting a –trig-start-time option to the node when it is executed.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_user_tag</span></code>(usertag[,&nbsp;pass_to_command_line])</td>
+<td>Set the user tag that is passed to the analysis code.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_vds_group</span></code>(group)</td>
+<td>Set the name of the VDS group key when generating a DAX</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#XPypeline.xcondor.XsearchNode.set_x_injnum" title="XPypeline.xcondor.XsearchNode.set_x_injnum"><code class="xref py py-obj docutils literal"><span class="pre">set_x_injnum</span></code></a>(n)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#XPypeline.xcondor.XsearchNode.set_x_jobnum" title="XPypeline.xcondor.XsearchNode.set_x_jobnum"><code class="xref py py-obj docutils literal"><span class="pre">set_x_jobnum</span></code></a>(n)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_category</span></code>(fh)</td>
+<td>Write the DAG entry for this node’s category to the DAG file descriptor.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_input_files</span></code>(fh)</td>
+<td>Write as a comment into the DAG file the list of input files for this DAG node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_job</span></code>(fh)</td>
+<td>Write the DAG entry for this node’s job to the DAG file descriptor.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_output_files</span></code>(fh)</td>
+<td>Write as a comment into the DAG file the list of output files for this DAG node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_parents</span></code>(fh)</td>
+<td>Write the parent/child relations for this job to the DAG file descriptor.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_post_script</span></code>(fh)</td>
+<td>Write the post script for the job, if there is one &#64;param fh: descriptor of open DAG file.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_pre_script</span></code>(fh)</td>
+<td>Write the pre script for the job, if there is one &#64;param fh: descriptor of open DAG file.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_priority</span></code>(fh)</td>
+<td>Write the DAG entry for this node’s priority to the DAG file descriptor.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_vars</span></code>(fh)</td>
+<td>Write the variable (macro) options and arguments to the DAG file descriptor.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="XPypeline.xcondor.XsearchNode.get_output_dir">
+<code class="descname">get_output_dir</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XsearchNode.get_output_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XsearchNode.get_output_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="XPypeline.xcondor.XsearchNode.get_param_file">
+<code class="descname">get_param_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XsearchNode.get_param_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XsearchNode.get_param_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="XPypeline.xcondor.XsearchNode.get_x_injnum">
+<code class="descname">get_x_injnum</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XsearchNode.get_x_injnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XsearchNode.get_x_injnum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="XPypeline.xcondor.XsearchNode.get_x_jobnum">
+<code class="descname">get_x_jobnum</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XsearchNode.get_x_jobnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XsearchNode.get_x_jobnum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="XPypeline.xcondor.XsearchNode.set_output_dir">
+<code class="descname">set_output_dir</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XsearchNode.set_output_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XsearchNode.set_output_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="XPypeline.xcondor.XsearchNode.set_param_file">
+<code class="descname">set_param_file</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XsearchNode.set_param_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XsearchNode.set_param_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="XPypeline.xcondor.XsearchNode.set_x_injnum">
+<code class="descname">set_x_injnum</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XsearchNode.set_x_injnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XsearchNode.set_x_injnum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="XPypeline.xcondor.XsearchNode.set_x_jobnum">
+<code class="descname">set_x_jobnum</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XsearchNode.set_x_jobnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XsearchNode.set_x_jobnum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="XPypeline.xcondor.XtmvaJob">
+<em class="property">class </em><code class="descclassname">XPypeline.xcondor.</code><code class="descname">XtmvaJob</code><span class="sig-paren">(</span><em>cp</em>, <em>nDet</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XtmvaJob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XtmvaJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.CondorDAGJob</span></code>, <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.AnalysisJob</span></code></p>
+<p>An xtmva classification job.</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_arg</span></code>(arg)</td>
+<td>Add an argument to the executable.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_checkpoint_file</span></code>(filename)</td>
+<td>Add filename as a checkpoint file for this DAG job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_condor_cmd</span></code>(cmd,&nbsp;value)</td>
+<td>Add a Condor command to the submit file (e.g.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_arg</span></code>(filename)</td>
+<td>Add a file argument to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_opt</span></code>(opt,&nbsp;filename)</td>
+<td>Add a command line option to the executable.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_ini_opts</span></code>(cp,&nbsp;section)</td>
+<td>Parse command line options from a given section in an ini file and pass to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_input_file</span></code>(filename)</td>
+<td>Add filename as a necessary input file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_opt</span></code>(opt,&nbsp;value)</td>
+<td>Add a command line option to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_output_file</span></code>(filename)</td>
+<td>Add filename as a output file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_short_opt</span></code>(opt,&nbsp;value)</td>
+<td>Add a command line option to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_arg</span></code>(arg_index[,&nbsp;quote])</td>
+<td>Add a command to the submit file to allow variable (macro) arguments to be passed to the executable.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_condor_cmd</span></code>(command)</td>
+<td>Add a condor command to the submit file that allows variable (macro) arguments to be passes to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_opt</span></code>(opt[,&nbsp;short])</td>
+<td>Add a variable (or macro) option to the condor job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">channel</span></code>()</td>
+<td>Returns the name of the channel that this job is filtering.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">create_node</span></code>()</td>
+<td>Create a condor node from this job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_args</span></code>()</td>
+<td>Return the list of arguments that are to be passed to the executable.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_checkpoint_files</span></code>()</td>
+<td>Return a list of checkpoint files for this DAG node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_condor_cmds</span></code>()</td>
+<td>Return the dictionary of condor keywords to add to the job</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_config</span></code>(sec,&nbsp;opt)</td>
+<td>Get the configration variable in a particular section of this jobs ini file.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_dax_mpi_cluster</span></code>()</td>
+<td>Get the DAX collapse key for this node</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_executable</span></code>()</td>
+<td>Return the name of the executable for this job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_executable_installed</span></code>()</td>
+<td>return whether or not the executable is installed</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_scheduler</span></code>()</td>
+<td>Return the grid scheduler.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_server</span></code>()</td>
+<td>Return the grid server on which the job will run.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_site</span></code>()</td>
+<td>Return the grid site for this node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_type</span></code>()</td>
+<td>Return the grid type of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_input_files</span></code>()</td>
+<td>Return list of input files for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_opt</span></code>(opt)</td>
+<td>Returns the value associated with the given command line option.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_opts</span></code>()</td>
+<td>Return the dictionary of opts for the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_output_files</span></code>()</td>
+<td>Return list of output files for this DAG node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_short_opts</span></code>()</td>
+<td>Return the dictionary of short options for the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_stderr_file</span></code>()</td>
+<td>Get the file to which Condor directs the stderr of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_stdin_file</span></code>()</td>
+<td>Get the file from which Condor directs the stdin of the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_stdout_file</span></code>()</td>
+<td>Get the file to which Condor directs the stdout of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_sub_file</span></code>()</td>
+<td>Get the name of the file which the Condor submit file will be written to when write_sub_file() is called.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_universe</span></code>()</td>
+<td>Return the condor universe that the job will run in.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">is_dax</span></code>()</td>
+<td>Returns true if this job should behave as a DAX</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_channel</span></code>(channel)</td>
+<td>Set the name of the channel that this job is filtering.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_dax_mpi_cluster</span></code>(size)</td>
+<td>Set the DAX collapse key for this node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_executable</span></code>(executable)</td>
+<td>Set the name of the executable for this job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_executable_installed</span></code>(installed)</td>
+<td>If executable installed is true, then no copying of the executable is done.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_scheduler</span></code>(grid_scheduler)</td>
+<td>Set the grid scheduler.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_server</span></code>(grid_server)</td>
+<td>Set the grid server on which to run the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_site</span></code>(site)</td>
+<td>Set the grid site to run on.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_type</span></code>(grid_type)</td>
+<td>Set the type of grid resource for the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_log_file</span></code>(path)</td>
+<td>Set the Condor log file.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_notification</span></code>(value)</td>
+<td>Set the email address to send notification to.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_stderr_file</span></code>(path)</td>
+<td>Set the file to which Condor directs the stderr of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_stdin_file</span></code>(path)</td>
+<td>Set the file from which Condor directs the stdin of the job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_stdout_file</span></code>(path)</td>
+<td>Set the file to which Condor directs the stdout of the job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_sub_file</span></code>(path)</td>
+<td>Set the name of the file to write the Condor submit file to when write_sub_file() is called.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_universe</span></code>(universe)</td>
+<td>Set the condor universe for the job to run in.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_sub_file</span></code>()</td>
+<td>Write a submit file for this Condor job.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="XPypeline.xcondor.XtmvaNode">
+<em class="property">class </em><code class="descclassname">XPypeline.xcondor.</code><code class="descname">XtmvaNode</code><span class="sig-paren">(</span><em>job</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/XPypeline/xcondor.html#XtmvaNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#XPypeline.xcondor.XtmvaNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.CondorDAGNode</span></code>, <code class="xref py py-class docutils literal"><span class="pre">glue.pipeline.AnalysisNode</span></code></p>
+<p>cluster and merge results that were cut into blocks of less than maxInjNum jobs</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_checkpoint_file</span></code>(filename)</td>
+<td>Add filename as a checkpoint file for this DAG node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_checkpoint_macro</span></code>(filename)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_arg</span></code>(filename)</td>
+<td>Add a variable (or macro) file name argument to the condor job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_file_opt</span></code>(opt,&nbsp;filename[,&nbsp;…])</td>
+<td>Add a variable (macro) option for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_input_file</span></code>(filename)</td>
+<td>Add filename as a necessary input file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_input_macro</span></code>(filename)</td>
+<td>Add a variable (macro) for storing the input files associated with this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_io_macro</span></code>(io,&nbsp;filename)</td>
+<td>Add a variable (macro) for storing the input/output files associated with this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_macro</span></code>(name,&nbsp;value)</td>
+<td>Add a variable (macro) for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_output_file</span></code>(filename)</td>
+<td>Add filename as a output file for this DAG node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_output_macro</span></code>(filename)</td>
+<td>Add a variable (macro) for storing the output files associated with this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_parent</span></code>(node)</td>
+<td>Add a parent to this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_pegasus_profile</span></code>(namespace,&nbsp;key,&nbsp;value)</td>
+<td>Add a Pegasus profile to this job which will be written to the dax as &lt;profile namespace=”NAMESPACE” key=”KEY”&gt;VALUE&lt;/profile&gt; This can be used to add classads to particular jobs in the DAX &#64;param namespace: A valid Pegasus namespace, e.g.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_post_script_arg</span></code>(arg)</td>
+<td>Adds an argument to the post script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_pre_script_arg</span></code>(arg)</td>
+<td>Adds an argument to the pre script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_arg</span></code>(arg[,&nbsp;quote])</td>
+<td>Add a variable (or macro) argument to the condor job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_condor_cmd</span></code>(command,&nbsp;value)</td>
+<td>Add a variable (macro) condor command for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">add_var_opt</span></code>(opt,&nbsp;value[,&nbsp;short])</td>
+<td>Add a variable (macro) option for this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">calibration</span></code>()</td>
+<td>Set the path to the calibration cache file for the given IFO.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">calibration_cache_path</span></code>()</td>
+<td>Determine the path to the correct calibration cache file to use.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">finalize</span></code>()</td>
+<td>The finalize method of a node is called before the node is</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_args</span></code>()</td>
+<td>Return the arguments for this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_calibration</span></code>()</td>
+<td>Return the calibration cache file to be used by the DAG.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_category</span></code>()</td>
+<td>Get the category for this node in the DAG.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_checkpoint_files</span></code>()</td>
+<td>Return a list of checkpoint files for this DAG node and its job.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_cmd_line</span></code>()</td>
+<td>Return the full command line that will be used when this node is run by DAGman.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_cmd_tuple_list</span></code>()</td>
+<td>Return a list of tuples containg the command line arguments</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_data_end</span></code>()</td>
+<td>Get the GPS end time of the data needed by this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_data_start</span></code>()</td>
+<td>Get the GPS start time of the data needed by this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_dax_collapse</span></code>()</td>
+<td>Get the DAX collapse key for this node</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_end</span></code>()</td>
+<td>Get the GPS end time of the node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_grid_start</span></code>()</td>
+<td>Return the grid starter that pegasus will use.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_ifo</span></code>()</td>
+<td>Returns the two letter IFO code for this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_ifo_tag</span></code>()</td>
+<td>Returns the IFO tag string</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_input</span></code>()</td>
+<td>Get the file that will be passed as input.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_input_files</span></code>()</td>
+<td>Return list of input files for this DAG node and its job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_name</span></code>()</td>
+<td>Get the name for this node in the DAG.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_opts</span></code>()</td>
+<td>Return the opts for this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_output</span></code>()</td>
+<td>Get the file that will be passed as output.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_output_files</span></code>()</td>
+<td>Return list of output files for this DAG node and its job.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_pad_data</span></code>()</td>
+<td>Get the GPS start time of the data needed by this node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_pegasus_profile</span></code>()</td>
+<td>Return the pegasus profile dictionary for this node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_post_script</span></code>()</td>
+<td>returns the name of the post script that is executed before the DAG node is</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_post_script_arg</span></code>()</td>
+<td>Returns and array of arguments to the post script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_priority</span></code>()</td>
+<td>Get the priority for this node in the DAG.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_retry</span></code>()</td>
+<td>Return the number of times that this node in the DAG should retry.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_start</span></code>()</td>
+<td>Get the GPS start time of the node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_trig_end</span></code>()</td>
+<td>Get the trig end time of the node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_trig_start</span></code>()</td>
+<td>Get the trig start time of the node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">get_user_tag</span></code>()</td>
+<td>Returns the usertag string</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">get_vds_group</span></code>()</td>
+<td>Returns the VDS group key for this node</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">job</span></code>()</td>
+<td>Return the CondorJob that this node is associated with.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_cache</span></code>(filename)</td>
+<td>Set the LAL frame cache to to use.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_category</span></code>(category)</td>
+<td>Set the category for this node in the DAG.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_data_end</span></code>(time)</td>
+<td>Set the GPS end time of the data needed by this analysis node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_data_start</span></code>(time)</td>
+<td>Set the GPS start time of the data needed by this analysis node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_dax_collapse</span></code>(collapse)</td>
+<td>Set the DAX collapse key for this node</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_end</span></code>(time[,&nbsp;pass_to_command_line])</td>
+<td>Set the GPS end time of the analysis node by setting a –gps-end-time option to the node when it is executed.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_grid_start</span></code>(gridstart)</td>
+<td>Set the grid starter that pegasus will use.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_ifo</span></code>(ifo)</td>
+<td>Set the ifo name to analyze.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_ifo_tag</span></code>(ifo_tag[,&nbsp;pass_to_command_line])</td>
+<td>Set the ifo tag that is passed to the analysis code.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_input</span></code>(filename[,&nbsp;pass_to_command_line])</td>
+<td>Add an input to the node by adding a –input option.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_log_file</span></code>(log)</td>
+<td>Set the Condor log file to be used by this CondorJob.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_name</span></code>(name)</td>
+<td>Set the name for this node in the DAG.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_output</span></code>(filename[,&nbsp;pass_to_command_line])</td>
+<td>Add an output to the node by adding a –output option.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_pad_data</span></code>(pad)</td>
+<td>Set the GPS start time of the data needed by this analysis node.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_post_script</span></code>(script)</td>
+<td>Sets the name of the post script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_pre_script</span></code>(script)</td>
+<td>Sets the name of the pre script that is executed before the DAG node is run.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_priority</span></code>(priority)</td>
+<td>Set the priority for this node in the DAG.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_retry</span></code>(retry)</td>
+<td>Set the number of times that this node in the DAG should retry.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_start</span></code>(time[,&nbsp;pass_to_command_line])</td>
+<td>Set the GPS start time of the analysis node by setting a –gps-start-time option to the node when it is executed.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_trig_end</span></code>(time[,&nbsp;pass_to_command_line])</td>
+<td>Set the trig end time of the analysis node by setting a –trig-end-time option to the node when it is executed.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_trig_start</span></code>(time[,&nbsp;pass_to_command_line])</td>
+<td>Set the trig start time of the analysis node by setting a –trig-start-time option to the node when it is executed.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">set_user_tag</span></code>(usertag[,&nbsp;pass_to_command_line])</td>
+<td>Set the user tag that is passed to the analysis code.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">set_vds_group</span></code>(group)</td>
+<td>Set the name of the VDS group key when generating a DAX</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_category</span></code>(fh)</td>
+<td>Write the DAG entry for this node’s category to the DAG file descriptor.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_input_files</span></code>(fh)</td>
+<td>Write as a comment into the DAG file the list of input files for this DAG node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_job</span></code>(fh)</td>
+<td>Write the DAG entry for this node’s job to the DAG file descriptor.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_output_files</span></code>(fh)</td>
+<td>Write as a comment into the DAG file the list of output files for this DAG node.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_parents</span></code>(fh)</td>
+<td>Write the parent/child relations for this job to the DAG file descriptor.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_post_script</span></code>(fh)</td>
+<td>Write the post script for the job, if there is one &#64;param fh: descriptor of open DAG file.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_pre_script</span></code>(fh)</td>
+<td>Write the pre script for the job, if there is one &#64;param fh: descriptor of open DAG file.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">write_priority</span></code>(fh)</td>
+<td>Write the DAG entry for this node’s priority to the DAG file descriptor.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">write_vars</span></code>(fh)</td>
+<td>Write the variable (macro) options and arguments to the DAG file descriptor.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Scott Coughlin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0+untagged.26.g8de8be3.dirty',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

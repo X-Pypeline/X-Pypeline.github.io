@@ -1,0 +1,17 @@
+XPypeline\.io package
+=====================
+
+Submodules
+----------
+
+.. toctree::
+
+   XPypeline.io.utils
+
+Module contents
+---------------
+
+.. automodule:: XPypeline.io
+    :members:
+    :undoc-members:
+    :show-inheritance:

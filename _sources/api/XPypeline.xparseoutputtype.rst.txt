@@ -1,0 +1,4 @@
+.. automodule:: XPypeline.xparseoutputtype
+    :members:
+    :undoc-members:
+    :show-inheritance:
