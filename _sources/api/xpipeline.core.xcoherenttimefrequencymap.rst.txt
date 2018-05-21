@@ -1,0 +1,4 @@
+.. automodule:: xpipeline.core.xcoherenttimefrequencymap
+    :members:
+    :undoc-members:
+    :show-inheritance:

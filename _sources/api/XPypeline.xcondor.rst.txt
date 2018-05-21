@@ -1,4 +1,0 @@
-.. automodule:: XPypeline.xcondor
-    :members:
-    :undoc-members:
-    :show-inheritance:

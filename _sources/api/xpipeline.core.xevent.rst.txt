@@ -1,0 +1,4 @@
+.. automodule:: xpipeline.core.xevent
+    :members:
+    :undoc-members:
+    :show-inheritance:

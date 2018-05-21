@@ -1,0 +1,4 @@
+.. automodule:: xpipeline.core.xtimeseries
+    :members:
+    :undoc-members:
+    :show-inheritance:

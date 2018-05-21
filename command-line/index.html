@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Running setupJobs on the command line &mdash; XPypeline 0+untagged.26.g8de8be3.dirty documentation</title>
+  <title>Running setupJobs on the command line &mdash; xpipeline 0+untagged.52.g3236362.dirty documentation</title>
   
 
   
@@ -25,27 +25,20 @@
   
 
   
-  
     <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="../_static/X-Pypeline-docs.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="XPypeline 0+untagged.26.g8de8be3.dirty documentation" href="../index.html"/>
-        <link rel="prev" title="Welcome to X-Pypeline’s documentation!" href="../index.html"/> 
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/xpipeline-docs.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="xpipeline an explanation" href="../examples/index.html" />
+    <link rel="prev" title="Welcome to xpipeline’s documentation!" href="../index.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -57,7 +50,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> XPypeline
+            <a href="../index.html" class="icon icon-home"> xpipeline
           
 
           
@@ -67,7 +60,7 @@
             
             
               <div class="version">
-                0+untagged.26.g8de8be3.dirty
+                0+untagged.52.g3236362.dirty
               </div>
             
           
@@ -92,11 +85,12 @@
             
             
               <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Running <code class="docutils literal"><span class="pre">setupJobs</span></code> on the command line</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#basic-instructions">Basic instructions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#detailed-instructions">Detailed instructions</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">xpipeline an explanation</a></li>
 </ul>
 
             
@@ -108,17 +102,18 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">XPypeline</a>
+          <a href="../index.html">xpipeline</a>
         
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -141,7 +136,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Running <code class="docutils literal"><span class="pre">setupJobs</span></code> on the command line</li>
+      <li>Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -161,12 +156,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="running-setupjobs-on-the-command-line">
-<span id="command-line"></span><h1>Running <code class="docutils literal"><span class="pre">setupJobs</span></code> on the command line<a class="headerlink" href="#running-setupjobs-on-the-command-line" title="Permalink to this headline">¶</a></h1>
-<p>As described on the home page, the main interface to the setUpJobs algorithm is the command-line executable <code class="docutils literal"><span class="pre">setUpJobs</span></code>.</p>
+<span id="command-line"></span><h1>Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line<a class="headerlink" href="#running-setupjobs-on-the-command-line" title="Permalink to this headline">¶</a></h1>
+<p>As described on the home page, the main interface to the setUpJobs algorithm is the command-line executable <code class="docutils literal notranslate"><span class="pre">setUpJobs</span></code>.</p>
 <div class="section" id="basic-instructions">
 <h2>Basic instructions<a class="headerlink" href="#basic-instructions" title="Permalink to this headline">¶</a></h2>
-<p>Basic instructions on running <code class="docutils literal"><span class="pre">setUpJobs</span></code> can be gained by looking at the <code class="docutils literal"><span class="pre">--help</span></code> menu:</p>
-<div class="highlight-text"><div class="highlight"><pre><span></span>$ setUpJobs --help
+<p>Basic instructions on running <code class="docutils literal notranslate"><span class="pre">setUpJobs</span></code> can be gained by looking at the <code class="docutils literal notranslate"><span class="pre">--help</span></code> menu:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ setUpJobs --help
 usage: setUpJobs [-h] -s SEARCH_TYPE -p PARAMS_FILE -n GRB_NAME -g
                  TRIGGER_TIME -r RA -d DECL -i DETECTOR [DETECTOR ...]
                  [--FAR FAR] [--FAP FAP] [-e SKY_POS_ERR] [-t GRID_TYPE]
@@ -315,16 +310,16 @@ required named arguments:
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="../examples/index.html" class="btn btn-neutral float-right" title="xpipeline an explanation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="../index.html" class="btn btn-neutral" title="Welcome to X-Pypeline’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="../index.html" class="btn btn-neutral" title="Welcome to xpipeline’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -333,11 +328,11 @@ required named arguments:
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Scott Coughlin.
+        &copy; Copyright 2018, Scott Coughlin.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -355,7 +350,8 @@ required named arguments:
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.26.g8de8be3.dirty',
+            VERSION:'0+untagged.52.g3236362.dirty',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -373,14 +369,11 @@ required named arguments:
     <script type="text/javascript" src="../_static/js/theme.js"></script>
   
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

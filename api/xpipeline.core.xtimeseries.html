@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.52.g3236362.dirty documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/xpipeline-docs.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> xpipeline
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.52.g3236362.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">xpipeline an explanation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">xpipeline</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>&lt;no title&gt;</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/xpipeline.core.xtimeseries.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="module-xpipeline.core.xtimeseries"></span><dl class="class">
+<dt id="xpipeline.core.xtimeseries.XTimeSeries">
+<em class="property">class </em><code class="descclassname">xpipeline.core.xtimeseries.</code><code class="descname">XTimeSeries</code><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">gwpy.timeseries.timeseries.TimeSeriesDict</span></code></p>
+<dl class="method">
+<dt id="xpipeline.core.xtimeseries.XTimeSeries.asd">
+<code class="descname">asd</code><span class="sig-paren">(</span><em>fftlength</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.asd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.asd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the asd of items in this dict.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>fftlength</strong> : <cite>dict</cite>, <cite>float</cite></p>
+<blockquote>
+<div><p>either a <cite>dict</cite> of (channel, <cite>float</cite>) pairs for key-wise
+asd calc, or a single float/int to computer as of all items.</p>
+</div></blockquote>
+<p><strong>**kwargs</strong></p>
+<blockquote class="last">
+<div><p>other keyword arguments to pass to each item’s asd
+method.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="xpipeline.core.xtimeseries.XTimeSeries.retrieve_data">
+<em class="property">classmethod </em><code class="descname">retrieve_data</code><span class="sig-paren">(</span><em>event_time</em>, <em>block_time</em>, <em>channel_names</em>, <em>sample_frequency</em>, <em>frame_types=[]</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.retrieve_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.retrieve_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain data for either on source, off source, or injections.</p>
+<p>This uses the gwpy <cite>TimeSeriesDict.get</cite> method</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>event_time</strong> : (<a href="#id1"><span class="problematic" id="id2">`</span></a>float)</p>
+<blockquote>
+<div><p>trigger time of event to be processing</p>
+</div></blockquote>
+<p><strong>blcok_time</strong> : (<cite>int</cite>)</p>
+<blockquote>
+<div><p>length of data to be processed</p>
+</div></blockquote>
+<p><strong>channel_names (`list`) :</strong></p>
+<blockquote>
+<div><p>required data channels.</p>
+</div></blockquote>
+<p><strong>frame_types</strong> : <cite>str</cite>, optional</p>
+<blockquote>
+<div><p>name of frametype in which this channel is stored, by default
+will search for all required frame types</p>
+</div></blockquote>
+<p><strong>verbose</strong> : <cite>bool</cite>, optional</p>
+<blockquote>
+<div><p>print verbose output about NDS progress.</p>
+</div></blockquote>
+<p><strong>Returns:</strong></p>
+<blockquote class="last">
+<div><p><cite>TimeSeriesDict</cite> :</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.core.xtimeseries.XTimeSeries.spectrogram">
+<code class="descname">spectrogram</code><span class="sig-paren">(</span><em>fftlength</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.spectrogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.spectrogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the specotrograms of items in this dict.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>fftlength</strong> : <cite>dict</cite>, <cite>float</cite></p>
+<blockquote>
+<div><p>either a <cite>dict</cite> of (channel, <cite>float</cite>) pairs for key-wise
+asd calc, or a single float/int to computer as of all items.</p>
+</div></blockquote>
+<p><strong>**kwargs</strong></p>
+<blockquote class="last">
+<div><p>other keyword arguments to pass to each item’s asd
+method.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.core.xtimeseries.XTimeSeries.whiten">
+<code class="descname">whiten</code><span class="sig-paren">(</span><em>asds</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.whiten"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.whiten" title="Permalink to this definition">¶</a></dt>
+<dd><p>White this <cite>XTimeSeries</cite> against its own ASD</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>asds</strong> : <cite>dict</cite></p>
+<blockquote class="last">
+<div><dl class="docutils">
+<dt>a <cite>dict</cite> of (channel, <cite>XFrequencySeries</cite>) pairs for key-wise</dt>
+<dd><p class="first last">whitened of the timeseries</p>
+</dd>
+</dl>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Scott Coughlin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0+untagged.52.g3236362.dirty',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

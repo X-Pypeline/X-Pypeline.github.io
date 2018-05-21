@@ -1,0 +1,17 @@
+xpipeline.skyutils package
+==========================
+
+Submodules
+----------
+
+.. toctree::
+
+   xpipeline.skyutils.skyutils
+
+Module contents
+---------------
+
+.. automodule:: xpipeline.skyutils
+    :members:
+    :undoc-members:
+    :show-inheritance:

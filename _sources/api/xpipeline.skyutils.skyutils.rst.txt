@@ -1,0 +1,4 @@
+.. automodule:: xpipeline.skyutils.skyutils
+    :members:
+    :undoc-members:
+    :show-inheritance:

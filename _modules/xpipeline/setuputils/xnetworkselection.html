@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>xpipeline.setuputils.xnetworkselection &mdash; xpipeline 0+untagged.52.g3236362.dirty documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/xpipeline-docs.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> xpipeline
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.52.g3236362.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">xpipeline an explanation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">xpipeline</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>xpipeline.setuputils.xnetworkselection</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for xpipeline.setuputils.xnetworkselection</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (C) Scott Coughlin (2017)</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of XPypeline.</span>
+<span class="c1">#</span>
+<span class="c1"># GWpy is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># GWpy is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with GWpy.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides the basis for selecting a valid network of detectors to use for an analysis based on some requiremnets for the quality of the on-source data </span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../api/xpipeline.setuputils.xnetworkselection.html#xpipeline.setuputils.xnetworkselection.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">detectorList</span><span class="p">,</span>
+   <span class="n">centerTimesFile</span><span class="p">,</span>
+   <span class="n">timeOffsetsFile</span><span class="p">,</span>
+   <span class="n">cat1_segment_file</span><span class="p">,</span>
+   <span class="n">cat24_segment_file</span><span class="p">,</span>
+   <span class="n">output_file</span><span class="p">,</span>
+   <span class="n">verbosity</span><span class="p">,</span> <span class="n">windowBeginOffset</span><span class="p">,</span> <span class="n">windowEndOffset</span><span class="p">,</span> <span class="n">transientTime</span><span class="p">,</span> <span class="n">windowLength</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      detectors_considered        cell array of ifos to be considered, e.g.,</span>
+<span class="sd">                                  [&#39;H1&#39; &#39;H2&#39; &#39;L1&#39;], size (1 * nIfo).</span>
+<span class="sd">      centerTimes                 vector of segment center times, size (nJobs * 1).</span>
+<span class="sd">      timeOffsets                 array of segment time offsets, </span>
+<span class="sd">                                  size(nJobs * nIfo).</span>
+<span class="sd">      cat1_seglist                structure containing cat1 DQ segments (i.e., </span>
+<span class="sd">                                  livetimes). </span>
+<span class="sd">                                  cat1_seglist(nIfo).gpsStart()</span>
+<span class="sd">                                  cat1_seglist(nIfo).duration()</span>
+<span class="sd">      cat2_seglist                Similar to cat1_seglist but containing cat2 </span>
+<span class="sd">                                  veto segments (deadtime).</span>
+<span class="sd">      verbosity                   string used to control verbosity of output,</span>
+<span class="sd">                                  either &#39;verbose&#39; or &#39;quiet&#39;. </span>
+<span class="sd">      output_file                  String. Name of file to which we will write</span>
+<span class="sd">                                   the detector networks. </span>
+<span class="sd">      windowBeginOffset            String. Offset [sec] between start of on-source</span>
+<span class="sd">                                   window and trigger time, e.g., -600. </span>
+<span class="sd">      windowEndOffset              String. Offset [sec] between end of on-source </span>
+<span class="sd">                                   window and trigger time, e.g., 60.</span>
+<span class="sd">      transientTime                String. Length of time [sec] discarded at </span>
+<span class="sd">                                   beginning and end of each analysis block, e.g., 4.</span>
+<span class="sd">      windowLength                 String. 2*transientTime+jobsPerWindow*(blockTime-2*transientTime)</span>
+
+<span class="sd">     XNETWORKSELECTION is a wrapper function for calling XAPPLYNETWORKTESTS.</span>
+<span class="sd">     It is intended to be compiled, allowing it to be called from the command</span>
+<span class="sd">     line or from python scripts such as grb.py.</span>
+
+<span class="sd">     XNETWORKSELECTION takes in lists of event times and on-source windows,</span>
+<span class="sd">     plus lists of science mode livetime and veto deadtime segment files. It  </span>
+<span class="sd">     uses XAPPLYNETWORKTESTS to determine which detectors satisfy the data</span>
+<span class="sd">     quality criteria (defined in XAPPLYNETWORKTESTS) to be used for the</span>
+<span class="sd">     analysis of each event. The list of acceptable detectors for each event</span>
+<span class="sd">     is written to the file specified by the input argument output_file, with</span>
+<span class="sd">     one line per event, of the form &#39;H1L1V1&#39;, or &#39;H1H2&#39;, etc. </span>
+
+
+<span class="sd">      Our criteria for including an ifo in our network is as follows:w</span>
+<span class="sd">      i) No deadtime incurred by category 1 flags in an interval [-128,+128]s </span>
+<span class="sd">         about the GRB trigger time. </span>
+<span class="sd">         X-pipeline requires 256s in order to estimate the PSD, category 1 </span>
+<span class="sd">         flags raised within these 256s will lead to inaccurate/incorrect PSD </span>
+<span class="sd">         estimation.</span>
+<span class="sd">     ii) Less than 9s (5#) deadtime incurred by category 2 flags in the onsource, </span>
+<span class="sd">         i.e., an interval [-120,+60]s about the GRB trigger time. </span>
+<span class="sd">         We tune our glitch rejection cuts using calculation of the 90# UL on </span>
+<span class="sd">         hrss amplitude. If we lose much more than 5# deadtime in our (dummy) </span>
+<span class="sd">         onsource we may not be able to accurately estimate the hrss amplitude </span>
+<span class="sd">         leading to 90# detection efficiency.</span>
+<span class="sd">    iii) No deadtime incurred by category 2 flags in an interval [-5,+1]s about </span>
+<span class="sd">         the GRB trigger time. Many GRB models predict similar arrival times of </span>
+<span class="sd">         EM and GW emission from a GRB. We therefore require that inclusion of </span>
+<span class="sd">         an ifo does not kill times close to the GRB trigger time.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># ---- Number of jobs equals number of centerTimes pass_inited in.</span>
+    <span class="n">nJobs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">centerTimes</span><span class="p">)</span>
+
+    <span class="c1"># ---- Initially assume all ifos FAIL our criteria for all of</span>
+    <span class="c1">#      the jobs.</span>
+    <span class="c1"># ---- Note that unlike other pass_init flags this has one element</span>
+    <span class="c1">#      per job (rather than one per trigger etc.).</span>
+    <span class="n">pass_init</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nJobs</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">detectorList</span><span class="p">))</span>
+
+    <span class="c1">###############################################################################</span>
+    <span class="c1">#                             Apply network test.</span>
+    <span class="c1">###############################################################################</span>
+
+    <span class="c1"># ---- Loop over jobs, each job represents a choice</span>
+    <span class="c1">#      of segment centerTimes and timeOffsets.</span>
+    <span class="k">for</span> <span class="n">iJob</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">nJobs</span><span class="p">):</span>
+
+       <span class="c1"># ---- Loop over ifos we are considering.</span>
+       <span class="k">for</span> <span class="n">iIfo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">detectorList</span><span class="p">)):</span>
+
+          <span class="c1">#########################################################################</span>
+          <span class="c1">#                     Unslide centerTimes.</span>
+          <span class="c1">#########################################################################</span>
+
+          <span class="c1"># ---- Before applying vetoSeg cuts we must unslide the triggers.</span>
+          <span class="n">unslidCenterTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">]</span> <span class="o">=</span> <span class="n">centerTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">]</span> <span class="o">+</span> <span class="n">timeOffsets</span><span class="p">[</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">]</span>
+
+          <span class="c1">#########################################################################</span>
+          <span class="c1">#  Check that we have  cat1 flags raised in [-128,+128]s interval about </span>
+          <span class="c1">#                         unslid centerTimes.</span>
+          <span class="c1">#########################################################################</span>
+
+          <span class="c1"># ---- Define our [-128,+128]s interval about the (unslid) centerTimes.</span>
+          <span class="n">goodBefore</span> <span class="o">=</span> <span class="o">-</span><span class="n">windowBeginOffset</span><span class="o">+</span><span class="n">transientTime</span>
+          <span class="n">duration</span>   <span class="o">=</span> <span class="n">windowLength</span>
+
+          <span class="c1"># ---- Find intersections between cat1 segments and the [-128,+128]s </span>
+          <span class="c1">#      interval about unslid centerTimes.</span>
+          <span class="c1"># ---- Passing the shorter list to Coincidence2 first</span>
+          <span class="c1">#      speeds it up. </span>
+
+          <span class="n">coincOut</span><span class="o">=</span><span class="n">Coincidence2</span><span class="p">(</span><span class="n">unslidCenterTimes</span><span class="p">(</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">)</span><span class="o">-</span><span class="n">goodBefore</span><span class="p">,</span><span class="n">duration</span><span class="p">,</span>
+             <span class="n">cat1_seglist</span><span class="p">(</span><span class="n">iIfo</span><span class="p">)</span><span class="o">.</span><span class="n">gpsStart</span><span class="p">,</span>
+             <span class="n">cat1_seglist</span><span class="p">(</span><span class="n">iIfo</span><span class="p">)</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span>
+
+          <span class="c1"># ---- We require an info to have cat1 flags (i.e., be in science mode)</span>
+          <span class="c1">#      for the full duration of the [-128,+128]s.</span>
+          <span class="k">if</span> <span class="o">~</span><span class="n">isempty</span><span class="p">(</span><span class="n">coincOut</span><span class="p">):</span>
+             <span class="c1"># ---- If our interval is completely contained within a cat1 segment</span>
+             <span class="c1">#      we should only have one intersection and it should have the </span>
+             <span class="c1">#      duration of our interval.</span>
+             <span class="k">if</span> <span class="p">(</span><span class="n">size</span><span class="p">(</span><span class="n">coincOut</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">coincOut</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="n">duration</span><span class="p">):</span>
+                <span class="n">pass_init</span><span class="p">[</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="n">verboseFlag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+                   <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;#s has good cat 1 DQ for job #d </span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">detectors_considered</span><span class="p">[</span><span class="n">iIfo</span><span class="p">],</span> <span class="n">iJob</span> <span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+
+          <span class="c1">#########################################################################</span>
+          <span class="c1">#    Check for cat2 flags raised in [-5,+1]s interval about unslid </span>
+          <span class="c1">#                        centerTimes.</span>
+          <span class="c1">#########################################################################</span>
+
+          <span class="c1"># ---- Define our [-5,+1]s interval about the (unslid) centerTimes.</span>
+          <span class="n">goodBefore</span> <span class="o">=</span> <span class="mi">5</span>
+          <span class="n">duration</span>   <span class="o">=</span> <span class="mi">6</span>
+
+          <span class="c1"># ---- Find intersections between cat2 segments and the [-5,+1]s </span>
+          <span class="c1">#      interval about unslid centerTimes.</span>
+          <span class="c1"># ---- Passing the shorter list to Coincidence2 first</span>
+          <span class="c1">#      speeds it up. </span>
+          <span class="n">coincOut</span><span class="o">=</span><span class="n">Coincidence2</span><span class="p">(</span><span class="n">unslidCenterTimes</span><span class="p">(</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">)</span><span class="o">-</span><span class="n">goodBefore</span><span class="p">,</span><span class="n">duration</span><span class="p">,</span>
+             <span class="n">cat2_seglist</span><span class="p">(</span><span class="n">iIfo</span><span class="p">)</span><span class="o">.</span><span class="n">gpsStart</span><span class="p">,</span>
+             <span class="n">cat2_seglist</span><span class="p">(</span><span class="n">iIfo</span><span class="p">)</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span>
+
+          <span class="c1"># ---- If there were any coincidences between our interval and the</span>
+          <span class="c1">#      vetoSegs we must discard this job. We don&#39;t count</span>
+          <span class="c1">#      coincidences with zero duration (edge overlap)</span>
+          <span class="k">if</span> <span class="ow">not</span> <span class="n">isempty</span><span class="p">(</span><span class="n">coincOut</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="n">coincOut</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">):</span>
+             <span class="c1"># ---- Setting pass_init for this job to zero.</span>
+             <span class="n">pass_init</span><span class="p">[</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+             <span class="k">if</span> <span class="p">(</span><span class="n">verboseFlag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Time killed in [-#f,+#f]s interval about center time </span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">goodBefore</span><span class="p">,</span><span class="n">duration</span><span class="o">-</span><span class="n">goodBefore</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;startTime     stopTime</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------------------------</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">iCoinc</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">coincOut</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])):</span>
+                   <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;#9.2f  #9.2f </span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                      <span class="n">coincOut</span><span class="p">(</span><span class="n">iCoinc</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                      <span class="n">coincOut</span><span class="p">(</span><span class="n">iCoinc</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">coincOut</span><span class="p">(</span><span class="n">iCoinc</span><span class="p">,</span><span class="mi">2</span><span class="p">)),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Setting pass_init to zero </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+
+          <span class="c1">#########################################################################</span>
+          <span class="c1">#     Find deadtime in [-120,+60]s interval about unslid centerTime. </span>
+          <span class="c1">#########################################################################</span>
+
+          <span class="c1"># ---- Define our [-120,+60]s interval about the (unslid) centerTimes.</span>
+          <span class="n">goodBefore</span> <span class="o">=</span> <span class="o">-</span><span class="n">windowBeginOffset</span>
+          <span class="n">duration</span>   <span class="o">=</span> <span class="n">windowEndOffset</span><span class="o">-</span><span class="n">windowBeginOffset</span>
+
+          <span class="c1"># ---- Allowed Threshold on deadtime in on source window is 5#</span>
+          <span class="n">killedThresh</span> <span class="o">=</span> <span class="mf">0.05</span><span class="o">*</span><span class="n">duration</span>
+
+          <span class="c1"># ---- Find intersections between cat2 veto segs and our [-120,+60]s</span>
+          <span class="c1">#      on-source region.</span>
+          <span class="c1"># ---- Passing the shorter list to Coincidence2 first</span>
+          <span class="c1">#      speeds it up </span>
+          <span class="n">coincOut</span><span class="o">=</span><span class="n">Coincidence2</span><span class="p">(</span><span class="n">unslidCenterTimes</span><span class="p">(</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">)</span><span class="o">-</span><span class="n">goodBefore</span><span class="p">,</span><span class="n">duration</span><span class="p">,</span>
+             <span class="n">cat2_seglist</span><span class="p">(</span><span class="n">iIfo</span><span class="p">)</span><span class="o">.</span><span class="n">gpsStart</span><span class="p">,</span>
+             <span class="n">cat2_seglist</span><span class="p">(</span><span class="n">iIfo</span><span class="p">)</span><span class="o">.</span><span class="n">duration</span><span class="p">)</span>
+
+          <span class="c1"># ---- Record times killed by segments. </span>
+          <span class="k">if</span> <span class="n">isempty</span><span class="p">(</span><span class="n">coincOut</span><span class="p">):</span>
+             <span class="c1">#killedTimes[iJob,iIfo] = [0,0]</span>
+             <span class="c1"># ---- No times killed by cat2 veto segments.</span>
+             <span class="n">liveTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">unslidCenterTimes</span><span class="p">(</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">)</span><span class="o">-</span><span class="n">goodBefore</span><span class="p">,</span><span class="n">duration</span><span class="p">]</span>
+          <span class="k">else</span><span class="p">:</span>
+             <span class="c1">#killedTimes[iJob,iIfo] = [coincOut(:,1),coincOut(:,2)]</span>
+             <span class="c1"># ---- Some times killed by cat2 veto segments.</span>
+             <span class="c1">#      If any one ifo has deadtime &gt;= killedThresh</span>
+             <span class="c1">#      we will discard it straight away.</span>
+             <span class="c1"># ---- Sum up duration of intersections to find deadtime.</span>
+             <span class="n">totDeadTime_cat2</span><span class="p">[</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">coincOut</span><span class="p">[:,</span><span class="mi">2</span><span class="p">])</span>
+
+             <span class="k">if</span> <span class="n">totDeadTime_cat2</span><span class="p">[</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">killedThresh</span><span class="p">:</span>
+                <span class="n">pass_init</span><span class="p">[</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+             <span class="n">liveTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">]</span> <span class="o">=</span> <span class="n">ComplementSegmentList</span><span class="p">(</span><span class="n">coincOut</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">coincOut</span><span class="p">[:,</span><span class="mi">2</span><span class="p">],</span>
+                <span class="n">unslidCenterTimes</span><span class="p">(</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">)</span><span class="o">-</span><span class="n">goodBefore</span><span class="p">,</span>
+                <span class="n">unslidCenterTimes</span><span class="p">(</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">)</span><span class="o">-</span><span class="n">goodBefore</span><span class="o">+</span><span class="n">duration</span><span class="p">)</span>
+
+          <span class="c1"># ---- Resliding liveTimes in order to measure how much of</span>
+          <span class="c1">#      deadtime in our interval.</span>
+          <span class="c1">#      To do this we must SUBTRACT timeOffsets.</span>
+          <span class="n">reslidLiveTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">liveTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">][:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span>
+             <span class="n">timeOffsets</span><span class="p">(</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">),</span>
+             <span class="n">liveTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">][:,</span><span class="mi">2</span><span class="p">]]</span>
+
+
+       <span class="c1"># ---- For current job, find intersection of reslid liveTimes from all ifos</span>
+       <span class="c1">#      that are still in our network.</span>
+
+       <span class="n">intersectReslidLiveTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">Inf</span><span class="p">]</span>
+       <span class="k">for</span> <span class="n">iIfo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">detectors_considered</span><span class="p">)):</span>
+          <span class="c1"># ---- We only care about the ifo&#39;s livetime if it is still in</span>
+          <span class="c1">#      our network. </span>
+          <span class="k">if</span> <span class="n">pass_init</span><span class="p">(</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">):</span>
+             <span class="n">coincOut</span> <span class="o">=</span> <span class="n">Coincidence2</span><span class="p">(</span><span class="n">intersectReslidLiveTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">][:,</span><span class="mi">1</span><span class="p">],</span>
+                                     <span class="n">intersectReslidLiveTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">][:,</span><span class="mi">2</span><span class="p">],</span>
+                                     <span class="n">reslidLiveTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">][:,</span><span class="mi">1</span><span class="p">],</span>
+                                     <span class="n">reslidLiveTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">][:,</span><span class="mi">2</span><span class="p">])</span>
+
+             <span class="k">if</span> <span class="n">isempty</span><span class="p">(</span><span class="n">coincOut</span><span class="p">):</span>
+                <span class="n">intersectReslidLiveTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+             <span class="k">else</span><span class="p">:</span>
+                <span class="n">intersectReslidLiveTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">coincOut</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">coincOut</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]]</span>
+
+
+       <span class="c1"># ---- For current job, find time killed by cat2 veto flags.</span>
+       <span class="n">finalKilledTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">]</span> <span class="o">=</span> <span class="n">ComplementSegmentList</span><span class="p">(</span>
+          <span class="n">intersectReslidLiveTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">][:,</span><span class="mi">1</span><span class="p">],</span>
+          <span class="n">intersectReslidLiveTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">][:,</span><span class="mi">2</span><span class="p">],</span>
+          <span class="n">centerTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">]</span><span class="o">-</span><span class="n">goodBefore</span><span class="p">,</span><span class="n">centerTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">]</span><span class="o">-</span><span class="n">goodBefore</span><span class="o">+</span><span class="n">duration</span><span class="p">)</span>
+       <span class="n">deadtime</span><span class="p">[</span><span class="n">iJob</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">finalKilledTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">][:,</span><span class="mi">2</span><span class="p">])</span>
+
+       <span class="c1">############################################################################</span>
+       <span class="c1">#         Discard jobs with &gt;=9s deadtime in [-120,+60]s interval </span>
+       <span class="c1">#                     about centerTime. </span>
+       <span class="c1">############################################################################</span>
+
+       <span class="k">if</span> <span class="p">(</span><span class="n">verboseFlag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+          <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Total time killed in [&#39;</span> <span class="o">+</span>  <span class="n">num2str</span><span class="p">(</span><span class="n">windowBeginOffset</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;,&#39;</span> <span class="o">+</span> <span class="n">num2str</span><span class="p">(</span><span class="n">windowEndOffset</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;]s interval about centre time: #9.2f </span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">deadtime</span><span class="p">(</span><span class="n">iJob</span><span class="p">)),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+          <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;startTime     stopTime</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+          <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------------------------</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+
+          <span class="k">for</span> <span class="n">iCoinc</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">finalKilledTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">][:,</span><span class="mi">1</span><span class="p">])):</span>
+             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;#9.2f  #9.2f </span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">finalKilledTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">][</span><span class="n">iCoinc</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">finalKilledTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">][</span><span class="n">iCoinc</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span>
+                <span class="n">finalKilledTimes</span><span class="p">[</span><span class="n">iJob</span><span class="p">][</span><span class="n">iCoinc</span><span class="p">,</span><span class="mi">2</span><span class="p">]),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+
+       <span class="c1"># ---- Check total duration of killed times</span>
+       <span class="k">if</span> <span class="n">deadtime</span><span class="p">(</span><span class="n">iJob</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">killedThresh</span><span class="p">:</span>
+
+          <span class="n">warning</span><span class="p">([</span><span class="s1">&#39;Killing network due to cat2 flags in on-source. &#39;</span>
+             <span class="s1">&#39;We should investigate this network further&#39;</span><span class="p">])</span>
+
+          <span class="n">networkCell</span><span class="p">[</span><span class="n">iJob</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">]</span>
+
+          <span class="k">for</span> <span class="n">iIfo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">detectors_considered</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">pass_init</span><span class="p">(</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">):</span>
+              <span class="n">networkCell</span><span class="p">[</span><span class="n">iJob</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">networkCell</span><span class="p">[</span><span class="n">iJob</span><span class="p">],</span> <span class="n">detectors_considered</span><span class="p">[</span><span class="n">iIfo</span><span class="p">]]</span>
+            <span class="n">pass_init</span><span class="p">[</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+
+          <span class="k">if</span> <span class="p">(</span><span class="n">verboseFlag</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;More than #ds killed, setting pass_init to zero </span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">fromat</span><span class="p">(</span><span class="n">killedThresh</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+       <span class="k">else</span><span class="p">:</span>
+          <span class="n">networkCell</span><span class="p">[</span><span class="n">iJob</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+       <span class="c1">#############################################################################</span>
+       <span class="c1">#                     Construct network cell array.</span>
+       <span class="c1">#############################################################################</span>
+
+       <span class="c1"># ---- Loop over ifos we are considering.</span>
+       <span class="k">for</span> <span class="n">iIfo</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">detectors_considered</span><span class="p">)):</span>
+          <span class="k">if</span> <span class="n">pass_init</span><span class="p">[</span><span class="n">iJob</span><span class="p">,</span><span class="n">iIfo</span><span class="p">]:</span>
+             <span class="n">networkCell</span><span class="p">[</span><span class="n">iJob</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">networkCell</span><span class="p">[</span><span class="n">iJob</span><span class="p">],</span> <span class="n">detectors_considered</span><span class="p">[</span><span class="n">iIfo</span><span class="p">]]</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Scott Coughlin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0+untagged.52.g3236362.dirty',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

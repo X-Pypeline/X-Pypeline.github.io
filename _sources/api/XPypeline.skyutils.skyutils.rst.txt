@@ -1,4 +1,0 @@
-.. automodule:: XPypeline.skyutils.skyutils
-    :members:
-    :undoc-members:
-    :show-inheritance:

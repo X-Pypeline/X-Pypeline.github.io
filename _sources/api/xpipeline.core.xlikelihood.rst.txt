@@ -1,0 +1,4 @@
+.. automodule:: xpipeline.core.xlikelihood
+    :members:
+    :undoc-members:
+    :show-inheritance:

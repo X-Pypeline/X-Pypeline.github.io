@@ -1,0 +1,284 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>xpipeline.core.xtimefrequencymap &mdash; xpipeline 0+untagged.52.g3236362.dirty documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/xpipeline-docs.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> xpipeline
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.52.g3236362.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">xpipeline an explanation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">xpipeline</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>xpipeline.core.xtimefrequencymap</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for xpipeline.core.xtimefrequencymap</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1"># ---- Import standard modules to the python path.</span>
+<span class="kn">from</span> <span class="nn">gwpy.spectrogram</span> <span class="k">import</span> <span class="n">Spectrogram</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="XTimeFrequencyMapDict"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict">[docs]</a><span class="k">class</span> <span class="nc">XTimeFrequencyMapDict</span><span class="p">(</span><span class="n">OrderedDict</span><span class="p">):</span>
+<div class="viewcode-block" id="XTimeFrequencyMapDict.dosomething"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.dosomething">[docs]</a>    <span class="k">def</span> <span class="nf">dosomething</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span></div></div>
+
+
+<div class="viewcode-block" id="XTimeFrequencyMap"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap">[docs]</a><span class="k">class</span> <span class="nc">XTimeFrequencyMap</span><span class="p">(</span><span class="n">Spectrogram</span><span class="p">):</span>
+<div class="viewcode-block" id="XTimeFrequencyMap.find_significant_pixels"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.find_significant_pixels">[docs]</a>    <span class="k">def</span> <span class="nf">find_significant_pixels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="o">=</span><span class="mi">99</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtain the time-frequency indicies of the loudest pixels</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            blackpixel_percentile : `int`</span>
+<span class="sd">                what 2D percentile value we will use as the threshold</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">energy_threshold</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="p">,</span>
+                                          <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;midpoint&#39;</span><span class="p">)</span>
+        <span class="n">pixel_time</span><span class="p">,</span> <span class="n">pixel_freq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="n">energy_threshold</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pixel_time</span><span class="p">,</span> <span class="n">pixel_freq</span></div>
+
+
+<div class="viewcode-block" id="XTimeFrequencyMap.phaseshift"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.phaseshift">[docs]</a>    <span class="k">def</span> <span class="nf">phaseshift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Phase shift this `spectrogram` by ``delta``</span>
+
+<span class="sd">        This modifies the spectrogram in-place.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        delta : `float`, `~astropy.units.Quantity`, `str`</span>
+<span class="sd">            The amount by which to shift (in seconds if `float`), give</span>
+<span class="sd">            a negative value to shift backwards in time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sqrt_of_neg_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">))</span>
+        <span class="n">frequency_shift</span> <span class="o">=</span> <span class="n">residual_time_shift</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">to_value</span><span class="p">())</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">*</span> <span class="n">frequency_shift</span></div>
+
+
+<div class="viewcode-block" id="XTimeFrequencyMap.circular_time_slide"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.circular_time_slide">[docs]</a>    <span class="k">def</span> <span class="nf">circular_time_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slide</span><span class="p">,</span> <span class="n">sample_frequency</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Phase shift this `spectrogram` by ``delta``</span>
+
+<span class="sd">        This modifies the spectrogram in-place.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        delta : `float`, `~astropy.units.Quantity`, `str`</span>
+<span class="sd">            The amount by which to shift (in seconds if `float`), give</span>
+<span class="sd">            a negative value to shift backwards in time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">offsetlength</span> <span class="o">=</span> <span class="n">seconds_to_samples</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">sample_frequency</span><span class="p">)</span>
+        <span class="n">ntimepixelshifted</span> <span class="o">=</span> <span class="n">slide</span> <span class="o">*</span> <span class="n">sample_frequency</span><span class="o">/</span><span class="n">offsetlength</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">ntimepixelshifted</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="XTimeFrequencyMap.to_dominant_polarization_frame"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.to_dominant_polarization_frame">[docs]</a>    <span class="k">def</span> <span class="nf">to_dominant_polarization_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dpf_asd</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">XTimeFrequencyMapDPF</span><span class="p">(</span><span class="bp">self</span> <span class="o">*</span> <span class="n">dpf_asd</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="residual_time_shift"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.residual_time_shift">[docs]</a><span class="k">def</span> <span class="nf">residual_time_shift</span><span class="p">(</span><span class="n">seconds</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">):</span>
+    <span class="c1"># define sqrt of -1</span>
+    <span class="n">sqrt_of_neg_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">))</span>
+    <span class="n">residual_time_shift_phases</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">sqrt_of_neg_1</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> \
+        <span class="n">frequencies</span> <span class="o">*</span> <span class="n">seconds</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">residual_time_shift_phases</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Scott Coughlin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0+untagged.52.g3236362.dirty',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,643 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>xpipeline.skyutils.skyutils &mdash; xpipeline 0+untagged.52.g3236362.dirty documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/xpipeline-docs.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> xpipeline
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.52.g3236362.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">xpipeline an explanation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">xpipeline</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>xpipeline.skyutils.skyutils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for xpipeline.skyutils.skyutils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (C) Scott Coughlin (2017)</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of XPypeline.</span>
+<span class="c1">#</span>
+<span class="c1"># GWpy is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># GWpy is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with GWpy.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;This module converts ra to dec and saves to a file if supplied</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">lal</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="radectoearth"><a class="viewcode-back" href="../../../api/xpipeline.skyutils.skyutils.html#xpipeline.skyutils.skyutils.radectoearth">[docs]</a><span class="k">def</span> <span class="nf">radectoearth</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">gps</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="n">gmst</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">lal</span><span class="o">.</span><span class="n">GreenwichMeanSiderealTime</span><span class="p">(</span><span class="n">gps</span><span class="p">),</span> <span class="mi">2</span><span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>  <span class="o">*</span> <span class="mi">86400</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="n">gmst_deg</span> <span class="o">=</span> <span class="n">gmst</span> <span class="o">/</span> <span class="mi">86400</span> <span class="o">*</span> <span class="mi">360</span>
+    <span class="c1"># ---- Compute Earth-based coordinates of targeted sky location, in degrees.</span>
+    <span class="n">phi_deg</span> <span class="o">=</span> <span class="n">ra</span> <span class="o">-</span> <span class="n">gmst_deg</span>
+    <span class="n">theta_deg</span>  <span class="o">=</span> <span class="mi">90</span> <span class="o">-</span> <span class="n">dec</span>
+    <span class="c1"># ---- Convert to radians.</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">phi_deg</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">360</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">phi</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">theta_deg</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">360</span>
+    <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span></div>
+
+
+<div class="viewcode-block" id="xmakeskygrid"><a class="viewcode-back" href="../../../api/xpipeline.skyutils.skyutils.html#xpipeline.skyutils.skyutils.xmakeskygrid">[docs]</a><span class="k">def</span> <span class="nf">xmakeskygrid</span><span class="p">(</span><span class="n">ra_ctr_deg</span><span class="p">,</span> <span class="n">dec_ctr_deg</span><span class="p">,</span> <span class="n">gps</span><span class="p">,</span> 
+                 <span class="n">sigma_deg</span><span class="p">,</span> <span class="n">nSigma</span><span class="p">,</span> <span class="n">sites</span><span class="p">,</span> <span class="n">delay_tol</span><span class="p">,</span> <span class="n">outputfile</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gridtype</span><span class="o">=</span><span class="s1">&#39;circular&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">return</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    # XMAKESKYGRID - tile the sky to cover circular error boxes</span>
+<span class="sd">    #</span>
+<span class="sd">    # XMAKESKYGRID - Given a set of estimated sky locations and</span>
+<span class="sd">    # common error in sky location measurement, generate a list of sky</span>
+<span class="sd">    # locations which we should search over to keep time-delay errors below a</span>
+<span class="sd">    # given threshold for the specified network.</span>
+<span class="sd">    #</span>
+<span class="sd">    # usage:</span>
+<span class="sd">    #</span>
+<span class="sd">    # [ra_search_deg,dec_search_deg,probabilities,gridarea] = ...</span>
+<span class="sd">    #     xmakeskygrid(ra_ctr_deg,dec_ctr_deg,gps,sigma_deg, ...</span>
+<span class="sd">    #     nSigma,sites,delay_tol,outputfile,gridtype,verbose)</span>
+<span class="sd">    #</span>
+<span class="sd">    #  ra_ctr_deg        Tilde-delimited string. Right ascension of centre of </span>
+<span class="sd">    #                    error circles [deg], e.g., &#39;178.1~172.3&#39;.</span>
+<span class="sd">    #  dec_ctr_deg       Tilde-delimited string. Declination of centre of</span>
+<span class="sd">    #                    error circles [deg], e.g., &#39;-12.0~-22.2&#39;.</span>
+<span class="sd">    #  gps               String. GPS time of trigger.</span>
+<span class="sd">    #  sigma_deg         Tilde-delimited string. 1-sigma size of error circles</span>
+<span class="sd">    #                    [deg]. This is</span>
+<span class="sd">    #                    multiplied by nSigma (see below) to define a radius</span>
+<span class="sd">    #                    around each central point to be covered by the grid.</span>
+<span class="sd">    #                    A single value may be supplied, in which case this</span>
+<span class="sd">    #                    common value is used for all error circles.</span>
+<span class="sd">    #  nSigma            String. Determines region about each central position</span>
+<span class="sd">    #                    to be covered by grid.</span>
+<span class="sd">    #  sites             String. Tilde-separated list of detector sites,</span>
+<span class="sd">    #                    e.g., &#39;H~L~V&#39;.</span>
+<span class="sd">    #  delay_tol         String. Maximum error in time delay [sec] allowed</span>
+<span class="sd">    #                    between any sky position in an error box and the</span>
+<span class="sd">    #                    closest grid point. </span>
+<span class="sd">    #  outputfile        String, optional.  Name of output file to which to</span>
+<span class="sd">    #                    write grid. The file will contain four columns:</span>
+<span class="sd">    #                    1. theta   Polar angle [rad] in the range [0, pi] with</span>
+<span class="sd">    #                       0 at the North Pole/ z axis.</span>
+<span class="sd">    #                    2. phi     Azimuthal angle [rad]in the range [-pi, pi) </span>
+<span class="sd">    #                       with 0 at Greenwich / x axis.</span>
+<span class="sd">    #                    3. pOmega  A priori probability associated with each</span>
+<span class="sd">    #                       grid point.</span>
+<span class="sd">    #                    4. dOmega  Solid angle associated with each grid point.</span>
+<span class="sd">    #                    This follows the format of the skyPositions array as</span>
+<span class="sd">    #                    described in sinusoidalMap.m. Specify &#39;None&#39; for no</span>
+<span class="sd">    #                    file to be produced.</span>
+<span class="sd">    #  gridtype          String, optional.  Type of grid.  Recognized values:</span>
+<span class="sd">    #                      &#39;circular&#39;       Grid made of concentric rings centered</span>
+<span class="sd">    #                        on each input sky position, with redundant points</span>
+<span class="sd">    #                        discarded.  Made using SINUSOIDALMAP.</span>
+<span class="sd">    #                      &#39;healpix&#39;    Single uniform all-sky grid, with</span>
+<span class="sd">    #                        points outside all error circles discarded.  Made</span>
+<span class="sd">    #                        using HEALPIX.</span>
+<span class="sd">    #  verbose           String, optional.  Use &#39;1&#39; for verbose output.</span>
+<span class="sd">    #                    Default &#39;0&#39;.</span>
+<span class="sd">    #</span>
+<span class="sd">    #  ra_search_deg     Vector. Right ascensions [deg] of search grid points.   </span>
+<span class="sd">    #  dec_search_deg    Vector. Declinations [deg] of search grid points.</span>
+<span class="sd">    #  probabilities     Vector. Fisher probability of each sky position. For</span>
+<span class="sd">    #                    1-sigma errors above 360 degrees uniform probability</span>
+<span class="sd">    #                    is used.</span>
+<span class="sd">    #  gridarea          Vector. Area [steradians] of each grid point.</span>
+<span class="sd">    #</span>
+<span class="sd">    #  The probability for each grid point is the sum of the Fisher</span>
+<span class="sd">    #  probabilities for that grid point with each of the input central sky</span>
+<span class="sd">    #  positions. </span>
+<span class="sd">    #</span>
+<span class="sd">    # $Id: xmakeskygrid.m 4364 2014-07-19 07:20:42Z iain.dorrington@LIGO.ORG $</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    #                              Preliminaries.</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    # ---- Convert input variables to appropriate type.</span>
+<span class="sd">    sites = sites.split(&#39;~&#39;)</span>
+
+<span class="sd">    # ---- Length checks.</span>
+<span class="sd">    if len(ra_ctr_deg) != len(dec_ctr_deg):</span>
+<span class="sd">        raise ValueError(&#39;Right ascension and declination must have same length.&#39;)</span>
+
+<span class="sd">    if len(sigma_deg) == 1:</span>
+<span class="sd">        sigma_deg = sigma_deg * np.ones(len(ra_ctr_deg))</span>
+
+<span class="sd">    elif len(sigma_deg) ~= len(ra_ctr_deg):</span>
+<span class="sd">        raise ValueError(&#39;Sigma must be scalar or same length as right ascension, declination.&#39;)</span>
+
+<span class="sd">    # ---- Speed of light (in m/s).</span>
+<span class="sd">    speedOfLight = 299792458</span>
+<span class="sd">    # ---- Calc radius of sky area we will search for GRBs.</span>
+<span class="sd">    skyPosError_deg = sigma_deg * nSigma</span>
+<span class="sd">    # ---- Radius of sky area in radians.</span>
+<span class="sd">    skyPosError_rad = skyPosError_deg * pi/180</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    #          Get cartesian Earth-based coordinates (m) of detector</span>
+<span class="sd">    #                       vertex for each site.</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    nSites = len(sites)</span>
+<span class="sd">    for iSite = range(nSites):</span>
+<span class="sd">        det = LoadDetectorData(sites{iSite}(1))</span>
+<span class="sd">        siteVertex(iSite,:) = det.V&#39;</span>
+
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    #    If only one site is present, use only one point for the error box.</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    if nSites == 1</span>
+<span class="sd">        # ---- Use first input sky location.</span>
+<span class="sd">        ra_ctr_deg = ra_ctr_deg(1)</span>
+<span class="sd">        dec_ctr_deg = dec_ctr_deg(1)</span>
+<span class="sd">        # ---- Command-line output.</span>
+<span class="sd">        ra_search_deg = ra_ctr_deg</span>
+<span class="sd">        dec_search_deg = dec_ctr_deg</span>
+<span class="sd">        probabilities = 1</span>
+<span class="sd">        gridarea = [] #-- dummy value that can&#39;t be mistaken for physical number</span>
+<span class="sd">        # ---- File output.</span>
+<span class="sd">        # ---- Convert trigger ra,dec to phi,theta.</span>
+<span class="sd">        [phi_ctr_rad, theta_ctr_rad] = radectoearth(ra_ctr_deg,dec_ctr_deg,gps)</span>
+<span class="sd">        skyPositions = [theta_ctr_rad phi_ctr_rad 1 4*pi]</span>
+<span class="sd">        dlmwrite(outputfile,skyPositions,&#39;delimiter&#39;,&#39; &#39;,&#39;precision&#39;,&#39;#7.5f&#39;)     </span>
+<span class="sd">        if verbose</span>
+<span class="sd">            disp([&#39;Single-site network: using only one grid point.&#39;])</span>
+<span class="sd">        return</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    #               Construct vector joining each pair of sites.</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    iPair = 1</span>
+<span class="sd">    iSite1 = 1</span>
+<span class="sd">    for iSite1 = 1:nSites-1</span>
+<span class="sd">        for iSite2 = iSite1+1:nSites</span>
+<span class="sd">           # ---- Construct structure listing names and displacements between</span>
+<span class="sd">           #      pairs of sites.</span>
+<span class="sd">           pairNames{iPair} = [sites{iSite1} sites{iSite2}]</span>
+<span class="sd">           site1ToSite2(iPair,:) = siteVertex(iSite2,:) -  siteVertex(iSite1,:)</span>
+<span class="sd">           # ---- Baseline in units of seconds.</span>
+<span class="sd">           site1ToSite2_sec(iPair,:) = site1ToSite2(iPair,:) ./ speedOfLight </span>
+<span class="sd">           iPair = iPair + 1</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    #       Construct vector representing direction to error box centres</span>
+<span class="sd">    #                          from Earth&#39;s centre.</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    # ---- Convert trigger ra,dec to phi,theta.</span>
+<span class="sd">    [phi_ctr_rad, theta_ctr_rad] = radectoearth(ra_ctr_deg,dec_ctr_deg,gps)</span>
+<span class="sd">    # ---- Construct the sky direction assumed from skyPosition_central.</span>
+<span class="sd">    earthToGRB = [sin(theta_ctr_rad).*cos(phi_ctr_rad)... # x</span>
+<span class="sd">                  sin(theta_ctr_rad).*sin(phi_ctr_rad)... # y</span>
+<span class="sd">                  cos(theta_ctr_rad)]                    # z</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    #      For each pair of sites calculate angle with GRB line of sight.</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    # ---- For sites separated by distance delay_max [sec] have</span>
+<span class="sd">    #        delay = delay_max cos(lambda)</span>
+<span class="sd">    #      Differentiating yields</span>
+<span class="sd">    #        ddelay = (-) alpha dlambda</span>
+<span class="sd">    #      where</span>
+<span class="sd">    #        alpha := delay_max sin(lambda).</span>
+<span class="sd">    #      Here we find the baseline giving the largest value of alpha.</span>
+<span class="sd">    #      This will produce the most conservative spacing of sky positions</span>
+<span class="sd">    #      (dlambda) for a given tolerance in delay time error (ddelay).</span>
+<span class="sd">    Npair = length(pairNames)</span>
+<span class="sd">    for iPair = 1:Npair</span>
+<span class="sd">        # ---- Some shorthand.</span>
+<span class="sd">        v1 = site1ToSite2_sec(iPair,:).&#39;</span>
+<span class="sd">        v2 = earthToGRB</span>
+<span class="sd">       </span>
+<span class="sd">        # ---- Check for 2 detectors at the same site (i.e., H1-H2).  In this</span>
+<span class="sd">        #      case set alpha = 0 otherwise compute alpha.</span>
+<span class="sd">        if (norm(v1)&lt;1e-6)  #-- time delay of 1 microsec = 1000 foot baseline ...</span>
+<span class="sd">           </span>
+<span class="sd">            alpha(iPair) = 0</span>
+<span class="sd">            # ---- Dummy values for vebose output case.</span>
+<span class="sd">            lambda_extrema = 0</span>
+<span class="sd">            lambda_opt = 0</span>
+<span class="sd">           </span>
+<span class="sd">        else</span>
+<span class="sd">            # ---- Invert dot product to calculate opening angle.</span>
+<span class="sd">            lambda_ctr_rad = acos(v2*v1/norm(v1))</span>
+<span class="sd">            # ---- Lambda should be between 0 and pi.</span>
+<span class="sd">            if max(lambda_ctr_rad) &gt; pi | min(lambda_ctr_rad) &lt; 0</span>
+<span class="sd">                disp([&#39;lambda_ctr_rad: &#39;])</span>
+<span class="sd">                    disp(lambda_ctr_rad)</span>
+<span class="sd">                error(&#39;lambda_ctr_rad should be between 0 and pi.&#39;)</span>
+<span class="sd">            # ---- Add (subtract) skyPosError to find extreme angles.</span>
+<span class="sd">            lambda_extrema  = [lambda_ctr_rad - skyPosError_rad, ...</span>
+<span class="sd">                lambda_ctr_rad + skyPosError_rad]</span>
+<span class="sd">            # ---- We are looking to maximise sin(abs(lambda)).</span>
+<span class="sd">            # ---- If our range of lambda excludes pi/2 then choose the</span>
+<span class="sd">            #      extrema closest to pi/2.</span>
+<span class="sd">            [dummy,idx]=min(abs(pi/2-lambda_extrema),[],2)</span>
+<span class="sd">            for ii = 1:length(idx)</span>
+<span class="sd">                lambda_opt(ii) = lambda_extrema(ii,idx(ii))</span>
+<span class="sd">            # ---- If our range of lambda includes pi/2 this will maximise</span>
+<span class="sd">            #      sin(abs(lambda)).</span>
+<span class="sd">            ind = find(lambda_extrema(:,1) &lt; pi/2 &amp; lambda_extrema(:,2) &gt; pi/2)</span>
+<span class="sd">            if ~isempty(ind)</span>
+<span class="sd">                lambda_opt(ind) = pi/2</span>
+<span class="sd">            # ---- Compute alpha for this baseline.</span>
+<span class="sd">            alpha(:,iPair) = norm(v1) * sin(lambda_opt(:))</span>
+<span class="sd">           </span>
+<span class="sd">       </span>
+<span class="sd">        # ---- Some output, if desired.</span>
+<span class="sd">        if verbose</span>
+<span class="sd">            fprintf(1,&#39;For #s : \n&#39;, pairNames{iPair})</span>
+<span class="sd">            fprintf(1,&#39;lambda_min : #2.5f \n&#39;, min(lambda_extrema))</span>
+<span class="sd">            fprintf(1,&#39;lambda_max : #2.5f \n&#39;, max(lambda_extrema))</span>
+<span class="sd">            fprintf(1,&#39;lambda_opt : #2.5f \n&#39;, lambda_opt)</span>
+<span class="sd">            fprintf(1,&#39;alpha      : #2.5f \n&#39;, alpha(:,iPair))</span>
+<span class="sd">    clear v1 v2</span>
+<span class="sd">    # ---- Find largest alpha value.</span>
+<span class="sd">    alpha_max = max(alpha,[],2)</span>
+<span class="sd">    # ---- Use alpha_max to calculate most conservative angularResolution which</span>
+<span class="sd">    #      will be used to place out skyPositions.</span>
+<span class="sd">    angularResolution = 2 * delay_tol ./ alpha_max</span>
+<span class="sd">    if verbose</span>
+<span class="sd">        disp([&#39;Desired angularResolution = &#39; num2str(angularResolution(:).&#39;) &#39;.&#39;])</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    #                    Lay down grid of desired type.</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    switch lower(gridtype)</span>
+<span class="sd">       </span>
+<span class="sd">        case &#39;circular&#39;</span>
+<span class="sd">           </span>
+<span class="sd">            # ---- Use separate circular grids for each error circle, removing</span>
+<span class="sd">            #      overlap as needed.</span>
+<span class="sd">            # ---- Number of error circles.</span>
+<span class="sd">            Ncircle = size(earthToGRB,1)</span>
+<span class="sd">            # ---- Number of points in each circular grid.</span>
+<span class="sd">            Ngrid = zeros(Ncircle,1)</span>
+<span class="sd">            # ---- Prepare storage.</span>
+<span class="sd">            skyPositions = [] </span>
+<span class="sd">            # ---- Order in which to lay down circles: least dense to most</span>
+<span class="sd">            #      dense.  (Gives smallest number of grid points, since we</span>
+<span class="sd">            #      throw away points from later circles that overlap earlier</span>
+<span class="sd">            #      circles.)  Reorder list of circles appropriately.</span>
+<span class="sd">            [angularResolution,I] = sort(angularResolution,&#39;descend&#39;)</span>
+<span class="sd">            earthToGRB = earthToGRB(I,:)</span>
+<span class="sd">            ra_ctr_deg = ra_ctr_deg(I)</span>
+<span class="sd">            dec_ctr_deg = dec_ctr_deg(I)       </span>
+<span class="sd">            skyPosError_rad = skyPosError_rad(I)</span>
+<span class="sd">            skyPosError_deg = skyPosError_deg(I)</span>
+<span class="sd">            sigma_deg = sigma_deg(I)</span>
+<span class="sd">            # ---- Lay down grid for each error circle.</span>
+<span class="sd">            for ii = 1:Ncircle</span>
+<span class="sd">                # ---- Place skyPositions about North Pole in sky patch with</span>
+<span class="sd">                #      radius = skyPosError_rad.</span>
+<span class="sd">                #      3rd arg means we will place point at North Pole.</span>
+<span class="sd">                #      4th arg means we will use &#39;optimal&#39; spacing in theta.</span>
+<span class="sd">                tempPositions = sinusoidalMap(angularResolution(ii),skyPosError_rad(ii),1,1)</span>
+<span class="sd">                theta = tempPositions(:,1)</span>
+<span class="sd">                phi = tempPositions(:,2)</span>
+<span class="sd">                pOmega = tempPositions(:,3)</span>
+<span class="sd">                dOmega = tempPositions(:,4)</span>
+<span class="sd">                Ngrid(ii) = length(theta) </span>
+<span class="sd">                # ---- Rotate skyPositions to center them on each error circle.</span>
+<span class="sd">                # ---- Convert from spherical coords to cartesian for convenience.</span>
+<span class="sd">                V = CartesianPointingVector(phi,theta)</span>
+<span class="sd">                # ---- The first vector in V should point to the North Pole.</span>
+<span class="sd">                #      Figure out opening angle betwen this and the GRB.</span>
+<span class="sd">                v1 = V(1,:)</span>
+<span class="sd">                if dot(v1,[0,0,1])~=1</span>
+<span class="sd">                    error(&#39;First point in non-rotated skyPositions map should be North Pole&#39;)</span>
+<span class="sd">               </span>
+<span class="sd">                v2 = earthToGRB(ii,:)</span>
+<span class="sd">                # ---- Construct vector which we will rotate skyPositions around.</span>
+<span class="sd">                v3 = cross(v1,v2)</span>
+<span class="sd">                # ---- Angle which we will rotate skyPositions about v3 by.</span>
+<span class="sd">                psi = acos(dot(v1,v2)/(norm(v1)*norm(v2)))</span>
+<span class="sd">                # ---- Loop over all skyPositions rotating them by psi about v3.</span>
+<span class="sd">                Vrot = zeros(Ngrid(ii),3)</span>
+<span class="sd">                for iVec = 1:size(V,1)</span>
+<span class="sd">                    Vrot(iVec,:) = RotateVector(V(iVec,:),v3,psi)   </span>
+<span class="sd">                # ---- Convert rotated skyPositions back to spherical coordinates</span>
+<span class="sd">                #      and replace original skyPositions with rotated ones.</span>
+<span class="sd">                skyPositions = [skyPositions ...</span>
+<span class="sd">                    acos(Vrot(:,3)) atan2(Vrot(:,2),Vrot(:,1)) pOmega dOmega]</span>
+<span class="sd">           </span>
+<span class="sd">            # ---- Compute angle between each grid point and all circle centers</span>
+<span class="sd">            #      (needed for probability calculation).</span>
+<span class="sd">            V = CartesianPointingVector(skyPositions(:,2),skyPositions(:,1))</span>
+<span class="sd">            # ---- Location of error circle centers.</span>
+<span class="sd">            [phi_ctr_rad, theta_ctr_rad] = radectoearth(ra_ctr_deg,dec_ctr_deg,gps)</span>
+<span class="sd">            C = CartesianPointingVector(phi_ctr_rad,theta_ctr_rad)</span>
+<span class="sd">            # ---- cos(Angle between grid points and error circle centers)</span>
+<span class="sd">            overlap = V*C&#39;</span>
+<span class="sd">           </span>
+<span class="sd">            # ---- Remove any grid points from circle N that lie within any of</span>
+<span class="sd">            #      circles 1, ..., N-1, since they are redundant.</span>
+<span class="sd">            for ii = Ncircle:-1:2</span>
+<span class="sd">                index = cumsum(Ngrid)</span>
+<span class="sd">                index = [index(ii-1)+1:index(ii)]</span>
+<span class="sd">                drop = find(sum(overlap(index,1:ii-1)&gt;repmat(cos(skyPosError_rad(1:ii-1).&#39;),length(index),1),2))</span>
+<span class="sd">                skyPositions(index(drop),:) = []</span>
+<span class="sd">                overlap(index(drop),:) = []</span>
+<span class="sd">           </span>
+<span class="sd">        case &#39;healpix&#39;</span>
+<span class="sd">           </span>
+<span class="sd">            # ---- Use healpix to generate all-sky grid with desired</span>
+<span class="sd">            #      angularResolution, then discard points outside error</span>
+<span class="sd">            #      circles.  Gives a nice regular grid with meaningful area for</span>
+<span class="sd">            #      each point, but density may be up to 4 x higher than needed.</span>
+<span class="sd">            # ---- Number of points to cover sky at desired resolution -- based</span>
+<span class="sd">            #      on finest angular resolution needed for all error boxes.</span>
+<span class="sd">            Ntotal = 4*pi/min(angularResolution)^2</span>
+<span class="sd">            # ---- Make smallest healpix grid with this many points.</span>
+<span class="sd">            n = [0:7]</span>
+<span class="sd">            Nhealpix = 12*2.^(2*n)</span>
+<span class="sd">            ind = find(Nhealpix&gt;=Ntotal)</span>
+<span class="sd">            if verbose</span>
+<span class="sd">                disp([&#39;Using healpix grid with n = &#39; num2str(n(ind(1))) &#39; (&#39; ...</span>
+<span class="sd">                    num2str(Nhealpix(ind(1))) &#39; sky positions, angular resolution = &#39; ...</span>
+<span class="sd">                    num2str((4*pi/Nhealpix(ind(1))).^0.5) &#39;).&#39;])</span>
+<span class="sd">            [coordinates, solidAngles, probabilities] = healpix(n(ind(1)))</span>
+<span class="sd">            skyPositions = [coordinates, probabilities, solidAngles]</span>
+<span class="sd">            # ---- Unit three-vectors pointing to each grid point.</span>
+<span class="sd">            V = CartesianPointingVector(skyPositions(:,2),skyPositions(:,1))</span>
+<span class="sd">            # ---- Location of error circle centers.</span>
+<span class="sd">            [phi_ctr_rad, theta_ctr_rad] = radectoearth(ra_ctr_deg,dec_ctr_deg,gps)</span>
+<span class="sd">            C = CartesianPointingVector(phi_ctr_rad,theta_ctr_rad)</span>
+<span class="sd">            # ---- Throw away grid points outside both error circles.</span>
+<span class="sd">            overlap = V*C&#39;</span>
+<span class="sd">            # pass = max(overlap &gt;= cos(skyPosError_rad),[],2)</span>
+<span class="sd">            pass = max(overlap &gt;= cos(skyPosError_rad+angularResolution),[],2) #-- probably overkill</span>
+<span class="sd">            index = find(pass)</span>
+<span class="sd">            skyPositions = skyPositions(index,:)</span>
+<span class="sd">            overlap = overlap(index,:) #-- keep for probability calculations</span>
+<span class="sd">            V = V(index,:) #-- keep for plots</span>
+<span class="sd">    # ---- Some output, if desired.</span>
+<span class="sd">    if verbose</span>
+<span class="sd">        fprintf(1,&#39;We place #d grid points.\n&#39;, size(skyPositions,1))</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    #                   Calculate probability of sky positions.</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    # -- If provided error is absurdly large use a uniform distribution</span>
+<span class="sd">    if any(sigma_deg &gt; 360)</span>
+<span class="sd">      warning([&#39;The provided 1-sigma error is greater than 360 degrees, using &#39; ...</span>
+<span class="sd">               &#39;a uniform penalty instead of a Fisher penalty&#39;])</span>
+<span class="sd">      skyPositions(:,3) = 1</span>
+<span class="sd">    else</span>
+<span class="sd">    # ---- We assume that the probabilities of sky positions follow a Fisher</span>
+<span class="sd">    #      distribution in the angle from the center of each error circle. Note</span>
+<span class="sd">    #      that for each grid point we add the Fisher probabilities for each</span>
+<span class="sd">    #      error circle.</span>
+<span class="sd">    # ---- Compute the approximate kappa to get the 68# containment for the</span>
+<span class="sd">    #      Fisher distribution.</span>
+<span class="sd">    sigma = sigma_deg(:).&#39; * (pi/180)</span>
+<span class="sd">    kappa = (0.66 * sigma).^(-2)</span>
+<span class="sd">    # ---- Verify that the approximation is not too bad.</span>
+<span class="sd">    p1sigma = 0.68</span>
+<span class="sd">    containmentRadius = acos((kappa+log(1-p1sigma+p1sigma*exp(-2*kappa)))./kappa)</span>
+<span class="sd">    if any(abs(containmentRadius-sigma) &gt; 0.3 * sigma)</span>
+<span class="sd">        error([&#39;Discrepency between desired and generated containment &#39; ...</span>
+<span class="sd">            &#39;radius is greater than 30#&#39;])</span>
+<span class="sd">    if any(abs(containmentRadius-sigma) &gt; 0.1 * sigma)</span>
+<span class="sd">        warning([&#39;Discrepency between desired and generated containment &#39; ...</span>
+<span class="sd">            &#39;radius is greater than 10#&#39;])</span>
+<span class="sd">    # ---- Compute probabilities, summing over all error circles.  Note that</span>
+<span class="sd">    #      fisherpdf returns pdf for &quot;polar&quot; angle out from source, so to get</span>
+<span class="sd">    #      2D probability distribution we need to divide by</span>
+<span class="sd">    #      2*pi*sin(polar_angle).  Finally, we rescale so that the peak value</span>
+<span class="sd">    #      is unity.</span>
+<span class="sd">    kappa = repmat(kappa,size(skyPositions,1),1)</span>
+<span class="sd">    skyPositions(:,3) = sum(exp(kappa.*(overlap-1)),2)</span>
+<span class="sd">    skyPositions(:,3) = skyPositions(:,3) / max(skyPositions(:,3))</span>
+<span class="sd">    # skyPositions(:,3) =  sum(kappa./(1-exp(-2*kappa)).*exp(kappa.*(overlap-1)),2)/...</span>
+<span class="sd">    #     (kappa./(1-exp(-2*kappa)))</span>
+<span class="sd">    if verbose</span>
+<span class="sd">        # ---- Plot for debugging.</span>
+<span class="sd">        figure set(gca,&#39;fontsize&#39;,16)</span>
+<span class="sd">        plot3(V(:,1),V(:,2),V(:,3),&#39;b.&#39;)</span>
+<span class="sd">        hold on</span>
+<span class="sd">        plot3(1.03*C(:,1),1.03*C(:,2),1.03*C(:,3),&#39;m.&#39;,&#39;markersize&#39;,20)</span>
+<span class="sd">        axis([-1.1 1.1 -1.1 1.1 -1.1 1.1])</span>
+<span class="sd">        axis square</span>
+<span class="sd">        grid on</span>
+<span class="sd">        xlabel(&#39;x&#39;)</span>
+<span class="sd">        ylabel(&#39;y&#39;)</span>
+<span class="sd">        zlabel(&#39;z&#39;)</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    #                         Convert back to ra,dec.</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    # ---- Generate output arguments.</span>
+<span class="sd">    [ra_search_deg, dec_search_deg] = earthtoradec(skyPositions(:,2),skyPositions(:,1),gps)</span>
+<span class="sd">    probabilities = skyPositions(:,3)</span>
+<span class="sd">    gridarea = skyPositions(:,4)</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    #                         Write output file.</span>
+<span class="sd">    ###########################################################################</span>
+<span class="sd">    if ~strcmp(outputfile,&#39;None&#39;)</span>
+<span class="sd">        dlmwrite(outputfile,skyPositions,&#39;delimiter&#39;,&#39; &#39;,&#39;precision&#39;,&#39;#7.5f&#39;)</span>
+<span class="sd">    # ---- Done.</span>
+<span class="sd">    return ra_search_deg, dec_search_deg, probabilities, gridarea</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Scott Coughlin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0+untagged.52.g3236362.dirty',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

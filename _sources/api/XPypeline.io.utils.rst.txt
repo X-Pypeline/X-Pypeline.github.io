@@ -1,4 +1,0 @@
-.. automodule:: XPypeline.io.utils
-    :members:
-    :undoc-members:
-    :show-inheritance:

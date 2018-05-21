@@ -1,0 +1,656 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>xpipeline.io.utils &mdash; xpipeline 0+untagged.52.g3236362.dirty documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/xpipeline-docs.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> xpipeline
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.52.g3236362.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">xpipeline an explanation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">xpipeline</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>xpipeline.io.utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for xpipeline.io.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (C) Scott Coughlin (2017)</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of XPypeline.</span>
+<span class="c1">#</span>
+<span class="c1"># GWpy is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># GWpy is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with GWpy.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;This module provides function to help write param files needed for xdetection </span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="write_onsource"><a class="viewcode-back" href="../../../api/xpipeline.io.utils.html#xpipeline.io.utils.write_onsource">[docs]</a><span class="k">def</span> <span class="nf">write_onsource</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">outputType</span><span class="p">,</span> <span class="n">frameCacheAll</span><span class="p">,</span> <span class="n">skyPositionList</span><span class="p">,</span> <span class="n">likelihoodTypeStr</span><span class="p">,</span> <span class="n">onSourceEndOffset</span><span class="p">,</span> <span class="n">cp</span><span class="p">):</span>
+
+    <span class="n">parameters</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">)</span>
+    <span class="c1"># ---- Parameters file for on-source analysis.</span>
+    <span class="n">fParam</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    <span class="c1"># ---- First write framecache file, channel file, event file, and sky position.</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;channelFileName:input/channels.txt&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;frameCacheFile:&#39;</span> <span class="o">+</span> <span class="n">frameCacheAll</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;eventFileName:input/event_on_source.txt&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;skyPositionList:&#39;</span> <span class="o">+</span> <span class="n">skyPositionList</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;skyCoordinateSystem:earthfixed&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;likelihoodtype:&#39;</span> <span class="o">+</span> <span class="n">likelihoodTypeStr</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="c1"># ---- Now write all of the other parameters from the parameters section.</span>
+    <span class="c1">#      We ignore the likelihoodType_* lines since this is handled above.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">))</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;likelihoodtype&quot;</span><span class="p">)):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">,</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;onsourceendoffset&quot;</span><span class="p">:</span>
+                <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;onsourceendoffset:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">onSourceEndOffset</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;circtimeslidestep&quot;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="n">value</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">outputType</span> <span class="o">==</span> <span class="s1">&#39;seedless&#39;</span> <span class="p">:</span>
+        <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;seedlessparams:input/seedless_onsource.txt</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="write_ul_source"><a class="viewcode-back" href="../../../api/xpipeline.io.utils.html#xpipeline.io.utils.write_ul_source">[docs]</a><span class="k">def</span> <span class="nf">write_ul_source</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">outputType</span><span class="p">,</span> <span class="n">frameCacheAll</span><span class="p">,</span> <span class="n">skyPositionList</span><span class="p">,</span> <span class="n">likelihoodTypeStr</span><span class="p">,</span> <span class="n">onSourceEndOffset</span><span class="p">,</span> <span class="n">cp</span><span class="p">):</span>
+
+    <span class="n">parameters</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">)</span>
+    <span class="c1"># ---- Parameters file for ul-source analysis.</span>
+    <span class="n">fParam</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    <span class="c1"># ---- First write framecache file, channel file, event file, and sky position.</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;channelFileName:input/channels.txt&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;frameCacheFile:&#39;</span> <span class="o">+</span> <span class="n">frameCacheAll</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;eventFileName:input/event_on_source.txt&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;skyPositionList:&#39;</span> <span class="o">+</span> <span class="n">skyPositionList</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;skyCoordinateSystem:earthfixed&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;likelihoodtype:&#39;</span> <span class="o">+</span> <span class="n">likelihoodTypeStr</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="c1"># ---- Now write all of the other parameters from the parameters section.</span>
+    <span class="c1">#      We ignore the likelihoodType_* lines since this is handled above.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">))</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;likelihoodtype&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;ecimateRate&quot;</span><span class="p">)):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">,</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;onsourceendoffset&quot;</span><span class="p">:</span>
+                <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;onsourceendoffset:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">onSourceEndOffset</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;circtimeslidestep&quot;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="n">value</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;decimateRate:100</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;superDecimateRate:100</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">outputType</span> <span class="o">==</span> <span class="s1">&#39;seedless&#39;</span> <span class="p">:</span>
+        <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;seedlessparams:input/seedless_ul.txt</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="write_offsource"><a class="viewcode-back" href="../../../api/xpipeline.io.utils.html#xpipeline.io.utils.write_offsource">[docs]</a><span class="k">def</span> <span class="nf">write_offsource</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">outputType</span><span class="p">,</span> <span class="n">frameCacheAll</span><span class="p">,</span> <span class="n">skyPositionList</span><span class="p">,</span> <span class="n">likelihoodTypeStr</span><span class="p">,</span> <span class="n">onSourceEndOffset</span><span class="p">,</span> <span class="n">cp</span><span class="p">):</span>
+
+    <span class="n">parameters</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">)</span>
+    <span class="c1"># ---- Parameters file for off-source analysis.</span>
+    <span class="n">fParam</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    <span class="c1"># ---- First write framecache file, channel file, event file, and sky position.</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;channelFileName:input/channels.txt&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;frameCacheFile:&#39;</span> <span class="o">+</span> <span class="n">frameCacheAll</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;eventFileName:input/event_off_source.txt&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;skyPositionList:&#39;</span> <span class="o">+</span> <span class="n">skyPositionList</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;skyCoordinateSystem:earthfixed&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;likelihoodtype:&#39;</span> <span class="o">+</span> <span class="n">likelihoodTypeStr</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="c1"># ---- Now write all of the other parameters from the parameters section.</span>
+    <span class="c1">#      We ignore the likelihoodType_* lines since this is handled above.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">))</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;likelihoodtype&quot;</span><span class="p">)):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">,</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;onsourceendoffset&quot;</span><span class="p">:</span>
+                <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;onsourceendoffset:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">onSourceEndOffset</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="n">value</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">outputType</span> <span class="o">==</span> <span class="s1">&#39;seedless&#39;</span> <span class="p">:</span>
+        <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;seedlessparams:input/seedless_offsource.txt</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="write_waveforms"><a class="viewcode-back" href="../../../api/xpipeline.io.utils.html#xpipeline.io.utils.write_waveforms">[docs]</a><span class="k">def</span> <span class="nf">write_waveforms</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">outputType</span><span class="p">,</span> <span class="n">frameCacheAll</span><span class="p">,</span> <span class="n">skyPositionList</span><span class="p">,</span> <span class="n">likelihoodTypeStr</span><span class="p">,</span> <span class="n">onSourceEndOffset</span><span class="p">,</span> <span class="n">cp</span><span class="p">,</span> <span class="n">injectionScalesList</span><span class="p">,</span> <span class="n">disableFastInjections</span><span class="p">,</span> <span class="n">waveform</span><span class="p">):</span>
+
+    <span class="n">parameters</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+    <span class="c1"># ---- First write framecache file, channel file, event file, and sky position.</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;channelFileName:input/channels.txt&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;frameCacheFile:&#39;</span> <span class="o">+</span> <span class="n">frameCacheAll</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;eventFileName:input/event_inj_source.txt&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;catalogdirectory:input/&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;skyPositionList:&#39;</span> <span class="o">+</span> <span class="n">skyPositionList</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;skyCoordinateSystem:earthfixed&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;likelihoodtype:&#39;</span> <span class="o">+</span> <span class="n">likelihoodTypeStr</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="c1"># ---- Now write all of the other parameters from the parameters section.</span>
+    <span class="c1">#      We ignore the likelihoodType_* lines since this is handled above.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">))</span> <span class="p">:</span>
+      <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;likelihoodtype&quot;</span><span class="p">))</span> <span class="p">:</span>
+          <span class="n">value</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">,</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+          <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;outputtype&quot;</span>  <span class="ow">and</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;clusters&quot;</span> <span class="ow">and</span> <span class="ow">not</span><span class="p">(</span><span class="n">disableFastInjections</span><span class="p">):</span>
+              <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;outputtype:injectionclusters</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+          <span class="k">elif</span> <span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;onsourceendoffset&quot;</span><span class="p">:</span>
+              <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;onsourceendoffset:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">onSourceEndOffset</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+          <span class="k">elif</span> <span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;circtimeslidestep&quot;</span><span class="p">:</span>
+              <span class="k">continue</span>
+          <span class="k">else</span><span class="p">:</span>
+              <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="n">value</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># ---- Write simulations info.  The specified injection file</span>
+    <span class="c1">#      will be written later.</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;injectionFileName:input/injection_&#39;</span> <span class="o">+</span> <span class="n">waveform</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;injectionScales:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">injectionScalesList</span><span class="p">[:])</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="c1"># fParam.write(&#39;catalogdirectory:&#39; + XPIPELINE_ROOT  + &#39;/waveforms\n&#39;)</span>
+    <span class="k">if</span> <span class="n">outputType</span> <span class="o">==</span> <span class="s1">&#39;seedless&#39;</span> <span class="p">:</span>
+      <span class="n">fParam</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;seedlessparams:input/seedless_simulation.txt</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">fParam</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="write_mdc"><a class="viewcode-back" href="../../../api/xpipeline.io.utils.html#xpipeline.io.utils.write_mdc">[docs]</a><span class="k">def</span> <span class="nf">write_mdc</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">outputType</span><span class="p">,</span> <span class="n">frameCacheAll</span><span class="p">,</span> <span class="n">skyPositionList</span><span class="p">,</span> <span class="n">likelihoodTypeStr</span><span class="p">,</span> <span class="n">onSourceEndOffset</span><span class="p">,</span> <span class="n">cp</span><span class="p">,</span> <span class="n">injectionScalesList</span><span class="p">,</span> <span class="n">disableFastInjections</span><span class="p">,</span> <span class="n">waveform</span><span class="p">):</span>
+
+    <span class="n">parameters</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">)</span>
+    <span class="c1"># ---- Read [mdc] sets and injection scales.  If mdc_sets is empty or specifies</span>
+    <span class="c1">#      unknown MDC sets then the script will have already exited when trying to</span>
+    <span class="c1">#      write the mdcchannel file above.</span>
+    <span class="n">mdc_setsList</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mdc&#39;</span><span class="p">,</span><span class="s1">&#39;mdc_sets&#39;</span><span class="p">)</span>
+    <span class="n">mdc_sets</span> <span class="o">=</span> <span class="n">mdc_setsList</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="c1"># ---- Write one parameters file for each (mdc set, injection scale) pair.</span>
+    <span class="k">for</span> <span class="n">iMDC</span> <span class="ow">in</span> <span class="n">mdc_sets</span> <span class="p">:</span>
+        <span class="k">if</span> <span class="n">cp</span><span class="o">.</span><span class="n">has_section</span><span class="p">(</span><span class="n">iMDC</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">cp</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="n">iMDC</span><span class="p">,</span><span class="s1">&#39;injectionScales&#39;</span><span class="p">)</span> <span class="p">:</span>
+            <span class="c1"># ---- This check lets you specify different injection scales for</span>
+            <span class="c1">#      each MDC set.</span>
+            <span class="n">injectionScalesList</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">iMDC</span><span class="p">,</span><span class="s1">&#39;injectionScales&#39;</span><span class="p">)</span>
+            <span class="n">injectionScales</span> <span class="o">=</span> <span class="n">injectionScalesList</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># ---- Otherwise, use the injection scales specified in</span>
+            <span class="c1">#      the [injection] section.</span>
+            <span class="n">injectionScalesList</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;injection&#39;</span><span class="p">,</span><span class="s1">&#39;injectionScales&#39;</span><span class="p">)</span>
+            <span class="n">injectionScales</span> <span class="o">=</span> <span class="n">injectionScalesList</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+
+        <span class="c1"># ---- Write a separate parameter file for each injection scale.</span>
+        <span class="n">scale_counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">injectionScale</span> <span class="ow">in</span> <span class="n">injectionScales</span> <span class="p">:</span>
+            <span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="n">filename</span> <span class="o">+</span> <span class="n">iMDC</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">scale_counter</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="c1"># ---- First write framecache file, channel file, event file, and sky position.</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;channelFileName:input/channels.txt&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;frameCacheFile:&#39;</span> <span class="o">+</span> <span class="n">frameCacheAll</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;eventFileName:input/event_&#39;</span><span class="o">+</span> <span class="n">iMDC</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;skyPositionList:&#39;</span> <span class="o">+</span> <span class="n">skyPositionList</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;skyCoordinateSystem:earthfixed&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;likelihoodtype:&#39;</span> <span class="o">+</span> <span class="n">likelihoodTypeStr</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="c1"># ---- Now write all of the other parameters from the parameters section.</span>
+            <span class="c1">#      We ignore the likelihoodType_* lines since this is handled above.</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">parameters</span><span class="p">))</span> <span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;likelihoodtype&quot;</span><span class="p">)):</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">,</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;outputtype&quot;</span>  <span class="ow">and</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;clusters&quot;</span> <span class="ow">and</span> <span class="ow">not</span><span class="p">(</span><span class="n">disableFastInjections</span><span class="p">):</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;outputtype:injectionclusters</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;onsourceendoffset&quot;</span><span class="p">:</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;onsourceendoffset:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">onSourceEndOffset</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;circtimeslidestep&quot;</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="n">value</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="c1"># ---- Write mdc info.</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;mdcChannelFileName:input/channels_&#39;</span> <span class="o">+</span> <span class="n">iMDC</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;injectionFileName:input/injection_&#39;</span> <span class="o">+</span> <span class="n">iMDC</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;injectionScale:&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">injectionScale</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">outputType</span> <span class="o">==</span> <span class="s1">&#39;seedless&#39;</span> <span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;seedlessparams:input/seedless_simulation.txt</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">scale_counter</span> <span class="o">=</span> <span class="n">scale_counter</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="c1"># ---- Status message.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Writing Matlab-formatted MDC channel files &quot;</span>
+          <span class="s2">&quot;and framecache files... &quot;</span><span class="p">)</span>
+
+    <span class="c1"># ---- Get list of MDC sets to process.</span>
+    <span class="n">mdc_setsList</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mdc&#39;</span><span class="p">,</span><span class="s1">&#39;mdc_sets&#39;</span><span class="p">)</span>
+    <span class="n">mdc_sets</span> <span class="o">=</span> <span class="n">mdc_setsList</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="c1"># print &gt;&gt; sys.stdout, &quot;mdc_sets:&quot;, mdc_sets</span>
+
+    <span class="c1"># ---- We will create a list of all the log files for each mdc set</span>
+    <span class="n">mdc_log_files</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># ---- Make MDC channels file for each set.</span>
+    <span class="k">for</span> <span class="n">setIdx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mdc_sets</span><span class="p">))</span> <span class="p">:</span>
+        <span class="nb">set</span> <span class="o">=</span> <span class="n">mdc_sets</span><span class="p">[</span><span class="n">setIdx</span><span class="p">]</span>
+        <span class="c1"># print &gt;&gt; sys.stdout, &quot;set:&quot;, set</span>
+        <span class="k">if</span> <span class="n">cp</span><span class="o">.</span><span class="n">has_section</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span> <span class="p">:</span>
+            <span class="c1"># ---- Read channel parameters for this mdc set.</span>
+            <span class="n">mdcChannelListLine</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">set</span><span class="p">,</span><span class="s1">&#39;channelList&#39;</span><span class="p">)</span>
+            <span class="n">mdcChannelList</span> <span class="o">=</span> <span class="n">mdcChannelListLine</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="n">mdcFrameTypeListLine</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">set</span><span class="p">,</span><span class="s1">&#39;frameTypeList&#39;</span><span class="p">)</span>
+            <span class="n">mdcFrameTypeList</span> <span class="o">=</span> <span class="n">mdcFrameTypeListLine</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="n">numberOfChannels</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">set</span><span class="p">,</span><span class="s1">&#39;numberOfChannels&#39;</span><span class="p">)</span>
+            <span class="c1"># ---- Keep only info for detectors requested for the analysis.</span>
+            <span class="n">mdcChannel</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">mdcFrameType</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">keepIndex</span><span class="p">)):</span>
+                <span class="n">mdcChannel</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mdcChannelList</span><span class="p">[</span><span class="n">keepIndex</span><span class="p">[</span><span class="n">jj</span><span class="p">]])</span>
+                <span class="n">mdcFrameType</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mdcFrameTypeList</span><span class="p">[</span><span class="n">keepIndex</span><span class="p">[</span><span class="n">jj</span><span class="p">]])</span>
+
+            <span class="c1"># ---- For each detector, write the</span>
+            <span class="c1">#      corresponding channel name and frame type to a file.</span>
+            <span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input/channels_&#39;</span> <span class="o">+</span> <span class="nb">set</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">detector</span><span class="p">))</span> <span class="p">:</span>
+                <span class="c1"># ---- if we are doing a MOCK analysis we must not add on</span>
+                <span class="c1">#      grb_name to mdcFrameType.</span>
+                <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">mockAnalysis</span><span class="p">):</span>
+                    <span class="c1"># ---- mdcFrameTypes have format: H1_SGC554Q8d9_ON_GRB060211B</span>
+                    <span class="c1"># ---- from params file mdcFrameTypes of format: H1_SGC554Q8d9_ON_</span>
+                    <span class="c1">#      we append last underscore if missing and append grb_name.</span>
+                    <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">mdcFrameType</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)):</span>
+                        <span class="n">mdcFrameType</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">mdcFrameType</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span>
+                    <span class="n">mdcFrameType</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">mdcFrameType</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">grb_name</span>
+
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">detector</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;:&#39;</span> <span class="o">+</span> <span class="n">mdcChannel</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">mdcFrameType</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="c1"># ---- end loop over ifo</span>
+
+            <span class="c1"># -------------------------------------------------------------------------</span>
+            <span class="c1">#                         Find MDC frames.</span>
+            <span class="c1"># -------------------------------------------------------------------------</span>
+
+            <span class="c1"># ---- Check to see if mdc frame cache has been specified in config file.</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">mdcFrameCache</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">set</span><span class="p">,</span><span class="s1">&#39;frameCacheFile&#39;</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Warning: No frameCacheFile file specified &quot;</span> \
+                    <span class="s2">&quot;in [&quot;</span> <span class="o">+</span> <span class="nb">set</span> <span class="o">+</span> <span class="s2">&quot;] section of configuration file.&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;         A frameCache for the ifo data file &quot;</span> \
+                    <span class="s2">&quot;will be generated automatically.&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+                <span class="n">mdcFrameCache</span> <span class="o">=</span> <span class="kc">None</span>
+
+            <span class="k">if</span> <span class="n">mdcFrameCache</span><span class="p">:</span>
+                <span class="c1"># ---- Check that the frame cache file specified actually exists.</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">mdcFrameCache</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: non existant framecache: &quot;</span><span class="p">,</span> <span class="n">mdcFrameCache</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="c1"># ---- If the specified mdc frame cache exists then concat it</span>
+                <span class="c1">#      other frame caches.</span>
+                <span class="n">command</span> <span class="o">=</span> <span class="s1">&#39;cat &#39;</span> <span class="o">+</span> <span class="n">mdcFrameCache</span> <span class="o">+</span> <span class="s1">&#39;  &gt;&gt; &#39;</span> <span class="o">+</span> <span class="n">frameCacheAll</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+
+            <span class="c1"># ---- If the mdcFrameCache was not specified we generate it here.</span>
+            <span class="c1">#      Note that we look for frames using the virtual detector name</span>
+            <span class="c1">#      to ensure the MDC injection data is consistent with the </span>
+            <span class="c1">#      detector being simulated.</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">detector</span><span class="p">))</span> <span class="p">:</span>
+                    <span class="c1"># ---- generate frame cache file for MDCs</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">mdcFrameCache</span><span class="p">:</span>
+                        <span class="c1"># ---- Status message.</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Writing MDC framecache file for &quot;</span> \
+                            <span class="s2">&quot;mdcset: &quot;</span> <span class="o">+</span> <span class="nb">set</span> <span class="o">+</span> <span class="s2">&quot;, ifo: &quot;</span> <span class="o">+</span> <span class="n">detector</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot; ...&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+                        <span class="c1"># ---- Clear away any pre-existing mdcframecache files.</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;rm -f mdcframecache_temp.txt&#39;</span><span class="p">)</span>
+
+                        <span class="c1"># ---- Construct dataFind command.</span>
+                        <span class="n">dataFindCommand</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">datafind_exec</span><span class="p">,</span>
+                        <span class="s2">&quot;--server&quot;</span><span class="p">,</span> <span class="n">datafind_server</span><span class="p">,</span>
+                        <span class="s2">&quot;--observatory&quot;</span><span class="p">,</span><span class="n">detector</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+                        <span class="s2">&quot;--type&quot;</span><span class="p">,</span><span class="n">mdcFrameType</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                        <span class="s2">&quot;--gps-start-time&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">start_time</span><span class="p">),</span>
+                        <span class="s2">&quot;--gps-end-time&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">end_time</span><span class="p">),</span>
+                        <span class="s2">&quot;--url-type file&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;--lal-cache&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot; &gt; mdclalcache.txt&quot;</span><span class="p">])</span>
+                        <span class="c1"># ---- Issue dataFind command.</span>
+                        <span class="nb">print</span><span class="p">((</span><span class="s2">&quot;calling dataFind: </span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dataFindCommand</span><span class="p">)))</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">dataFindCommand</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;... finished call to dataFind.&quot;</span><span class="p">)</span>
+
+                        <span class="c1"># ---- Convert lalframecache file to readframedata format.</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;calling convertlalcache:&quot;</span><span class="p">)</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;convertlalcache.pl mdclalcache.txt mdcframecache_temp.txt&#39;</span><span class="p">)</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;cat mdcframecache_temp.txt &gt;&gt; &#39;</span> <span class="o">+</span> <span class="n">frameCacheAll</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;... finished call to convertlalcache.&quot;</span><span class="p">)</span>
+                        <span class="c1"># ---- Clean up.</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;rm -f mdcframecache_temp.txt mdclalcache.txt&#39;</span><span class="p">)</span>
+
+                        <span class="c1"># ---- Status message.</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;... finished writing MDC framecache file.&quot;</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">((</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">))</span>
+
+            <span class="c1">#-------------------------------------------------------------------------</span>
+            <span class="c1">#   Create a list of the mdc log files and create an mdc segment list.</span>
+            <span class="c1">#-------------------------------------------------------------------------</span>
+
+            <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">mdc_path</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: mdc_path must be specified if we are using mdcs.&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Use --mdc-path to specify it.&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="c1"># ---- check dir names end in &#39;/&#39;</span>
+            <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">mdc_path</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)):</span>
+                <span class="n">mdc_path</span> <span class="o">=</span> <span class="n">mdc_path</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
+            <span class="n">mdc_grbdir</span> <span class="o">=</span> <span class="n">grb_name</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>
+
+            <span class="c1"># ---- mdcFrameType[i] will have name in format H1_SGC100Q8d9_ON_GRB051105</span>
+            <span class="c1">#      logs are in dir structure:</span>
+            <span class="c1">#      /data/node5/eharstad/ExtTrigMDC/GRB051105/SGC1000Q8d9_ON/logs/</span>
+            <span class="c1">#      ExtTrigMDC-SGC1000Q8d9_ON_GRB051105-815207086-256-Log.txt</span>
+
+            <span class="c1"># ---- Remove &lt;ifo&gt;_ and _GRB* part from mdcFrameType.</span>
+            <span class="k">if</span> <span class="n">mockAnalysis</span><span class="p">:</span>
+                <span class="n">strList0</span>    <span class="o">=</span> <span class="n">mdcFrameType</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+                <span class="n">mdcType</span>     <span class="o">=</span> <span class="n">strList0</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">strList0</span>    <span class="o">=</span> <span class="n">mdcFrameType</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span>
+                <span class="n">mdcType</span>     <span class="o">=</span> <span class="n">strList0</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">strList0</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+            <span class="n">mdc_log_glob</span> <span class="o">=</span> <span class="n">mdc_path</span> <span class="o">+</span> <span class="n">grb_name</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span>  <span class="o">+</span> <span class="n">mdcType</span> <span class="o">+</span>  <span class="s1">&#39;/logs/ExtTrigMDC-&#39;</span> <span class="o">+</span> <span class="n">mdcType</span> <span class="o">+</span> <span class="s1">&#39;*.txt&#39;</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Getting mdc log files from &#39;</span> <span class="o">+</span> <span class="n">mdc_log_glob</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+            <span class="n">mdc_log_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">mdc_log_glob</span><span class="p">))</span>
+
+            <span class="c1"># ---- Report error if no log files found.</span>
+            <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mdc_log_files</span><span class="p">[</span><span class="n">setIdx</span><span class="p">])):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error: No ExtTrigMDC*.txt log files in &#39;</span> <span class="o">+</span> <span class="n">mdc_log_glob</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1"># ---- If these are on source mdcs check we only have one log file.</span>
+            <span class="k">if</span> <span class="n">mdcType</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;ON&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mdc_log_files</span><span class="p">[</span><span class="n">setIdx</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error: We only expect one ON source ExtTrigMDC*.txt log file in &#39;</span> <span class="o">+</span> <span class="n">mdc_log_glob</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="c1"># ---- Extract start time of each mdc block from its log file name</span>
+            <span class="c1">#      use this to create a segment list which we later use to</span>
+            <span class="c1">#      figure out which mdc blocks have good data quality flags.</span>
+            <span class="n">mdc_segs</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">fileIdx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">mdc_log_files</span><span class="p">[</span><span class="n">setIdx</span><span class="p">])):</span>
+                <span class="c1"># ---- We need to extract start times for each log file.</span>
+                <span class="c1"># ---- We are in a loop over mdc sets.</span>
+                <span class="n">strList</span> <span class="o">=</span> <span class="n">mdc_log_files</span><span class="p">[</span><span class="n">setIdx</span><span class="p">][</span><span class="n">fileIdx</span><span class="p">]</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+
+                <span class="c1"># ---- Choose element of strList counting back from end of strList in case</span>
+                <span class="c1">#      dir names contain a hyphen which would throw off our counting.</span>
+                <span class="n">mdc_start_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">strList</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">strList</span><span class="p">)</span><span class="o">-</span><span class="mi">3</span><span class="p">])</span>
+                <span class="n">mdc_block_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">strList</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">strList</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+                <span class="n">mdc_segs</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">mdc_start_time</span><span class="p">,</span><span class="n">mdc_block_time</span><span class="p">])</span>
+
+            <span class="c1"># ---- Sort our segments on mdc_start_time.</span>
+            <span class="n">mdc_segs_sorted</span><span class="o">=</span><span class="nb">sorted</span><span class="p">(</span><span class="n">mdc_segs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+            <span class="c1"># ---- Write mdc segtment list.</span>
+            <span class="n">fmdcseg</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input/segment_&#39;</span> <span class="o">+</span> <span class="nb">set</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">segIdx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">mdc_segs_sorted</span><span class="p">)):</span>
+                <span class="n">mdc_start_time</span> <span class="o">=</span> <span class="n">mdc_segs_sorted</span><span class="p">[</span><span class="n">segIdx</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">mdc_block_time</span> <span class="o">=</span> <span class="n">mdc_segs_sorted</span><span class="p">[</span><span class="n">segIdx</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">mdc_end_time</span>   <span class="o">=</span> <span class="n">mdc_start_time</span> <span class="o">+</span> <span class="n">mdc_block_time</span>
+                <span class="n">time_range_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">segIdx</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> \
+                    <span class="nb">str</span><span class="p">(</span><span class="n">mdc_start_time</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mdc_end_time</span><span class="p">)</span>  <span class="o">+</span> \
+                    <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mdc_block_time</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="n">fmdcseg</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">time_range_string</span><span class="p">)</span>
+            <span class="n">fmdcseg</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: MDC set &quot;</span><span class="p">,</span> <span class="nb">set</span><span class="p">,</span> \
+                <span class="s2">&quot; is not defined in the parameters file.  Exiting.&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># ---- Status message.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;... finished writing MDC channel and frame files.   &quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+
+    <span class="c1"># ---- Status message.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Writing MDC event files ...          &quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+
+    <span class="c1"># ---- Get list of MDC sets to process.</span>
+    <span class="n">mdc_setsList</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;mdc&#39;</span><span class="p">,</span><span class="s1">&#39;mdc_sets&#39;</span><span class="p">)</span>
+    <span class="n">mdc_sets</span> <span class="o">=</span> <span class="n">mdc_setsList</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="nb">set</span> <span class="ow">in</span> <span class="n">mdc_sets</span><span class="p">:</span>
+        <span class="c1"># ---- Read mdc segments into a &quot;ScienceData&quot; object.</span>
+        <span class="n">mdc_segment</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">ScienceData</span><span class="p">()</span>
+        <span class="n">mdc_segment</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;input/segment_&#39;</span> <span class="o">+</span> <span class="nb">set</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span><span class="p">,</span> <span class="n">blockTime</span> <span class="p">)</span>
+
+        <span class="c1"># ---- Now get the intersection of all of the detector segment lists with this</span>
+        <span class="c1">#      on-source list. Note that the segment lists mst be sorted by start time</span>
+        <span class="c1">#      for intersection to work properly</span>
+        <span class="n">mdc_coincidence_segment</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">mdc_segment</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">full_segment_list</span><span class="p">:</span>
+            <span class="n">mdc_coincidence_segment</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">det</span><span class="p">)</span>
+
+        <span class="c1"># ---- Do some checking... check we have some MDCs in coinc...</span>
+
+        <span class="c1"># ---- At this point, the ScienceData object mdc_segment contains the</span>
+        <span class="c1">#      mdc segments.  Write this to the mdc event file.</span>
+        <span class="n">f</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input/event_&#39;</span> <span class="o">+</span> <span class="nb">set</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="c1"># ---- We also rewrite our segment files so they only contain the segs</span>
+        <span class="c1">#      we are going to analyse</span>
+        <span class="n">fmdcseg</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input/segment_&#39;</span> <span class="o">+</span> <span class="nb">set</span> <span class="o">+</span> <span class="s1">&#39;.txt&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="c1"># ---- loop over coinc segs</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">mdc_coincidence_segment</span><span class="o">.</span><span class="fm">__len__</span><span class="p">()):</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">mdc_coincidence_segment</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">end</span><span class="p">()</span> <span class="o">-</span> \
+                <span class="n">mdc_coincidence_segment</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">duration</span> <span class="o">==</span> <span class="n">blockTime</span><span class="p">):</span>
+                <span class="n">time_range_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">mdc_coincidence_segment</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span> \
+                    <span class="o">+</span> <span class="n">blockTime</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">time_range_string</span><span class="p">)</span>
+                <span class="n">time_range_string</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> \
+                    <span class="nb">str</span><span class="p">(</span><span class="n">mdc_coincidence_segment</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">())</span> \
+                    <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mdc_coincidence_segment</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">end</span><span class="p">())</span>  \
+                    <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">mdc_coincidence_segment</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">end</span><span class="p">()</span> \
+                    <span class="o">-</span><span class="n">mdc_coincidence_segment</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">())</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="n">fmdcseg</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">time_range_string</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="p">(</span><span class="n">duration</span> <span class="o">&gt;</span> <span class="n">blockTime</span><span class="p">):</span>
+                <span class="c1"># ---- this should not be possible</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: something has gone wrong in creating MDC segment list &quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">fmdcseg</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="c1"># ---- Status message.</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;... finished writing MDC event files.&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Scott Coughlin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0+untagged.52.g3236362.dirty',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

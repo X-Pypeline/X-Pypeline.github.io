@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.52.g3236362.dirty documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/xpipeline-docs.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> xpipeline
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.52.g3236362.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">xpipeline an explanation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">xpipeline</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>&lt;no title&gt;</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/xpipeline.setuputils.xnetworkselection.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="module-xpipeline.setuputils.xnetworkselection"></span><p>This module provides the basis for selecting a valid network of detectors to use for an analysis based on some requiremnets for the quality of the on-source data</p>
+<dl class="function">
+<dt id="xpipeline.setuputils.xnetworkselection.main">
+<code class="descclassname">xpipeline.setuputils.xnetworkselection.</code><code class="descname">main</code><span class="sig-paren">(</span><em>detectorList</em>, <em>centerTimesFile</em>, <em>timeOffsetsFile</em>, <em>cat1_segment_file</em>, <em>cat24_segment_file</em>, <em>output_file</em>, <em>verbosity</em>, <em>windowBeginOffset</em>, <em>windowEndOffset</em>, <em>transientTime</em>, <em>windowLength</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/setuputils/xnetworkselection.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.setuputils.xnetworkselection.main" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><blockquote>
+<div><dl class="docutils">
+<dt>detectors_considered        cell array of ifos to be considered, e.g.,</dt>
+<dd>[‘H1’ ‘H2’ ‘L1’], size (1 * nIfo).</dd>
+</dl>
+<p>centerTimes                 vector of segment center times, size (nJobs * 1).
+timeOffsets                 array of segment time offsets,</p>
+<blockquote>
+<div>size(nJobs * nIfo).</div></blockquote>
+<dl class="docutils">
+<dt>cat1_seglist                structure containing cat1 DQ segments (i.e., </dt>
+<dd>livetimes). 
+cat1_seglist(nIfo).gpsStart()
+cat1_seglist(nIfo).duration()</dd>
+<dt>cat2_seglist                Similar to cat1_seglist but containing cat2 </dt>
+<dd>veto segments (deadtime).</dd>
+<dt>verbosity                   string used to control verbosity of output,</dt>
+<dd>either ‘verbose’ or ‘quiet’.</dd>
+<dt>output_file                  String. Name of file to which we will write</dt>
+<dd>the detector networks.</dd>
+<dt>windowBeginOffset            String. Offset [sec] between start of on-source</dt>
+<dd>window and trigger time, e.g., -600.</dd>
+<dt>windowEndOffset              String. Offset [sec] between end of on-source </dt>
+<dd>window and trigger time, e.g., 60.</dd>
+<dt>transientTime                String. Length of time [sec] discarded at </dt>
+<dd>beginning and end of each analysis block, e.g., 4.</dd>
+</dl>
+<p>windowLength                 String. 2*transientTime+jobsPerWindow*(blockTime-2*transientTime)</p>
+</div></blockquote>
+<p>XNETWORKSELECTION is a wrapper function for calling XAPPLYNETWORKTESTS.
+It is intended to be compiled, allowing it to be called from the command
+line or from python scripts such as grb.py.</p>
+<p>XNETWORKSELECTION takes in lists of event times and on-source windows,
+plus lists of science mode livetime and veto deadtime segment files. It  
+uses XAPPLYNETWORKTESTS to determine which detectors satisfy the data
+quality criteria (defined in XAPPLYNETWORKTESTS) to be used for the
+analysis of each event. The list of acceptable detectors for each event
+is written to the file specified by the input argument output_file, with
+one line per event, of the form ‘H1L1V1’, or ‘H1H2’, etc.</p>
+<blockquote>
+<div><p>Our criteria for including an ifo in our network is as follows:w
+i) No deadtime incurred by category 1 flags in an interval [-128,+128]s</p>
+<blockquote>
+<div>about the GRB trigger time. 
+X-pipeline requires 256s in order to estimate the PSD, category 1 
+flags raised within these 256s will lead to inaccurate/incorrect PSD 
+estimation.</div></blockquote>
+</div></blockquote>
+<ol class="lowerroman simple" start="2">
+<li>Less than 9s (5#) deadtime incurred by category 2 flags in the onsource, 
+i.e., an interval [-120,+60]s about the GRB trigger time. 
+We tune our glitch rejection cuts using calculation of the 90# UL on 
+hrss amplitude. If we lose much more than 5# deadtime in our (dummy) 
+onsource we may not be able to accurately estimate the hrss amplitude 
+leading to 90# detection efficiency.</li>
+</ol>
+</div></blockquote>
+<ol class="lowerroman simple" start="3">
+<li>No deadtime incurred by category 2 flags in an interval [-5,+1]s about 
+the GRB trigger time. Many GRB models predict similar arrival times of 
+EM and GW emission from a GRB. We therefore require that inclusion of 
+an ifo does not kill times close to the GRB trigger time.</li>
+</ol>
+</dd></dl>
+
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Scott Coughlin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0+untagged.52.g3236362.dirty',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

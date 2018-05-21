@@ -1,0 +1,23 @@
+xpipeline.core package
+======================
+
+Submodules
+----------
+
+.. toctree::
+
+   xpipeline.core.xcoherenttimefrequencymap
+   xpipeline.core.xdetector
+   xpipeline.core.xevent
+   xpipeline.core.xfrequencyseries
+   xpipeline.core.xlikelihood
+   xpipeline.core.xtimefrequencymap
+   xpipeline.core.xtimeseries
+
+Module contents
+---------------
+
+.. automodule:: xpipeline.core
+    :members:
+    :undoc-members:
+    :show-inheritance:

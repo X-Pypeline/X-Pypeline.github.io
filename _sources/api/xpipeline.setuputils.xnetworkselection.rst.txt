@@ -1,0 +1,4 @@
+.. automodule:: xpipeline.setuputils.xnetworkselection
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,4 @@
+.. automodule:: xpipeline.xparseoutputtype
+    :members:
+    :undoc-members:
+    :show-inheritance:

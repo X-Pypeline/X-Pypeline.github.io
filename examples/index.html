@@ -1,0 +1,303 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>xpipeline an explanation &mdash; xpipeline 0+untagged.52.g3236362.dirty documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/xpipeline-docs.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Running setupJobs on the command line" href="../command-line/index.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> xpipeline
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.52.g3236362.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">xpipeline an explanation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-time-frequency-map">The Time-Frequency Map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-dominant-polarization-frame">The Dominant Polarization Frame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#coherent-data">Coherent Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xpipeline-likelihoods">xpipeline likelihoods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">xpipeline</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>xpipeline an explanation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/examples/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="xpipeline-an-explanation">
+<span id="examples"></span><h1>xpipeline an explanation<a class="headerlink" href="#xpipeline-an-explanation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>The story of one “trial” of core X-Pipeline,</p>
+<p>There is some timestamp considered as an “event time”</p>
+<p>Some block of data from N detectors if obtain around this event time.</p>
+<p>A time-frequency is made for a given fftlength, and based on time delays between detectors which is based on a potential sky location of the “source”, the tfmaps of N-1 detectors is phase shifted appropriately.</p>
+<p>From these individual maps loud pixels are identified and then a “coherent” set of pixels is calculated from the overlap of these individually loud pixels.</p>
+<p>a coherent energy is calculated and a threshold on loud coherent pixels is used,</p>
+<p>These final loud enough coherent pixels are then turned from individual pixels into clusters using whatever clustering algorithm</p>
+<p>these clusters then are assigned a variety of <em>likelihoods</em> these <em>likelihoods</em> for each cluster are based on the concept of translating the data in the dominant polarization frame i.e. plus and cross polarized time frequency maps instead of the standard time frequency maps considered above.</p>
+<p>So the final important stat calculated is energy_of_cluster * likelihood_of_cluster for a given likelihood.</p>
+<p>These likelihood rely largely on the ability to project the N stream of gravitational wave data in the relative antenna response pattern weighted time frequency space (so fplus fcross, fscalar, etc)</p>
+<p>In order to calculate these antenna weighted tfmaps we need to re-weight the ASDs of the data streams appropriately. This re-weighted ASD is then multiplied with the time frequency map obtained normally above.</p>
+<div class="section" id="the-time-frequency-map">
+<h3>The Time-Frequency Map<a class="headerlink" href="#the-time-frequency-map" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [1]: </span><span class="kn">from</span> <span class="nn">xpipeline.core.xtimeseries</span> <span class="kn">import</span> <span class="n">XTimeSeries</span>
+
+<span class="gp">In [2]: </span><span class="n">data</span> <span class="o">=</span> <span class="n">XTimeSeries</span><span class="o">.</span><span class="n">retrieve_data</span><span class="p">(</span><span class="n">event_time</span><span class="o">=</span><span class="mf">1135223174.0</span><span class="p">,</span> <span class="n">block_time</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">sample_frequency</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">channel_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;H1:DCS-CALIB_STRAIN_C01&#39;</span><span class="p">,</span><span class="s1">&#39;L1:DCS-CALIB_STRAIN_C01&#39;</span><span class="p">],</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="go">    [nds.ligo.caltech.edu] set ALLOW_DATA_ON_TAPE=&#39;False&#39;</span>
+<span class="go">Downloading data (1135223302-1135223046 | 256s): [Done]</span>
+
+<span class="gp">In [3]: </span><span class="n">asds</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">asd</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+
+<span class="gp">In [4]: </span><span class="n">data</span><span class="o">.</span><span class="n">whiten</span><span class="p">(</span><span class="n">asds</span><span class="p">)</span>
+<span class="gh">Out[4]: </span><span class="go"></span>
+<span class="go">XTimeSeries([(&#39;H1:DCS-CALIB_STRAIN_C01&#39;,</span>
+<span class="go">              &lt;TimeSeries([ 0.00178372,  0.00266933,  0.00342489, ...,</span>
+<span class="go">                           -0.0014678 ,  0.00452223,  0.00118007]</span>
+<span class="go">                          unit=Unit(&quot;strain&quot;),</span>
+<span class="go">                          t0=&lt;Quantity 1.13522317e+09 s&gt;,</span>
+<span class="go">                          dt=&lt;Quantity 0.00097656 s&gt;,</span>
+<span class="go">                          name=&#39;H1:DCS-CALIB_STRAIN_C01&#39;,</span>
+<span class="go">                          channel=&lt;Channel(&quot;H1:DCS-CALIB_STRAIN_C01&quot; [reduced], 16384.0 Hz) at 0x10d266400&gt;)&gt;),</span>
+<span class="go">             (&#39;L1:DCS-CALIB_STRAIN_C01&#39;,</span>
+<span class="go">              &lt;TimeSeries([-0.02369483, -0.00270819, -0.02352885, ...,</span>
+<span class="go">                           -0.01679554,  0.00077488, -0.01482185]</span>
+<span class="go">                          unit=Unit(&quot;strain&quot;),</span>
+<span class="go">                          t0=&lt;Quantity 1.13522317e+09 s&gt;,</span>
+<span class="go">                          dt=&lt;Quantity 0.00097656 s&gt;,</span>
+<span class="go">                          name=&#39;L1:DCS-CALIB_STRAIN_C01&#39;,</span>
+<span class="go">                          channel=&lt;Channel(&quot;L1:DCS-CALIB_STRAIN_C01&quot; [reduced], 16384.0 Hz) at 0x10d284400&gt;)&gt;)])</span>
+
+<span class="gp">In [5]: </span><span class="n">whitened_timeseries</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">whiten</span><span class="p">(</span><span class="n">asds</span><span class="p">)</span>
+
+<span class="gp">In [6]: </span><span class="k">print</span><span class="p">(</span><span class="n">whitened_timeseries</span><span class="p">)</span>
+<span class="go">XTimeSeries([(&#39;H1:DCS-CALIB_STRAIN_C01&#39;, &lt;TimeSeries([ 0.00178372,  0.00266933,  0.00342489, ...,</span>
+<span class="go">             -0.0014678 ,  0.00452223,  0.00118007]</span>
+<span class="go">            unit=Unit(&quot;strain&quot;),</span>
+<span class="go">            t0=&lt;Quantity 1.13522317e+09 s&gt;,</span>
+<span class="go">            dt=&lt;Quantity 0.00097656 s&gt;,</span>
+<span class="go">            name=&#39;H1:DCS-CALIB_STRAIN_C01&#39;,</span>
+<span class="go">            channel=&lt;Channel(&quot;H1:DCS-CALIB_STRAIN_C01&quot; [reduced], 16384.0 Hz) at 0x10d266400&gt;)&gt;), (&#39;L1:DCS-CALIB_STRAIN_C01&#39;, &lt;TimeSeries([-0.02369483, -0.00270819, -0.02352885, ...,</span>
+<span class="go">             -0.01679554,  0.00077488, -0.01482185]</span>
+<span class="go">            unit=Unit(&quot;strain&quot;),</span>
+<span class="go">            t0=&lt;Quantity 1.13522317e+09 s&gt;,</span>
+<span class="go">            dt=&lt;Quantity 0.00097656 s&gt;,</span>
+<span class="go">            name=&#39;L1:DCS-CALIB_STRAIN_C01&#39;,</span>
+<span class="go">            channel=&lt;Channel(&quot;L1:DCS-CALIB_STRAIN_C01&quot; [reduced], 16384.0 Hz) at 0x10d284400&gt;)&gt;)])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-dominant-polarization-frame">
+<h3>The Dominant Polarization Frame<a class="headerlink" href="#the-dominant-polarization-frame" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="coherent-data">
+<h3>Coherent Data<a class="headerlink" href="#coherent-data" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="xpipeline-likelihoods">
+<h3>xpipeline likelihoods<a class="headerlink" href="#xpipeline-likelihoods" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../command-line/index.html" class="btn btn-neutral" title="Running setupJobs on the command line" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Scott Coughlin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0+untagged.52.g3236362.dirty',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

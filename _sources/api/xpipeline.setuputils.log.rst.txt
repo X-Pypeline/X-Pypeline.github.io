@@ -1,0 +1,4 @@
+.. automodule:: xpipeline.setuputils.log
+    :members:
+    :undoc-members:
+    :show-inheritance:

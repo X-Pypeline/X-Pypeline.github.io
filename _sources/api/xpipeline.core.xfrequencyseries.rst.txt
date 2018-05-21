@@ -1,0 +1,4 @@
+.. automodule:: xpipeline.core.xfrequencyseries
+    :members:
+    :undoc-members:
+    :show-inheritance:

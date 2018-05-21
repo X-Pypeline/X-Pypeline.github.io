@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Welcome to X-Pypeline’s documentation! &mdash; XPypeline 0+untagged.26.g8de8be3.dirty documentation</title>
+  <title>Welcome to xpipeline’s documentation! &mdash; xpipeline 0+untagged.52.g3236362.dirty documentation</title>
   
 
   
@@ -25,27 +25,19 @@
   
 
   
-  
     <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-    <link rel="stylesheet" href="_static/X-Pypeline-docs.css" type="text/css" />
-  
-
-  
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="XPypeline 0+untagged.26.g8de8be3.dirty documentation" href="#"/>
-        <link rel="next" title="Running setupJobs on the command line" href="command-line/index.html"/> 
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/xpipeline-docs.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Running setupJobs on the command line" href="command-line/index.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -57,7 +49,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> XPypeline
+            <a href="#" class="icon icon-home"> xpipeline
           
 
           
@@ -67,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.26.g8de8be3.dirty
+                0+untagged.52.g3236362.dirty
               </div>
             
           
@@ -92,7 +84,8 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="command-line/index.html">Running <code class="docutils literal"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">xpipeline an explanation</a></li>
 </ul>
 
             
@@ -104,17 +97,18 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">XPypeline</a>
+          <a href="#">xpipeline</a>
         
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -137,7 +131,7 @@
     
       <li><a href="#">Docs</a> &raquo;</li>
         
-      <li>Welcome to X-Pypeline’s documentation!</li>
+      <li>Welcome to xpipeline’s documentation!</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -156,36 +150,37 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="welcome-to-x-pypeline-s-documentation">
-<h1>Welcome to X-Pypeline’s documentation!<a class="headerlink" href="#welcome-to-x-pypeline-s-documentation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="welcome-to-xpipeline-s-documentation">
+<h1>Welcome to xpipeline’s documentation!<a class="headerlink" href="#welcome-to-xpipeline-s-documentation" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://trac.ligo.caltech.edu/xpipeline/wiki">X Pipeline</a> is a burst gravitational-wave search algorithm. It can perform SN, GRB, and ALLSKY searches. For full details see <a class="reference external" href="http://iopscience.iop.org/article/10.1088/1367-2630/12/5/053034/meta">Sutton et al. (IOP, 2010)</a> and <a class="reference external" href="https://journals.aps.org/prd/abstract/10.1103/PhysRevD.86.022003">Was et al. (PRD, 2012)</a></p>
-<div class="section" id="installing-x-pypeline">
-<h2>Installing X-Pypeline<a class="headerlink" href="#installing-x-pypeline" title="Permalink to this headline">¶</a></h2>
-<p>The easiest method to install X-Pypeline is using <a class="reference external" href="https://pip.pypa.io/en/stable/">pip</a> directly from the <a class="reference external" href="https://github.com/X-Pypeline/X-Pypeline.git">GitHub repository</a>:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install git+https://github.com/X-Pypeline/X-Pypeline.git
+<div class="section" id="installing-xpipeline">
+<h2>Installing xpipeline<a class="headerlink" href="#installing-xpipeline" title="Permalink to this headline">¶</a></h2>
+<p>The easiest method to install xpipeline is using <a class="reference external" href="https://pip.pypa.io/en/stable/">pip</a> directly from the <a class="reference external" href="https://github.com/xpipeline/xpipeline.git">GitHub repository</a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ pip install git+https://github.com/xpipeline/xpipeline.git
 </pre></div>
 </div>
 </div>
-<div class="section" id="how-to-run-x-pypeline">
-<h2>How to run X-Pypeline<a class="headerlink" href="#how-to-run-x-pypeline" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-to-run-xpipeline">
+<h2>How to run xpipeline<a class="headerlink" href="#how-to-run-xpipeline" title="Permalink to this headline">¶</a></h2>
 <p>The main product of this package is the command-line executable <cite>setUpJobs</cite>, which runs a script that sets up X-Pipeline gravitational-wave searches of SN GRB and ALLSKY/SPHRAD.</p>
 <p>To run an analysis:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ setUpJobs -p grb_full.ini --grb-name GRB160830 -g <span class="m">1156610000</span> -r <span class="m">307</span>.65 -d <span class="m">45</span>.72 -i H1 L1 V1 -s grb --FAP<span class="o">=</span><span class="m">99</span>.9
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ setUpJobs -p grb_full.ini --grb-name GRB160830 -g <span class="m">1156610000</span> -r <span class="m">307</span>.65 -d <span class="m">45</span>.72 -i H1 L1 V1 -s grb --FAP<span class="o">=</span><span class="m">99</span>.9
 </pre></div>
 </div>
-<p>where <code class="docutils literal"><span class="pre">-g</span></code> is the GPS time of the GRB event, and <code class="docutils literal"><span class="pre">-p</span> <span class="pre">grb_full.ini</span></code> is the path of your configuration file.</p>
+<p>where <code class="docutils literal notranslate"><span class="pre">-g</span></code> is the GPS time of the GRB event, and <code class="docutils literal notranslate"><span class="pre">-p</span> <span class="pre">grb_full.ini</span></code> is the path of your configuration file.</p>
 <p>For a full list of command-line argument and options, run</p>
-<div class="highlight-bash"><div class="highlight"><pre><span></span>$ setUpJobs --help
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ setUpJobs --help
 </pre></div>
 </div>
 <p>For more details see <a class="reference internal" href="command-line/index.html#command-line"><span class="std std-ref">Running setupJobs on the command line</span></a>.</p>
 </div>
 <div class="section" id="package-documentation">
 <h2>Package documentation<a class="headerlink" href="#package-documentation" title="Permalink to this headline">¶</a></h2>
-<p>Please consult these pages for more details on using X-Pypeline:</p>
+<p>Please consult these pages for more details on using xpipeline:</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="command-line/index.html">Running <code class="docutils literal"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/index.html">xpipeline an explanation</a></li>
 </ul>
 </div>
 </div>
@@ -201,9 +196,7 @@
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -219,11 +212,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Scott Coughlin.
+        &copy; Copyright 2018, Scott Coughlin.
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -241,7 +234,8 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0+untagged.26.g8de8be3.dirty',
+            VERSION:'0+untagged.52.g3236362.dirty',
+            LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
@@ -259,14 +253,11 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
   
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

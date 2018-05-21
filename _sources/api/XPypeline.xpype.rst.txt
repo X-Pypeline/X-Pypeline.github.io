@@ -1,4 +1,0 @@
-.. automodule:: XPypeline.xpype
-    :members:
-    :undoc-members:
-    :show-inheritance:

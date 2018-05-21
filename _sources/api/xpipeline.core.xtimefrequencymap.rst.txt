@@ -1,0 +1,4 @@
+.. automodule:: xpipeline.core.xtimefrequencymap
+    :members:
+    :undoc-members:
+    :show-inheritance:

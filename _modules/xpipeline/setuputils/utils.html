@@ -1,0 +1,398 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>xpipeline.setuputils.utils &mdash; xpipeline 0+untagged.52.g3236362.dirty documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/xpipeline-docs.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> xpipeline
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.52.g3236362.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">xpipeline an explanation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">xpipeline</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>xpipeline.setuputils.utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for xpipeline.setuputils.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (C) Scott Coughlin (2017)</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of XPypeline.</span>
+<span class="c1">#</span>
+<span class="c1"># GWpy is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># GWpy is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with GWpy.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="sd">&quot;&quot;&quot;This module contains utility functions for setUpJobs </span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">gwpy.segments</span> <span class="k">import</span> <span class="n">Segment</span><span class="p">,</span> <span class="n">DataQualityDict</span><span class="p">,</span> <span class="n">SegmentList</span><span class="p">,</span> <span class="n">DataQualityFlag</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">reduce</span>
+
+<div class="viewcode-block" id="query_veto_definer_file"><a class="viewcode-back" href="../../../api/xpipeline.setuputils.utils.html#xpipeline.setuputils.utils.query_veto_definer_file">[docs]</a><span class="k">def</span> <span class="nf">query_veto_definer_file</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">cp</span><span class="p">):</span>
+    <span class="c1"># Obtain segments that are analysis ready</span>
+    <span class="n">analysis_ready</span> <span class="o">=</span> <span class="n">DataQualityFlag</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">:DMT-ANALYSIS_READY:1&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ifo</span><span class="p">),</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+    <span class="c1"># Define the start and stop time of analysis ready</span>
+    <span class="n">analysis_ready_start</span> <span class="o">=</span> <span class="n">analysis_ready</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">extent</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">analysis_ready_end</span> <span class="o">=</span> <span class="n">analysis_ready</span><span class="o">.</span><span class="n">active</span><span class="o">.</span><span class="n">extent</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># Query for vetos found during this time.</span>
+    <span class="n">vdf</span> <span class="o">=</span> <span class="n">DataQualityDict</span><span class="o">.</span><span class="n">from_veto_definer_file</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;segfind&#39;</span><span class="p">,</span> <span class="s1">&#39;veto-file&#39;</span><span class="p">),</span> <span class="n">analysis_ready_start</span><span class="p">,</span> <span class="n">analysis_ready_end</span><span class="p">)</span>
+    <span class="c1"># Populate only for analysis ready segments.</span>
+    <span class="n">vdf</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="n">segments</span><span class="o">=</span><span class="n">analysis_ready</span><span class="o">.</span><span class="n">active</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">vdf</span></div>
+
+
+<div class="viewcode-block" id="filter_for_cat_type"><a class="viewcode-back" href="../../../api/xpipeline.setuputils.utils.html#xpipeline.setuputils.utils.filter_for_cat_type">[docs]</a><span class="k">def</span> <span class="nf">filter_for_cat_type</span><span class="p">(</span><span class="n">vdf</span><span class="p">,</span> <span class="n">ifo</span><span class="p">,</span> <span class="n">cat</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">or_</span><span class="p">,</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">active</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">vdf</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">ifo</span> <span class="o">==</span> <span class="n">ifo</span> <span class="ow">and</span> <span class="n">f</span><span class="o">.</span><span class="n">category</span> <span class="ow">in</span> <span class="n">cat</span><span class="p">],</span> <span class="n">SegmentList</span><span class="p">())</span></div>
+   
+
+<div class="viewcode-block" id="validate_segments"><a class="viewcode-back" href="../../../api/xpipeline.setuputils.utils.html#xpipeline.setuputils.utils.validate_segments">[docs]</a><span class="k">def</span> <span class="nf">validate_segments</span><span class="p">(</span><span class="n">ifos</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">cp</span><span class="p">,</span> <span class="n">trigger_time</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;determine analysis ready segments during requested analysis time</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ifos : `str`</span>
+<span class="sd">        list of ifos used in X-Pipeline analysis</span>
+
+<span class="sd">    start : `float`, :class:`~gwpy.time.LIGOTimeGPS`</span>
+
+<span class="sd">    end : `float`, `~gwpy.time.LIGOTimeGPS`</span>
+
+<span class="sd">    cp : `object` ConfigParser object</span>
+
+<span class="sd">    trigger_time</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    DataQualityDict : ~gwpy.segments.DataQualityDict`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">analysis_seg_files</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># If simulating noise skip all segment, veto </span>
+    <span class="c1"># and network validation checks. The on source and off source is</span>
+    <span class="c1"># simulated and therefore has no DQ issues.</span>
+    <span class="k">if</span> <span class="n">cp</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">,</span><span class="s1">&#39;makeSimulatedNoise&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="n">ifos</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Making simulated noise, creating temp segment file&#39;</span><span class="p">)</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;segments_</span><span class="si">{0}</span><span class="s1">.txt&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ifo</span><span class="p">),</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;0 </span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1"> </span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="p">,</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="n">analysis_seg_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;segments_</span><span class="si">{0}</span><span class="s1">.txt&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ifo</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="n">ifos</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cp</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span><span class="s1">&#39;segment-list&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span><span class="s1">&#39;segment-list&#39;</span><span class="p">)):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Please uncomment the &#39;</span>
+                                     <span class="s1">&#39;the segment file in ini file &#39;</span>
+                                     <span class="s1">&#39;as it does not exist. &#39;</span>
+                                     <span class="s1">&#39;If you want to use a &#39;</span>
+                                     <span class="s1">&#39;supplied file please provide one.&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">analysis_seg_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span><span class="s1">&#39;segment-list&#39;</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Query for veto definer file</span>
+                <span class="n">vdf</span> <span class="o">=</span> <span class="n">query_veto_definer_file</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">cp</span><span class="p">)</span> 
+
+                <span class="c1"># Filter for cat1 vetos</span>
+                <span class="n">segs</span> <span class="o">=</span> <span class="n">filter_for_cat_type</span><span class="p">(</span><span class="n">vdf</span><span class="p">,</span> <span class="n">ifo</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+                <span class="c1"># ---- Write out cat1 veto to text file.</span>
+                <span class="n">filename_cat1</span> <span class="o">=</span> <span class="s2">&quot;input/&quot;</span> <span class="o">+</span> <span class="n">ifo</span> <span class="o">+</span>  <span class="s2">&quot;-veto-cat1.txt&quot;</span>
+                <span class="n">segs</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename_cat1</span><span class="p">)</span>
+
+                <span class="c1"># Compute analysis ready segments in order to</span>
+                <span class="c1"># subtract out cat1 vetos</span>
+                <span class="n">analysis_ready</span> <span class="o">=</span> <span class="n">DataQualityFlag</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">:DMT-ANALYSIS_READY:1&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ifo</span><span class="p">),</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+
+                <span class="c1"># Subtract cat 1 veto from analysis_ready</span>
+                <span class="n">analysis_ready_minus_cat1</span> <span class="o">=</span> <span class="n">analysis_ready</span><span class="o">.</span><span class="n">active</span> <span class="o">-</span> <span class="n">segs</span>
+                <span class="c1"># Save new segment list to file</span>
+                <span class="n">filename_analysis_ready_minus_cat1</span> <span class="o">=</span> <span class="s2">&quot;input/&quot;</span> <span class="o">+</span> <span class="n">ifo</span> <span class="o">+</span> <span class="s2">&quot;_science_cat1.txt&quot;</span>
+                <span class="n">analysis_ready_minus_cat1</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename_analysis_ready_minus_cat1</span><span class="p">)</span>
+                <span class="n">analysis_seg_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filename_analysis_ready_minus_cat1</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">analysis_seg_files</span></div>
+
+<div class="viewcode-block" id="validate_network"><a class="viewcode-back" href="../../../api/xpipeline.setuputils.utils.html#xpipeline.setuputils.utils.validate_network">[docs]</a><span class="k">def</span> <span class="nf">validate_network</span><span class="p">():</span>
+
+    <span class="k">return</span></div>
+
+
+<div class="viewcode-block" id="validate_vetos"><a class="viewcode-back" href="../../../api/xpipeline.setuputils.utils.html#xpipeline.setuputils.utils.validate_vetos">[docs]</a><span class="k">def</span> <span class="nf">validate_vetos</span><span class="p">(</span><span class="n">ifos</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">cp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;determine vetos during requested analysis time</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ifos : `str`</span>
+<span class="sd">	list of ifos used in X-Pipeline analysis</span>
+
+<span class="sd">    start : `float`, :class:`~gwpy.time.LIGOTimeGPS`</span>
+
+<span class="sd">    end : `float`, `~gwpy.time.LIGOTimeGPS`</span>
+
+<span class="sd">    cp : `object` ConfigParser object</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    DataQualityDict : ~gwpy.segments.DataQualityDict`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">veto_seg_files</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># If simulating noise skip all segment, veto </span>
+    <span class="c1"># and network validation checks. The on source and off source is</span>
+    <span class="c1"># simulated and therefore has no DQ issues.</span>
+    <span class="k">if</span> <span class="n">cp</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">,</span><span class="s1">&#39;makeSimulatedNoise&#39;</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="n">ifos</span><span class="p">:</span>
+            <span class="n">veto_seg_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;None&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">ifo</span> <span class="ow">in</span> <span class="n">ifos</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cp</span><span class="o">.</span><span class="n">has_option</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span><span class="s1">&#39;veto-list&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span><span class="s1">&#39;veto-list&#39;</span><span class="p">)):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Please uncomment the &#39;</span>
+                                     <span class="s1">&#39;the veto file in ini file &#39;</span>
+                                     <span class="s1">&#39;as it does not exist. &#39;</span>
+                                     <span class="s1">&#39;If you want to use a &#39;</span>
+                                     <span class="s1">&#39;supplied file please provide one.&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">veto_seg_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span><span class="s1">&#39;veto-list&#39;</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Query for veto definer file</span>
+                <span class="n">vdf</span> <span class="o">=</span> <span class="n">query_veto_definer_file</span><span class="p">(</span><span class="n">ifo</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">cp</span><span class="p">)</span>
+
+                <span class="c1"># Filter for cat24 vetos</span>
+                <span class="n">cat</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">iCat</span> <span class="ow">in</span> <span class="n">cat</span><span class="p">:</span>
+                    <span class="n">segs</span> <span class="o">=</span> <span class="n">filter_for_cat_type</span><span class="p">(</span><span class="n">vdf</span><span class="p">,</span> <span class="n">ifo</span><span class="p">,</span> <span class="p">[</span><span class="n">iCat</span><span class="p">])</span>
+                    <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;input/&quot;</span> <span class="o">+</span> <span class="n">ifo</span> <span class="o">+</span>  <span class="s2">&quot;-veto-cat</span><span class="si">{0}</span><span class="s2">.txt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">iCat</span><span class="p">)</span>
+                    <span class="n">segs</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+                <span class="n">segs</span> <span class="o">=</span> <span class="n">filter_for_cat_type</span><span class="p">(</span><span class="n">vdf</span><span class="p">,</span> <span class="n">ifo</span><span class="p">,</span> <span class="n">cat</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;input/&quot;</span> <span class="o">+</span> <span class="n">ifo</span> <span class="o">+</span> <span class="s2">&quot;_cat24veto.txt&quot;</span>
+                <span class="n">segs</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+                <span class="n">veto_seg_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+                
+    <span class="k">return</span> <span class="n">veto_seg_files</span></div>
+
+
+<div class="viewcode-block" id="make_chunks"><a class="viewcode-back" href="../../../api/xpipeline.setuputils.utils.html#xpipeline.setuputils.utils.make_chunks">[docs]</a><span class="k">def</span> <span class="nf">make_chunks</span><span class="p">(</span><span class="n">segment</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">    Divides the science segment into chunks of length seconds overlapped by </span>
+<span class="sd">    overlap seconds. </span>
+<span class="sd">    when generating chunks </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">chunks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">iseg</span> <span class="ow">in</span> <span class="n">segment</span><span class="p">:</span>
+        <span class="n">segtemp</span> <span class="o">=</span> <span class="n">SegmentList</span><span class="p">([</span><span class="n">iseg</span><span class="p">])</span>
+        <span class="n">time_left</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">segtemp</span><span class="p">)</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">segtemp</span><span class="o">.</span><span class="n">extent</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">increment</span> <span class="o">=</span> <span class="n">length</span> <span class="o">-</span> <span class="n">overlap</span>
+        <span class="k">while</span> <span class="n">time_left</span> <span class="o">&gt;=</span> <span class="n">length</span><span class="p">:</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">length</span>
+            <span class="n">chunks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Segment</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+            <span class="n">start</span> <span class="o">+=</span> <span class="n">increment</span>
+            <span class="n">time_left</span> <span class="o">-=</span> <span class="n">increment</span>
+
+    <span class="k">return</span> <span class="n">SegmentList</span><span class="p">(</span><span class="n">chunks</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Scott Coughlin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0+untagged.52.g3236362.dirty',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+xpipeline.setuputils package
+============================
+
+Submodules
+----------
+
+.. toctree::
+
+   xpipeline.setuputils.log
+   xpipeline.setuputils.utils
+   xpipeline.setuputils.xnetworkselection
+
+Module contents
+---------------
+
+.. automodule:: xpipeline.setuputils
+    :members:
+    :undoc-members:
+    :show-inheritance:

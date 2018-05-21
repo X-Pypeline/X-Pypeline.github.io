@@ -1,0 +1,4 @@
+.. automodule:: xpipeline.xcondor
+    :members:
+    :undoc-members:
+    :show-inheritance:
