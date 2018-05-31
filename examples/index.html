@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline an explanation &mdash; xpipeline 0+untagged.57.g5c29f3c documentation</title>
+  <title>xpipeline an explanation &mdash; xpipeline 0+untagged.58.g5eec178.dirty documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.57.g5c29f3c
+                0+untagged.58.g5eec178.dirty
               </div>
             
           
@@ -203,12 +203,14 @@
 <span class="gp">In [10]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">tfmaps</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
 
 <span class="gp">In [11]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">gps</span> <span class="o">-</span> <span class="mf">0.15</span><span class="p">,</span> <span class="n">gps</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">gps</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time [milliseconds]&#39;</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="gp">   ....: </span>
 
-<span class="gp">In [11]: </span><span class="n">plot</span>
-<span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-11-2289002d1a4f&gt;&quot;</span><span class="gt">, line </span><span class="mi">2</span>
-    <span class="n">plot</span>
-       <span class="o">^</span>
-<span class="ne">IndentationError</span>: expected an indented block
+<span class="gp">In [12]: </span><span class="n">plot</span>
+<span class="gh">Out[12]: </span><span class="go">&lt;SpectrogramPlot size 800x400 with 1 Axes&gt;</span>
 </pre></div>
 </div>
 <img alt="../_images/plot-time-frequency-map.png" src="../_images/plot-time-frequency-map.png" />
@@ -216,25 +218,27 @@
 </div>
 <div class="section" id="the-dominant-polarization-frame">
 <h3>The Dominant Polarization Frame<a class="headerlink" href="#the-dominant-polarization-frame" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [12]: </span><span class="kn">from</span> <span class="nn">xpipeline.core.xdetector</span> <span class="kn">import</span> <span class="n">compute_antenna_patterns</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [13]: </span><span class="kn">from</span> <span class="nn">xpipeline.core.xdetector</span> <span class="kn">import</span> <span class="n">compute_antenna_patterns</span>
 
-<span class="gp">In [13]: </span><span class="n">phi</span> <span class="o">=</span> <span class="mf">0.7728</span><span class="p">;</span> <span class="n">theta</span> <span class="o">=</span> <span class="mf">1.4323</span>
+<span class="gp">In [14]: </span><span class="n">phi</span> <span class="o">=</span> <span class="mf">0.7728</span><span class="p">;</span> <span class="n">theta</span> <span class="o">=</span> <span class="mf">1.4323</span>
 
-<span class="gp">In [14]: </span><span class="n">antenna_patterns</span> <span class="o">=</span> <span class="n">compute_antenna_patterns</span><span class="p">([</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">],</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">antenna_patterns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">,</span> <span class="s1">&#39;f_cross&#39;</span><span class="p">,</span> <span class="s1">&#39;f_scalar&#39;</span><span class="p">])</span>
+<span class="gp">In [15]: </span><span class="n">antenna_patterns</span> <span class="o">=</span> <span class="n">compute_antenna_patterns</span><span class="p">([</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">],</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">antenna_patterns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">,</span> <span class="s1">&#39;f_cross&#39;</span><span class="p">,</span> <span class="s1">&#39;f_scalar&#39;</span><span class="p">])</span>
 
-<span class="gp">In [15]: </span><span class="n">projected_asds</span> <span class="o">=</span> <span class="n">asds</span><span class="o">.</span><span class="n">project_onto_antenna_patterns</span><span class="p">(</span><span class="n">antenna_patterns</span><span class="p">,</span> <span class="n">to_dominant_polarization_frame</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">In [16]: </span><span class="n">projected_asds</span> <span class="o">=</span> <span class="n">asds</span><span class="o">.</span><span class="n">project_onto_antenna_patterns</span><span class="p">(</span><span class="n">antenna_patterns</span><span class="p">,</span> <span class="n">to_dominant_polarization_frame</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-<span class="gp">In [16]: </span><span class="n">projected_tfmaps</span> <span class="o">=</span> <span class="n">tfmaps</span><span class="o">.</span><span class="n">to_dominant_polarization_frame</span><span class="p">(</span><span class="n">projected_asds</span><span class="p">)</span>
+<span class="gp">In [17]: </span><span class="n">projected_tfmaps</span> <span class="o">=</span> <span class="n">tfmaps</span><span class="o">.</span><span class="n">to_dominant_polarization_frame</span><span class="p">(</span><span class="n">projected_asds</span><span class="p">)</span>
 
-<span class="gp">In [17]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">projected_tfmaps</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">In [18]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">projected_tfmaps</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
 
-<span class="gp">In [18]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+<span class="gp">In [19]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">gps</span> <span class="o">-</span> <span class="mf">0.15</span><span class="p">,</span> <span class="n">gps</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">gps</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time [milliseconds]&#39;</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="gp">   ....: </span>
 
-<span class="gp">In [18]: </span><span class="n">plot</span>
-<span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-18-2289002d1a4f&gt;&quot;</span><span class="gt">, line </span><span class="mi">2</span>
-    <span class="n">plot</span>
-       <span class="o">^</span>
-<span class="ne">IndentationError</span>: expected an indented block
+<span class="gp">In [20]: </span><span class="n">plot</span>
+<span class="gh">Out[20]: </span><span class="go">&lt;Plot size 800x400 with 2 Axes&gt;</span>
 </pre></div>
 </div>
 <img alt="../_images/plot-time-frequency-map-dpf-plus.png" src="../_images/plot-time-frequency-map-dpf-plus.png" />
@@ -246,35 +250,37 @@ can be considered likely was a gravitational wave</p>
 <p>A gravitational wave not only should be coherent between the multiple data streams
 but if it originated from a certain part of the sky the projection of the cluster onto
 the plus and cross polarization plane (i.e. <cite>projected_tfmaps</cite> should also be large.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [19]: </span><span class="kn">from</span> <span class="nn">xpipeline.core.xlikelihood</span> <span class="kn">import</span> <span class="n">XLikelihood</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [21]: </span><span class="kn">from</span> <span class="nn">xpipeline.core.xlikelihood</span> <span class="kn">import</span> <span class="n">XLikelihood</span>
 
-<span class="gp">In [20]: </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">In [22]: </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
-<span class="gp">In [21]: </span><span class="n">mpp</span> <span class="o">=</span> <span class="n">projected_asds</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_m_ab</span><span class="p">()</span>
+<span class="gp">In [23]: </span><span class="n">mpp</span> <span class="o">=</span> <span class="n">projected_asds</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_m_ab</span><span class="p">()</span>
 
-<span class="gp">In [22]: </span><span class="n">mcc</span> <span class="o">=</span> <span class="n">projected_asds</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_m_ab</span><span class="p">()</span>
+<span class="gp">In [24]: </span><span class="n">mcc</span> <span class="o">=</span> <span class="n">projected_asds</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_m_ab</span><span class="p">()</span>
 
-<span class="gp">In [23]: </span><span class="n">wfptimefrequencymap</span> <span class="o">=</span> <span class="n">projected_tfmaps</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span>
+<span class="gp">In [25]: </span><span class="n">wfptimefrequencymap</span> <span class="o">=</span> <span class="n">projected_tfmaps</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span>
 
-<span class="gp">In [24]: </span><span class="n">wfctimefrequencymap</span> <span class="o">=</span> <span class="n">projected_tfmaps</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span>
+<span class="gp">In [26]: </span><span class="n">wfctimefrequencymap</span> <span class="o">=</span> <span class="n">projected_tfmaps</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span>
 
-<span class="gp">In [25]: </span><span class="n">frequencies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">513</span><span class="p">,</span><span class="mi">64</span><span class="p">)</span>
+<span class="gp">In [27]: </span><span class="n">frequencies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">513</span><span class="p">,</span><span class="mi">64</span><span class="p">)</span>
 
-<span class="gp">In [26]: </span><span class="n">mpp</span> <span class="o">=</span> <span class="n">mpp</span><span class="p">[</span><span class="n">frequencies</span><span class="p">]</span>
+<span class="gp">In [28]: </span><span class="n">mpp</span> <span class="o">=</span> <span class="n">mpp</span><span class="p">[</span><span class="n">frequencies</span><span class="p">]</span>
 
-<span class="gp">In [27]: </span><span class="n">mcc</span> <span class="o">=</span> <span class="n">mcc</span><span class="p">[</span><span class="n">frequencies</span><span class="p">]</span>
+<span class="gp">In [29]: </span><span class="n">mcc</span> <span class="o">=</span> <span class="n">mcc</span><span class="p">[</span><span class="n">frequencies</span><span class="p">]</span>
 
-<span class="gp">In [28]: </span><span class="n">likelihood_map</span> <span class="o">=</span> <span class="n">XLikelihood</span><span class="o">.</span><span class="n">standard</span><span class="p">(</span><span class="n">mpp</span><span class="p">,</span> <span class="n">mcc</span><span class="p">,</span> <span class="n">wfptimefrequencymap</span><span class="p">,</span> <span class="n">wfctimefrequencymap</span><span class="p">)</span>
+<span class="gp">In [30]: </span><span class="n">likelihood_map</span> <span class="o">=</span> <span class="n">XLikelihood</span><span class="o">.</span><span class="n">standard</span><span class="p">(</span><span class="n">mpp</span><span class="p">,</span> <span class="n">mcc</span><span class="p">,</span> <span class="n">wfptimefrequencymap</span><span class="p">,</span> <span class="n">wfctimefrequencymap</span><span class="p">)</span>
 
-<span class="gp">In [29]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">likelihood_map</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="gp">In [31]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">likelihood_map</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
 
-<span class="gp">In [30]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+<span class="gp">In [32]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">gps</span> <span class="o">-</span> <span class="mf">0.15</span><span class="p">,</span> <span class="n">gps</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">gps</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time [milliseconds]&#39;</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="gp">   ....: </span>
 
-<span class="gp">In [30]: </span><span class="n">plot</span>
-<span class="gt">  File</span><span class="nn"> &quot;&lt;ipython-input-30-2289002d1a4f&gt;&quot;</span><span class="gt">, line </span><span class="mi">2</span>
-    <span class="n">plot</span>
-       <span class="o">^</span>
-<span class="ne">IndentationError</span>: expected an indented block
+<span class="gp">In [33]: </span><span class="n">plot</span>
+<span class="gh">Out[33]: </span><span class="go">&lt;SpectrogramPlot size 800x400 with 1 Axes&gt;</span>
 </pre></div>
 </div>
 <img alt="../_images/plot-time-frequency-map-standard-likelihood.png" src="../_images/plot-time-frequency-map-standard-likelihood.png" />
@@ -322,7 +328,7 @@ the plus and cross polarization plane (i.e. <cite>projected_tfmaps</cite> should
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.57.g5c29f3c',
+            VERSION:'0+untagged.58.g5eec178.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

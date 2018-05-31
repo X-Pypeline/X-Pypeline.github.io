@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.core.xtimeseries &mdash; xpipeline 0+untagged.57.g5c29f3c documentation</title>
+  <title>xpipeline.core.xtimeseries &mdash; xpipeline 0+untagged.58.g5eec178.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.57.g5c29f3c
+                0+untagged.58.g5eec178.dirty
               </div>
             
           
@@ -278,10 +278,8 @@
             <span class="n">fftlength</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">c</span><span class="p">,</span> <span class="n">fftlength</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="p">(</span><span class="n">idet</span><span class="p">,</span> <span class="n">iseries</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
-            <span class="n">tfmaps</span><span class="p">[</span><span class="n">idet</span><span class="p">]</span> <span class="o">=</span> <span class="n">XTimeFrequencyMap</span><span class="p">(</span><span class="n">iseries</span><span class="o">.</span><span class="n">spectrogram</span><span class="p">(</span>
-                                             <span class="n">stride</span><span class="o">=</span><span class="n">fftlength</span><span class="p">[</span><span class="n">idet</span><span class="p">],</span>
+            <span class="n">tfmaps</span><span class="p">[</span><span class="n">idet</span><span class="p">]</span> <span class="o">=</span> <span class="n">XTimeFrequencyMap</span><span class="p">(</span><span class="n">iseries</span><span class="o">.</span><span class="n">spectrogram2</span><span class="p">(</span>
                                              <span class="n">fftlength</span><span class="o">=</span><span class="n">fftlength</span><span class="p">[</span><span class="n">idet</span><span class="p">],</span>
-                                             <span class="n">overlap</span><span class="o">=</span><span class="n">fftlength</span><span class="p">[</span><span class="n">idet</span><span class="p">]</span><span class="o">*</span><span class="mf">0.5</span><span class="p">,</span>
                                              <span class="n">window</span><span class="o">=</span><span class="s1">&#39;hann&#39;</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">tfmaps</span></div></div>
 </pre></div>
@@ -318,7 +316,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0+untagged.57.g5c29f3c',
+            VERSION:'0+untagged.58.g5eec178.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

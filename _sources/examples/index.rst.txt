@@ -55,6 +55,7 @@ The following is all open data obtained via `LOSC <https://losc.ligo.org/>`_
        ...:     ax.set_epoch(gps)
        ...:     ax.set_xlabel('Time [milliseconds]')
        ...:     ax.set_ylim(20, 500)
+       ...:
 
     @savefig plot-time-frequency-map.png
     In [9]: plot
@@ -62,10 +63,10 @@ The following is all open data obtained via `LOSC <https://losc.ligo.org/>`_
     In [10]: plot = tfmaps.to_coherent().plot(figsize=[8, 4])
 
     In [11]: for ax in plot.axes:
-        ...:     ax.set_xlim(gps - 0.15, gps + 0.05)
-        ...:     ax.set_epoch(gps)
-        ...:     ax.set_xlabel('Time [milliseconds]')
-        ...:     ax.set_ylim(20, 500)
+       ....:     ax.set_xlim(gps - 0.15, gps + 0.05)
+       ....:     ax.set_epoch(gps)
+       ....:     ax.set_xlabel('Time [milliseconds]')
+       ....:     ax.set_ylim(20, 500)
 
     @savefig plot-time-frequency-map-coherent.png
     In [12]: plot
@@ -88,10 +89,10 @@ The Dominant Polarization Frame
     In [18]: plot = projected_tfmaps['f_plus'].plot(figsize=[8, 4])
 
     In [19]: for ax in plot.axes:
-        ...:     ax.set_xlim(gps - 0.15, gps + 0.05)
-        ...:     ax.set_epoch(gps)
-        ...:     ax.set_xlabel('Time [milliseconds]')
-        ...:     ax.set_ylim(20, 500)
+       ....:     ax.set_xlim(gps - 0.15, gps + 0.05)
+       ....:     ax.set_epoch(gps)
+       ....:     ax.set_xlabel('Time [milliseconds]')
+       ....:     ax.set_ylim(20, 500)
 
     @savefig plot-time-frequency-map-dpf-plus.png
     In [20]: plot
@@ -130,10 +131,10 @@ the plus and cross polarization plane (i.e. `projected_tfmaps` should also be la
     In [30]: plot = likelihood_map.plot(figsize=[8, 4])
 
     In [31]: for ax in plot.axes:
-        ...:     ax.set_xlim(gps - 0.15, gps + 0.05)
-        ...:     ax.set_epoch(gps)
-        ...:     ax.set_xlabel('Time [milliseconds]')
-        ...:     ax.set_ylim(20, 500)
+       ....:     ax.set_xlim(gps - 0.15, gps + 0.05)
+       ....:     ax.set_epoch(gps)
+       ....:     ax.set_xlabel('Time [milliseconds]')
+       ....:     ax.set_ylim(20, 500)
 
     @savefig plot-time-frequency-map-standard-likelihood.png
     In [32]: plot
