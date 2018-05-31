@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.52.g3236362.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.57.g5c29f3c documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.52.g3236362.dirty
+                0+untagged.57.g5c29f3c
               </div>
             
           
@@ -156,16 +156,24 @@
 <dl class="method">
 <dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.circular_time_slide">
 <code class="descname">circular_time_slide</code><span class="sig-paren">(</span><em>slide</em>, <em>sample_frequency</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.circular_time_slide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.circular_time_slide" title="Permalink to this definition">¶</a></dt>
-<dd><p>Phase shift this <cite>spectrogram</cite> by <code class="docutils literal notranslate"><span class="pre">delta</span></code></p>
-<p>This modifies the spectrogram in-place.</p>
+<dd><p>Slide the TF pixels of this map</p>
+<p>This should move the appropriate number of time bins
+such that slide represents a slide in seconds.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>delta</strong> : <cite>float</cite>, <cite>~astropy.units.Quantity</cite>, <cite>str</cite></p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>slide</strong> : <cite>int</cite>,</p>
+<blockquote>
+<div><p>Ho many seconds we are sliding the map</p>
+</div></blockquote>
+<p><strong>sample_freqeunecy</strong> : <cite>float</cite></p>
+<blockquote>
+<div><p>what is the sample frequency of the data</p>
+</div></blockquote>
+<p><strong>offset</strong> : <cite>float</cite></p>
 <blockquote class="last">
-<div><p>The amount by which to shift (in seconds if <cite>float</cite>), give
-a negative value to shift backwards in time</p>
+<div><p>what offset was used to make this spectrogram</p>
 </div></blockquote>
 </td>
 </tr>
@@ -177,18 +185,11 @@ a negative value to shift backwards in time</p>
 <dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.find_significant_pixels">
 <code class="descname">find_significant_pixels</code><span class="sig-paren">(</span><em>blackpixel_percentile=99</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.find_significant_pixels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.find_significant_pixels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtain the time-frequency indicies of the loudest pixels</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>blackpixel_percentile</strong> : <cite>int</cite></p>
-<blockquote class="last">
-<div><p>what 2D percentile value we will use as the threshold</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+<p>Parameters:</p>
+<dl class="docutils">
+<dt>blackpixel_percentile <span class="classifier-delimiter">:</span> <span class="classifier"><cite>int</cite></span></dt>
+<dd>what 2D percentile value we will use as the threshold</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -223,9 +224,69 @@ a negative value to shift backwards in time</p>
 <em class="property">class </em><code class="descclassname">xpipeline.core.xtimefrequencymap.</code><code class="descname">XTimeFrequencyMapDict</code><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMapDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a></p>
 <dl class="method">
-<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.dosomething">
-<code class="descname">dosomething</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMapDict.dosomething"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.dosomething" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>label='key'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMapDict.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the data for this <cite>XTimeFrequencyMapDict</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>label</strong> : <cite>str</cite>, optional</p>
+<blockquote>
+<div><p>labelling system to use, or fixed label for all elements
+Special values include</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">'key'</span></code>: use the key of the <cite>XTimeFrequencyMapDict</cite>,</li>
+<li><code class="docutils literal notranslate"><span class="pre">'name'</span></code>: use the <code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code> of each element</li>
+</ul>
+<p>If anything else, that fixed label will be used for all lines.</p>
+</div></blockquote>
+<p><strong>**kwargs</strong></p>
+<blockquote class="last">
+<div><p>all other keyword arguments are passed to the plotter as
+appropriate</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.to_coherent">
+<code class="descname">to_coherent</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMapDict.to_coherent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.to_coherent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sum all maps in the dict</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt><cite>XTimeFrequencyMap</cite>:</dt>
+<dd>A coherent TF-Map</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.to_dominant_polarization_frame">
+<code class="descname">to_dominant_polarization_frame</code><span class="sig-paren">(</span><em>projected_asds</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMapDict.to_dominant_polarization_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.to_dominant_polarization_frame" title="Permalink to this definition">¶</a></dt>
+<dd><p>Project Tfmap to an antenna frame give a dict of asds</p>
+<dl class="docutils">
+<dt>Parameters:</dt>
+<dd><dl class="first last docutils">
+<dt>projected_asds <span class="classifier-delimiter">:</span> <span class="classifier"><cite>dict</cite></span></dt>
+<dd>key-wise dict of antenna pattern name
+and values <cite>XFrequencySeriesDict</cite></dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt><cite>OrderedDict</cite>:</dt>
+<dd>A key-wise dict of antenna pattern name
+and value <cite>XTimeFrequencyMapDict</cite></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -268,7 +329,7 @@ a negative value to shift backwards in time</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.52.g3236362.dirty',
+            VERSION:'0+untagged.57.g5c29f3c',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

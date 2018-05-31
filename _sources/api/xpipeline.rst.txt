@@ -6,10 +6,12 @@ Subpackages
 
 .. toctree::
 
+    xpipeline.cluster
     xpipeline.core
     xpipeline.io
     xpipeline.setuputils
     xpipeline.skyutils
+    xpipeline.waveform
 
 Submodules
 ----------

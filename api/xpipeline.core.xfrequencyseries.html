@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.52.g3236362.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.57.g5c29f3c documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.52.g3236362.dirty
+                0+untagged.57.g5c29f3c
               </div>
             
           
@@ -154,20 +154,48 @@
 <em class="property">class </em><code class="descclassname">xpipeline.core.xfrequencyseries.</code><code class="descname">XFrequencySeriesDict</code><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a></p>
 <dl class="method">
-<dt id="xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_dominant_polarization_frame">
-<code class="descname">to_dominant_polarization_frame</code><span class="sig-paren">(</span><em>phi</em>, <em>theta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict.to_dominant_polarization_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_dominant_polarization_frame" title="Permalink to this definition">¶</a></dt>
+<dt id="xpipeline.core.xfrequencyseries.XFrequencySeriesDict.project_onto_antenna_patterns">
+<code class="descname">project_onto_antenna_patterns</code><span class="sig-paren">(</span><em>antenna_responses</em>, <em>to_dominant_polarization_frame=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict.project_onto_antenna_patterns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.project_onto_antenna_patterns" title="Permalink to this definition">¶</a></dt>
 <dd><p>Shift timeseries by assosciated time delay</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>antenna_patterns</strong> : <cite>dict</cite></p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>antenna_responses</strong> : <cite>dict</cite></p>
+<blockquote>
+<div><p>key-wise pair of
+OrderedDict([(‘f_plus’,</p>
+<blockquote>
+<div><blockquote>
+<div><dl class="docutils">
+<dt>OrderedDict([(‘H1’, array([-0.02424373])),</dt>
+<dd><p class="first last">(‘L1’, array([0.3089992]))])),</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>(‘f_cross’,</dt>
+<dd><dl class="first last docutils">
+<dt>OrderedDict([(‘H1’, array([-0.5677237])),</dt>
+<dd><p class="first last">(‘L1’, array([0.52872644]))])),</p>
+</dd>
+</dl>
+</dd>
+<dt>(‘f_scalar’,</dt>
+<dd><dl class="first last docutils">
+<dt>OrderedDict([(‘H1’, array([0.12427263])),</dt>
+<dd><p class="first last">(‘L1’, array([-0.30016348]))]))])</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+<p><strong>to_dominant_polarization_frame ” `bool`</strong></p>
 <blockquote class="last">
-<div><p>key-wise pair of antenna pattern name and value
-{‘f_plus’ : 0.045}
-available antenna patterns include
-‘f_plus’, ‘f_cross’, ‘f_scalar’,
-‘f_long’, ‘f_one’, ‘f_two’</p>
+<div><p>This boolean determines whether or not to calculate the
+relevant angle parameter that would project the data into
+the orthogonal cross plus polarization frame.</p>
 </div></blockquote>
 </td>
 </tr>
@@ -175,13 +203,28 @@ available antenna patterns include
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_array">
+<code class="descname">to_array</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict.to_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_array" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert to number of freq bins by number of detctors array</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_m_ab">
+<code class="descname">to_m_ab</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict.to_m_ab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_m_ab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Matrix M_AB components.</p>
+<p>These are the dot products of wFp, with
+themselves and each other, for each frequency, computed in
+the DP frame.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="function">
 <dt id="xpipeline.core.xfrequencyseries.convert_to_dominant_polarization_frame">
 <code class="descclassname">xpipeline.core.xfrequencyseries.</code><code class="descname">convert_to_dominant_polarization_frame</code><span class="sig-paren">(</span><em>Fp</em>, <em>Fc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#convert_to_dominant_polarization_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.convert_to_dominant_polarization_frame" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take in stream of fplus and f_cross and convert to DPF</p>
-<p>DPF is the Cominant Polarization Frame</p>
+<dd><p>Take in stream of fplus and ≈f_cross and convert to DPF</p>
+<p>DPF is the Dominant Polarization Frame</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -230,7 +273,7 @@ available antenna patterns include
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.52.g3236362.dirty',
+            VERSION:'0+untagged.57.g5c29f3c',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

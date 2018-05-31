@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.52.g3236362.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.57.g5c29f3c documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.52.g3236362.dirty
+                0+untagged.57.g5c29f3c
               </div>
             
           
@@ -154,6 +154,85 @@
 <em class="property">class </em><code class="descclassname">xpipeline.core.xlikelihood.</code><code class="descname">XLikelihood</code><a class="reference internal" href="../_modules/xpipeline/core/xlikelihood.html#XLikelihood"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xlikelihood.XLikelihood" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="classmethod">
+<dt id="xpipeline.core.xlikelihood.XLikelihood.circenergy">
+<em class="property">classmethod </em><code class="descname">circenergy</code><span class="sig-paren">(</span><em>mpp</em>, <em>mcc</em>, <em>wfptimefrequencymap</em>, <em>wfctimefrequencymap</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xlikelihood.html#XLikelihood.circenergy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xlikelihood.XLikelihood.circenergy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Circular energy likelihood detection statistic.</p>
+<p>Compute larger of left/rightcircularly
+polarized GWB.  (-) sign for last term SHOULD
+correspond to hp = cos(), hc = sin(), or inspiral with
+iota=0.</p>
+<dl class="docutils">
+<dt>Parameters:</dt>
+<dd><dl class="first last docutils">
+<dt>mpp (array):</dt>
+<dd>sum(asds_plus**2, 1)</dd>
+<dt>mcc (array):</dt>
+<dd>sum(asds_cross**2, 1)</dd>
+<dt>wfptimefrequencymap (array):</dt>
+<dd>plus weighted time-frequency-map</dd>
+<dt>wfctimefrequencymap (array):</dt>
+<dd>cross weighted time-frequency-map</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt><cite>likelihood</cite> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array</cite></span></dt>
+<dd>The standard likelihood assosciated with your time-
+frequency map and/or sub clusters of tf-pixels</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="xpipeline.core.xlikelihood.XLikelihood.circinc">
+<em class="property">classmethod </em><code class="descname">circinc</code><span class="sig-paren">(</span><em>tfmaps</em>, <em>mpp</em>, <em>mcc</em>, <em>projected_asds</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xlikelihood.html#XLikelihood.circinc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xlikelihood.XLikelihood.circinc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Circular energy likelihood detection statistic.</p>
+<p>Compute larger of left/rightcircularly
+polarized GWB.  (-) sign for last term SHOULD
+correspond to hp = cos(), hc = sin(), or inspiral with
+iota=0.</p>
+<dl class="docutils">
+<dt>Parameters:</dt>
+<dd><dl class="first last docutils">
+<dt>mpp (array):</dt>
+<dd>sum(asds_plus**2, 1)</dd>
+<dt>mcc (array):</dt>
+<dd>sum(asds_cross**2, 1)</dd>
+<dt>wfptimefrequencymap (array):</dt>
+<dd>plus weighted time-frequency-map</dd>
+<dt>wfctimefrequencymap (array):</dt>
+<dd>cross weighted time-frequency-map</dd>
+</dl>
+</dd>
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt><cite>likelihood</cite> <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array</cite></span></dt>
+<dd>The standard likelihood assosciated with your time-
+frequency map and/or sub clusters of tf-pixels</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="xpipeline.core.xlikelihood.XLikelihood.circnullenergy">
+<em class="property">classmethod </em><code class="descname">circnullenergy</code><span class="sig-paren">(</span><em>mpp</em>, <em>mcc</em>, <em>projected_tfmaps</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xlikelihood.html#XLikelihood.circnullenergy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xlikelihood.XLikelihood.circnullenergy" title="Permalink to this definition">¶</a></dt>
+<dd><p>% —- Compute larger of left/right
+% circularly
+%      polarized GWB.  (-) sign for last term SHOULD
+%      correspond 
+%      to hp = cos(), hc = sin(), or inspiral with
+%      iota=0.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="xpipeline.core.xlikelihood.XLikelihood.circnullinc">
+<em class="property">classmethod </em><code class="descname">circnullinc</code><span class="sig-paren">(</span><em>tfmaps</em>, <em>mpp</em>, <em>mcc</em>, <em>projected_asds</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xlikelihood.html#XLikelihood.circnullinc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xlikelihood.XLikelihood.circnullinc" title="Permalink to this definition">¶</a></dt>
+<dd><p>—- For a general network (aligned or not):</p>
+</dd></dl>
+
+<dl class="classmethod">
 <dt id="xpipeline.core.xlikelihood.XLikelihood.standard">
 <em class="property">classmethod </em><code class="descname">standard</code><span class="sig-paren">(</span><em>mpp</em>, <em>mcc</em>, <em>wfptimefrequencymap</em>, <em>wfctimefrequencymap</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xlikelihood.html#XLikelihood.standard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xlikelihood.XLikelihood.standard" title="Permalink to this definition">¶</a></dt>
 <dd><p>Standard likelihood detection statistic.</p>
@@ -216,7 +295,7 @@ frequency map and/or sub clusters of tf-pixels</dd>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.52.g3236362.dirty',
+            VERSION:'0+untagged.57.g5c29f3c',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

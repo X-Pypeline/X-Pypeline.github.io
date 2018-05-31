@@ -1,0 +1,24 @@
+xpipeline.waveform package
+==========================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    xpipeline.waveform.io
+
+Submodules
+----------
+
+.. toctree::
+
+   xpipeline.waveform.waveform
+
+Module contents
+---------------
+
+.. automodule:: xpipeline.waveform
+    :members:
+    :undoc-members:
+    :show-inheritance:

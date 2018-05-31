@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.core.xdetector &mdash; xpipeline 0+untagged.52.g3236362.dirty documentation</title>
+  <title>xpipeline.core.xdetector &mdash; xpipeline 0+untagged.57.g5c29f3c documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.52.g3236362.dirty
+                0+untagged.57.g5c29f3c
               </div>
             
           
@@ -182,7 +182,7 @@
 <span class="kn">import</span> <span class="nn">lal</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="k">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span>
 <span class="kn">from</span> <span class="nn">gwpy.timeseries</span> <span class="k">import</span> <span class="n">TimeSeries</span>
-
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
 
 <div class="viewcode-block" id="Detector"><a class="viewcode-back" href="../../../api/xpipeline.core.xdetector.html#xpipeline.core.xdetector.Detector">[docs]</a><span class="k">class</span> <span class="nc">Detector</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A gravitaional wave detector</span>
@@ -363,6 +363,53 @@
 
 <div class="viewcode-block" id="effective_distance"><a class="viewcode-back" href="../../../api/xpipeline.core.xdetector.html#xpipeline.core.xdetector.effective_distance">[docs]</a><span class="k">def</span> <span class="nf">effective_distance</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="n">inclination</span><span class="p">,</span> <span class="n">f_plus</span><span class="p">,</span> <span class="n">f_cross</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">distance</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span> <span class="n">inclination</span> <span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">f_plus</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span> <span class="n">inclination</span> <span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">f_cross</span><span class="o">**</span><span class="mi">2</span> <span class="p">)</span></div>
+
+
+<span class="n">_default_antenna_patterns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">,</span> <span class="s1">&#39;f_cross&#39;</span><span class="p">,</span> <span class="s1">&#39;f_scalar&#39;</span><span class="p">,</span>
+                             <span class="s1">&#39;f_long&#39;</span><span class="p">,</span> <span class="s1">&#39;f_one&#39;</span><span class="p">,</span> <span class="s1">&#39;f_two&#39;</span><span class="p">]</span>
+<div class="viewcode-block" id="compute_antenna_patterns"><a class="viewcode-back" href="../../../api/xpipeline.core.xdetector.html#xpipeline.core.xdetector.compute_antenna_patterns">[docs]</a><span class="k">def</span> <span class="nf">compute_antenna_patterns</span><span class="p">(</span><span class="n">detectors</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute the antenna patterns for a set of detectors and a sky location</span>
+
+<span class="sd">       Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        detectors : `list`</span>
+<span class="sd">            A list of detector by there abbr i.e. H1, L1 etc.</span>
+<span class="sd">        phi : float</span>
+<span class="sd">            Earth fixed coordinate of signal</span>
+<span class="sd">        theta : float</span>
+<span class="sd">            The earth fixed coordinate of signal.</span>
+<span class="sd">        antenna_patterns : `list`</span>
+<span class="sd">            list of antenna patterns to calculate and return</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        `dict` :</span>
+<span class="sd">            key-wise dict were keys are antenna pattern name</span>
+<span class="sd">            values are `XFrequencyDicts` </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">antenna_patterns</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;antenna_patterns&#39;</span><span class="p">,</span>
+                                  <span class="n">_default_antenna_patterns</span><span class="p">)</span>
+    <span class="n">antenna_responses</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">ipattern</span> <span class="ow">in</span> <span class="n">antenna_patterns</span><span class="p">:</span>
+        <span class="n">antenna_responses</span><span class="p">[</span><span class="n">ipattern</span><span class="p">]</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">idet</span> <span class="ow">in</span> <span class="n">detectors</span><span class="p">:</span>
+        <span class="n">detector</span> <span class="o">=</span> <span class="n">Detector</span><span class="p">(</span><span class="n">idet</span><span class="p">)</span>
+        <span class="p">[</span><span class="n">Fp</span><span class="p">,</span> <span class="n">Fc</span><span class="p">,</span> <span class="n">Fb</span><span class="p">,</span> <span class="n">FL</span><span class="p">,</span> <span class="n">F1</span><span class="p">,</span> <span class="n">F2</span><span class="p">]</span> <span class="o">=</span> <span class="n">detector</span><span class="o">.</span><span class="n">compute_antenna_response</span><span class="p">([</span><span class="n">phi</span><span class="p">],</span> <span class="p">[</span><span class="n">theta</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s1">&#39;f_plus&#39;</span> <span class="ow">in</span> <span class="n">antenna_patterns</span><span class="p">:</span>
+            <span class="n">antenna_responses</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">][</span><span class="n">idet</span><span class="p">]</span> <span class="o">=</span> <span class="n">Fp</span>
+        <span class="k">if</span> <span class="s1">&#39;f_cross&#39;</span> <span class="ow">in</span> <span class="n">antenna_patterns</span><span class="p">:</span>
+            <span class="n">antenna_responses</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">][</span><span class="n">idet</span><span class="p">]</span> <span class="o">=</span> <span class="n">Fc</span>
+        <span class="k">if</span> <span class="s1">&#39;f_scalar&#39;</span> <span class="ow">in</span> <span class="n">antenna_patterns</span><span class="p">:</span>
+            <span class="n">antenna_responses</span><span class="p">[</span><span class="s1">&#39;f_scalar&#39;</span><span class="p">][</span><span class="n">idet</span><span class="p">]</span> <span class="o">=</span> <span class="n">Fb</span>
+        <span class="k">if</span> <span class="s1">&#39;f_long&#39;</span> <span class="ow">in</span> <span class="n">antenna_patterns</span><span class="p">:</span>
+            <span class="n">antenna_responses</span><span class="p">[</span><span class="s1">&#39;f_long&#39;</span><span class="p">][</span><span class="n">idet</span><span class="p">]</span> <span class="o">=</span> <span class="n">FL</span>
+        <span class="k">if</span> <span class="s1">&#39;f_one&#39;</span> <span class="ow">in</span> <span class="n">antenna_patterns</span><span class="p">:</span>
+            <span class="n">antenna_responses</span><span class="p">[</span><span class="s1">&#39;f_one&#39;</span><span class="p">][</span><span class="n">idet</span><span class="p">]</span> <span class="o">=</span> <span class="n">F1</span>
+        <span class="k">if</span> <span class="s1">&#39;f_two&#39;</span> <span class="ow">in</span> <span class="n">antenna_patterns</span><span class="p">:</span>
+            <span class="n">antenna_responses</span><span class="p">[</span><span class="s1">&#39;f_two&#39;</span><span class="p">][</span><span class="n">idet</span><span class="p">]</span> <span class="o">=</span> <span class="n">F2</span>
+
+    <span class="k">return</span> <span class="n">antenna_responses</span></div>
 </pre></div>
 
            </div>
@@ -397,7 +444,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0+untagged.52.g3236362.dirty',
+            VERSION:'0+untagged.57.g5c29f3c',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

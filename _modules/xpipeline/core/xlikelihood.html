@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.core.xlikelihood &mdash; xpipeline 0+untagged.52.g3236362.dirty documentation</title>
+  <title>xpipeline.core.xlikelihood &mdash; xpipeline 0+untagged.57.g5c29f3c documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.52.g3236362.dirty
+                0+untagged.57.g5c29f3c
               </div>
             
           
@@ -180,7 +180,118 @@
                      <span class="o">+</span>
                      <span class="p">(</span><span class="n">mcc</span><span class="o">**</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">wfctimefrequencymap</span><span class="o">.</span><span class="n">real</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> 
                                    <span class="n">wfctimefrequencymap</span><span class="o">.</span><span class="n">imag</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span>
-        <span class="k">return</span> <span class="n">likelihood</span></div></div>
+        <span class="k">return</span> <span class="n">likelihood</span></div>
+
+<div class="viewcode-block" id="XLikelihood.circenergy"><a class="viewcode-back" href="../../../api/xpipeline.core.xlikelihood.html#xpipeline.core.xlikelihood.XLikelihood.circenergy">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">circenergy</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">mpp</span><span class="p">,</span> <span class="n">mcc</span><span class="p">,</span> <span class="n">wfptimefrequencymap</span><span class="p">,</span> <span class="n">wfctimefrequencymap</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Circular energy likelihood detection statistic.</span>
+
+<span class="sd">        Compute larger of left/rightcircularly</span>
+<span class="sd">        polarized GWB.  (-) sign for last term SHOULD</span>
+<span class="sd">        correspond to hp = cos(), hc = sin(), or inspiral with</span>
+<span class="sd">        iota=0.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            mpp (array):</span>
+<span class="sd">                sum(asds_plus**2, 1)</span>
+<span class="sd">            mcc (array):</span>
+<span class="sd">                sum(asds_cross**2, 1)</span>
+<span class="sd">            wfptimefrequencymap (array):</span>
+<span class="sd">                plus weighted time-frequency-map</span>
+<span class="sd">            wfctimefrequencymap (array):</span>
+<span class="sd">                cross weighted time-frequency-map</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `likelihood` : `array`</span>
+<span class="sd">                The standard likelihood assosciated with your time-</span>
+<span class="sd">                frequency map and/or sub clusters of tf-pixels</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># ---- Compute larger of left/rightcircularly</span>
+        <span class="c1">#      polarized GWB.  (-) sign for last term SHOULD</span>
+        <span class="c1">#      correspond </span>
+        <span class="c1">#      to hp = cos(), hc = sin(), or inspiral with</span>
+        <span class="c1">#      iota=0.</span>
+        <span class="n">likelihood1</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">wfptimefrequencymap</span><span class="o">.</span><span class="n">real</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span>
+            <span class="n">wfptimefrequencymap</span><span class="o">.</span><span class="n">imag</span><span class="o">**</span><span class="mi">2</span>
+            <span class="o">+</span> <span class="n">wfctimefrequencymap</span><span class="o">.</span><span class="n">real</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span>
+            <span class="n">wfctimefrequencymap</span><span class="o">.</span><span class="n">image</span><span class="o">**</span><span class="mi">2</span>
+            <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">wfptimefrequencymap</span><span class="o">.</span><span class="n">conj</span> <span class="o">*</span>
+                        <span class="n">wfctimefrequencymap</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+
+        <span class="n">likelihood1</span> <span class="o">=</span> <span class="n">likelihood1</span> <span class="o">/</span> <span class="p">(</span><span class="n">Mpp</span><span class="o">+</span><span class="n">Mcc</span><span class="p">);</span>
+        <span class="n">likelihood2</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">wfptimefrequencymap</span><span class="o">.</span><span class="n">real</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span>
+            <span class="n">wfptimefrequencymap</span><span class="o">.</span><span class="n">imag</span><span class="o">**</span><span class="mi">2</span>
+            <span class="o">+</span> <span class="n">wfctimefrequencymap</span><span class="o">.</span><span class="n">real</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span>
+            <span class="n">wfctimefrequencymap</span><span class="o">.</span><span class="n">image</span><span class="o">**</span><span class="mi">2</span>
+            <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">wfptimefrequencymap</span><span class="o">.</span><span class="n">conj</span> <span class="o">*</span>
+                        <span class="n">wfctimefrequencymap</span><span class="p">)</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+
+        <span class="n">likelihood2</span> <span class="o">=</span> <span class="n">likelihood2</span> <span class="o">/</span> <span class="p">(</span><span class="n">Mpp</span><span class="o">+</span><span class="n">Mcc</span><span class="p">);</span>
+        <span class="n">likelihood</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">likelihood1</span><span class="p">,</span><span class="n">likelihood2</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">likelihood</span></div>
+
+<div class="viewcode-block" id="XLikelihood.circinc"><a class="viewcode-back" href="../../../api/xpipeline.core.xlikelihood.html#xpipeline.core.xlikelihood.XLikelihood.circinc">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">circinc</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">tfmaps</span><span class="p">,</span> <span class="n">mpp</span><span class="p">,</span> <span class="n">mcc</span><span class="p">,</span> <span class="n">projected_asds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Circular energy likelihood detection statistic.</span>
+
+<span class="sd">        Compute larger of left/rightcircularly</span>
+<span class="sd">        polarized GWB.  (-) sign for last term SHOULD</span>
+<span class="sd">        correspond to hp = cos(), hc = sin(), or inspiral with</span>
+<span class="sd">        iota=0.</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">            mpp (array):</span>
+<span class="sd">                sum(asds_plus**2, 1)</span>
+<span class="sd">            mcc (array):</span>
+<span class="sd">                sum(asds_cross**2, 1)</span>
+<span class="sd">            wfptimefrequencymap (array):</span>
+<span class="sd">                plus weighted time-frequency-map</span>
+<span class="sd">            wfctimefrequencymap (array):</span>
+<span class="sd">                cross weighted time-frequency-map</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `likelihood` : `array`</span>
+<span class="sd">                The standard likelihood assosciated with your time-</span>
+<span class="sd">                frequency map and/or sub clusters of tf-pixels</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># ---- For a general network (aligned or not):</span>
+        <span class="k">for</span> <span class="n">channelNumber</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numberOfChannels</span><span class="p">):</span>
+            <span class="n">likelihood</span> <span class="o">=</span> <span class="p">(</span><span class="n">likelihood</span> <span class="o">+</span>
+              <span class="p">(</span><span class="n">wFpDP</span><span class="p">[:,</span><span class="n">channelNumber</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">wFcDP</span><span class="p">[:,</span><span class="n">channelNumber</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+              <span class="o">/</span> <span class="p">(</span><span class="n">Mpp</span> <span class="o">+</span> <span class="n">Mcc</span><span class="p">)</span> <span class="o">*</span>
+               <span class="n">pixEnergyMap</span><span class="p">[</span><span class="n">channelNumber</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="XLikelihood.circnullenergy"><a class="viewcode-back" href="../../../api/xpipeline.core.xlikelihood.html#xpipeline.core.xlikelihood.XLikelihood.circnullenergy">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">circnullenergy</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">mpp</span><span class="p">,</span> <span class="n">mcc</span><span class="p">,</span> <span class="n">projected_tfmaps</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        % ---- Compute larger of left/right</span>
+<span class="sd">        % circularly</span>
+<span class="sd">        %      polarized GWB.  (-) sign for last term SHOULD</span>
+<span class="sd">        %      correspond </span>
+<span class="sd">        %      to hp = cos(), hc = sin(), or inspiral with</span>
+<span class="sd">        %      iota=0.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">irat</span><span class="o">=</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+        <span class="n">nMcc</span> <span class="o">=</span> <span class="n">Mcc</span><span class="o">/</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Mpp</span><span class="o">*</span><span class="n">Mcc</span><span class="p">)</span>
+        <span class="n">nMpp</span> <span class="o">=</span> <span class="n">Mpp</span><span class="o">/</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Mpp</span><span class="o">*</span><span class="n">Mcc</span><span class="p">)</span>
+        <span class="n">likelihood1</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">nMcc</span><span class="o">*</span><span class="n">wfptimefrequencymap</span> <span class="o">+</span> <span class="n">irat</span><span class="o">*</span><span class="n">nMpp</span><span class="o">*</span><span class="n">wfctimefrequencymap</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span>\
+            <span class="p">(</span><span class="n">Mpp</span><span class="o">+</span><span class="n">Mcc</span><span class="p">)</span>
+        <span class="n">likelihood2</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">nMcc</span><span class="o">*</span><span class="n">wfptimefrequencymap</span> <span class="o">-</span> <span class="n">irat</span><span class="o">*</span><span class="n">nMpp</span><span class="o">*</span><span class="n">wfctimefrequencymap</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span>\
+            <span class="p">(</span><span class="n">Mpp</span><span class="o">+</span><span class="n">Mcc</span><span class="p">)</span>
+        <span class="n">likelihood</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">likelihood1</span><span class="p">,</span><span class="n">likelihood2</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="XLikelihood.circnullinc"><a class="viewcode-back" href="../../../api/xpipeline.core.xlikelihood.html#xpipeline.core.xlikelihood.XLikelihood.circnullinc">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">circnullinc</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">tfmaps</span><span class="p">,</span> <span class="n">mpp</span><span class="p">,</span> <span class="n">mcc</span><span class="p">,</span> <span class="n">projected_asds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">         ---- For a general network (aligned or not):</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">channelNumber</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numberOfChannels</span><span class="p">):</span>
+          <span class="n">likelihood</span> <span class="o">=</span> <span class="n">likelihood</span> <span class="o">+</span> <span class="p">(</span> \
+              <span class="p">((</span><span class="n">Mcc</span><span class="o">*</span><span class="n">wFpDP</span><span class="p">[:,</span><span class="n">channelNumber</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">Mpp</span><span class="o">*</span><span class="n">wFcDP</span><span class="p">[:,</span><span class="n">channelNumber</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>\
+              <span class="o">/</span> <span class="p">((</span><span class="n">Mpp</span> <span class="o">+</span> <span class="n">Mcc</span><span class="p">)</span><span class="o">*</span><span class="n">Mpp</span><span class="o">*</span><span class="n">Mcc</span><span class="p">))</span> <span class="o">*</span> \
+              <span class="n">pixEnergyMap</span><span class="p">[</span><span class="n">channelNumber</span><span class="p">]</span></div></div>
 </pre></div>
 
            </div>
@@ -215,7 +326,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0+untagged.52.g3236362.dirty',
+            VERSION:'0+untagged.57.g5c29f3c',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

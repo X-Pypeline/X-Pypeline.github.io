@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.core.xtimefrequencymap &mdash; xpipeline 0+untagged.52.g3236362.dirty documentation</title>
+  <title>xpipeline.core.xtimefrequencymap &mdash; xpipeline 0+untagged.57.g5c29f3c documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.52.g3236362.dirty
+                0+untagged.57.g5c29f3c
               </div>
             
           
@@ -157,18 +157,84 @@
 
 
 <div class="viewcode-block" id="XTimeFrequencyMapDict"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict">[docs]</a><span class="k">class</span> <span class="nc">XTimeFrequencyMapDict</span><span class="p">(</span><span class="n">OrderedDict</span><span class="p">):</span>
-<div class="viewcode-block" id="XTimeFrequencyMapDict.dosomething"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.dosomething">[docs]</a>    <span class="k">def</span> <span class="nf">dosomething</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span></div></div>
+<div class="viewcode-block" id="XTimeFrequencyMapDict.to_coherent"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.to_coherent">[docs]</a>    <span class="k">def</span> <span class="nf">to_coherent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sum all maps in the dict</span>
+
+<span class="sd">           Returns:</span>
+<span class="sd">               `XTimeFrequencyMap`:</span>
+<span class="sd">                   A coherent TF-Map</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">coherent_map</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">tfmap</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">coherent_map</span> <span class="o">=+</span> <span class="n">tfmap</span>
+
+        <span class="k">return</span> <span class="n">coherent_map</span></div>
+
+
+<div class="viewcode-block" id="XTimeFrequencyMapDict.to_dominant_polarization_frame"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.to_dominant_polarization_frame">[docs]</a>    <span class="k">def</span> <span class="nf">to_dominant_polarization_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">projected_asds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Project Tfmap to an antenna frame give a dict of asds</span>
+
+<span class="sd">           Parameters:</span>
+<span class="sd">               projected_asds : `dict`</span>
+<span class="sd">                   key-wise dict of antenna pattern name</span>
+<span class="sd">                   and values `XFrequencySeriesDict`</span>
+
+<span class="sd">           Returns:</span>
+<span class="sd">               `OrderedDict`:</span>
+<span class="sd">                   A key-wise dict of antenna pattern name</span>
+<span class="sd">                   and value `XTimeFrequencyMapDict`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">projected_time_frequency_maps</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">asds</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">projected_asds</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">projected_time_frequency_maps</span><span class="p">[</span><span class="n">pattern</span><span class="p">]</span> <span class="o">=</span> <span class="n">XTimeFrequencyMapDict</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">det</span><span class="p">,</span> <span class="n">asd</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">asds</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">asd</span><span class="o">.</span><span class="n">xindex</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="n">det</span><span class="p">]</span><span class="o">.</span><span class="n">yindex</span><span class="p">)</span>
+                <span class="n">projected_time_frequency_maps</span><span class="p">[</span><span class="n">pattern</span><span class="p">][</span><span class="n">det</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">det</span><span class="p">]</span> <span class="o">*</span> <span class="n">asd</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">projected_time_frequency_maps</span></div>
+
+
+<div class="viewcode-block" id="XTimeFrequencyMapDict.plot"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot the data for this `XTimeFrequencyMapDict`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        label : `str`, optional</span>
+
+<span class="sd">            labelling system to use, or fixed label for all elements</span>
+<span class="sd">            Special values include</span>
+
+<span class="sd">            - ``&#39;key&#39;``: use the key of the `XTimeFrequencyMapDict`,</span>
+<span class="sd">            - ``&#39;name&#39;``: use the :attr:`~XTimeSeries.name` of each element</span>
+
+<span class="sd">            If anything else, that fixed label will be used for all lines.</span>
+
+<span class="sd">        **kwargs</span>
+<span class="sd">            all other keyword arguments are passed to the plotter as</span>
+<span class="sd">            appropriate</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">gwpy.plotter</span> <span class="k">import</span> <span class="n">Plot</span>
+        <span class="n">figargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;figsize&#39;</span><span class="p">,</span> <span class="s1">&#39;dpi&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                <span class="n">figargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">plot_</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="o">**</span><span class="n">figargs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">lab</span><span class="p">,</span> <span class="n">tfmap</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">label</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span>
+                <span class="n">lab</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">elif</span> <span class="n">label</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;key&#39;</span><span class="p">:</span>
+                <span class="n">lab</span> <span class="o">=</span> <span class="n">label</span>
+            <span class="n">plot_</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">tfmap</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">lab</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">plot_</span></div></div>
 
 
 <div class="viewcode-block" id="XTimeFrequencyMap"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap">[docs]</a><span class="k">class</span> <span class="nc">XTimeFrequencyMap</span><span class="p">(</span><span class="n">Spectrogram</span><span class="p">):</span>
 <div class="viewcode-block" id="XTimeFrequencyMap.find_significant_pixels"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.find_significant_pixels">[docs]</a>    <span class="k">def</span> <span class="nf">find_significant_pixels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="o">=</span><span class="mi">99</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Obtain the time-frequency indicies of the loudest pixels</span>
 
-<span class="sd">            Parameters</span>
-<span class="sd">            ----------</span>
-<span class="sd">            blackpixel_percentile : `int`</span>
-<span class="sd">                what 2D percentile value we will use as the threshold</span>
+<span class="sd">           Parameters:</span>
+
+<span class="sd">           blackpixel_percentile : `int`</span>
+<span class="sd">               what 2D percentile value we will use as the threshold</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">energy_threshold</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="p">,</span>
                                           <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;midpoint&#39;</span><span class="p">)</span>
@@ -195,15 +261,21 @@
 
 
 <div class="viewcode-block" id="XTimeFrequencyMap.circular_time_slide"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.circular_time_slide">[docs]</a>    <span class="k">def</span> <span class="nf">circular_time_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slide</span><span class="p">,</span> <span class="n">sample_frequency</span><span class="p">,</span> <span class="n">offset</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Phase shift this `spectrogram` by ``delta``</span>
+        <span class="sd">&quot;&quot;&quot;Slide the TF pixels of this map</span>
 
-<span class="sd">        This modifies the spectrogram in-place.</span>
+<span class="sd">        This should move the appropriate number of time bins</span>
+<span class="sd">        such that slide represents a slide in seconds.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        delta : `float`, `~astropy.units.Quantity`, `str`</span>
-<span class="sd">            The amount by which to shift (in seconds if `float`), give</span>
-<span class="sd">            a negative value to shift backwards in time</span>
+<span class="sd">        slide : `int`,</span>
+<span class="sd">            Ho many seconds we are sliding the map</span>
+
+<span class="sd">        sample_freqeunecy : `float`</span>
+<span class="sd">            what is the sample frequency of the data</span>
+
+<span class="sd">        offset : `float`</span>
+<span class="sd">            what offset was used to make this spectrogram</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">offsetlength</span> <span class="o">=</span> <span class="n">seconds_to_samples</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">sample_frequency</span><span class="p">)</span>
         <span class="n">ntimepixelshifted</span> <span class="o">=</span> <span class="n">slide</span> <span class="o">*</span> <span class="n">sample_frequency</span><span class="o">/</span><span class="n">offsetlength</span>
@@ -211,7 +283,7 @@
 
 
 <div class="viewcode-block" id="XTimeFrequencyMap.to_dominant_polarization_frame"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.to_dominant_polarization_frame">[docs]</a>    <span class="k">def</span> <span class="nf">to_dominant_polarization_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dpf_asd</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">XTimeFrequencyMapDPF</span><span class="p">(</span><span class="bp">self</span> <span class="o">*</span> <span class="n">dpf_asd</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">*</span> <span class="n">dpf_asd</span></div></div>
 
 
 <div class="viewcode-block" id="residual_time_shift"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.residual_time_shift">[docs]</a><span class="k">def</span> <span class="nf">residual_time_shift</span><span class="p">(</span><span class="n">seconds</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">):</span>
@@ -255,7 +327,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0+untagged.52.g3236362.dirty',
+            VERSION:'0+untagged.57.g5c29f3c',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

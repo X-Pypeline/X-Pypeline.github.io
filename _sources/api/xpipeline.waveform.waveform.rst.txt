@@ -1,0 +1,4 @@
+.. automodule:: xpipeline.waveform.waveform
+    :members:
+    :undoc-members:
+    :show-inheritance:

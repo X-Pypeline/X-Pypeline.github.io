@@ -1,0 +1,10 @@
+xpipeline.cluster package
+=========================
+
+Module contents
+---------------
+
+.. automodule:: xpipeline.cluster
+    :members:
+    :undoc-members:
+    :show-inheritance:
