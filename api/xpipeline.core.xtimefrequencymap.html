@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.58.g5eec178.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.72.g8cdbf6e.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.58.g5eec178.dirty
+                0+untagged.72.g8cdbf6e.dirty
               </div>
             
           
@@ -150,76 +150,6 @@
            <div itemprop="articleBody">
             
   <span class="target" id="module-xpipeline.core.xtimefrequencymap"></span><dl class="class">
-<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap">
-<em class="property">class </em><code class="descclassname">xpipeline.core.xtimefrequencymap.</code><code class="descname">XTimeFrequencyMap</code><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">gwpy.spectrogram.core.Spectrogram</span></code></p>
-<dl class="method">
-<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.circular_time_slide">
-<code class="descname">circular_time_slide</code><span class="sig-paren">(</span><em>slide</em>, <em>sample_frequency</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.circular_time_slide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.circular_time_slide" title="Permalink to this definition">¶</a></dt>
-<dd><p>Slide the TF pixels of this map</p>
-<p>This should move the appropriate number of time bins
-such that slide represents a slide in seconds.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>slide</strong> : <cite>int</cite>,</p>
-<blockquote>
-<div><p>Ho many seconds we are sliding the map</p>
-</div></blockquote>
-<p><strong>sample_freqeunecy</strong> : <cite>float</cite></p>
-<blockquote>
-<div><p>what is the sample frequency of the data</p>
-</div></blockquote>
-<p><strong>offset</strong> : <cite>float</cite></p>
-<blockquote class="last">
-<div><p>what offset was used to make this spectrogram</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.find_significant_pixels">
-<code class="descname">find_significant_pixels</code><span class="sig-paren">(</span><em>blackpixel_percentile=99</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.find_significant_pixels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.find_significant_pixels" title="Permalink to this definition">¶</a></dt>
-<dd><p>Obtain the time-frequency indicies of the loudest pixels</p>
-<p>Parameters:</p>
-<dl class="docutils">
-<dt>blackpixel_percentile <span class="classifier-delimiter">:</span> <span class="classifier"><cite>int</cite></span></dt>
-<dd>what 2D percentile value we will use as the threshold</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.phaseshift">
-<code class="descname">phaseshift</code><span class="sig-paren">(</span><em>delta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.phaseshift"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.phaseshift" title="Permalink to this definition">¶</a></dt>
-<dd><p>Phase shift this <cite>spectrogram</cite> by <code class="docutils literal notranslate"><span class="pre">delta</span></code></p>
-<p>This modifies the spectrogram in-place.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>delta</strong> : <cite>float</cite>, <cite>~astropy.units.Quantity</cite>, <cite>str</cite></p>
-<blockquote class="last">
-<div><p>The amount by which to shift (in seconds if <cite>float</cite>), give
-a negative value to shift backwards in time</p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.to_dominant_polarization_frame">
-<code class="descname">to_dominant_polarization_frame</code><span class="sig-paren">(</span><em>dpf_asd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.to_dominant_polarization_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.to_dominant_polarization_frame" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="class">
 <dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict">
 <em class="property">class </em><code class="descclassname">xpipeline.core.xtimefrequencymap.</code><code class="descname">XTimeFrequencyMapDict</code><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMapDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a></p>
@@ -295,6 +225,76 @@ and value <cite>XTimeFrequencyMapDict</cite></dd>
 <code class="descclassname">xpipeline.core.xtimefrequencymap.</code><code class="descname">residual_time_shift</code><span class="sig-paren">(</span><em>seconds</em>, <em>frequencies</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#residual_time_shift"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.residual_time_shift" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+<dl class="class">
+<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap">
+<em class="property">class </em><code class="descclassname">xpipeline.core.xtimefrequencymap.</code><code class="descname">XTimeFrequencyMap</code><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">gwpy.spectrogram.core.Spectrogram</span></code></p>
+<dl class="method">
+<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.circular_time_slide">
+<code class="descname">circular_time_slide</code><span class="sig-paren">(</span><em>slide</em>, <em>sample_frequency</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.circular_time_slide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.circular_time_slide" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slide the TF pixels of this map</p>
+<p>This should move the appropriate number of time bins
+such that slide represents a slide in seconds.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>slide</strong> : <cite>int</cite>,</p>
+<blockquote>
+<div><p>Ho many seconds we are sliding the map</p>
+</div></blockquote>
+<p><strong>sample_freqeunecy</strong> : <cite>float</cite></p>
+<blockquote>
+<div><p>what is the sample frequency of the data</p>
+</div></blockquote>
+<p><strong>offset</strong> : <cite>float</cite></p>
+<blockquote class="last">
+<div><p>what offset was used to make this spectrogram</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.find_significant_pixels">
+<code class="descname">find_significant_pixels</code><span class="sig-paren">(</span><em>blackpixel_percentile=99</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.find_significant_pixels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.find_significant_pixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the time-frequency indicies of the loudest pixels</p>
+<p>Parameters:</p>
+<dl class="docutils">
+<dt>blackpixel_percentile <span class="classifier-delimiter">:</span> <span class="classifier"><cite>int</cite></span></dt>
+<dd>what 2D percentile value we will use as the threshold</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.phaseshift">
+<code class="descname">phaseshift</code><span class="sig-paren">(</span><em>delta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.phaseshift"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.phaseshift" title="Permalink to this definition">¶</a></dt>
+<dd><p>Phase shift this <cite>spectrogram</cite> by <code class="docutils literal notranslate"><span class="pre">delta</span></code></p>
+<p>This modifies the spectrogram in-place.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>delta</strong> : <cite>float</cite>, <cite>~astropy.units.Quantity</cite>, <cite>str</cite></p>
+<blockquote class="last">
+<div><p>The amount by which to shift (in seconds if <cite>float</cite>), give
+a negative value to shift backwards in time</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.to_dominant_polarization_frame">
+<code class="descname">to_dominant_polarization_frame</code><span class="sig-paren">(</span><em>dpf_asd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.to_dominant_polarization_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.to_dominant_polarization_frame" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 
 
            </div>
@@ -329,7 +329,7 @@ and value <cite>XTimeFrequencyMapDict</cite></dd>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.58.g5eec178.dirty',
+            VERSION:'0+untagged.72.g8cdbf6e.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
