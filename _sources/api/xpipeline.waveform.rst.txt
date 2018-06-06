@@ -14,6 +14,9 @@ Submodules
 .. toctree::
 
    xpipeline.waveform.waveform
+   xpipeline.waveform.xinjectsignal
+   xpipeline.waveform.xoptimalsnr
+   xpipeline.waveform.xwaveform
 
 Module contents
 ---------------

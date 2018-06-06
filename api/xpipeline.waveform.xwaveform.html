@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.81.g737ed9e.dirty documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/xpipeline-docs.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> xpipeline
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.81.g737ed9e.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">xpipeline an explanation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">xpipeline</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>&lt;no title&gt;</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/xpipeline.waveform.xwaveform.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="module-xpipeline.waveform.xwaveform"></span><dl class="function">
+<dt id="xpipeline.waveform.xwaveform.xmakewaveform">
+<code class="descclassname">xpipeline.waveform.xwaveform.</code><code class="descname">xmakewaveform</code><span class="sig-paren">(</span><em>family</em>, <em>parameters</em>, <em>T</em>, <em>T0</em>, <em>fs</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/waveform/xwaveform.html#xmakewaveform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.waveform.xwaveform.xmakewaveform" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create timeseries data containing a simulated GW.</p>
+<p>Parameters:</p>
+<blockquote>
+<div><p>family (str):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>A char or cell array containing one of (not case sensitive):</dt>
+<dd><dl class="first docutils">
+<dt>adi-a,…,-e  accretion disk</dt>
+<dd>instability waveforms as used in STAMP searches</dd>
+<dt>AORDDMJ10  Abdikamalov et al. accretion-induced collapse waveforms</dt>
+<dd>[PRD81 044012 2010],</dd>
+<dt>BLDOM07  Burrows et al. acoustic mechanism supernova waveforms</dt>
+<dd>[ApJ655 416 2007],</dd>
+</dl>
+<p>CG  cosine-Gaussians (special case of ‘chirplet’),
+chirplet  chirping sine/cosine-Gaussian,
+cusp  waveform from a cosmic string cusp (see cuspgw.m),
+DFM  NOT FUNCTIONAL. Dimmelmeier-Font-Mueller 2002 supernova waveforms,</p>
+<blockquote>
+<div>relativistic simulations only [A&amp;A393 523 2002],
+WARNING: Normalization may be incorrect.</div></blockquote>
+<dl class="docutils">
+<dt>DFMc  NOT FUNCTIONAL. Conditioned Dimmelmeier-Font-Mueller supernova</dt>
+<dd>waveforms.  Same as DFM except detrended.
+WARNING: Normalization may be incorrect.</dd>
+<dt>DFM02  Dimmelmeier-Font-Mueller 2002 supernova waveforms,</dt>
+<dd>relativistic &amp; Newtonian simulations, conditioned
+and detrended [A&amp;A393 523 2002].
+WARNING: Normalization may be incorrect.</dd>
+<dt>DOJMM07  Dimmelmeier et al. 2007 supernova waveforms [PRL98</dt>
+<dd>251101 2007],</dd>
+<dt>DOMJ08  Dimmelmeier et al. 2008 supernova waveforms [PRD78</dt>
+<dd>064056 2008]</dd>
+</dl>
+<p>DS  damped sinusoids,
+DS2P  2-polarization damped sinusoids with smooth turn-on,
+ebbh-a,…,-e  eccentric binary black-hole waveforms as used in STAMP</p>
+<blockquote>
+<div>searches</div></blockquote>
+<p>G  Gaussians (special case of ‘chirplet’),
+inspiral    post-Newtonian inspiral,
+inspiralgated  As inspiralsmooth, with a gate applied centered 1 sec</p>
+<blockquote>
+<div>before coalescence time. Gate is 0.5 sec hann roll-off,
+0.3 sec zeros, 0.5 sec hann roll-on.</div></blockquote>
+<p>inspiralsmooth  post-Newtonian inspiral, tapered at the end
+iscochirp*  Broadband chirps from ISCO waves around rotating black holes,</p>
+<blockquote>
+<div>from <a class="reference external" href="https://arxiv.org/abs/1602.03634">https://arxiv.org/abs/1602.03634</a> (Van Putten)</div></blockquote>
+<p>kotake09  Kotake et al. supernova waveform – NEED INFO,
+lalinspiral  post-Newtonian inspiral, generated using LALsuite
+Lazarus  Lazarus project black-hole merger waveforms (analytic</p>
+<blockquote>
+<div>approximation) [PRD65 124012 2002],</div></blockquote>
+<p>longbar  long-lived bar mode,
+magnetar  GW emission by magnetar undergoing spin down caused by EM</p>
+<blockquote>
+<div>and/or EM emission,</div></blockquote>
+<p>marek09  Marek et al. 2009 supernova waveforms – NEED INFO,
+methodspaper  One of four numerical supernova waveforms from</p>
+<blockquote>
+<div><a class="reference external" href="http://arxiv.org/abs/1110.5107v2">http://arxiv.org/abs/1110.5107v2</a>.</div></blockquote>
+<dl class="docutils">
+<dt>mono       Monochromatic waveforms used by STAMP-AS (including mono-<a href="#id1"><span class="problematic" id="id2">*</span></a>,</dt>
+<dd>line-<em>, quad-</em>) see <a class="reference external" href="https://wiki.ligo.org/Main/O1analysisInjections">https://wiki.ligo.org/Main/O1analysisInjections</a>,</dd>
+<dt>mob09      Murphy-Ott-Burrows 2009 supernova waveforms</dt>
+<dd>[arXiv:0907.4762],</dd>
+</dl>
+<p>murphy09  Murphy+09 waveforms
+mvp       van Putten based waveform model – NEED INFO,
+NCSA-CAM  eccentric binary neutron star mergers, generated with the</p>
+<blockquote>
+<div>NCSA-CAM waveform model. The waveforms start at 15Hz and
+continue through merger and ringdown. See
+<a class="reference external" href="https://dcc.ligo.org/DocDB/0140/G1700265/001/ecc_presentation.pdf">https://dcc.ligo.org/DocDB/0140/G1700265/001/ecc_presentation.pdf</a></div></blockquote>
+<dl class="docutils">
+<dt>OBDL06     Ott, Burrows, Dessart, &amp; Livne supernova waveforms</dt>
+<dd>[PRL 96 201102 2006]</dd>
+<dt>OBLW04     Ott-Burrows-Livne-Walder 2004 supernova waveforms</dt>
+<dd>[ApJ600 834 2004],</dd>
+</dl>
+<p>onecyclesine  single cycle (phase -pi-&gt;0-&gt;pi) of a sine wave,
+osnsearch  test waveform used in S5/S6 optical supernova search,
+o1snews  Waveforms for O1 X SNEWS Search.
+O09  Ott SASI supernova waveforms [CQG26 063001 2009],
+O10  Ott 2010 supernova waveforms – NEED INFO,
+PCA  Principle Component Analysis Wave Forms
+piro  NOT FUNCTIONAL. Piro-based waveform model – NEED INFO,
+scalarchirplet  scalar-mode chirping cosine-Gaussian,
+pmns_pca  A large number of precalculated Post-Merger Remnant Signals for a</p>
+<blockquote>
+<div>variety of EOS mass configurations. some include
+‘nl3_1515’ ‘tma_1215’ ‘tma_1212’ ‘dd2_1314’
+‘ls375_1215’ ‘dd2_1215’ ‘dd2_165165’ ‘tma_1515’
+‘ls375_1212’ ‘ls220_1414’</div></blockquote>
+<dl class="docutils">
+<dt>scalarsn  Model A follows solution number 4 from Table 1 for a 1.5</dt>
+<dd><blockquote class="first">
+<div>solar mass star undergoing spontaneous scalarization. See
+<a class="reference external" href="http://journals.aps.org/prd/abstract/10.1103/PhysRevD.58.064019">http://journals.aps.org/prd/abstract/10.1103/PhysRevD.58.064019</a>
+Model B follows the collpase of aspherical NS star to
+blackhole following solution B in table 1.
+<a class="reference external" href="http://journals.aps.org/prd/abstract/10.1103/PhysRevD.57.4789">http://journals.aps.org/prd/abstract/10.1103/PhysRevD.57.4789</a>
+Models C, D, E are Novak and Ibanez scalar supernovae waveforms.</div></blockquote>
+<p class="last"><a class="reference external" href="http://stacks.iop.org/0004-637X/533/i=1/a=392">http://stacks.iop.org/0004-637X/533/i=1/a=392</a></p>
+</dd>
+</dl>
+<p>scheide    Scheidegger et al. 2010 equatorial waveforms – NEED INFO,
+scheidp     Scheidegger et al. 2010 for polar waveforms – NEED INFO,</p>
+<blockquote>
+<div>SG  sine-Gaussians (special case of ‘chirplet’),</div></blockquote>
+<dl class="docutils">
+<dt>snmp  Waveforms used for SN Methods Paper that are not included in</dt>
+<dd>osnsearch.</dd>
+<dt>SNN94  Shibata, Nakao, and Nakamura scalar-mode GWs from</dt>
+<dd>gravitational collapse [PRD 50 7304 1994],</dd>
+<dt>stamp_*  STAMP-AS waveforms for O1 long-duration search see</dt>
+<dd><a class="reference external" href="https://wiki.ligo.org/Bursts/Allsky20160425">https://wiki.ligo.org/Bursts/Allsky20160425</a></dd>
+<dt>WNB  windowed, band-limited white-noise burst (2 independent</dt>
+<dd>polarizations).</dd>
+</dl>
+<p>Yakunin2010  Yakunin et al. <a class="reference external" href="http://arxiv.org/abs/1005.0779">http://arxiv.org/abs/1005.0779</a>
+zero  null signal (hp=0=hc),
+ZM  Zwerger-Mueller supernova waveforms [A&amp;A320 209 1997].</p>
+<blockquote class="last">
+<div>WARNING: Normalization may be incorrect see eqn (21) of
+the reference.</div></blockquote>
+</dd>
+</dl>
+</div></blockquote>
+<p>params (Array, or tilde-delimited string):</p>
+<blockquote>
+<div>containing parameters for the specified waveform type.  The format and
+definition of the parameters depend on the waveform type.  For
+details on a specific waveform, e.g. WNB, do xmakewaveform(‘WNB’).</div></blockquote>
+<dl class="docutils">
+<dt>T (<cite>int</cite>):</dt>
+<dd>Duration of the waveform.  Must have T*fs = integer.
+Recommend T&gt;=1 for astrophysical waveforms.</dd>
+<dt>T0 (<cite>int</cite>):</dt>
+<dd>Desired peak time of the waveform, as measured in hrss
+for (hp.^+hc.^2).^(0.5).  Must have 0&lt;T0&lt;T.  See “Notes” below
+for caveats.</dd>
+<dt>fs (<cite>int</cite>):</dt>
+<dd>Sampling rate of the time series.  T*fs must be an</dd>
+</dl>
+<p>integer.</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt>t:</dt>
+<dd>Times at which the waveform is sampled, starting from zero.</dd>
+<dt>hp:</dt>
+<dd>Plus polarization waveform [strain].</dd>
+<dt>hc:</dt>
+<dd>Cross polarization waveform [strain].</dd>
+<dt>hb:</dt>
+<dd>Breathing (scalar) polarization waveform [strain].  Identically
+zero for all waveform types unless explicitly stated otherwise.</dd>
+</dl>
+</dd>
+</dl>
+<p>Notes:</p>
+<blockquote>
+<div><p>The waveform is interpolated so that the RSS-weighted center time,
+[int dt t (hp.^+hc.^2+hb.^2)].^(0.5), is at T0.  Note that for
+2-polarization waveforms that include an inclination angle (eg, DS2P)
+different inclination angles will cause hp, hc to be weighted differently
+and therefore will produce different shifts.</p>
+<p>The cusp waveform (generated by P. Shawhan’s cuspgw function) and most
+astrophysical waveforms that are loaded from files are always 1 sec long
+with sampling rate 16384 Hz when created/loaded. These are resampled
+linearly and truncated or zero-padded to the desired length.  One should
+be cautious in using T&lt;1 for these waveforms.</p>
+</div></blockquote>
+</dd></dl>
+
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Scott Coughlin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0+untagged.81.g737ed9e.dirty',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

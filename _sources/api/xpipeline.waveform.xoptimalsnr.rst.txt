@@ -1,0 +1,4 @@
+.. automodule:: xpipeline.waveform.xoptimalsnr
+    :members:
+    :undoc-members:
+    :show-inheritance:

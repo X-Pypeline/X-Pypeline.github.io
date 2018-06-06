@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.72.g8cdbf6e.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.81.g737ed9e.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.72.g8cdbf6e.dirty
+                0+untagged.81.g737ed9e.dirty
               </div>
             
           
@@ -153,6 +153,25 @@
 <dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict">
 <em class="property">class </em><code class="descclassname">xpipeline.core.xtimefrequencymap.</code><code class="descname">XTimeFrequencyMapDict</code><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMapDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a></p>
+<dl class="method">
+<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.get_significant_pixels">
+<code class="descname">get_significant_pixels</code><span class="sig-paren">(</span><em>blackpixel_percentile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMapDict.get_significant_pixels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.get_significant_pixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the time-frequency indicies of the loudest pixels</p>
+<p>Parameters:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>blackpixel_percentile <span class="classifier-delimiter">:</span> <span class="classifier"><cite>dict</cite>, <cite>int</cite></span></dt>
+<dd>either a <cite>dict</cite> of (channel, <cite>int</cite>) pairs for key-wise
+significant pixel calc, or a single int to use as the
+threshold of all items.</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><cite>dict</cite>: key-wise pair of channel : freq,time indices</dd>
+</dl>
+</dd></dl>
+
 <dl class="method">
 <dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.plot">
 <code class="descname">plot</code><span class="sig-paren">(</span><em>label='key'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMapDict.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.plot" title="Permalink to this definition">¶</a></dt>
@@ -259,7 +278,7 @@ such that slide represents a slide in seconds.</p>
 
 <dl class="method">
 <dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.find_significant_pixels">
-<code class="descname">find_significant_pixels</code><span class="sig-paren">(</span><em>blackpixel_percentile=99</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.find_significant_pixels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.find_significant_pixels" title="Permalink to this definition">¶</a></dt>
+<code class="descname">find_significant_pixels</code><span class="sig-paren">(</span><em>blackpixel_percentile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.find_significant_pixels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.find_significant_pixels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtain the time-frequency indicies of the loudest pixels</p>
 <p>Parameters:</p>
 <dl class="docutils">
@@ -329,7 +348,7 @@ a negative value to shift backwards in time</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.72.g8cdbf6e.dirty',
+            VERSION:'0+untagged.81.g737ed9e.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

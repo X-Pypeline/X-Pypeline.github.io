@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.waveform.io.generate &mdash; xpipeline 0+untagged.72.g8cdbf6e.dirty documentation</title>
+  <title>xpipeline.waveform.io.generate &mdash; xpipeline 0+untagged.81.g737ed9e.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.72.g8cdbf6e.dirty
+                0+untagged.81.g737ed9e.dirty
               </div>
             
           
@@ -180,7 +180,7 @@
     <span class="n">IORegistryError</span> <span class="o">=</span> <span class="ne">Exception</span>
 <span class="kn">from</span> <span class="nn">astropy.table</span> <span class="k">import</span> <span class="n">Table</span>
 
-<span class="n">_FETCHERS</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">_WAVEFORMS</span> <span class="o">=</span> <span class="p">{}</span>
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Duncan Macleod &lt;duncan.macleod@ligo.org&gt;&#39;</span>
 
@@ -205,8 +205,8 @@
 <span class="sd">        default: `False`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">data_format</span><span class="p">,</span> <span class="n">data_class</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_FETCHERS</span> <span class="ow">or</span> <span class="n">force</span><span class="p">:</span>
-        <span class="n">_FETCHERS</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">usage</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_WAVEFORMS</span> <span class="ow">or</span> <span class="n">force</span><span class="p">:</span>
+        <span class="n">_WAVEFORMS</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">usage</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">IORegistryError</span><span class="p">(</span><span class="s2">&quot;Fetcher for format &#39;</span><span class="si">{0}</span><span class="s2">&#39; and class &#39;</span><span class="si">{1}</span><span class="s2">&#39; &quot;</span>
                               <span class="s2">&quot;has already been &quot;</span> <span class="s2">&quot;defined&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
@@ -231,12 +231,12 @@
 <span class="sd">        if not registration is found matching ``data_format``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># this is a copy of astropy.io.regsitry.get_reader</span>
-    <span class="n">generators</span> <span class="o">=</span> <span class="p">[(</span><span class="n">fmt</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span> <span class="k">for</span> <span class="n">fmt</span><span class="p">,</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="n">_FETCHERS</span> <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="n">data_format</span><span class="p">]</span>
+    <span class="n">generators</span> <span class="o">=</span> <span class="p">[(</span><span class="n">fmt</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span> <span class="k">for</span> <span class="n">fmt</span><span class="p">,</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="n">_WAVEFORMS</span> <span class="k">if</span> <span class="n">fmt</span> <span class="o">==</span> <span class="n">data_format</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">generate_fmt</span><span class="p">,</span> <span class="n">generate_cls</span> <span class="ow">in</span> <span class="n">generators</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">io_registry</span><span class="o">.</span><span class="n">_is_best_match</span><span class="p">(</span><span class="n">data_class</span><span class="p">,</span> <span class="n">generate_cls</span><span class="p">,</span> <span class="n">generators</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">_FETCHERS</span><span class="p">[(</span><span class="n">generate_fmt</span><span class="p">,</span> <span class="n">generate_cls</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">_WAVEFORMS</span><span class="p">[(</span><span class="n">generate_fmt</span><span class="p">,</span> <span class="n">generate_cls</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">formats</span> <span class="o">=</span> <span class="p">[</span><span class="n">fmt</span> <span class="k">for</span> <span class="n">fmt</span><span class="p">,</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="n">_FETCHERS</span> <span class="k">if</span>
+        <span class="n">formats</span> <span class="o">=</span> <span class="p">[</span><span class="n">fmt</span> <span class="k">for</span> <span class="n">fmt</span><span class="p">,</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="n">_WAVEFORMS</span> <span class="k">if</span>
                    <span class="n">io_registry</span><span class="o">.</span><span class="n">_is_best_match</span><span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="n">generators</span><span class="p">)]</span>
         <span class="n">formatstr</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">formats</span><span class="p">))</span>
         <span class="k">raise</span> <span class="n">IORegistryError</span><span class="p">(</span>
@@ -268,10 +268,10 @@
 
     <span class="c1"># now re-write the format list</span>
     <span class="n">formats</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">fmt</span><span class="p">,</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_FETCHERS</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="k">for</span> <span class="n">fmt</span><span class="p">,</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_WAVEFORMS</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
         <span class="k">if</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">data_class</span><span class="p">:</span>
             <span class="k">continue</span>
-        <span class="n">usage</span> <span class="o">=</span> <span class="n">_FETCHERS</span><span class="p">[(</span><span class="n">fmt</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">usage</span> <span class="o">=</span> <span class="n">_WAVEFORMS</span><span class="p">[(</span><span class="n">fmt</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)][</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">formats</span><span class="o">.</span><span class="n">append</span><span class="p">((</span>
             <span class="n">fmt</span><span class="p">,</span> <span class="s1">&#39;``generate(</span><span class="si">%r</span><span class="s1">, </span><span class="si">%s</span><span class="s1">)``&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">fmt</span><span class="p">,</span> <span class="n">usage</span><span class="p">)))</span>
     <span class="n">format_str</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="n">formats</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Format&#39;</span><span class="p">,</span> <span class="s1">&#39;Basic usage&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">pformat</span><span class="p">(</span>
@@ -320,7 +320,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'0+untagged.72.g8cdbf6e.dirty',
+            VERSION:'0+untagged.81.g737ed9e.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

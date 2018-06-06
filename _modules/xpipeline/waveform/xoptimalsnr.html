@@ -1,0 +1,499 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>xpipeline.waveform.xoptimalsnr &mdash; xpipeline 0+untagged.81.g737ed9e.dirty documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/xpipeline-docs.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> xpipeline
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.81.g737ed9e.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">xpipeline an explanation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">xpipeline</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>xpipeline.waveform.xoptimalsnr</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for xpipeline.waveform.xoptimalsnr</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="k">import</span> <span class="n">interp1d</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+
+
+<div class="viewcode-block" id="xoptimalsnr"><a class="viewcode-back" href="../../../api/xpipeline.waveform.xoptimalsnr.html#xpipeline.waveform.xoptimalsnr.xoptimalsnr">[docs]</a><span class="k">def</span> <span class="nf">xoptimalsnr</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">t0</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">S</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">F0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dF</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Fmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Fmax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute SNR and other properties of a signal in noise.</span>
+
+<span class="sd">    XOPTIMALSNR - Compute the SNR and time-frequency measures of a waveform</span>
+<span class="sd">    in a specified noise background.  Simpler noise-independent measures of</span>
+<span class="sd">    the wave amplitude are also provided.</span>
+
+<span class="sd">       [SNR, h_rss, h_peak, Fchar, bw, Tchar, dur] = ...</span>
+<span class="sd">           xoptimalsnr(h,t0,fs,S,F0,dF,Fmin,Fmax)</span>
+
+<span class="sd">       h      Array.  Waveform timeseries data.  Each column holds the</span>
+<span class="sd">              timeseries for one of the GW polarizations.  (There may be any</span>
+<span class="sd">              number of polarisations, for the non-GR case.  The order of</span>
+<span class="sd">              polarizations does not matter.)  The timeseries duration should</span>
+<span class="sd">              be a power of 2.</span>
+<span class="sd">       t0     Scalar.  Time at which the first waveform data point h(1,:) is</span>
+<span class="sd">              sampled.</span>
+<span class="sd">       fs     Scalar.  Sampling rate (Hz) of waveform data.  This should be a</span>
+<span class="sd">              power of 2.</span>
+<span class="sd">       S      Vector (optional).  Noise background one-sided POWER (not</span>
+<span class="sd">              amplitude) spectrum.  If supplied, it must cover at least the</span>
+<span class="sd">              range [Fmin, Fmax], and must be sampled in ascending</span>
+<span class="sd">              order of frequency.  For noise-independent signal measures use</span>
+<span class="sd">              S=f0=df=[].  In this case the constant spectrum S(f)=2 will be</span>
+<span class="sd">              used (corresponding to a two-sided noise spectrum of unity).</span>
+<span class="sd">       F0     Scalar or vector (optional).  Scalar: Frequency at which S(1) is</span>
+<span class="sd">              sampled.  Vector: frequencies at which S is sampled.</span>
+<span class="sd">       dF     Scalar (optional).  Frequency spacing of the noise spectrum S.</span>
+<span class="sd">              If F0 is a vector then dF = [] must be used.</span>
+<span class="sd">       Fmin   Scalar (optional).  Minimum frequency (Hz) to include in</span>
+<span class="sd">              frequency-domain calculations.  Defaults to 0 if no noise</span>
+<span class="sd">              spectrum specified, or minimum frequency of noise spectrum.</span>
+<span class="sd">      Fmax   Scalar (optional).  Maximum frequency (Hz) to include in</span>
+<span class="sd">              frequency-domain calculations. Defaults to Nyquist if no noise</span>
+<span class="sd">              spectrum specified, or maximum frequency of noise spectrum.</span>
+
+<span class="sd">     Computations are done in the time domain (TD) and frequency</span>
+<span class="sd">     domain (FD) using the energy distributions</span>
+<span class="sd">          p_TD = h(:,1).^2 + h(:,2).^2</span>
+<span class="sd">          p_FD = 2(|FFT(h(:,1))|.^2 + |FFT(h(:,2))|.^2)  # for f&gt;=0</span>
+<span class="sd">     With these conventions, the output is</span>
+<span class="sd">       SNR    Signal-to-noise ratio of h in the given noise background,</span>
+<span class="sd">              defined as</span>
+<span class="sd">                SNR = (2 \int_Fmin^Fmax df p_FD./S).^0.5</span>
+<span class="sd">       h_rss  The root-sum-square amplitude (Hz^-0.5) of the waveform h:</span>
+<span class="sd">                h_rss = \int_Fmin^Fmax df p_FD</span>
+<span class="sd">       h_peak The maximum absolute amplitude of the waveform h:</span>
+<span class="sd">                h_peak = max(p_TD).^0.5</span>
+<span class="sd">       Fchar  Characteristic frequency (Hz) of h in the given noise</span>
+<span class="sd">              background, defined as</span>
+<span class="sd">                        \int_Fmin^Fmax df f p_FD./S</span>
+<span class="sd">                Fchar = ----------------------------------------</span>
+<span class="sd">                         \int_Fmin^Fmax df p_FD./S</span>
+<span class="sd">              where Fmin = max(f) and \tilde(h) is the FFT of h.</span>
+<span class="sd">       bw     Effective bandwidth (Hz) of h in the given noise</span>
+<span class="sd">              background, defined as</span>
+<span class="sd">                     \int_Fmin^Fmax df (f-Fchar).^2 p_FD./S</span>
+<span class="sd">                bw = ---------------------------------------------------</span>
+<span class="sd">                      \int_Fmin^Fmax df p_FD./S</span>
+<span class="sd">              where Fmin = max(f) and \tilde(h) is the FFT of h.</span>
+<span class="sd">       Tchar  Characteristic time at which the event occurs, defined as</span>
+<span class="sd">                        \int dt t p_TD(t)</span>
+<span class="sd">                Tchar = -----------------</span>
+<span class="sd">                         \int dt p_TD(t)</span>
+<span class="sd">       dur    Duration of the signal, defined as</span>
+<span class="sd">                        \int dt (t-Tchar).^2 p_TD(t)</span>
+<span class="sd">                Tchar = ----------------------------</span>
+<span class="sd">                         \int dt p_TD(t)</span>
+
+<span class="sd">     Notes:</span>
+
+<span class="sd">     The power spectrum S is interpolated (if needed) to the frequencies of</span>
+<span class="sd">     fft(h).</span>
+
+<span class="sd">     Note that no windowing is used for computing FFTs windowing and</span>
+<span class="sd">     averaging is not really sensible for a transient signal, since by</span>
+<span class="sd">     definition the statistical properties of the signal are changing over</span>
+<span class="sd">     time.  There may be problems for, e.g., band-passed noise bursts.</span>
+
+<span class="sd">     The SNR and h_rss measures are restricted to the frequency interval</span>
+<span class="sd">     [Fmin,Fmax], while h_peak is evaluated in the time domain (i.e., using</span>
+<span class="sd">     data from the full frequency range.</span>
+
+<span class="sd">     See FFTCONVENTIONS for information on the conventions used for Fourier</span>
+<span class="sd">     transforms.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+    <span class="c1">###########################################################################</span>
+    <span class="c1">#   Checks.</span>
+    <span class="c1">###########################################################################</span>
+
+    <span class="c1"># ---- Optional arguments.</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t0</span><span class="p">)</span>
+    <span class="c1"># ---- Is there an input noise spectrum?</span>
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="n">S</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">F0</span><span class="p">):</span>
+        <span class="c1"># ---- Set flag to make dummy noise spectrum.</span>
+        <span class="n">noise</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">noise</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="c1"># ---- Validate noise spectrum data.</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">S</span><span class="p">)</span> <span class="ow">is</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Spectrum S be a vector or empty array.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">((</span><span class="nb">type</span><span class="p">(</span><span class="n">dF</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span> <span class="ow">and</span>  <span class="n">dF</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>  <span class="ow">or</span> <span class="ow">not</span> <span class="n">dF</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Spectrum frequency resolution dF &#39;</span>
+                             <span class="s1">&#39;must be a positive scalar (if F0 is a scalar) &#39;</span>
+                             <span class="s1">&#39;or empty (if F0 is a vector).&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">F0</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span> <span class="ow">and</span> <span class="n">F0</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> 
+                 <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">F0</span><span class="p">)</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">F0</span><span class="p">))</span>
+                <span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Spectrum lowest frequency F0 must be a &#39;</span>
+                             <span class="s1">&#39;non-negative scalar, &#39;</span>
+                             <span class="s1">&#39;or a vector of equal length to S&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">F0</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">dF</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Frequency sampling step not provided and F0 is a scalar&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">F0</span><span class="p">)</span> <span class="o">==</span><span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dF</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Frequency sampling step provided, but F0 is a vector&#39;</span><span class="p">)</span>
+
+        <span class="c1"># ---- Vector of sampled noise frequencies.</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">F0</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="n">F</span> <span class="o">=</span> <span class="n">F0</span> <span class="o">+</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">))</span> <span class="o">*</span> <span class="n">dF</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">diff</span><span class="p">(</span><span class="n">F0</span><span class="p">)</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;F0 is not an ascending frequency series&#39;</span><span class="p">)</span>
+            <span class="n">F</span> <span class="o">=</span> <span class="n">F0</span>
+
+    <span class="c1"># ---- Frequency range of analysis.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">Fmax</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">noise</span><span class="p">:</span>
+            <span class="c1"># ---- Default to highest frequency in supplied spectrum.</span>
+            <span class="n">Fmax</span> <span class="o">=</span> <span class="n">F</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># ---- Default to Nyquist.</span>
+            <span class="n">Fmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">fs</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">Fmin</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">noise</span><span class="p">:</span>
+            <span class="c1"># ---- Default to lowest frequency in supplied spectrum.</span>
+            <span class="n">Fmin</span> <span class="o">=</span> <span class="n">F</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># ---- Default to DC.</span>
+            <span class="n">Fmin</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># ---- Error checks.</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">Fmax</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span>
+        <span class="ow">or</span> <span class="n">Fmax</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Fmax must be positive and either a float or int&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">fs</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Sampling rate fs must be positive.&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">t0</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Timeseries start time t0 must be a scalar.&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">Fmin</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">float64</span><span class="p">])</span>
+        <span class="ow">or</span> <span class="n">Fmin</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Frequency limit Fmin must be a non-negative scalar.&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">Fmin</span> <span class="o">&gt;=</span> <span class="n">Fmax</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Frequency limits must satisfy Fmin&lt;Fmax.&#39;</span><span class="p">)</span>
+
+    <span class="c1"># ---- Require positive sampling rate.</span>
+    <span class="k">if</span> <span class="n">fs</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Sampling rate fs must be positive.&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">t0</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Timeseries start time t0 must be a scalar.&#39;</span><span class="p">)</span>
+
+
+    <span class="c1">###########################################################################</span>
+    <span class="c1">#   Preparations.</span>
+    <span class="c1">###########################################################################</span>
+    <span class="c1"># ---- Number of data points.  Force to be even.</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">N</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Function not guaranteed for waveforms with odd number &#39;</span>
+                      <span class="s1">&#39;of samples.  Dropping last sample&#39;</span><span class="p">)</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="n">h</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>    
+
+    <span class="c1"># ---- Duration of timeseries [sec].</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">N</span><span class="o">/</span><span class="n">fs</span>
+
+    <span class="c1"># ---- Verify that T is a power of 2.</span>
+    <span class="k">if</span> <span class="n">T</span> <span class="o">!=</span> <span class="mi">2</span><span class="o">**</span><span class="n">numpy</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">T</span><span class="p">)):</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Function is not guaranteed for timeseries durations &#39;</span>
+                       <span class="s1">&#39;that are not powers of 2.&#39;</span><span class="p">)</span>
+
+    <span class="c1"># ---- Sample times.</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">t0</span> <span class="o">+</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span><span class="o">/</span><span class="n">fs</span>
+
+    <span class="c1"># ---- If no noise spectrum is supplied then make a dummy noise vector</span>
+    <span class="c1">#      covering [0,Nyquist] Hz.  This will allow us to assume henceforth</span>
+    <span class="c1">#      that S, F, F0, and dF are defined.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">noise</span><span class="p">:</span>
+        <span class="n">dF</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">T</span>
+        <span class="n">F0</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">N</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="n">F</span> <span class="o">=</span> <span class="n">F0</span> <span class="o">+</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">S</span><span class="o">.</span><span class="n">size</span><span class="p">)</span><span class="o">*</span><span class="n">dF</span>
+
+    <span class="c1">###########################################################################</span>
+    <span class="c1">#   Frequency-domain calculations.</span>
+    <span class="c1">###########################################################################</span>
+
+    <span class="c1"># ---- Signal.</span>
+
+    <span class="c1"># ---- Standard FFT works by column.</span>
+    <span class="n">hf</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">fs</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+    <span class="c1"># ---- Vector holding frequencies in usual screwy FFT order:</span>
+    <span class="c1">#        vector element:   [ 1  2  ...  N/2-1  N/2    N/2+1            N/2+2   ... N-1  N ]</span>
+    <span class="c1">#        frequency (df):   [ 0  1  ...  N/2-2  N/2-1  (N/2 or -N/2)   -N/2+1  ... -2   -1 ]</span>
+    <span class="n">f_one_side</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">N</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">T</span>
+    <span class="c1"># ---- Keep only frequency components in [Fmin,Fmax].  Note that most of</span>
+    <span class="c1">#      the frequency-domain formulas include a factor of 2 to account for</span>
+    <span class="c1">#      negative frequencies.</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">f_one_side</span><span class="o">&gt;=</span><span class="n">Fmin</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">f_one_side</span><span class="o">&lt;=</span><span class="n">Fmax</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">f_one_side</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+    <span class="c1"># ---- Distribution of signal energy in frequency.</span>
+    <span class="n">p_FD</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">hf</span><span class="p">[:,</span> <span class="n">index</span><span class="p">]</span> <span class="o">*</span> <span class="n">hf</span><span class="p">[:,</span> <span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">conj</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># ---- f=0 and f=Nyq bins should count for 1/2.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+        <span class="n">p_FD</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">p_FD</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">fs</span><span class="o">/</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">p_FD</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">p_FD</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># ---- Noise.</span>
+
+    <span class="c1"># ---- Does vector of sampled noise frequencies cover requested range?</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="p">(</span><span class="n">F</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="n">F</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">f</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Noise spectrum does not cover desired frequency range.&#39;</span><span class="p">)</span>
+
+    <span class="c1"># ---- Force interpolation of S from sampled frequencies F to data</span>
+    <span class="c1">#      frequencies f.</span>
+    <span class="n">interp_function</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">interp_function</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">F</span> <span class="o">=</span> <span class="n">f</span>
+    <span class="n">dF</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">T</span>
+    <span class="n">F0</span> <span class="o">=</span> <span class="n">F</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+    <span class="c1"># ---- All set to do calculations.  Assured that f, F interchangable.</span>
+
+    <span class="c1"># ---- SNR^2 versus frequency.</span>
+    <span class="n">SNR2f</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">p_FD</span> <span class="o">/</span> <span class="n">S</span>
+
+    <span class="c1"># ---- SNR on [Fmin,Fmax].</span>
+    <span class="n">SNR</span> <span class="o">=</span> <span class="p">(</span><span class="n">dF</span><span class="o">*</span><span class="nb">sum</span><span class="p">(</span><span class="n">SNR2f</span><span class="p">))</span><span class="o">**</span><span class="mf">0.5</span>
+
+    <span class="c1"># ---- Characteristic frequency.</span>
+    <span class="n">Fchar</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">f</span> <span class="o">*</span> <span class="n">SNR2f</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">SNR2f</span><span class="p">)</span>
+
+    <span class="c1"># ---- Characteristic bandwidth.</span>
+    <span class="n">bw</span> <span class="o">=</span> <span class="p">(</span><span class="nb">sum</span><span class="p">((</span><span class="n">f</span><span class="o">-</span><span class="n">Fchar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">SNR2f</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">SNR2f</span><span class="p">))</span><span class="o">**</span><span class="mf">0.5</span>
+
+    <span class="c1"># ---- RSS amplitude.</span>
+    <span class="n">h_rss</span> <span class="o">=</span> <span class="p">(</span><span class="n">dF</span> <span class="o">*</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p_FD</span><span class="p">))</span><span class="o">**</span><span class="mf">0.5</span>
+
+
+    <span class="c1">###########################################################################</span>
+    <span class="c1">#   Time-domain calculations.</span>
+    <span class="c1">###########################################################################</span>
+
+    <span class="c1"># ---- Distribution of signal energy in time.</span>
+    <span class="n">p_TD</span> <span class="o">=</span> <span class="p">(</span><span class="n">h</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># ---- Peak amplitude.</span>
+    <span class="n">h_peak</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">p_TD</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+
+    <span class="c1"># ---- Characteristic time.</span>
+    <span class="n">Tchar</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="n">p_TD</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p_TD</span><span class="p">)</span>
+
+    <span class="c1"># ---- Duration.</span>
+    <span class="n">dur</span> <span class="o">=</span> <span class="p">(</span><span class="nb">sum</span><span class="p">((</span><span class="n">t</span><span class="o">-</span><span class="n">Tchar</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">p_TD</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">p_TD</span><span class="p">))</span><span class="o">**</span><span class="mf">0.5</span>
+
+    <span class="c1"># ---- Done</span>
+
+    <span class="k">return</span> <span class="n">SNR</span><span class="p">,</span> <span class="n">h_rss</span><span class="p">,</span> <span class="n">h_peak</span><span class="p">,</span> <span class="n">Fchar</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">Tchar</span><span class="p">,</span> <span class="n">dur</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Scott Coughlin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0+untagged.81.g737ed9e.dirty',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

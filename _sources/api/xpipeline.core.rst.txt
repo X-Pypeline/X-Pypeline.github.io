@@ -12,7 +12,6 @@ Submodules
    xpipeline.core.xlikelihood
    xpipeline.core.xtimefrequencymap
    xpipeline.core.xtimeseries
-   xpipeline.core.xwaveform
 
 Module contents
 ---------------

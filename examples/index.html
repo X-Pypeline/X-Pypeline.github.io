@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline an explanation &mdash; xpipeline 0+untagged.72.g8cdbf6e.dirty documentation</title>
+  <title>xpipeline an explanation &mdash; xpipeline 0+untagged.81.g737ed9e.dirty documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.72.g8cdbf6e.dirty
+                0+untagged.81.g737ed9e.dirty
               </div>
             
           
@@ -91,6 +91,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#the-coherent-time-frequency-map">The Coherent Time-Frequency Map</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#the-dominant-polarization-frame">The Dominant Polarization Frame</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#xpipeline-likelihoods">xpipeline likelihoods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clustering-pixels">Clustering Pixels</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-waveform">The Waveform</a></li>
 </ul>
 </li>
 </ul>
@@ -348,16 +350,16 @@ the plus and cross polarization plane (i.e. <cite>projected_tfmaps</cite> should
 <span class="gp">In [51]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">likelihood_map_standard</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;standard&#39;</span><span class="p">)</span>
 
 <span class="gp">In [52]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">likelihood_map_circinc</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;circinc&#39;</span><span class="p">)</span>
-<span class="gh">Out[52]: </span><span class="go">&lt;matplotlib.image.AxesImage at 0x111ce6c18&gt;</span>
+<span class="gh">Out[52]: </span><span class="go">&lt;matplotlib.image.AxesImage at 0x11b56f668&gt;</span>
 
 <span class="gp">In [53]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">likelihood_map_circnullenergy</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;circnullenergy&#39;</span><span class="p">)</span>
-<span class="go">                                                     Out[53]: &lt;matplotlib.image.AxesImage at 0x111cfeb70&gt;</span>
+<span class="go">                                                     Out[53]: &lt;matplotlib.image.AxesImage at 0x11b585ac8&gt;</span>
 
 <span class="gp">In [54]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">likelihood_map_circnullinc</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;circnullinc&#39;</span><span class="p">)</span>
-<span class="go">                                                                                                          Out[54]: &lt;matplotlib.image.AxesImage at 0x110a112b0&gt;</span>
+<span class="go">                                                                                                          Out[54]: &lt;matplotlib.image.AxesImage at 0x11a1bc400&gt;</span>
 
 <span class="gp">In [55]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">likelihood_map_circenergy</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;circenergy&#39;</span><span class="p">)</span>
-<span class="go">                                                                                                                                                               Out[55]: &lt;matplotlib.image.AxesImage at 0x110a2c240&gt;</span>
+<span class="go">                                                                                                                                                               Out[55]: &lt;matplotlib.image.AxesImage at 0x11a1d5908&gt;</span>
 
 <span class="gp">In [56]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
 <span class="gp">   ....: </span>    <span class="n">plot</span><span class="o">.</span><span class="n">add_colorbar</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
@@ -372,6 +374,81 @@ the plus and cross polarization plane (i.e. <cite>projected_tfmaps</cite> should
 </pre></div>
 </div>
 <img alt="../_images/plot-time-frequency-map-likelihood-maps.png" src="../_images/plot-time-frequency-map-likelihood-maps.png" />
+</div>
+<div class="section" id="clustering-pixels">
+<h3>Clustering Pixels<a class="headerlink" href="#clustering-pixels" title="Permalink to this headline">¶</a></h3>
+<p>There are a few ways to speed up the processing of the map. Many of the pixels
+are going to not be significant, so we can threhold on what pixels we want
+(say the loudest 1 percent of pixels) and then employ a method to group the pixels
+together in what are referred to as <cite>clusters</cite>. These <cite>clusters</cite> become our possible
+gravitational wave <cite>triggers</cite> on which we evaluate the likelihoods described above</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [58]: </span><span class="kn">from</span> <span class="nn">xpipeline.cluster</span> <span class="kn">import</span> <span class="n">nearestneighbor</span>
+
+<span class="gp">In [59]: </span><span class="n">pixel_time</span><span class="p">,</span> <span class="n">pixel_freq</span> <span class="o">=</span> <span class="n">tfmaps</span><span class="p">[</span><span class="s1">&#39;L1:GDS-CALIB_STRAIN&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">find_significant_pixels</span><span class="p">(</span><span class="n">blackpixel_percentile</span><span class="o">=</span><span class="mi">99</span><span class="p">)</span>
+
+<span class="gp">In [60]: </span><span class="n">coord_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">pixel_time</span><span class="p">,</span> <span class="n">pixel_freq</span><span class="p">])</span>
+
+<span class="gp">In [61]: </span><span class="n">coord_dim_array</span> <span class="o">=</span> <span class="n">tfmaps</span><span class="p">[</span><span class="s1">&#39;L1:GDS-CALIB_STRAIN&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+
+<span class="gp">In [62]: </span><span class="n">npixels</span> <span class="o">=</span> <span class="n">pixel_time</span><span class="o">.</span><span class="n">size</span><span class="p">;</span> <span class="n">connectivity</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
+
+<span class="gp">In [63]: </span><span class="n">labelled_map</span> <span class="o">=</span> <span class="n">nearestneighbor</span><span class="o">.</span><span class="n">fastlabel_wrapper</span><span class="p">(</span><span class="n">coord_array</span><span class="p">,</span> <span class="n">coord_dim_array</span><span class="p">,</span> <span class="n">connectivity</span><span class="p">,</span> <span class="n">npixels</span><span class="p">)</span>
+
+<span class="gp">In [64]: </span><span class="k">print</span><span class="p">(</span><span class="n">labelled_map</span><span class="p">)</span>
+<span class="go">[  1.   2.   3. ... 972. 973. 974.]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-waveform">
+<h3>The Waveform<a class="headerlink" href="#the-waveform" title="Permalink to this headline">¶</a></h3>
+<p>In order to train these likelihoods so we can understand what values to expect from
+gravitational wave clusters instead of random noise fluctations or <cite>glitches</cite> we must
+inject a number of fake gravitational wave like signals.</p>
+<p>This involves to steps, generating a gravitational-wave like waveform on the fly
+and then injecting that signal into a stretch of data.</p>
+<p>The parametrs that go into xmakewaveform are the <cite>family</cite> of waveform, a set of parameters specific for that
+waveform. In this case, the hrss is the quadrature sum of the RSS amplitudes of the plus and cross
+polarizations, tau is the duration, f0 is the central frequency, alpha is
+the chirp parameter, and delta is the phase at the peak of the envelope.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [65]: </span><span class="kn">from</span> <span class="nn">xpipeline.waveform</span> <span class="kn">import</span> <span class="n">xwaveform</span>
+
+<span class="gp">In [66]: </span><span class="kn">from</span> <span class="nn">gwpy.plotter</span> <span class="kn">import</span> <span class="n">TimeSeriesPlot</span>
+
+<span class="gp">In [67]: </span><span class="n">t</span><span class="p">,</span> <span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">,</span> <span class="n">hb</span> <span class="o">=</span> <span class="n">xwaveform</span><span class="o">.</span><span class="n">xmakewaveform</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="s1">&#39;chirplet&#39;</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-22</span><span class="p">,</span> <span class="mf">0.0033</span><span class="p">,</span> <span class="mf">300.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">T</span><span class="o">=</span><span class="mi">513</span><span class="p">,</span> <span class="n">T0</span><span class="o">=</span><span class="mf">256.6161</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+
+<span class="gp">In [68]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">TimeSeriesPlot</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">)</span>
+
+<span class="gp">In [69]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="mf">256.6161</span><span class="p">)</span>
+
+<span class="gp">In [70]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mf">256.6161</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">256.6161</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">])</span>
+
+<span class="gp">In [71]: </span><span class="n">plot</span>
+<span class="gh">Out[71]: </span><span class="go">&lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
+</pre></div>
+</div>
+<img alt="../_images/chirplet.png" src="../_images/chirplet.png" />
+<p>Now let’s say this is not an analytical waveform and instead an hplus and hcross
+from say a supernova simulation. We can also handles that, tracked by <cite>git-lfs</cite>,
+the waveforms folder of X-Pypeline repository houses a number of hdf5 files
+full of pregenerated waveforms.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [72]: </span><span class="kn">from</span> <span class="nn">xpipeline.waveform</span> <span class="kn">import</span> <span class="n">xwaveform</span>
+
+<span class="gp">In [73]: </span><span class="kn">from</span> <span class="nn">gwpy.plotter</span> <span class="kn">import</span> <span class="n">TimeSeriesPlot</span>
+
+<span class="gp">In [74]: </span><span class="n">t</span><span class="p">,</span> <span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">,</span> <span class="n">hb</span> <span class="o">=</span> <span class="n">xwaveform</span><span class="o">.</span><span class="n">xmakewaveform</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="s1">&#39;o1snews&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>    <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-21</span><span class="p">,</span> <span class="mf">1e-21</span><span class="p">,</span> <span class="s1">&#39;R4E1FC_L_theta2.094_phi2.094&#39;</span><span class="p">],</span>
+<span class="gp">   ....: </span>    <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">T0</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="mi">16384</span><span class="p">,</span> <span class="n">catalogdirectory</span><span class="o">=</span><span class="s1">&#39;../waveforms/&#39;</span><span class="p">)</span>
+<span class="gp">   ....: </span>
+
+<span class="gp">In [75]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">TimeSeriesPlot</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">)</span>
+
+<span class="gp">In [76]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+
+<span class="gp">In [77]: </span><span class="n">plot</span>
+<span class="gh">Out[77]: </span><span class="go">&lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
+</pre></div>
+</div>
+<img alt="../_images/supernova-R4E1FC_L_theta2.094_phi2.094.png" src="../_images/supernova-R4E1FC_L_theta2.094_phi2.094.png" />
 </div>
 </div>
 </div>
@@ -416,7 +493,7 @@ the plus and cross polarization plane (i.e. <cite>projected_tfmaps</cite> should
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.72.g8cdbf6e.dirty',
+            VERSION:'0+untagged.81.g737ed9e.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
