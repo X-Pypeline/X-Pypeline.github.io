@@ -296,3 +296,38 @@ full of pregenerated waveforms.
 
     @savefig supernova-R4E1FC_L_theta2.094_phi2.094.png
     In [45]: plot
+
+
+The Injection
+-------------
+
+Now in a coherent search is not enough to simply inject any old signal.
+You must take in a set of sky coordiantes and project an individual
+signal on its antenna pattern just like we do for the data.
+
+.. ipython::
+
+    In [1]: from gwpy.timeseries import TimeSeriesDict
+
+    In [2]: from xpipeline.waveform import xinjectsignal
+
+    In [3]: start_time = 1156609396.0; block_time = 256; channels = ['H1', 'L1', 'V1']; sample_rate = 1024; injection_file_name ='examples/injection_sgc300.txt'; injection_number=0; catalogdirectory='';
+
+    In [4]: [injection_data, gps_s, gps_ns, phi, theta, psi] = xinjectsignal.xinjectsignal(start_time=start_time, block_time=block_time, channels=channels, injection_file_name=injection_file_name, injection_number=injection_number, sample_rate= sample_rate, catalogdirectory=catalogdirectory)
+
+    In [5]: print(gps_s, gps_ns, phi, theta, psi)
+
+    In [6]: injections = TimeSeriesDict(injection_data)
+
+    In [7]: plot = injections.plot()
+
+    In [8]: plot.add_legend()
+
+    In [9]: peak_time = injections['H1'].peak
+
+    In [10]: plot.set_epoch(peak_time)
+
+    In [11]: plot.set_xlim([peak_time - 0.1, peak_time + 0.1])
+
+    @savefig chirplet-h1-l1-v1.png 
+    In [12]: plot

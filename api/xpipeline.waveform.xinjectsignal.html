@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.81.g737ed9e.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.83.g753277f.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.81.g737ed9e.dirty
+                0+untagged.83.g753277f.dirty
               </div>
             
           
@@ -149,7 +149,123 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  
+  <span class="target" id="module-xpipeline.waveform.xinjectsignal"></span><dl class="function">
+<dt id="xpipeline.waveform.xinjectsignal.xinjectsignal">
+<code class="descclassname">xpipeline.waveform.xinjectsignal.</code><code class="descname">xinjectsignal</code><span class="sig-paren">(</span><em>start_time</em>, <em>block_time</em>, <em>channels</em>, <em>sample_rate</em>, <em>injection_file_name</em>, <em>rescale_by_antenna_response=False</em>, <em>injection_number=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/waveform/xinjectsignal.html#xinjectsignal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.waveform.xinjectsignal.xinjectsignal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create simulated data streams containing simulated signals</p>
+<p>for the specified network of gravitational-wave detectors.</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>[injection_data, gps_s, gps_ns, phi, theta, psi] = xinjectsignal( …</dt>
+<dd>start_time,block_time,channel,sample_rate,injection_file_name, …
+rescale_by_antenna_response,injection_number,varargin)</dd>
+</dl>
+<p>start_time    Scalar.  Start time of the data being analysed.
+block_time    Scalar.  Duration (s) of the data being analysed.
+channel      Cell array of strings.  channel{j} holds the name of the</p>
+<blockquote>
+<div>jth detector channel being analysed.  The detector name is
+inferred from the first character of the channel name, and
+must be one of the names recognized by LoadDetectorData.</div></blockquote>
+<dl class="docutils">
+<dt>sample_rate   length(channel)x1 vector.  Sample rates corresponding to</dt>
+<dd>channels.</dd>
+<dt>injection_file_name</dt>
+<dd>String.  Name of file specifying simulated signals to be
+injected.</dd>
+<dt>rescale_by_antenna_response</dt>
+<dd>Scalar.  Optional.  If nonzero then rescale each injection
+amplitude by 1/(sum over detectors of Fp^2)^0.5, where Fp
+is calculated for each detector using the sky angles of the
+injection into the first detector.  This rescaling is
+useful for injecting linearly polarized GWBs into identical
+detectors so that the sum-squared SNR is held fixed.
+WARNING: It is probably not a good idea to use
+this rescaling for: (1) glitches simulated using different
+sky positions for each detector (2) waveforms with 2
+polarizations (3) detectors that are not identical.</dd>
+<dt>injection_number</dt>
+<dd><blockquote class="first">
+<div>Array (positive integer).  Optional.  If given then only
+the injections specified on rows “injection_number” of the
+injection file are injected.  This over-rides the default
+behaviour, which is to inject all injections in the file</div></blockquote>
+<p class="last">(including those outside the interval [start_time,start_time+block_time]!).</p>
+</dd>
+<dt>varargin     Optional ‘name’,’value’ pairs.  Recognized options are:</dt>
+<dd>‘do_not_inject’,logical</dd>
+</dl>
+</div></blockquote>
+<p># —– Speed of light (m/s).
+c = 299792458</p>
+<p># —– Parse channel list and load info on corresponding detectors.
+detector_dict = {}
+for det in channels:</p>
+<blockquote>
+<div>detector_dict[det] = Detector(det)</div></blockquote>
+<p># —– Create appropraite columns for reading the injection
+#       file based on detectors supplied above
+injection_file_columns = []
+for det in channels:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>for columns in [‘gps_s’,’gps_ns’, ‘phi’, ‘theta’, ‘psi’, ‘gwb_type’,</dt>
+<dd><blockquote class="first">
+<div>‘gwb_params’]:</div></blockquote>
+<p class="last">injection_file_columns.append(columns + ‘_’ + det)</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>#—– Read injection file and extract parameters of injections
+injection_file_parameters = Table.read(injection_file_name, format=’ascii’,</p>
+<blockquote>
+<div>names=injection_file_columns)</div></blockquote>
+<p>#—– If specific injections are specified then keep only those injections.
+injection_file_parameters = injection_file_parameters[injection_number]                       If set to true, waveform is not injected injection</p>
+<blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div>parameters are calculated only.</div></blockquote>
+<dl class="docutils">
+<dt>‘catalogdirectory’,string</dt>
+<dd>Absolute path to the directory containing astrophysical
+waveform catalogs (e.g., DFM, OB, or ZM).  If not
+supplied when constructing such a waveform,
+xmakewaveform will attempt to load the appropriate
+catalog from a hard-coded location.</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>injection_data</dt>
+<dd>length(channel)x1 cell array of column vectors.
+injection_data{j} is a column vector holding the signal data
+for the jth detector.</dd>
+<dt>gps_s        Vector of peak time (GPS seconds, integer part) of each</dt>
+<dd>injection at the center of the Earth.</dd>
+<dt>gps_ns       Vector of peak time (GPS seconds, nanosecond part) of each</dt>
+<dd>injection at the center of the Earth.</dd>
+<dt>phi          Vector of azimuthal sky coordinate of each injection</dt>
+<dd>(radians, Earth-fixed coordinates).</dd>
+</dl>
+<p>theta        Vector of polar sky coordinate of each injection
+psi          Vector of polarization angle of each injection</p>
+<blockquote>
+<div>(radians Earth-fixed coordinates).</div></blockquote>
+</div></blockquote>
+<p>The coordinate system is explained in ComputeAntennaResponse. It is
+assumed that the sky positions in the injection file are supplied in this
+coordinate system.  For glitch injections the reported times and angles
+are those for the injection into the first detector.</p>
+<p>Any portion of any signal which lies outside the interval
+[start_time, start_time+block_time] will be clipped. Otherwise, XINJECTSIGNAL
+will inject any signal of duration up to block_time without clipping.
+The edges of long-duration signals will be tapered with
+a hann window to avoid turn-on/off transients.</p>
+</div></blockquote>
+</dd></dl>
+
+
 
            </div>
            
@@ -183,7 +299,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.81.g737ed9e.dirty',
+            VERSION:'0+untagged.83.g753277f.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

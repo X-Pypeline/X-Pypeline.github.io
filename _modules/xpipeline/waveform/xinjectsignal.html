@@ -1,0 +1,467 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>xpipeline.waveform.xinjectsignal &mdash; xpipeline 0+untagged.83.g753277f.dirty documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/xpipeline-docs.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> xpipeline
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.83.g753277f.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">xpipeline an explanation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">xpipeline</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>xpipeline.waveform.xinjectsignal</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for xpipeline.waveform.xinjectsignal</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">xpipeline.core.xdetector</span> <span class="k">import</span> <span class="n">Detector</span>
+<span class="kn">from</span> <span class="nn">.xwaveform</span> <span class="k">import</span> <span class="n">xmakewaveform</span>
+<span class="kn">from</span> <span class="nn">gwpy.timeseries</span> <span class="k">import</span> <span class="n">TimeSeries</span>
+<span class="kn">from</span> <span class="nn">gwpy.table</span> <span class="k">import</span> <span class="n">Table</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+
+<div class="viewcode-block" id="xinjectsignal"><a class="viewcode-back" href="../../../api/xpipeline.waveform.xinjectsignal.html#xpipeline.waveform.xinjectsignal.xinjectsignal">[docs]</a><span class="k">def</span> <span class="nf">xinjectsignal</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">block_time</span><span class="p">,</span> <span class="n">channels</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span>
+                  <span class="n">injection_file_name</span><span class="p">,</span> <span class="n">rescale_by_antenna_response</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                  <span class="n">injection_number</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create simulated data streams containing simulated signals</span>
+
+<span class="sd">    for the specified network of gravitational-wave detectors.</span>
+
+<span class="sd">      [injection_data, gps_s, gps_ns, phi, theta, psi] = xinjectsignal( ...</span>
+<span class="sd">        start_time,block_time,channel,sample_rate,injection_file_name, ...</span>
+<span class="sd">        rescale_by_antenna_response,injection_number,varargin)</span>
+
+<span class="sd">      start_time    Scalar.  Start time of the data being analysed.</span>
+<span class="sd">      block_time    Scalar.  Duration (s) of the data being analysed.</span>
+<span class="sd">      channel      Cell array of strings.  channel{j} holds the name of the</span>
+<span class="sd">                   jth detector channel being analysed.  The detector name is</span>
+<span class="sd">                   inferred from the first character of the channel name, and</span>
+<span class="sd">                   must be one of the names recognized by LoadDetectorData.</span>
+<span class="sd">      sample_rate   length(channel)x1 vector.  Sample rates corresponding to</span>
+<span class="sd">                   channels.</span>
+<span class="sd">      injection_file_name</span>
+<span class="sd">                   String.  Name of file specifying simulated signals to be</span>
+<span class="sd">                   injected.</span>
+<span class="sd">      rescale_by_antenna_response</span>
+<span class="sd">                   Scalar.  Optional.  If nonzero then rescale each injection</span>
+<span class="sd">                   amplitude by 1/(sum over detectors of Fp^2)^0.5, where Fp</span>
+<span class="sd">                   is calculated for each detector using the sky angles of the</span>
+<span class="sd">                   injection into the first detector.  This rescaling is</span>
+<span class="sd">                   useful for injecting linearly polarized GWBs into identical</span>
+<span class="sd">                   detectors so that the sum-squared SNR is held fixed.</span>
+<span class="sd">                   WARNING: It is probably not a good idea to use</span>
+<span class="sd">                   this rescaling for: (1) glitches simulated using different</span>
+<span class="sd">                   sky positions for each detector (2) waveforms with 2</span>
+<span class="sd">                   polarizations (3) detectors that are not identical.</span>
+<span class="sd">      injection_number</span>
+<span class="sd">                   Array (positive integer).  Optional.  If given then only</span>
+<span class="sd">                   the injections specified on rows &quot;injection_number&quot; of the</span>
+<span class="sd">                   injection file are injected.  This over-rides the default</span>
+<span class="sd">                   behaviour, which is to inject all injections in the file</span>
+<span class="sd">                  (including those outside the interval [start_time,start_time+block_time]!).</span>
+<span class="sd">      varargin     Optional &#39;name&#39;,&#39;value&#39; pairs.  Recognized options are:</span>
+<span class="sd">                     &#39;do_not_inject&#39;,logical</span>
+<span class="sd">    # ----- Speed of light (m/s).</span>
+<span class="sd">    c = 299792458</span>
+
+<span class="sd">    # ----- Parse channel list and load info on corresponding detectors.</span>
+<span class="sd">    detector_dict = {}</span>
+<span class="sd">    for det in channels:</span>
+<span class="sd">        detector_dict[det] = Detector(det)</span>
+
+<span class="sd">    # ----- Create appropraite columns for reading the injection</span>
+<span class="sd">    #       file based on detectors supplied above</span>
+<span class="sd">    injection_file_columns = []</span>
+<span class="sd">    for det in channels:</span>
+<span class="sd">        for columns in [&#39;gps_s&#39;,&#39;gps_ns&#39;, &#39;phi&#39;, &#39;theta&#39;, &#39;psi&#39;, &#39;gwb_type&#39;,</span>
+<span class="sd">                         &#39;gwb_params&#39;]:</span>
+<span class="sd">            injection_file_columns.append(columns + &#39;_&#39; + det)</span>
+
+
+<span class="sd">    #----- Read injection file and extract parameters of injections</span>
+<span class="sd">    injection_file_parameters = Table.read(injection_file_name, format=&#39;ascii&#39;,</span>
+<span class="sd">                                           names=injection_file_columns)</span>
+
+
+<span class="sd">    #----- If specific injections are specified then keep only those injections.</span>
+<span class="sd">    injection_file_parameters = injection_file_parameters[injection_number]                       If set to true, waveform is not injected injection</span>
+<span class="sd">                       parameters are calculated only.</span>
+<span class="sd">                     &#39;catalogdirectory&#39;,string</span>
+<span class="sd">                       Absolute path to the directory containing astrophysical</span>
+<span class="sd">                       waveform catalogs (e.g., DFM, OB, or ZM).  If not</span>
+<span class="sd">                       supplied when constructing such a waveform,</span>
+<span class="sd">                       xmakewaveform will attempt to load the appropriate</span>
+<span class="sd">                       catalog from a hard-coded location.</span>
+
+<span class="sd">      injection_data</span>
+<span class="sd">                   length(channel)x1 cell array of column vectors.</span>
+<span class="sd">                   injection_data{j} is a column vector holding the signal data</span>
+<span class="sd">                   for the jth detector.</span>
+<span class="sd">      gps_s        Vector of peak time (GPS seconds, integer part) of each</span>
+<span class="sd">                   injection at the center of the Earth.</span>
+<span class="sd">      gps_ns       Vector of peak time (GPS seconds, nanosecond part) of each</span>
+<span class="sd">                   injection at the center of the Earth.</span>
+<span class="sd">      phi          Vector of azimuthal sky coordinate of each injection</span>
+<span class="sd">                   (radians, Earth-fixed coordinates).</span>
+<span class="sd">      theta        Vector of polar sky coordinate of each injection</span>
+<span class="sd">      psi          Vector of polarization angle of each injection</span>
+<span class="sd">                   (radians Earth-fixed coordinates).</span>
+
+<span class="sd">     The coordinate system is explained in ComputeAntennaResponse. It is</span>
+<span class="sd">     assumed that the sky positions in the injection file are supplied in this</span>
+<span class="sd">     coordinate system.  For glitch injections the reported times and angles</span>
+<span class="sd">     are those for the injection into the first detector.</span>
+
+<span class="sd">     Any portion of any signal which lies outside the interval</span>
+<span class="sd">     [start_time, start_time+block_time] will be clipped. Otherwise, XINJECTSIGNAL</span>
+<span class="sd">     will inject any signal of duration up to block_time without clipping.</span>
+<span class="sd">     The edges of long-duration signals will be tapered with</span>
+<span class="sd">     a hann window to avoid turn-on/off transients.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># ---- Check for optional arguments.</span>
+    <span class="n">do_not_inject</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;do_not_inject&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">catalogdirectory</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;catalogdirectory&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+    <span class="c1"># ----- Speed of light (m/s).</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mi">299792458</span>
+
+    <span class="c1"># ----- Parse channel list and load info on corresponding detectors.</span>
+    <span class="n">detector_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">channels</span><span class="p">:</span>
+        <span class="n">detector_dict</span><span class="p">[</span><span class="n">det</span><span class="p">]</span> <span class="o">=</span> <span class="n">Detector</span><span class="p">(</span><span class="n">det</span><span class="p">)</span>
+
+    <span class="c1"># ----- Create appropraite columns for reading the injection</span>
+    <span class="c1">#       file based on detectors supplied above</span>
+    <span class="n">injection_file_columns</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">channels</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">columns</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;gps_s&#39;</span><span class="p">,</span><span class="s1">&#39;gps_ns&#39;</span><span class="p">,</span> <span class="s1">&#39;phi&#39;</span><span class="p">,</span> <span class="s1">&#39;theta&#39;</span><span class="p">,</span> <span class="s1">&#39;psi&#39;</span><span class="p">,</span> <span class="s1">&#39;gwb_type&#39;</span><span class="p">,</span>
+                         <span class="s1">&#39;gwb_params&#39;</span><span class="p">]:</span>
+            <span class="n">injection_file_columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">columns</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">det</span><span class="p">)</span>
+
+
+    <span class="c1">#----- Read injection file and extract parameters of injections</span>
+    <span class="n">injection_file_parameters</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">injection_file_name</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;ascii&#39;</span><span class="p">,</span>
+                                           <span class="n">names</span><span class="o">=</span><span class="n">injection_file_columns</span><span class="p">)</span>
+
+
+    <span class="c1">#----- If specific injections are specified then keep only those injections.</span>
+    <span class="n">injection_file_parameters</span> <span class="o">=</span> <span class="n">injection_file_parameters</span><span class="p">[</span><span class="n">injection_number</span><span class="p">]</span>
+
+    <span class="c1">#----- Compute sum over detectors of Fp^2 for each injection, if desired.</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    if (rescale_by_antenna_response)</span>
+<span class="sd">        totalInjectedPower = zeros(nInjection,1)</span>
+<span class="sd">        #----- Loop over simulated signals and record peak time, sky angles.</span>
+<span class="sd">        for jInjection=1:nInjection</span>
+<span class="sd">            #----- Use angles for first detector.</span>
+<span class="sd">            phi    = str2num(currentParameters{3}{jInjection})</span>
+<span class="sd">            theta  = str2num(currentParameters{4}{jInjection})</span>
+<span class="sd">            psi    = str2num(currentParameters{5}{jInjection})</span>
+<span class="sd">            #----- Compute Fp for each detector.</span>
+<span class="sd">            for jDetector=1:nDetector</span>
+<span class="sd">                Fp = ComputeAntennaResponse(phi,theta,psi,detector{jDetector}.d)</span>
+<span class="sd">                totalInjectedPower(jInjection) = ...</span>
+<span class="sd">                    totalInjectedPower(jInjection) + Fp^2</span>
+<span class="sd">            end</span>
+<span class="sd">        end</span>
+<span class="sd">    end</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1">#----- Loop over detectors and construct simulated signals.</span>
+    <span class="n">injection_data</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">channels</span><span class="p">:</span>
+        <span class="c1">#----- Make timeseries data for given detector.</span>
+        <span class="n">injection_data</span><span class="p">[</span><span class="n">det</span><span class="p">]</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">block_time</span> <span class="o">*</span> <span class="n">sample_rate</span><span class="p">),</span>
+                                         <span class="n">dx</span><span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">sample_rate</span><span class="p">,</span>
+                                         <span class="n">name</span><span class="o">=</span><span class="n">det</span><span class="p">)</span>
+        <span class="c1">#---------- Extract parameters for current injection.</span>
+        <span class="n">gps_s</span> <span class="o">=</span> <span class="n">injection_file_parameters</span><span class="p">[</span><span class="s1">&#39;gps_s_&#39;</span> <span class="o">+</span> <span class="n">det</span><span class="p">]</span>
+        <span class="n">gps_ns</span> <span class="o">=</span> <span class="n">injection_file_parameters</span><span class="p">[</span><span class="s1">&#39;gps_ns_&#39;</span> <span class="o">+</span> <span class="n">det</span><span class="p">]</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">injection_file_parameters</span><span class="p">[</span><span class="s1">&#39;phi_&#39;</span> <span class="o">+</span> <span class="n">det</span><span class="p">]</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">injection_file_parameters</span><span class="p">[</span><span class="s1">&#39;theta_&#39;</span> <span class="o">+</span> <span class="n">det</span><span class="p">]</span>
+        <span class="n">psi</span> <span class="o">=</span> <span class="n">injection_file_parameters</span><span class="p">[</span><span class="s1">&#39;psi_&#39;</span> <span class="o">+</span> <span class="n">det</span><span class="p">]</span>
+        <span class="n">gwb_type</span> <span class="o">=</span> <span class="n">injection_file_parameters</span><span class="p">[</span><span class="s1">&#39;gwb_type_&#39;</span> <span class="o">+</span> <span class="n">det</span><span class="p">]</span>
+        <span class="n">gwb_params</span> <span class="o">=</span> <span class="n">injection_file_parameters</span><span class="p">[</span><span class="s1">&#39;gwb_params_&#39;</span> <span class="o">+</span> <span class="n">det</span><span class="p">]</span>
+
+
+        <span class="c1">#----- Time delay for incoming signal wrt center of Earth</span>
+        <span class="n">delay</span> <span class="o">=</span> <span class="n">detector_dict</span><span class="p">[</span><span class="n">det</span><span class="p">]</span><span class="o">.</span><span class="n">time_delay_from_earth_center_phi_theta</span><span class="p">(</span>
+                                       <span class="p">[</span><span class="n">phi</span><span class="p">],</span> <span class="p">[</span><span class="n">theta</span><span class="p">])</span>
+
+        <span class="c1">#----- Compute antenna response, including polarization angle.</span>
+        <span class="p">[</span><span class="n">Fp</span><span class="p">,</span> <span class="n">Fc</span><span class="p">,</span> <span class="n">Fb</span><span class="p">,</span> <span class="n">F1</span><span class="p">,</span> <span class="n">F2</span><span class="p">,</span> <span class="n">FL</span><span class="p">]</span> <span class="o">=</span> <span class="n">detector_dict</span><span class="p">[</span><span class="n">det</span><span class="p">]</span><span class="o">.</span><span class="n">compute_antenna_response</span><span class="p">(</span>
+                                       <span class="p">[</span><span class="n">phi</span><span class="p">],</span> <span class="p">[</span><span class="n">theta</span><span class="p">],</span> <span class="p">[</span><span class="n">psi</span><span class="p">])</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        #----- Rescale amplitude by sum_over_detectors of Fp^2, if desired:</span>
+<span class="sd">        if (rescale_by_antenna_response):</span>
+<span class="sd">            Fp = Fp / sqrt(totalInjectedPower(jInjection))</span>
+<span class="sd">            Fc = Fc / sqrt(totalInjectedPower(jInjection))</span>
+<span class="sd">        end</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#----- Make injection data in a several-second snippet.  This will</span>
+        <span class="c1">#      work for any signal with duration less than snippet_pad for</span>
+        <span class="c1">#      longer signals some clipping may occur.  Clipping will</span>
+        <span class="c1">#      definitely occur for injections longer than snippet_duration.</span>
+        <span class="n">snippet_pad</span> <span class="o">=</span> <span class="n">block_time</span>
+        <span class="n">snippet_duration</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">snippet_pad</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="c1">#----- Peak Time of signal relative to start_time.</span>
+        <span class="n">peak_time</span> <span class="o">=</span> <span class="n">gps_s</span> <span class="o">+</span> <span class="mf">1e-9</span> <span class="o">*</span> <span class="n">gps_ns</span> <span class="o">+</span> <span class="n">delay</span>
+
+        <span class="n">peak_time_for_waveform</span> <span class="o">=</span> <span class="n">snippet_pad</span> <span class="o">+</span> <span class="n">peak_time</span> <span class="o">-</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">peak_time</span><span class="p">)</span>
+        <span class="c1">#----- Waveform plus and cross polarizations, in wave frame.</span>
+        <span class="p">[</span><span class="n">t</span><span class="p">,</span><span class="n">hp</span><span class="p">,</span><span class="n">hc</span><span class="p">,</span><span class="n">hb</span><span class="p">]</span> <span class="o">=</span> <span class="n">xmakewaveform</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="n">gwb_type</span><span class="p">,</span>
+                                     <span class="n">parameters</span><span class="o">=</span><span class="n">gwb_params</span><span class="p">,</span>
+                                     <span class="n">T</span><span class="o">=</span><span class="n">snippet_duration</span><span class="p">,</span>
+                                     <span class="n">T0</span><span class="o">=</span><span class="n">peak_time_for_waveform</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                     <span class="n">fs</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">,</span>
+                                     <span class="n">catalogdirectory</span><span class="o">=</span><span class="n">catalogdirectory</span><span class="p">)</span>
+
+        <span class="c1"># ---- Apply taper to start and end of snippet to avoid</span>
+        <span class="c1">#      discontinuous turn-on/off of very long signals.</span>
+        <span class="c1"># Only taper if there is an signal to taper</span>
+        <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">hp</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="n">hp</span><span class="o">.</span><span class="n">taper</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">hc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="n">hc</span><span class="o">.</span><span class="n">taper</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">hb</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="n">hb</span><span class="o">.</span><span class="n">taper</span><span class="p">()</span>
+
+        <span class="c1">#----- Reset t to GPS time.</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">peak_time</span><span class="p">)</span> <span class="o">-</span> <span class="n">snippet_pad</span>
+
+        <span class="c1">#----- Sample indices.</span>
+        <span class="n">injection_samples</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">t</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+
+        <span class="c1">#----- keep only samples which fall inside the desired time interval.</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span> <span class="p">(</span><span class="n">t</span><span class="o">&gt;=</span><span class="n">start_time</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">t</span><span class="o">&lt;</span><span class="n">start_time</span> <span class="o">+</span> <span class="n">block_time</span><span class="p">)</span> <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">injection_samples</span> <span class="o">=</span> <span class="n">injection_samples</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">hp</span> <span class="o">=</span> <span class="n">hp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">hc</span> <span class="o">=</span> <span class="n">hc</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">hb</span> <span class="o">=</span> <span class="n">hb</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+
+        <span class="c1">#----- Combine with antenna response to give signal.</span>
+        <span class="n">injection_samples</span> <span class="o">=</span> <span class="p">(</span><span class="n">injection_samples</span> <span class="o">+</span>
+                             <span class="n">numpy</span><span class="o">.</span><span class="n">round</span><span class="p">(</span>
+                             <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">peak_time</span><span class="p">)</span> <span class="o">-</span> <span class="n">snippet_pad</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
+                             <span class="o">*</span><span class="n">sample_rate</span><span class="p">)</span>
+                            <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+        <span class="n">injection_data</span><span class="p">[</span><span class="n">det</span><span class="p">][</span><span class="n">injection_samples</span><span class="p">]</span> <span class="o">=</span> <span class="n">Fp</span><span class="o">*</span><span class="n">hp</span> <span class="o">+</span> <span class="n">Fc</span><span class="o">*</span><span class="n">hc</span> <span class="o">+</span> <span class="n">Fb</span><span class="o">*</span><span class="n">hb</span>
+        <span class="n">injection_data</span><span class="p">[</span><span class="n">det</span><span class="p">]</span><span class="o">.</span><span class="n">t0</span> <span class="o">=</span> <span class="n">start_time</span>
+        <span class="n">injection_data</span><span class="p">[</span><span class="n">det</span><span class="p">]</span><span class="o">.</span><span class="n">peak</span> <span class="o">=</span> <span class="n">peak_time</span>
+
+    <span class="c1">#----- Record for output the peak time and sky angles for each of the</span>
+    <span class="c1">#      injections.  For glitches record only the parameters for the first</span>
+    <span class="c1">#      detector.</span>
+    <span class="c1">#----- Loop over simulated signals and record peak time, sky angles.</span>
+    <span class="c1">#---------- Extract parameters for current injection.</span>
+    <span class="n">gps_s</span> <span class="o">=</span> <span class="n">injection_file_parameters</span><span class="p">[</span><span class="s1">&#39;gps_s_&#39;</span> <span class="o">+</span> <span class="n">channels</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">gps_ns</span> <span class="o">=</span> <span class="n">injection_file_parameters</span><span class="p">[</span><span class="s1">&#39;gps_ns_&#39;</span> <span class="o">+</span> <span class="n">channels</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">injection_file_parameters</span><span class="p">[</span><span class="s1">&#39;phi_&#39;</span> <span class="o">+</span> <span class="n">channels</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">injection_file_parameters</span><span class="p">[</span><span class="s1">&#39;theta_&#39;</span> <span class="o">+</span> <span class="n">channels</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">psi</span> <span class="o">=</span> <span class="n">injection_file_parameters</span><span class="p">[</span><span class="s1">&#39;psi_&#39;</span> <span class="o">+</span> <span class="n">channels</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+    <span class="c1">#----- Done</span>
+    <span class="k">return</span> <span class="n">injection_data</span><span class="p">,</span> <span class="n">gps_s</span><span class="p">,</span> <span class="n">gps_ns</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Scott Coughlin.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0+untagged.83.g753277f.dirty',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
