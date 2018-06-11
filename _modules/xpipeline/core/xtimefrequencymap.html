@@ -169,6 +169,7 @@
 <span class="c1"># ---- Import standard modules to the python path.</span>
 <span class="kn">from</span> <span class="nn">gwpy.spectrogram</span> <span class="k">import</span> <span class="n">Spectrogram</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">gwpy.signal.fft.ui</span> <span class="k">import</span> <span class="n">seconds_to_samples</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
@@ -212,8 +213,9 @@
             <span class="n">significant_pixels</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;pix_time&#39;</span><span class="p">],</span> <span class="n">significant_pixels</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;pix_freq&#39;</span><span class="p">]</span> \
                 <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">find_significant_pixels</span><span class="p">(</span><span class="n">blackpixel_percentile</span><span class="o">=</span><span class="n">pix_thres</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="XTimeFrequencyMapDict.get_significant_pixels"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.get_significant_pixels">[docs]</a>    <span class="k">def</span> <span class="nf">get_significant_pixels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Obtain the time-frequency indicies of the loudest pixels</span>
+
+<div class="viewcode-block" id="XTimeFrequencyMapDict.blackout_pixels"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.blackout_pixels">[docs]</a>    <span class="k">def</span> <span class="nf">blackout_pixels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set pixels below certain energy level to zero</span>
 
 <span class="sd">        Parameters:</span>
 
@@ -229,13 +231,12 @@
             <span class="n">blackpixel_percentile</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">c</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="p">)</span>
                                          <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span>
 
-        <span class="n">significant_pixels</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="n">self_</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">pix_thres</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">blackpixel_percentile</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
-            <span class="n">significant_pixels</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="n">significant_pixels</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;pix_time&#39;</span><span class="p">],</span> <span class="n">significant_pixels</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;pix_freq&#39;</span><span class="p">]</span> \
-                <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">find_significant_pixels</span><span class="p">(</span><span class="n">blackpixel_percentile</span><span class="o">=</span><span class="n">pix_thres</span><span class="p">)</span>
+            <span class="n">self_</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">self_</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">blackout_pixels</span><span class="p">(</span>
+                                       <span class="n">blackpixel_percentile</span><span class="o">=</span><span class="n">pix_thres</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">significant_pixels</span></div>
+        <span class="k">return</span> <span class="n">self_</span></div>
 
 
 <div class="viewcode-block" id="XTimeFrequencyMapDict.plot"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -273,19 +274,20 @@
 
 
 <div class="viewcode-block" id="XTimeFrequencyMap"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap">[docs]</a><span class="k">class</span> <span class="nc">XTimeFrequencyMap</span><span class="p">(</span><span class="n">Spectrogram</span><span class="p">):</span>
-<div class="viewcode-block" id="XTimeFrequencyMap.find_significant_pixels"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.find_significant_pixels">[docs]</a>    <span class="k">def</span> <span class="nf">find_significant_pixels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Obtain the time-frequency indicies of the loudest pixels</span>
+<div class="viewcode-block" id="XTimeFrequencyMap.blackout_pixels"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.blackout_pixels">[docs]</a>    <span class="k">def</span> <span class="nf">blackout_pixels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set pixels below certain energy level to zero</span>
 
 <span class="sd">           Parameters:</span>
 
 <span class="sd">           blackpixel_percentile : `int`</span>
-<span class="sd">               what 2D percentile value we will use as the threshold</span>
+<span class="sd">               the x-percentile loudest tile all pixels</span>
+<span class="sd">               below which will be set to energy of 0</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">energy_threshold</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="p">,</span>
+        <span class="n">self_</span> <span class="o">=</span> <span class="bp">self</span>
+        <span class="n">energy_threshold</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">self_</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="p">,</span>
                                           <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;midpoint&#39;</span><span class="p">)</span>
-        <span class="n">pixel_time</span><span class="p">,</span> <span class="n">pixel_freq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="n">energy_threshold</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">pixel_time</span><span class="p">,</span> <span class="n">pixel_freq</span></div>
+        <span class="n">self_</span><span class="p">[</span><span class="n">self_</span><span class="o">.</span><span class="n">value</span> <span class="o">&lt;=</span> <span class="n">energy_threshold</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">self_</span> </div>
 
 
 <div class="viewcode-block" id="XTimeFrequencyMap.phaseshift"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.phaseshift">[docs]</a>    <span class="k">def</span> <span class="nf">phaseshift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delta</span><span class="p">):</span>
@@ -314,7 +316,7 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        slide : `int`,</span>
-<span class="sd">            Ho many seconds we are sliding the map</span>
+<span class="sd">            How many seconds we are sliding the map</span>
 
 <span class="sd">        sample_freqeunecy : `float`</span>
 <span class="sd">            what is the sample frequency of the data</span>

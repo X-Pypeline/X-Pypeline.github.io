@@ -154,9 +154,9 @@
 <em class="property">class </em><code class="descclassname">xpipeline.core.xtimefrequencymap.</code><code class="descname">XTimeFrequencyMapDict</code><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMapDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a></p>
 <dl class="method">
-<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.get_significant_pixels">
-<code class="descname">get_significant_pixels</code><span class="sig-paren">(</span><em>blackpixel_percentile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMapDict.get_significant_pixels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.get_significant_pixels" title="Permalink to this definition">¶</a></dt>
-<dd><p>Obtain the time-frequency indicies of the loudest pixels</p>
+<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.blackout_pixels">
+<code class="descname">blackout_pixels</code><span class="sig-paren">(</span><em>blackpixel_percentile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMapDict.blackout_pixels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.blackout_pixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set pixels below certain energy level to zero</p>
 <p>Parameters:</p>
 <blockquote>
 <div><dl class="docutils">
@@ -249,6 +249,18 @@ and value <cite>XTimeFrequencyMapDict</cite></dd>
 <em class="property">class </em><code class="descclassname">xpipeline.core.xtimefrequencymap.</code><code class="descname">XTimeFrequencyMap</code><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">gwpy.spectrogram.core.Spectrogram</span></code></p>
 <dl class="method">
+<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.blackout_pixels">
+<code class="descname">blackout_pixels</code><span class="sig-paren">(</span><em>blackpixel_percentile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.blackout_pixels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.blackout_pixels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set pixels below certain energy level to zero</p>
+<p>Parameters:</p>
+<dl class="docutils">
+<dt>blackpixel_percentile <span class="classifier-delimiter">:</span> <span class="classifier"><cite>int</cite></span></dt>
+<dd>the x-percentile loudest tile all pixels
+below which will be set to energy of 0</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.circular_time_slide">
 <code class="descname">circular_time_slide</code><span class="sig-paren">(</span><em>slide</em>, <em>sample_frequency</em>, <em>offset</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.circular_time_slide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.circular_time_slide" title="Permalink to this definition">¶</a></dt>
 <dd><p>Slide the TF pixels of this map</p>
@@ -260,7 +272,7 @@ such that slide represents a slide in seconds.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>slide</strong> : <cite>int</cite>,</p>
 <blockquote>
-<div><p>Ho many seconds we are sliding the map</p>
+<div><p>How many seconds we are sliding the map</p>
 </div></blockquote>
 <p><strong>sample_freqeunecy</strong> : <cite>float</cite></p>
 <blockquote>
@@ -274,17 +286,6 @@ such that slide represents a slide in seconds.</p>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
-<dl class="method">
-<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.find_significant_pixels">
-<code class="descname">find_significant_pixels</code><span class="sig-paren">(</span><em>blackpixel_percentile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.find_significant_pixels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.find_significant_pixels" title="Permalink to this definition">¶</a></dt>
-<dd><p>Obtain the time-frequency indicies of the loudest pixels</p>
-<p>Parameters:</p>
-<dl class="docutils">
-<dt>blackpixel_percentile <span class="classifier-delimiter">:</span> <span class="classifier"><cite>int</cite></span></dt>
-<dd>what 2D percentile value we will use as the threshold</dd>
-</dl>
 </dd></dl>
 
 <dl class="method">
