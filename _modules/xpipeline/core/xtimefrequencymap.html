@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.core.xtimefrequencymap &mdash; xpipeline 0+untagged.83.g753277f.dirty documentation</title>
+  <title>xpipeline.core.xtimefrequencymap &mdash; xpipeline 0+untagged.85.gcf75ef0.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.83.g753277f.dirty
+                0+untagged.85.gcf75ef0.dirty
               </div>
             
           
@@ -183,11 +183,7 @@
 <span class="sd">               `XTimeFrequencyMap`:</span>
 <span class="sd">                   A coherent TF-Map</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">coherent_map</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">tfmap</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
-            <span class="n">coherent_map</span> <span class="o">=+</span> <span class="n">tfmap</span>
-
-        <span class="k">return</span> <span class="n">coherent_map</span></div>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div>
 
 
 <div class="viewcode-block" id="XTimeFrequencyMapDict.to_dominant_polarization_frame"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.to_dominant_polarization_frame">[docs]</a>    <span class="k">def</span> <span class="nf">to_dominant_polarization_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">projected_asds</span><span class="p">):</span>
@@ -209,8 +205,12 @@
             <span class="k">for</span> <span class="n">det</span><span class="p">,</span> <span class="n">asd</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">asds</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
                 <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">asd</span><span class="o">.</span><span class="n">xindex</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="n">det</span><span class="p">]</span><span class="o">.</span><span class="n">yindex</span><span class="p">)</span>
                 <span class="n">projected_time_frequency_maps</span><span class="p">[</span><span class="n">pattern</span><span class="p">][</span><span class="n">det</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">det</span><span class="p">]</span> <span class="o">*</span> <span class="n">asd</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">projected_time_frequency_maps</span></div>
-
+        <span class="k">return</span> <span class="n">projected_time_frequency_maps</span>
+        <span class="n">significant_pixels</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">pix_thres</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">blackpixel_percentile</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">significant_pixels</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">significant_pixels</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;pix_time&#39;</span><span class="p">],</span> <span class="n">significant_pixels</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;pix_freq&#39;</span><span class="p">]</span> \
+                <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">find_significant_pixels</span><span class="p">(</span><span class="n">blackpixel_percentile</span><span class="o">=</span><span class="n">pix_thres</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="XTimeFrequencyMapDict.get_significant_pixels"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.get_significant_pixels">[docs]</a>    <span class="k">def</span> <span class="nf">get_significant_pixels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Obtain the time-frequency indicies of the loudest pixels</span>
@@ -233,7 +233,9 @@
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">pix_thres</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">blackpixel_percentile</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="n">significant_pixels</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="n">significant_pixels</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;pix_time&#39;</span><span class="p">],</span> <span class="n">significant_pixels</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s1">&#39;pix_freq&#39;</span><span class="p">]</span> \
-                <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">find_significant_pixels</span><span class="p">(</span><span class="n">blackpixel_percentile</span><span class="o">=</span><span class="n">pix_thres</span><span class="p">)</span></div>
+                <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">find_significant_pixels</span><span class="p">(</span><span class="n">blackpixel_percentile</span><span class="o">=</span><span class="n">pix_thres</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">significant_pixels</span></div>
 
 
 <div class="viewcode-block" id="XTimeFrequencyMapDict.plot"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMapDict.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -255,15 +257,15 @@
 <span class="sd">            all other keyword arguments are passed to the plotter as</span>
 <span class="sd">            appropriate</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">gwpy.plotter</span> <span class="k">import</span> <span class="n">Plot</span>
+        <span class="kn">from</span> <span class="nn">gwpy.plotter</span> <span class="k">import</span> <span class="n">SpectrogramPlot</span>
         <span class="n">figargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;figsize&#39;</span><span class="p">,</span> <span class="s1">&#39;dpi&#39;</span><span class="p">]:</span>
             <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
                 <span class="n">figargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-        <span class="n">plot_</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="o">**</span><span class="n">figargs</span><span class="p">)</span>
+        <span class="n">plot_</span> <span class="o">=</span> <span class="n">SpectrogramPlot</span><span class="p">(</span><span class="n">sep</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">figargs</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">lab</span><span class="p">,</span> <span class="n">tfmap</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="k">if</span> <span class="n">label</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;name&#39;</span><span class="p">:</span>
-                <span class="n">lab</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">name</span>
+                <span class="n">lab</span> <span class="o">=</span> <span class="n">tfmap</span><span class="o">.</span><span class="n">name</span>
             <span class="k">elif</span> <span class="n">label</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;key&#39;</span><span class="p">:</span>
                 <span class="n">lab</span> <span class="o">=</span> <span class="n">label</span>
             <span class="n">plot_</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">tfmap</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">lab</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -370,7 +372,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0+untagged.83.g753277f.dirty',
+            VERSION:'0+untagged.85.gcf75ef0.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

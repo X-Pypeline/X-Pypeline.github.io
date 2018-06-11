@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.waveform.xinjectsignal &mdash; xpipeline 0+untagged.83.g753277f.dirty documentation</title>
+  <title>xpipeline.waveform.xinjectsignal &mdash; xpipeline 0+untagged.85.gcf75ef0.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.83.g753277f.dirty
+                0+untagged.85.gcf75ef0.dirty
               </div>
             
           
@@ -151,6 +151,7 @@
 <span></span><span class="kn">from</span> <span class="nn">xpipeline.core.xdetector</span> <span class="k">import</span> <span class="n">Detector</span>
 <span class="kn">from</span> <span class="nn">.xwaveform</span> <span class="k">import</span> <span class="n">xmakewaveform</span>
 <span class="kn">from</span> <span class="nn">gwpy.timeseries</span> <span class="k">import</span> <span class="n">TimeSeries</span>
+<span class="kn">from</span> <span class="nn">xpipeline.core.xtimeseries</span> <span class="k">import</span> <span class="n">XTimeSeries</span>
 <span class="kn">from</span> <span class="nn">gwpy.table</span> <span class="k">import</span> <span class="n">Table</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span>
@@ -402,8 +403,7 @@
     <span class="n">psi</span> <span class="o">=</span> <span class="n">injection_file_parameters</span><span class="p">[</span><span class="s1">&#39;psi_&#39;</span> <span class="o">+</span> <span class="n">channels</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
 
     <span class="c1">#----- Done</span>
-    <span class="k">return</span> <span class="n">injection_data</span><span class="p">,</span> <span class="n">gps_s</span><span class="p">,</span> <span class="n">gps_ns</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span></div>
-
+    <span class="k">return</span> <span class="n">XTimeSeries</span><span class="p">(</span><span class="n">injection_data</span><span class="p">),</span> <span class="n">gps_s</span><span class="p">,</span> <span class="n">gps_ns</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span></div>
 </pre></div>
 
            </div>
@@ -438,7 +438,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0+untagged.83.g753277f.dirty',
+            VERSION:'0+untagged.85.gcf75ef0.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

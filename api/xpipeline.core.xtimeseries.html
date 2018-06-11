@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.83.g753277f.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.85.gcf75ef0.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.83.g753277f.dirty
+                0+untagged.85.gcf75ef0.dirty
               </div>
             
           
@@ -178,8 +178,8 @@ method.</p>
 </dd></dl>
 
 <dl class="classmethod">
-<dt id="xpipeline.core.xtimeseries.XTimeSeries.retrieve_data">
-<em class="property">classmethod </em><code class="descname">retrieve_data</code><span class="sig-paren">(</span><em>event_time</em>, <em>block_time</em>, <em>channel_names</em>, <em>sample_frequency</em>, <em>frame_types=[]</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.retrieve_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.retrieve_data" title="Permalink to this definition">¶</a></dt>
+<dt id="xpipeline.core.xtimeseries.XTimeSeries.generate_data">
+<em class="property">classmethod </em><code class="descname">generate_data</code><span class="sig-paren">(</span><em>event_time</em>, <em>block_time</em>, <em>channel_names</em>, <em>sample_frequency</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.generate_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.generate_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtain data for either on source, off source, or injections.</p>
 <p>This uses the gwpy <cite>TimeSeriesDict.get</cite> method</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -190,13 +190,86 @@ method.</p>
 <blockquote>
 <div><p>trigger time of event to be processing</p>
 </div></blockquote>
-<p><strong>blcok_time</strong> : (<cite>int</cite>)</p>
+<p><strong>block_time</strong> : (<cite>int</cite>)</p>
 <blockquote>
 <div><p>length of data to be processed</p>
 </div></blockquote>
 <p><strong>channel_names (`list`) :</strong></p>
 <blockquote>
 <div><p>required data channels.</p>
+</div></blockquote>
+<p><strong>sample_frequency (`int`):</strong></p>
+<blockquote>
+<div><p>sample rate of the data desired</p>
+</div></blockquote>
+<p><strong>verbose</strong> : <cite>bool</cite>, optional</p>
+<blockquote>
+<div><p>print verbose output about NDS progress.</p>
+</div></blockquote>
+<p><strong>Returns:</strong></p>
+<blockquote class="last">
+<div><p><cite>TimeSeriesDict</cite> :</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.core.xtimeseries.XTimeSeries.inject">
+<code class="descname">inject</code><span class="sig-paren">(</span><em>injection_data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.inject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.inject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take an injection time series and inject into <cite>XTimeSeries</cite></p>
+<p>This is essentially a wrapper arounf the very useful
+<cite>gwpy.timeseries.TimeSeries.inject</cite> method</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>injection_data</strong> : <cite>XTimeSeries</cite>,</p>
+<blockquote>
+<div><p>A <cite>XtimeSeries</cite> containing the same keys as
+the <cite>XTimeSeries</cite> you are injecting into
+i.e. if you are injecting into an
+<cite>XTimeSeries</cite> with ‘H1’, ‘L1’ and ‘V1’
+data then your injeciton data
+should have the same keys</p>
+</div></blockquote>
+<p><strong>**kwargs</strong></p>
+<blockquote class="last">
+<div><p>other keyword arguments to pass to each item’s asd
+method.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="xpipeline.core.xtimeseries.XTimeSeries.retrieve_data">
+<em class="property">classmethod </em><code class="descname">retrieve_data</code><span class="sig-paren">(</span><em>event_time</em>, <em>block_time</em>, <em>channel_names</em>, <em>sample_frequency</em>, <em>frame_types=[]</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.retrieve_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.retrieve_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain data for either on source, off source, or injections.</p>
+<p>This uses the gwpy <cite>TimeSeriesDict.get</cite> method</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>event_time</strong> : (<a href="#id3"><span class="problematic" id="id4">`</span></a>float)</p>
+<blockquote>
+<div><p>trigger time of event to be processing</p>
+</div></blockquote>
+<p><strong>block_time</strong> : (<cite>int</cite>)</p>
+<blockquote>
+<div><p>length of data to be processed</p>
+</div></blockquote>
+<p><strong>channel_names (`list`) :</strong></p>
+<blockquote>
+<div><p>required data channels.</p>
+</div></blockquote>
+<p><strong>sample_frequency (`int`):</strong></p>
+<blockquote>
+<div><p>sample rate of the data desired</p>
 </div></blockquote>
 <p><strong>frame_types</strong> : <cite>str</cite>, optional</p>
 <blockquote>
@@ -220,7 +293,7 @@ will search for all required frame types</p>
 <dl class="method">
 <dt id="xpipeline.core.xtimeseries.XTimeSeries.spectrogram">
 <code class="descname">spectrogram</code><span class="sig-paren">(</span><em>fftlength</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.spectrogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.spectrogram" title="Permalink to this definition">¶</a></dt>
-<dd><p>Obtain the specotrograms of items in this dict.</p>
+<dd><p>Obtain the spectrograms of items in this dict.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -299,7 +372,7 @@ method.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.83.g753277f.dirty',
+            VERSION:'0+untagged.85.gcf75ef0.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

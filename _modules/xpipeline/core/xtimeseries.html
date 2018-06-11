@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.core.xtimeseries &mdash; xpipeline 0+untagged.83.g753277f.dirty documentation</title>
+  <title>xpipeline.core.xtimeseries &mdash; xpipeline 0+untagged.85.gcf75ef0.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.83.g753277f.dirty
+                0+untagged.85.gcf75ef0.dirty
               </div>
             
           
@@ -167,9 +167,10 @@
 <span class="c1"># along with hveto.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
 <span class="c1"># ---- Import standard modules to the python path.</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
 
 <span class="kn">from</span> <span class="nn">gwpy.timeseries</span> <span class="k">import</span> <span class="n">TimeSeriesDict</span>
+<span class="kn">from</span> <span class="nn">gwpy.timeseries</span> <span class="k">import</span> <span class="n">TimeSeries</span>
 <span class="kn">from</span> <span class="nn">.xfrequencyseries</span> <span class="k">import</span> <span class="n">XFrequencySeriesDict</span>
 <span class="kn">from</span> <span class="nn">.xtimefrequencymap</span> <span class="k">import</span> <span class="n">XTimeFrequencyMapDict</span><span class="p">,</span> <span class="n">XTimeFrequencyMap</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
@@ -191,11 +192,14 @@
 <span class="sd">        event_time : (`float)</span>
 <span class="sd">            trigger time of event to be processing</span>
 
-<span class="sd">        blcok_time : (`int`)</span>
+<span class="sd">        block_time : (`int`)</span>
 <span class="sd">            length of data to be processed</span>
 
 <span class="sd">        channel_names (`list`) :</span>
 <span class="sd">            required data channels.</span>
+
+<span class="sd">        sample_frequency (`int`):</span>
+<span class="sd">            sample rate of the data desired</span>
 
 <span class="sd">        frame_types : `str`, optional</span>
 <span class="sd">            name of frametype in which this channel is stored, by default</span>
@@ -209,25 +213,77 @@
 <span class="sd">            `TimeSeriesDict` :</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1">#----- Start and stop time for this event.</span>
-        <span class="n">startTime</span> <span class="o">=</span> <span class="n">event_time</span> <span class="o">-</span> <span class="n">block_time</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
-        <span class="n">stopTime</span> <span class="o">=</span> <span class="n">event_time</span> <span class="o">+</span> <span class="n">block_time</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">event_time</span> <span class="o">-</span> <span class="n">block_time</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="n">stop_time</span> <span class="o">=</span> <span class="n">event_time</span> <span class="o">+</span> <span class="n">block_time</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
 
         <span class="c1"># Retrieve data and then resample and set epoch</span>
         <span class="n">data</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
                         <span class="n">channel_names</span><span class="p">,</span>
-                        <span class="n">startTime</span><span class="p">,</span> <span class="n">stopTime</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
+                        <span class="n">start_time</span><span class="p">,</span> <span class="n">stop_time</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
                        <span class="p">)</span>
 
         <span class="n">data</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">sample_frequency</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="p">(</span><span class="n">idet</span><span class="p">,</span> <span class="n">iseries</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="c1"># set epoch of timeseries to the event_time</span>
-            <span class="n">iseries</span><span class="o">.</span><span class="n">epoch</span> <span class="o">=</span> <span class="n">event_time</span>
+            <span class="n">iseries</span><span class="o">.</span><span class="n">epoch</span> <span class="o">=</span> <span class="n">start_time</span>
 
         <span class="c1"># set one of the detectors to be the reference detecotr</span>
         <span class="c1"># for any future coherent combinations</span>
 
         <span class="k">return</span> <span class="n">XTimeSeries</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="XTimeSeries.generate_data"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimeseries.html#xpipeline.core.xtimeseries.XTimeSeries.generate_data">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">generate_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">event_time</span><span class="p">,</span> <span class="n">block_time</span><span class="p">,</span>
+                      <span class="n">channel_names</span><span class="p">,</span> <span class="n">sample_frequency</span><span class="p">,</span>
+                      <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtain data for either on source, off source, or injections.</span>
+
+<span class="sd">        This uses the gwpy `TimeSeriesDict.get` method</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        event_time : (`float)</span>
+<span class="sd">            trigger time of event to be processing</span>
+
+<span class="sd">        block_time : (`int`)</span>
+<span class="sd">            length of data to be processed</span>
+
+<span class="sd">        channel_names (`list`) :</span>
+<span class="sd">            required data channels.</span>
+
+<span class="sd">        sample_frequency (`int`):</span>
+<span class="sd">            sample rate of the data desired</span>
+
+<span class="sd">        verbose : `bool`, optional</span>
+<span class="sd">            print verbose output about NDS progress.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">            `TimeSeriesDict` :</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#----- Start and stop time for this event.</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">event_time</span> <span class="o">-</span> <span class="n">block_time</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="n">stop_time</span> <span class="o">=</span> <span class="n">event_time</span> <span class="o">+</span> <span class="n">block_time</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+
+        <span class="c1"># Retrieve data and then resample and set epoch</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">channel_names</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">det</span><span class="p">]</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">scale</span><span class="o">=.</span><span class="mi">1</span><span class="p">,</span>
+                                        <span class="n">size</span><span class="o">=</span><span class="n">sample_frequency</span><span class="o">*</span><span class="n">block_time</span><span class="p">),</span>
+                                   <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_frequency</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">XTimeSeries</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">idet</span><span class="p">,</span> <span class="n">iseries</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="c1"># set epoch of timeseries to the event_time</span>
+            <span class="n">iseries</span><span class="o">.</span><span class="n">t0</span> <span class="o">=</span> <span class="n">start_time</span>
+
+        <span class="c1"># set one of the detectors to be the reference detecotr</span>
+        <span class="c1"># for any future coherent combinations</span>
+
+        <span class="k">return</span> <span class="n">data</span></div>
 
 
 <div class="viewcode-block" id="XTimeSeries.asd"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimeseries.html#xpipeline.core.xtimeseries.XTimeSeries.asd">[docs]</a>    <span class="k">def</span> <span class="nf">asd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fftlength</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -280,7 +336,7 @@
 
 
 <div class="viewcode-block" id="XTimeSeries.spectrogram"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimeseries.html#xpipeline.core.xtimeseries.XTimeSeries.spectrogram">[docs]</a>    <span class="k">def</span> <span class="nf">spectrogram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fftlength</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Obtain the specotrograms of items in this dict.</span>
+        <span class="sd">&quot;&quot;&quot;Obtain the spectrograms of items in this dict.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -300,7 +356,36 @@
             <span class="n">tfmaps</span><span class="p">[</span><span class="n">idet</span><span class="p">]</span> <span class="o">=</span> <span class="n">XTimeFrequencyMap</span><span class="p">(</span><span class="n">iseries</span><span class="o">.</span><span class="n">spectrogram2</span><span class="p">(</span>
                                              <span class="n">fftlength</span><span class="o">=</span><span class="n">fftlength</span><span class="p">[</span><span class="n">idet</span><span class="p">],</span>
                                              <span class="n">window</span><span class="o">=</span><span class="s1">&#39;hann&#39;</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">tfmaps</span></div></div>
+        <span class="k">return</span> <span class="n">tfmaps</span></div>
+
+
+<div class="viewcode-block" id="XTimeSeries.inject"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimeseries.html#xpipeline.core.xtimeseries.XTimeSeries.inject">[docs]</a>    <span class="k">def</span> <span class="nf">inject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">injection_data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Take an injection time series and inject into `XTimeSeries`</span>
+
+<span class="sd">        This is essentially a wrapper arounf the very useful</span>
+<span class="sd">        `gwpy.timeseries.TimeSeries.inject` method</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        injection_data : `XTimeSeries`,</span>
+<span class="sd">            A `XtimeSeries` containing the same keys as</span>
+<span class="sd">            the `XTimeSeries` you are injecting into</span>
+<span class="sd">            i.e. if you are injecting into an</span>
+<span class="sd">            `XTimeSeries` with &#39;H1&#39;, &#39;L1&#39; and &#39;V1&#39;</span>
+<span class="sd">            data then your injeciton data</span>
+<span class="sd">            should have the same keys</span>
+
+<span class="sd">        **kwargs</span>
+<span class="sd">             other keyword arguments to pass to each item&#39;s asd</span>
+<span class="sd">             method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">injection_timeseries</span> <span class="o">=</span> <span class="n">XTimeSeries</span><span class="p">()</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">idet</span><span class="p">,</span> <span class="n">iseries</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">injection_timeseries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span><span class="n">idet</span> <span class="p">:</span> <span class="n">iseries</span><span class="o">.</span><span class="n">inject</span><span class="p">(</span><span class="n">injection_data</span><span class="p">[</span><span class="n">idet</span><span class="p">])}</span>
+                <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">injection_timeseries</span></div></div>
 </pre></div>
 
            </div>
@@ -335,7 +420,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0+untagged.83.g753277f.dirty',
+            VERSION:'0+untagged.85.gcf75ef0.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
