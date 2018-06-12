@@ -287,7 +287,7 @@ of the timefrequencymap, here we do each of these methods.</p>
 </div>
 <div class="section" id="the-dominant-polarization-frame">
 <h3>The Dominant Polarization Frame<a class="headerlink" href="#the-dominant-polarization-frame" title="Permalink to this headline">¶</a></h3>
-<p>Now the we have a sky location assosciated with the event we can project every time-freqeuncy pixel
+<p>Now the we have a sky location assosciated with the event we can proclustersum.clustersum_wrapperject every time-freqeuncy pixel
 into the Dominant Polarization Frame (DPF). What this means is the is we assume the GW has a plus and cross
 polarization there is some orthoganal projection of the pixels onto the plus-cross plane for 2 or more detectors</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [30]: </span><span class="kn">from</span> <span class="nn">xpipeline.core.xdetector</span> <span class="kn">import</span> <span class="n">compute_antenna_patterns</span>
@@ -351,16 +351,16 @@ the plus and cross polarization plane (i.e. <cite>projected_tfmaps</cite> should
 <span class="gp">In [51]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">likelihood_map_standard</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;standard&#39;</span><span class="p">)</span>
 
 <span class="gp">In [52]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">likelihood_map_circinc</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;circinc&#39;</span><span class="p">)</span>
-<span class="gh">Out[52]: </span><span class="go">&lt;matplotlib.image.AxesImage at 0x11d6c16d8&gt;</span>
+<span class="gh">Out[52]: </span><span class="go">&lt;matplotlib.image.AxesImage at 0x10f446da0&gt;</span>
 
 <span class="gp">In [53]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">likelihood_map_circnullenergy</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;circnullenergy&#39;</span><span class="p">)</span>
-<span class="go">                                                     Out[53]: &lt;matplotlib.image.AxesImage at 0x118523358&gt;</span>
+<span class="go">                                                     Out[53]: &lt;matplotlib.image.AxesImage at 0x10f4652e8&gt;</span>
 
 <span class="gp">In [54]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">likelihood_map_circnullinc</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;circnullinc&#39;</span><span class="p">)</span>
-<span class="go">                                                                                                          Out[54]: &lt;matplotlib.image.AxesImage at 0x118540048&gt;</span>
+<span class="go">                                                                                                          Out[54]: &lt;matplotlib.image.AxesImage at 0x10f47dcf8&gt;</span>
 
 <span class="gp">In [55]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">likelihood_map_circenergy</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;circenergy&#39;</span><span class="p">)</span>
-<span class="go">                                                                                                                                                               Out[55]: &lt;matplotlib.image.AxesImage at 0x11d6cd048&gt;</span>
+<span class="go">                                                                                                                                                               Out[55]: &lt;matplotlib.image.AxesImage at 0x10f49a748&gt;</span>
 
 <span class="gp">In [56]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
 <span class="gp">   ....: </span>    <span class="n">plot</span><span class="o">.</span><span class="n">add_colorbar</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
@@ -395,63 +395,113 @@ column 7-?: sum-over-cluster map values for each likelihood</p>
 
 <span class="gp">In [59]: </span><span class="kn">import</span> <span class="nn">numpy</span>
 
-<span class="gp">In [60]: </span><span class="n">zeroed_map</span> <span class="o">=</span> <span class="n">tfmaps</span><span class="o">.</span><span class="n">blackout_pixels</span><span class="p">(</span><span class="mi">99</span><span class="p">)</span>
+<span class="gp">In [60]: </span><span class="n">tfmaps_ts_shifted</span> <span class="o">=</span> <span class="n">tfmaps_ts_shifted</span><span class="o">.</span><span class="n">blackout_pixels</span><span class="p">(</span><span class="mi">99</span><span class="p">)</span>
 
-<span class="gp">In [61]: </span><span class="n">tf_pixel_labels</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">zeroed_map</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<span class="gp">In [61]: </span><span class="n">coh_map</span> <span class="o">=</span> <span class="n">tfmaps_ts_shifted</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span>
 
-<span class="gp">In [62]: </span><span class="n">pixels</span> <span class="o">=</span> <span class="n">tf_pixel_labels</span><span class="p">[</span><span class="s1">&#39;L1:GDS-CALIB_STRAIN&#39;</span><span class="p">]</span>
+<span class="gp">In [62]: </span><span class="n">pixels</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">coh_map</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
 
-<span class="gp">In [63]: </span><span class="n">coord_dim_array</span> <span class="o">=</span> <span class="n">zeroed_map</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span>
+<span class="gp">In [63]: </span><span class="n">coord_dim_array</span> <span class="o">=</span> <span class="n">coh_map</span><span class="o">.</span><span class="n">shape</span>
 
 <span class="gp">In [64]: </span><span class="n">npixels</span> <span class="o">=</span> <span class="n">pixels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span> <span class="n">connectivity</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span>
 
 <span class="gp">In [65]: </span><span class="n">labelled_map</span> <span class="o">=</span> <span class="n">nearestneighbor</span><span class="o">.</span><span class="n">fastlabel_wrapper</span><span class="p">(</span><span class="n">pixels</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">coord_dim_array</span><span class="p">,</span> <span class="n">connectivity</span><span class="p">,</span> <span class="n">npixels</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
 <span class="gp">In [66]: </span><span class="k">print</span><span class="p">(</span><span class="n">labelled_map</span><span class="p">)</span>
-<span class="go">[   1    1    2 ... 1575 1576 1576]</span>
+<span class="go">[   1    2    3 ... 2662 2663 2663]</span>
+</pre></div>
+</div>
+<p>Now the we have labelled are remaining pixels (the non-zeroed out pixels), let’s extract
+some fo the cluster properites of these clusters. i.e. how many piels are in the clsuter
+the bounding box of the cluster (i.e. [[min-time, max-time], [min-freq, max-freq]] and the
+sum of energy over the cluster.</p>
+<p>Specifically the function <cite>clusterproperities</cite> outputs the following information</p>
+<p>column 0: minimum time of cluster
+column 1: weighted center time of cluster
+column 2: maximum time of cluster
+column 3: minimum frequency of cluster
+column 4: weighted center frequency of cluster
+column 5: maximum frequency of cluster
+column 6: number of pixels in cluster
+column 7-?: sum-over-cluster map values for each likelihood</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [67]: </span><span class="kn">from</span> <span class="nn">xpipeline.cluster</span> <span class="kn">import</span> <span class="n">clusterproperties</span>
 
-<span class="gp">In [67]: </span><span class="kn">from</span> <span class="nn">xpipeline.cluster</span> <span class="kn">import</span> <span class="n">clusterproperties</span>
+<span class="gp">In [68]: </span><span class="kn">from</span> <span class="nn">gwpy.table</span> <span class="kn">import</span> <span class="n">EventTable</span>
 
-<span class="gp">In [68]: </span><span class="n">total_energy</span> <span class="o">=</span> <span class="n">zeroed_map</span><span class="p">[</span><span class="s1">&#39;L1:GDS-CALIB_STRAIN&#39;</span><span class="p">][</span><span class="n">pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">pixels</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]]</span>
+<span class="gp">In [69]: </span><span class="n">total_energy</span> <span class="o">=</span> <span class="n">coh_map</span><span class="p">[</span><span class="n">pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">pixels</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]]</span>
 
-<span class="gp">In [69]: </span><span class="n">dim_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">total_energy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">])</span>
+<span class="gp">In [70]: </span><span class="n">dim_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">total_energy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">])</span>
 
-<span class="gp">In [70]: </span><span class="n">cluster_array</span> <span class="o">=</span> <span class="n">clusterproperties</span><span class="o">.</span><span class="n">clusterproperities_wrapper</span><span class="p">(</span><span class="n">dim_array</span><span class="p">,</span> <span class="n">labelled_map</span><span class="p">,</span> <span class="n">total_energy</span><span class="p">,</span> <span class="n">pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pixels</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="gp">In [71]: </span><span class="n">cluster_array</span> <span class="o">=</span> <span class="n">clusterproperties</span><span class="o">.</span><span class="n">clusterproperities_wrapper</span><span class="p">(</span><span class="n">dim_array</span><span class="p">,</span> <span class="n">labelled_map</span><span class="p">,</span> <span class="n">total_energy</span><span class="p">,</span> <span class="n">pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pixels</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
 
-<span class="gp">In [71]: </span><span class="n">cluster_array</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_array</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">tfmaps</span><span class="p">[</span><span class="s1">&#39;L1:GDS-CALIB_STRAIN&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dx</span> <span class="o">+</span> <span class="n">tfmaps</span><span class="p">[</span><span class="s1">&#39;L1:GDS-CALIB_STRAIN&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">t0</span> <span class="c1">#  minimum time of cluster, weighted center time of cluster, maximum time of cluster</span>
+<span class="gp">In [72]: </span><span class="n">cluster_array</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_array</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>  <span class="o">*</span> <span class="n">coh_map</span><span class="o">.</span><span class="n">dx</span> <span class="o">+</span> <span class="n">coh_map</span><span class="o">.</span><span class="n">t0</span>
 
-<span class="gp">In [72]: </span><span class="n">cluster_array</span><span class="p">[:,</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_array</span><span class="p">[:,</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">*</span> <span class="n">tfmaps</span><span class="p">[</span><span class="s1">&#39;L1:GDS-CALIB_STRAIN&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dy</span> <span class="o">+</span> <span class="n">tfmaps</span><span class="p">[</span><span class="s1">&#39;L1:GDS-CALIB_STRAIN&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">y0</span> <span class="c1">#  minimum frequency of cluster, weighted center frequency of cluster, maximum frequency of cluster</span>
+<span class="gp">In [73]: </span><span class="n">cluster_array</span><span class="p">[:,</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_array</span><span class="p">[:,</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">*</span> <span class="n">coh_map</span><span class="o">.</span><span class="n">dy</span> <span class="o">+</span> <span class="n">coh_map</span><span class="o">.</span><span class="n">y0</span>
 
-<span class="gp">In [73]: </span><span class="n">cluster_array</span><span class="p">[:,</span><span class="mi">6</span><span class="p">]</span> <span class="c1"># Number of pixels in cluster</span>
-<span class="gh">Out[73]: </span><span class="go">array([2., 2., 2., ..., 1., 1., 2.])</span>
+<span class="gp">In [74]: </span><span class="n">clusters</span> <span class="o">=</span> <span class="n">EventTable</span><span class="p">(</span><span class="n">cluster_array</span><span class="p">,</span>
+<span class="gp">   ....: </span>                      <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;min_time_of_cluster&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>                             <span class="s1">&#39;weighted_center_time&#39;</span><span class="p">,</span> <span class="s1">&#39;max_time_of_cluster&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>                             <span class="s1">&#39;min_frequency_of_cluster&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>                             <span class="s1">&#39;weighted_center_frequency&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>                             <span class="s1">&#39;max_frequency_of_cluster&#39;</span><span class="p">,</span>
+<span class="gp">   ....: </span>                             <span class="s1">&#39;number_of_pixels&#39;</span><span class="p">,</span> <span class="s1">&#39;energy_of_cluster&#39;</span><span class="p">])</span>
+<span class="gp">   ....: </span>
 
-<span class="gp">In [74]: </span><span class="n">cluster_array</span><span class="p">[:,</span><span class="mi">7</span><span class="p">]</span> <span class="c1"># sum-over-cluster map values for each likelihood</span>
-<span class="go">                                              Out[74]: </span>
-<span class="go">array([2.66805765e-05, 2.45621763e-05, 1.81425751e-05, ...,</span>
-<span class="go">       8.94776611e-06, 8.80720475e-06, 2.31897611e-05])</span>
+<span class="gp">In [75]: </span><span class="k">print</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
+<span class="go">min_time_of_cluster weighted_center_time ...   energy_of_cluster   </span>
+<span class="go">------------------- -------------------- ... ----------------------</span>
+<span class="go"> 1126259334.3398438     1126259334.34375 ...   8.93100431318696e-06</span>
+<span class="go"> 1126259334.3789062   1126259334.3828125 ...  9.184329402346414e-06</span>
+<span class="go"> 1126259334.4257812   1126259334.4363348 ...   6.32072544914507e-05</span>
+<span class="go"> 1126259334.4335938      1126259334.4375 ...  8.752025276965042e-06</span>
+<span class="go"> 1126259334.4804688    1126259334.491068 ...   7.97674671412686e-05</span>
+<span class="go"> 1126259334.5351562   1126259334.5390625 ...  1.814257509058567e-05</span>
+<span class="go"> 1126259334.5507812    1126259334.558724 ...  1.868696634616033e-05</span>
+<span class="go"> 1126259334.6054688   1126259334.6113296 ...  3.545919179652308e-05</span>
+<span class="go"> 1126259334.6757812   1126259334.6796875 ...  9.341278438510418e-06</span>
+<span class="go"> 1126259335.3867188    1126259335.390625 ...   8.76312213990253e-06</span>
+<span class="go">                ...                  ... ...                    ...</span>
+<span class="go"> 1126259589.3867188   1126259589.3947175 ...  1.893766853469247e-05</span>
+<span class="go"> 1126259589.3945312    1126259589.400364 ...  3.869812404272363e-05</span>
+<span class="go"> 1126259589.4257812    1126259589.437004 ...  5.018716722382287e-05</span>
+<span class="go"> 1126259589.4882812    1126259589.496845 ... 2.1714435050643957e-05</span>
+<span class="go"> 1126259589.5039062   1126259589.5078125 ... 1.1441670438113259e-05</span>
+<span class="go"> 1126259589.5195312   1126259589.5234375 ... 1.0346603801713364e-05</span>
+<span class="go"> 1126259589.5585938   1126259589.5646136 ...  4.353200892283574e-05</span>
+<span class="go"> 1126259589.5820312   1126259589.5899196 ... 6.0895522075906004e-05</span>
+<span class="go"> 1126259589.6132812   1126259589.6171875 ...  8.947766107202077e-06</span>
+<span class="go"> 1126259589.6210938       1126259589.625 ...   8.80720475280151e-06</span>
+<span class="go"> 1126259589.6523438   1126259589.6594357 ... 2.3189761103398402e-05</span>
+<span class="go">Length = 2663 rows</span>
 
-<span class="gp">In [75]: </span><span class="n">loudest_cluster_idx</span> <span class="o">=</span> <span class="n">cluster_array</span><span class="p">[:,</span> <span class="mi">7</span><span class="p">]</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+<span class="gp">In [76]: </span><span class="n">loudest_cluster_idx</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;energy_of_cluster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
 
-<span class="gp">In [76]: </span><span class="n">min_time</span> <span class="o">=</span> <span class="n">cluster_array</span><span class="p">[</span><span class="n">loudest_cluster_idx</span><span class="p">,</span> <span class="mi">0</span><span class="p">];</span> <span class="n">max_time</span> <span class="o">=</span> <span class="n">cluster_array</span><span class="p">[</span><span class="n">loudest_cluster_idx</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="gp">In [77]: </span><span class="n">min_time</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;min_time_of_cluster&#39;</span><span class="p">][</span><span class="n">loudest_cluster_idx</span><span class="p">];</span> <span class="n">max_time</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;max_time_of_cluster&#39;</span><span class="p">][</span><span class="n">loudest_cluster_idx</span><span class="p">];</span> <span class="n">weighted_center_time</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;weighted_center_time&#39;</span><span class="p">][</span><span class="n">loudest_cluster_idx</span><span class="p">];</span> <span class="n">min_freq</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;min_frequency_of_cluster&#39;</span><span class="p">][</span><span class="n">loudest_cluster_idx</span><span class="p">];</span> <span class="n">max_freq</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;max_frequency_of_cluster&#39;</span><span class="p">][</span><span class="n">loudest_cluster_idx</span><span class="p">];</span>
 
-<span class="gp">In [77]: </span><span class="n">weighted_center_time</span> <span class="o">=</span> <span class="n">cluster_array</span><span class="p">[</span><span class="n">loudest_cluster_idx</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">In [78]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">coh_map</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 
-<span class="gp">In [78]: </span><span class="n">min_freq</span> <span class="o">=</span> <span class="n">cluster_array</span><span class="p">[</span><span class="n">loudest_cluster_idx</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span> <span class="n">max_freq</span> <span class="o">=</span> <span class="n">cluster_array</span><span class="p">[</span><span class="n">loudest_cluster_idx</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-
-<span class="gp">In [79]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">zeroed_map</span><span class="p">[</span><span class="s1">&#39;L1:GDS-CALIB_STRAIN&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-
-<span class="gp">In [80]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+<span class="gp">In [79]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
 <span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">min_time</span><span class="p">,</span> <span class="n">max_time</span><span class="p">)</span>
 <span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">weighted_center_time</span><span class="p">)</span>
 <span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time [milliseconds]&#39;</span><span class="p">)</span>
 <span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">min_freq</span><span class="p">,</span> <span class="n">max_freq</span><span class="p">)</span>
 <span class="gp">   ....: </span>
 
-<span class="gp">In [81]: </span><span class="n">plot</span>
-<span class="gh">Out[81]: </span><span class="go">&lt;SpectrogramPlot size 1200x600 with 1 Axes&gt;</span>
+<span class="gp">In [80]: </span><span class="n">plot</span>
+<span class="gh">Out[80]: </span><span class="go">&lt;SpectrogramPlot size 1200x600 with 1 Axes&gt;</span>
 </pre></div>
 </div>
 <img alt="../_images/loudest-cluster-gw150914.png" src="../_images/loudest-cluster-gw150914.png" />
+<p>Alright, we now have a labelling of all pixels into clusters and likelihood maps.
+So, let us calculated the likelihood of the clusters</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [81]: </span><span class="kn">from</span> <span class="nn">xpipeline.cluster</span> <span class="kn">import</span> <span class="n">clustersum</span>
+
+<span class="gp">In [82]: </span><span class="n">clustersum</span><span class="o">.</span><span class="n">clustersum_wrapper</span>
+<span class="gh">Out[82]: </span><span class="go">&lt;function xpipeline.cluster.clustersum.clustersum_wrapper&gt;</span>
+
+<span class="gp">In [83]: </span><span class="n">likelihood</span> <span class="o">=</span> <span class="n">clustersum</span><span class="o">.</span><span class="n">clustersum_wrapper</span><span class="p">(</span><span class="n">labelled_map</span><span class="p">,</span> <span class="n">likelihood_map_standard</span><span class="p">[</span><span class="n">pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">pixels</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]])</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="the-waveform">
 <h3>The Waveform<a class="headerlink" href="#the-waveform" title="Permalink to this headline">¶</a></h3>
@@ -464,20 +514,20 @@ and then injecting that signal into a stretch of data.</p>
 waveform. In this case, the hrss is the quadrature sum of the RSS amplitudes of the plus and cross
 polarizations, tau is the duration, f0 is the central frequency, alpha is
 the chirp parameter, and delta is the phase at the peak of the envelope.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [82]: </span><span class="kn">from</span> <span class="nn">xpipeline.waveform</span> <span class="kn">import</span> <span class="n">xwaveform</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [84]: </span><span class="kn">from</span> <span class="nn">xpipeline.waveform</span> <span class="kn">import</span> <span class="n">xwaveform</span>
 
-<span class="gp">In [83]: </span><span class="kn">from</span> <span class="nn">gwpy.plotter</span> <span class="kn">import</span> <span class="n">TimeSeriesPlot</span>
+<span class="gp">In [85]: </span><span class="kn">from</span> <span class="nn">gwpy.plotter</span> <span class="kn">import</span> <span class="n">TimeSeriesPlot</span>
 
-<span class="gp">In [84]: </span><span class="n">t</span><span class="p">,</span> <span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">,</span> <span class="n">hb</span> <span class="o">=</span> <span class="n">xwaveform</span><span class="o">.</span><span class="n">xmakewaveform</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="s1">&#39;chirplet&#39;</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-22</span><span class="p">,</span> <span class="mf">0.0033</span><span class="p">,</span> <span class="mf">300.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">T</span><span class="o">=</span><span class="mi">513</span><span class="p">,</span> <span class="n">T0</span><span class="o">=</span><span class="mf">256.6161</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+<span class="gp">In [86]: </span><span class="n">t</span><span class="p">,</span> <span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">,</span> <span class="n">hb</span> <span class="o">=</span> <span class="n">xwaveform</span><span class="o">.</span><span class="n">xmakewaveform</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="s1">&#39;chirplet&#39;</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-22</span><span class="p">,</span> <span class="mf">0.0033</span><span class="p">,</span> <span class="mf">300.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">T</span><span class="o">=</span><span class="mi">513</span><span class="p">,</span> <span class="n">T0</span><span class="o">=</span><span class="mf">256.6161</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
 
-<span class="gp">In [85]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">TimeSeriesPlot</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">)</span>
+<span class="gp">In [87]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">TimeSeriesPlot</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">)</span>
 
-<span class="gp">In [86]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="mf">256.6161</span><span class="p">)</span>
+<span class="gp">In [88]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="mf">256.6161</span><span class="p">)</span>
 
-<span class="gp">In [87]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mf">256.6161</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">256.6161</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">])</span>
+<span class="gp">In [89]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mf">256.6161</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">256.6161</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">])</span>
 
-<span class="gp">In [88]: </span><span class="n">plot</span>
-<span class="gh">Out[88]: </span><span class="go">&lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
+<span class="gp">In [90]: </span><span class="n">plot</span>
+<span class="gh">Out[90]: </span><span class="go">&lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
 </pre></div>
 </div>
 <img alt="../_images/chirplet.png" src="../_images/chirplet.png" />
@@ -485,21 +535,21 @@ the chirp parameter, and delta is the phase at the peak of the envelope.</p>
 from say a supernova simulation. We can also handles that, tracked by <cite>git-lfs</cite>,
 the waveforms folder of X-Pypeline repository houses a number of hdf5 files
 full of pregenerated waveforms.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [89]: </span><span class="kn">from</span> <span class="nn">xpipeline.waveform</span> <span class="kn">import</span> <span class="n">xwaveform</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [91]: </span><span class="kn">from</span> <span class="nn">xpipeline.waveform</span> <span class="kn">import</span> <span class="n">xwaveform</span>
 
-<span class="gp">In [90]: </span><span class="kn">from</span> <span class="nn">gwpy.plotter</span> <span class="kn">import</span> <span class="n">TimeSeriesPlot</span>
+<span class="gp">In [92]: </span><span class="kn">from</span> <span class="nn">gwpy.plotter</span> <span class="kn">import</span> <span class="n">TimeSeriesPlot</span>
 
-<span class="gp">In [91]: </span><span class="n">t</span><span class="p">,</span> <span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">,</span> <span class="n">hb</span> <span class="o">=</span> <span class="n">xwaveform</span><span class="o">.</span><span class="n">xmakewaveform</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="s1">&#39;o1snews&#39;</span><span class="p">,</span>
+<span class="gp">In [93]: </span><span class="n">t</span><span class="p">,</span> <span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">,</span> <span class="n">hb</span> <span class="o">=</span> <span class="n">xwaveform</span><span class="o">.</span><span class="n">xmakewaveform</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="s1">&#39;o1snews&#39;</span><span class="p">,</span>
 <span class="gp">   ....: </span>    <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-21</span><span class="p">,</span> <span class="mf">1e-21</span><span class="p">,</span> <span class="s1">&#39;R4E1FC_L_theta2.094_phi2.094&#39;</span><span class="p">],</span>
 <span class="gp">   ....: </span>    <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">T0</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="mi">16384</span><span class="p">,</span> <span class="n">catalogdirectory</span><span class="o">=</span><span class="s1">&#39;../waveforms/&#39;</span><span class="p">)</span>
 <span class="gp">   ....: </span>
 
-<span class="gp">In [92]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">TimeSeriesPlot</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">)</span>
+<span class="gp">In [94]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">TimeSeriesPlot</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">)</span>
 
-<span class="gp">In [93]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+<span class="gp">In [95]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
 
-<span class="gp">In [94]: </span><span class="n">plot</span>
-<span class="gh">Out[94]: </span><span class="go">&lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
+<span class="gp">In [96]: </span><span class="n">plot</span>
+<span class="gh">Out[96]: </span><span class="go">&lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
 </pre></div>
 </div>
 <img alt="../_images/supernova-R4E1FC_L_theta2.094_phi2.094.png" src="../_images/supernova-R4E1FC_L_theta2.094_phi2.094.png" />
@@ -510,199 +560,199 @@ full of pregenerated waveforms.</p>
 You must take in a set of sky coordinates and project an individual
 signal with its antenna pattern (for example Fp*hp and Fc*hc)
 just like we do for the data.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [95]: </span><span class="kn">from</span> <span class="nn">xpipeline.waveform</span> <span class="kn">import</span> <span class="n">xinjectsignal</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [97]: </span><span class="kn">from</span> <span class="nn">xpipeline.waveform</span> <span class="kn">import</span> <span class="n">xinjectsignal</span>
 
-<span class="gp">In [96]: </span><span class="n">start_time</span> <span class="o">=</span> <span class="mf">1156609396.0</span><span class="p">;</span> <span class="n">block_time</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span> <span class="n">channels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">,</span> <span class="s1">&#39;V1&#39;</span><span class="p">];</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span> <span class="n">injection_file_name</span> <span class="o">=</span><span class="s1">&#39;examples/injection_sgc300.txt&#39;</span><span class="p">;</span> <span class="n">injection_number</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">catalogdirectory</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">;</span>
+<span class="gp">In [98]: </span><span class="n">start_time</span> <span class="o">=</span> <span class="mf">1156609396.0</span><span class="p">;</span> <span class="n">block_time</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span> <span class="n">channels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">,</span> <span class="s1">&#39;V1&#39;</span><span class="p">];</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span> <span class="n">injection_file_name</span> <span class="o">=</span><span class="s1">&#39;examples/injection_sgc300.txt&#39;</span><span class="p">;</span> <span class="n">injection_number</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">catalogdirectory</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">;</span>
 
-<span class="gp">In [97]: </span><span class="p">[</span><span class="n">injection_data</span><span class="p">,</span> <span class="n">gps_s</span><span class="p">,</span> <span class="n">gps_ns</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">]</span> <span class="o">=</span> <span class="n">xinjectsignal</span><span class="o">.</span><span class="n">xinjectsignal</span><span class="p">(</span><span class="n">start_time</span><span class="o">=</span><span class="n">start_time</span><span class="p">,</span> <span class="n">block_time</span><span class="o">=</span><span class="n">block_time</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="n">channels</span><span class="p">,</span> <span class="n">injection_file_name</span><span class="o">=</span><span class="n">injection_file_name</span><span class="p">,</span> <span class="n">injection_number</span><span class="o">=</span><span class="n">injection_number</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">catalogdirectory</span><span class="o">=</span><span class="n">catalogdirectory</span><span class="p">)</span>
+<span class="gp">In [99]: </span><span class="p">[</span><span class="n">injection_data</span><span class="p">,</span> <span class="n">gps_s</span><span class="p">,</span> <span class="n">gps_ns</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">]</span> <span class="o">=</span> <span class="n">xinjectsignal</span><span class="o">.</span><span class="n">xinjectsignal</span><span class="p">(</span><span class="n">start_time</span><span class="o">=</span><span class="n">start_time</span><span class="p">,</span> <span class="n">block_time</span><span class="o">=</span><span class="n">block_time</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="n">channels</span><span class="p">,</span> <span class="n">injection_file_name</span><span class="o">=</span><span class="n">injection_file_name</span><span class="p">,</span> <span class="n">injection_number</span><span class="o">=</span><span class="n">injection_number</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">catalogdirectory</span><span class="o">=</span><span class="n">catalogdirectory</span><span class="p">)</span>
 
-<span class="gp">In [98]: </span><span class="k">print</span><span class="p">(</span><span class="n">gps_s</span><span class="p">,</span> <span class="n">gps_ns</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">)</span>
+<span class="gp">In [100]: </span><span class="k">print</span><span class="p">(</span><span class="n">gps_s</span><span class="p">,</span> <span class="n">gps_ns</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">)</span>
 <span class="go">1156609400 617594004 1.441252 0.7728318 2.355969</span>
 
-<span class="gp">In [99]: </span><span class="n">peak_time</span> <span class="o">=</span> <span class="n">injection_data</span><span class="p">[</span><span class="s1">&#39;H1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">peak</span>
+<span class="gp">In [101]: </span><span class="n">peak_time</span> <span class="o">=</span> <span class="n">injection_data</span><span class="p">[</span><span class="s1">&#39;H1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">peak</span>
 
-<span class="gp">In [100]: </span><span class="k">for</span> <span class="n">det</span><span class="p">,</span> <span class="n">series</span> <span class="ow">in</span> <span class="n">injection_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">In [102]: </span><span class="k">for</span> <span class="n">det</span><span class="p">,</span> <span class="n">series</span> <span class="ow">in</span> <span class="n">injection_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 <span class="gp">   .....: </span>    <span class="n">injection_data</span><span class="p">[</span><span class="n">det</span><span class="p">]</span> <span class="o">=</span> <span class="n">series</span> <span class="o">*</span> <span class="mf">4.87</span>
 <span class="gp">   .....: </span>
 
-<span class="gp">In [101]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">injection_data</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="gp">In [103]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">injection_data</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 
-<span class="gp">In [102]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
-<span class="gh">Out[102]: </span><span class="go">&lt;matplotlib.legend.Legend at 0x126162550&gt;</span>
+<span class="gp">In [104]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
+<span class="gh">Out[104]: </span><span class="go">&lt;matplotlib.legend.Legend at 0x11e9d0be0&gt;</span>
 
-<span class="gp">In [103]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">peak_time</span><span class="p">)</span>
+<span class="gp">In [105]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">peak_time</span><span class="p">)</span>
 
-<span class="gp">In [104]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">peak_time</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">peak_time</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">])</span>
+<span class="gp">In [106]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">peak_time</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">peak_time</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">])</span>
 
-<span class="gp">In [105]: </span><span class="n">plot</span>
-<span class="gh">Out[105]: </span><span class="go">&lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
+<span class="gp">In [107]: </span><span class="n">plot</span>
+<span class="gh">Out[107]: </span><span class="go">&lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
 </pre></div>
 </div>
 <img alt="../_images/chirplet-h1-l1-v1.png" src="../_images/chirplet-h1-l1-v1.png" />
 <p>Now let’s inject this into some data, we could use real data but let’s just generate
 some data and scale it to an amplitude where we would expect this waveform to show up.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [106]: </span><span class="n">event_time</span> <span class="o">=</span> <span class="mi">1156609524</span><span class="p">;</span> <span class="n">block_time</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span> <span class="n">channel_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">,</span> <span class="s1">&#39;V1&#39;</span><span class="p">];</span> <span class="n">sample_frequency</span> <span class="o">=</span> <span class="mi">1024</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [108]: </span><span class="n">event_time</span> <span class="o">=</span> <span class="mi">1156609524</span><span class="p">;</span> <span class="n">block_time</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span> <span class="n">channel_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">,</span> <span class="s1">&#39;V1&#39;</span><span class="p">];</span> <span class="n">sample_frequency</span> <span class="o">=</span> <span class="mi">1024</span>
 
-<span class="gp">In [107]: </span><span class="n">data</span> <span class="o">=</span> <span class="n">XTimeSeries</span><span class="o">.</span><span class="n">generate_data</span><span class="p">(</span><span class="n">event_time</span><span class="o">=</span><span class="n">event_time</span><span class="p">,</span>
+<span class="gp">In [109]: </span><span class="n">data</span> <span class="o">=</span> <span class="n">XTimeSeries</span><span class="o">.</span><span class="n">generate_data</span><span class="p">(</span><span class="n">event_time</span><span class="o">=</span><span class="n">event_time</span><span class="p">,</span>
 <span class="gp">   .....: </span>                                 <span class="n">block_time</span><span class="o">=</span><span class="n">block_time</span><span class="p">,</span>
 <span class="gp">   .....: </span>                                 <span class="n">channel_names</span><span class="o">=</span><span class="n">channel_names</span><span class="p">,</span>
 <span class="gp">   .....: </span>                                 <span class="n">sample_frequency</span><span class="o">=</span><span class="n">sample_frequency</span><span class="p">)</span>
 <span class="gp">   .....: </span>
 
-<span class="gp">In [108]: </span><span class="k">for</span> <span class="n">det</span><span class="p">,</span> <span class="n">series</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">In [110]: </span><span class="k">for</span> <span class="n">det</span><span class="p">,</span> <span class="n">series</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
 <span class="gp">   .....: </span>    <span class="n">data</span><span class="p">[</span><span class="n">det</span><span class="p">]</span> <span class="o">=</span> <span class="n">series</span> <span class="o">*</span> <span class="mf">1e-21</span>
 <span class="gp">   .....: </span>
 
-<span class="gp">In [109]: </span><span class="n">injection_series</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">inject</span><span class="p">(</span><span class="n">injection_data</span><span class="o">=</span><span class="n">injection_data</span><span class="p">)</span>
+<span class="gp">In [111]: </span><span class="n">injection_series</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">inject</span><span class="p">(</span><span class="n">injection_data</span><span class="o">=</span><span class="n">injection_data</span><span class="p">)</span>
 
-<span class="gp">In [110]: </span><span class="n">injection_series</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-<span class="gh">Out[110]: </span><span class="go">&lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
+<span class="gp">In [112]: </span><span class="n">injection_series</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="gh">Out[112]: </span><span class="go">&lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
 
-<span class="gp">In [111]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">injection_series</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="gp">In [113]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">injection_series</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 
-<span class="gp">In [112]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
-<span class="gh">Out[112]: </span><span class="go">&lt;matplotlib.legend.Legend at 0x1260f57f0&gt;</span>
+<span class="gp">In [114]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
+<span class="gh">Out[114]: </span><span class="go">&lt;matplotlib.legend.Legend at 0x119989a20&gt;</span>
 
-<span class="gp">In [113]: </span><span class="n">plot</span>
-<span class="go">                                                    Out[113]: &lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
+<span class="gp">In [115]: </span><span class="n">plot</span>
+<span class="go">                                                    Out[115]: &lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
 </pre></div>
 </div>
 <img alt="../_images/chirplet-h1-l1-v1-in-data.png" src="../_images/chirplet-h1-l1-v1-in-data.png" />
 <p>Now you can see where the injection went in terms of the entire length of data
 we are analyzing (a 256 second block) but let us zoom in a bit.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [114]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">peak_time</span><span class="p">)</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [116]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">peak_time</span><span class="p">)</span>
 
-<span class="gp">In [115]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">peak_time</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">peak_time</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">])</span>
+<span class="gp">In [117]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">peak_time</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">peak_time</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">])</span>
 
-<span class="gp">In [116]: </span><span class="n">plot</span>
-<span class="gh">Out[116]: </span><span class="go">&lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
+<span class="gp">In [118]: </span><span class="n">plot</span>
+<span class="gh">Out[118]: </span><span class="go">&lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
 </pre></div>
 </div>
 <img alt="../_images/chirplet-h1-l1-v1-in-data-zoom.png" src="../_images/chirplet-h1-l1-v1-in-data-zoom.png" />
 <p>You will notice that just like int he case where we read in the data surrounding GW150914
 we now has a variable TimeSeries that is bascially the same as above, except it has
 an injected signal in there. Well let us look at what the likelihoods look like for this waveform</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [117]: </span><span class="n">asds</span> <span class="o">=</span> <span class="n">injection_series</span><span class="o">.</span><span class="n">asd</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [119]: </span><span class="n">asds</span> <span class="o">=</span> <span class="n">injection_series</span><span class="o">.</span><span class="n">asd</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
 
-<span class="gp">In [118]: </span><span class="n">whitened_timeseries</span> <span class="o">=</span> <span class="n">injection_series</span><span class="o">.</span><span class="n">whiten</span><span class="p">(</span><span class="n">asds</span><span class="p">)</span>
+<span class="gp">In [120]: </span><span class="n">whitened_timeseries</span> <span class="o">=</span> <span class="n">injection_series</span><span class="o">.</span><span class="n">whiten</span><span class="p">(</span><span class="n">asds</span><span class="p">)</span>
 
-<span class="gp">In [119]: </span><span class="n">tfmaps</span> <span class="o">=</span> <span class="n">whitened_timeseries</span><span class="o">.</span><span class="n">spectrogram</span><span class="p">(</span><span class="mf">1.</span> <span class="o">/</span><span class="mi">64</span><span class="p">)</span>
+<span class="gp">In [121]: </span><span class="n">tfmaps</span> <span class="o">=</span> <span class="n">whitened_timeseries</span><span class="o">.</span><span class="n">spectrogram</span><span class="p">(</span><span class="mf">1.</span> <span class="o">/</span><span class="mi">64</span><span class="p">)</span>
 
-<span class="gp">In [120]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">tfmaps</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="gp">In [122]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">tfmaps</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
 
-<span class="gp">In [121]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+<span class="gp">In [123]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
 <span class="gp">   .....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">peak_time</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">peak_time</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">)</span>
 <span class="gp">   .....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">peak_time</span><span class="p">)</span>
 <span class="gp">   .....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time [milliseconds]&#39;</span><span class="p">)</span>
 <span class="gp">   .....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 <span class="gp">   .....: </span>
 
-<span class="gp">In [122]: </span><span class="n">plot</span>
-<span class="gh">Out[122]: </span><span class="go">&lt;SpectrogramPlot size 1200x600 with 3 Axes&gt;</span>
+<span class="gp">In [124]: </span><span class="n">plot</span>
+<span class="gh">Out[124]: </span><span class="go">&lt;SpectrogramPlot size 1200x600 with 3 Axes&gt;</span>
 
-<span class="gp">In [123]: </span><span class="kn">from</span> <span class="nn">xpipeline.core.xdetector</span> <span class="kn">import</span> <span class="n">Detector</span>
+<span class="gp">In [125]: </span><span class="kn">from</span> <span class="nn">xpipeline.core.xdetector</span> <span class="kn">import</span> <span class="n">Detector</span>
 
-<span class="gp">In [124]: </span><span class="n">hanford</span> <span class="o">=</span> <span class="n">Detector</span><span class="p">(</span><span class="s1">&#39;H1&#39;</span><span class="p">)</span>
+<span class="gp">In [126]: </span><span class="n">hanford</span> <span class="o">=</span> <span class="n">Detector</span><span class="p">(</span><span class="s1">&#39;H1&#39;</span><span class="p">)</span>
 
-<span class="gp">In [125]: </span><span class="n">livingston</span> <span class="o">=</span> <span class="n">Detector</span><span class="p">(</span><span class="s1">&#39;L1&#39;</span><span class="p">)</span>
+<span class="gp">In [127]: </span><span class="n">livingston</span> <span class="o">=</span> <span class="n">Detector</span><span class="p">(</span><span class="s1">&#39;L1&#39;</span><span class="p">)</span>
 
-<span class="gp">In [126]: </span><span class="n">virgo</span> <span class="o">=</span> <span class="n">Detector</span><span class="p">(</span><span class="s1">&#39;V1&#39;</span><span class="p">)</span>
+<span class="gp">In [128]: </span><span class="n">virgo</span> <span class="o">=</span> <span class="n">Detector</span><span class="p">(</span><span class="s1">&#39;V1&#39;</span><span class="p">)</span>
 
-<span class="gp">In [127]: </span><span class="n">time_shift_livingston</span> <span class="o">=</span> <span class="n">livingston</span><span class="o">.</span><span class="n">time_delay_from_earth_center_phi_theta</span><span class="p">([</span><span class="n">phi</span><span class="p">],</span> <span class="p">[</span><span class="n">theta</span><span class="p">])</span> <span class="o">-</span> <span class="n">hanford</span><span class="o">.</span><span class="n">time_delay_from_earth_center_phi_theta</span><span class="p">([</span><span class="n">phi</span><span class="p">],</span> <span class="p">[</span><span class="n">theta</span><span class="p">])</span>
+<span class="gp">In [129]: </span><span class="n">time_shift_livingston</span> <span class="o">=</span> <span class="n">livingston</span><span class="o">.</span><span class="n">time_delay_from_earth_center_phi_theta</span><span class="p">([</span><span class="n">phi</span><span class="p">],</span> <span class="p">[</span><span class="n">theta</span><span class="p">])</span> <span class="o">-</span> <span class="n">hanford</span><span class="o">.</span><span class="n">time_delay_from_earth_center_phi_theta</span><span class="p">([</span><span class="n">phi</span><span class="p">],</span> <span class="p">[</span><span class="n">theta</span><span class="p">])</span>
 
-<span class="gp">In [128]: </span><span class="n">time_shift_virgo</span> <span class="o">=</span> <span class="n">virgo</span><span class="o">.</span><span class="n">time_delay_from_earth_center_phi_theta</span><span class="p">([</span><span class="n">phi</span><span class="p">],</span> <span class="p">[</span><span class="n">theta</span><span class="p">])</span> <span class="o">-</span> <span class="n">hanford</span><span class="o">.</span><span class="n">time_delay_from_earth_center_phi_theta</span><span class="p">([</span><span class="n">phi</span><span class="p">],</span> <span class="p">[</span><span class="n">theta</span><span class="p">])</span>
+<span class="gp">In [130]: </span><span class="n">time_shift_virgo</span> <span class="o">=</span> <span class="n">virgo</span><span class="o">.</span><span class="n">time_delay_from_earth_center_phi_theta</span><span class="p">([</span><span class="n">phi</span><span class="p">],</span> <span class="p">[</span><span class="n">theta</span><span class="p">])</span> <span class="o">-</span> <span class="n">hanford</span><span class="o">.</span><span class="n">time_delay_from_earth_center_phi_theta</span><span class="p">([</span><span class="n">phi</span><span class="p">],</span> <span class="p">[</span><span class="n">theta</span><span class="p">])</span>
 
-<span class="gp">In [129]: </span><span class="n">whitened_timeseries</span><span class="p">[</span><span class="s1">&#39;L1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="n">time_shift_livingston</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># In place shift</span>
+<span class="gp">In [131]: </span><span class="n">whitened_timeseries</span><span class="p">[</span><span class="s1">&#39;L1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="n">time_shift_livingston</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># In place shift</span>
 
-<span class="gp">In [130]: </span><span class="n">whitened_timeseries</span><span class="p">[</span><span class="s1">&#39;V1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="n">time_shift_virgo</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># In place shift</span>
+<span class="gp">In [132]: </span><span class="n">whitened_timeseries</span><span class="p">[</span><span class="s1">&#39;V1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="n">time_shift_virgo</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># In place shift</span>
 
-<span class="gp">In [131]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">whitened_timeseries</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="gp">In [133]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">whitened_timeseries</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 
-<span class="gp">In [132]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
-<span class="gh">Out[132]: </span><span class="go">&lt;matplotlib.legend.Legend at 0x11cf87198&gt;</span>
+<span class="gp">In [134]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
+<span class="gh">Out[134]: </span><span class="go">&lt;matplotlib.legend.Legend at 0x11e888908&gt;</span>
 
-<span class="gp">In [133]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">peak_time</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">peak_time</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">])</span>
+<span class="gp">In [135]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">peak_time</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">peak_time</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">])</span>
 
-<span class="gp">In [134]: </span><span class="n">plot</span>
-<span class="gh">Out[134]: </span><span class="go">&lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
+<span class="gp">In [136]: </span><span class="n">plot</span>
+<span class="gh">Out[136]: </span><span class="go">&lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
 
-<span class="gp">In [135]: </span><span class="n">tfmaps_ts_shifted</span> <span class="o">=</span> <span class="n">whitened_timeseries</span><span class="o">.</span><span class="n">spectrogram</span><span class="p">(</span><span class="mf">1.</span> <span class="o">/</span><span class="mi">64</span><span class="p">)</span>
+<span class="gp">In [137]: </span><span class="n">tfmaps_ts_shifted</span> <span class="o">=</span> <span class="n">whitened_timeseries</span><span class="o">.</span><span class="n">spectrogram</span><span class="p">(</span><span class="mf">1.</span> <span class="o">/</span><span class="mi">64</span><span class="p">)</span>
 
-<span class="gp">In [136]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">tfmaps_ts_shifted</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="gp">In [138]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">tfmaps_ts_shifted</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
 
-<span class="gp">In [137]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+<span class="gp">In [139]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
 <span class="gp">   .....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">peak_time</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">peak_time</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">)</span>
 <span class="gp">   .....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">peak_time</span><span class="p">)</span>
 <span class="gp">   .....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time [milliseconds]&#39;</span><span class="p">)</span>
 <span class="gp">   .....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 <span class="gp">   .....: </span>
 
-<span class="gp">In [138]: </span><span class="n">plot</span>
-<span class="gh">Out[138]: </span><span class="go">&lt;SpectrogramPlot size 1200x600 with 3 Axes&gt;</span>
+<span class="gp">In [140]: </span><span class="n">plot</span>
+<span class="gh">Out[140]: </span><span class="go">&lt;SpectrogramPlot size 1200x600 with 3 Axes&gt;</span>
 
-<span class="gp">In [139]: </span><span class="kn">from</span> <span class="nn">xpipeline.core.xdetector</span> <span class="kn">import</span> <span class="n">compute_antenna_patterns</span>
+<span class="gp">In [141]: </span><span class="kn">from</span> <span class="nn">xpipeline.core.xdetector</span> <span class="kn">import</span> <span class="n">compute_antenna_patterns</span>
 
-<span class="gp">In [140]: </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">In [142]: </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
-<span class="gp">In [141]: </span><span class="n">antenna_patterns</span> <span class="o">=</span> <span class="n">compute_antenna_patterns</span><span class="p">([</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">,</span> <span class="s1">&#39;V1&#39;</span><span class="p">],</span>
+<span class="gp">In [143]: </span><span class="n">antenna_patterns</span> <span class="o">=</span> <span class="n">compute_antenna_patterns</span><span class="p">([</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">,</span> <span class="s1">&#39;V1&#39;</span><span class="p">],</span>
 <span class="gp">   .....: </span>    <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">antenna_patterns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">,</span> <span class="s1">&#39;f_cross&#39;</span><span class="p">,</span> <span class="s1">&#39;f_scalar&#39;</span><span class="p">])</span>
 <span class="gp">   .....: </span>
 
-<span class="gp">In [142]: </span><span class="n">frequencies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">asds</span><span class="p">[</span><span class="s1">&#39;L1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">xindex</span><span class="o">.</span><span class="n">to_value</span><span class="p">(),</span> <span class="n">tfmaps_ts_shifted</span><span class="p">[</span><span class="s1">&#39;L1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">yindex</span><span class="o">.</span><span class="n">to_value</span><span class="p">())</span>
+<span class="gp">In [144]: </span><span class="n">frequencies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">in1d</span><span class="p">(</span><span class="n">asds</span><span class="p">[</span><span class="s1">&#39;L1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">xindex</span><span class="o">.</span><span class="n">to_value</span><span class="p">(),</span> <span class="n">tfmaps_ts_shifted</span><span class="p">[</span><span class="s1">&#39;L1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">yindex</span><span class="o">.</span><span class="n">to_value</span><span class="p">())</span>
 
-<span class="gp">In [143]: </span><span class="n">sliced_asds</span> <span class="o">=</span> <span class="n">asds</span><span class="o">.</span><span class="n">slice_frequencies</span><span class="p">(</span><span class="n">frequencies</span><span class="p">)</span>
+<span class="gp">In [145]: </span><span class="n">sliced_asds</span> <span class="o">=</span> <span class="n">asds</span><span class="o">.</span><span class="n">slice_frequencies</span><span class="p">(</span><span class="n">frequencies</span><span class="p">)</span>
 
-<span class="gp">In [144]: </span><span class="n">projected_asds</span> <span class="o">=</span> <span class="n">sliced_asds</span><span class="o">.</span><span class="n">project_onto_antenna_patterns</span><span class="p">(</span><span class="n">antenna_patterns</span><span class="p">,</span> <span class="n">to_dominant_polarization_frame</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">In [146]: </span><span class="n">projected_asds</span> <span class="o">=</span> <span class="n">sliced_asds</span><span class="o">.</span><span class="n">project_onto_antenna_patterns</span><span class="p">(</span><span class="n">antenna_patterns</span><span class="p">,</span> <span class="n">to_dominant_polarization_frame</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-<span class="gp">In [145]: </span><span class="n">projected_tfmaps</span> <span class="o">=</span> <span class="n">tfmaps_ts_shifted</span><span class="o">.</span><span class="n">to_dominant_polarization_frame</span><span class="p">(</span><span class="n">projected_asds</span><span class="p">)</span>
+<span class="gp">In [147]: </span><span class="n">projected_tfmaps</span> <span class="o">=</span> <span class="n">tfmaps_ts_shifted</span><span class="o">.</span><span class="n">to_dominant_polarization_frame</span><span class="p">(</span><span class="n">projected_asds</span><span class="p">)</span>
 
-<span class="gp">In [146]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">projected_tfmaps</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="gp">In [148]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">projected_tfmaps</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
 
-<span class="gp">In [147]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+<span class="gp">In [149]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
 <span class="gp">   .....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">peak_time</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">peak_time</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">)</span>
 <span class="gp">   .....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">peak_time</span><span class="p">)</span>
 <span class="gp">   .....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time [milliseconds]&#39;</span><span class="p">)</span>
 <span class="gp">   .....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 <span class="gp">   .....: </span>
 
-<span class="gp">In [148]: </span><span class="n">plot</span>
-<span class="gh">Out[148]: </span><span class="go">&lt;SpectrogramPlot size 1200x600 with 3 Axes&gt;</span>
+<span class="gp">In [150]: </span><span class="n">plot</span>
+<span class="gh">Out[150]: </span><span class="go">&lt;SpectrogramPlot size 1200x600 with 3 Axes&gt;</span>
 
-<span class="gp">In [149]: </span><span class="kn">from</span> <span class="nn">xpipeline.core.xlikelihood</span> <span class="kn">import</span> <span class="n">XLikelihood</span>
+<span class="gp">In [151]: </span><span class="kn">from</span> <span class="nn">xpipeline.core.xlikelihood</span> <span class="kn">import</span> <span class="n">XLikelihood</span>
 
-<span class="gp">In [150]: </span><span class="n">mpp</span> <span class="o">=</span> <span class="n">projected_asds</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_m_ab</span><span class="p">()</span>
+<span class="gp">In [152]: </span><span class="n">mpp</span> <span class="o">=</span> <span class="n">projected_asds</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_m_ab</span><span class="p">()</span>
 
-<span class="gp">In [151]: </span><span class="n">mcc</span> <span class="o">=</span> <span class="n">projected_asds</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_m_ab</span><span class="p">()</span>
+<span class="gp">In [153]: </span><span class="n">mcc</span> <span class="o">=</span> <span class="n">projected_asds</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_m_ab</span><span class="p">()</span>
 
-<span class="gp">In [152]: </span><span class="n">wfptimefrequencymap</span> <span class="o">=</span> <span class="n">projected_tfmaps</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span>
+<span class="gp">In [154]: </span><span class="n">wfptimefrequencymap</span> <span class="o">=</span> <span class="n">projected_tfmaps</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span>
 
-<span class="gp">In [153]: </span><span class="n">wfctimefrequencymap</span> <span class="o">=</span> <span class="n">projected_tfmaps</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span>
+<span class="gp">In [155]: </span><span class="n">wfctimefrequencymap</span> <span class="o">=</span> <span class="n">projected_tfmaps</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span>
 
-<span class="gp">In [154]: </span><span class="n">likelihood_map_standard</span> <span class="o">=</span> <span class="n">XLikelihood</span><span class="o">.</span><span class="n">standard</span><span class="p">(</span><span class="n">mpp</span><span class="p">,</span> <span class="n">mcc</span><span class="p">,</span> <span class="n">wfptimefrequencymap</span><span class="p">,</span> <span class="n">wfctimefrequencymap</span><span class="p">)</span>
+<span class="gp">In [156]: </span><span class="n">likelihood_map_standard</span> <span class="o">=</span> <span class="n">XLikelihood</span><span class="o">.</span><span class="n">standard</span><span class="p">(</span><span class="n">mpp</span><span class="p">,</span> <span class="n">mcc</span><span class="p">,</span> <span class="n">wfptimefrequencymap</span><span class="p">,</span> <span class="n">wfctimefrequencymap</span><span class="p">)</span>
 
-<span class="gp">In [155]: </span><span class="n">likelihood_map_circenergy</span> <span class="o">=</span> <span class="n">XLikelihood</span><span class="o">.</span><span class="n">circenergy</span><span class="p">(</span><span class="n">mpp</span><span class="p">,</span> <span class="n">mcc</span><span class="p">,</span> <span class="n">wfptimefrequencymap</span><span class="p">,</span> <span class="n">wfctimefrequencymap</span><span class="p">)</span>
+<span class="gp">In [157]: </span><span class="n">likelihood_map_circenergy</span> <span class="o">=</span> <span class="n">XLikelihood</span><span class="o">.</span><span class="n">circenergy</span><span class="p">(</span><span class="n">mpp</span><span class="p">,</span> <span class="n">mcc</span><span class="p">,</span> <span class="n">wfptimefrequencymap</span><span class="p">,</span> <span class="n">wfctimefrequencymap</span><span class="p">)</span>
 
-<span class="gp">In [156]: </span><span class="n">likelihood_map_circinc</span> <span class="o">=</span> <span class="n">XLikelihood</span><span class="o">.</span><span class="n">circinc</span><span class="p">(</span><span class="n">tfmaps</span><span class="p">,</span> <span class="n">mpp</span><span class="p">,</span> <span class="n">mcc</span><span class="p">,</span> <span class="n">projected_asds</span><span class="p">)</span>
+<span class="gp">In [158]: </span><span class="n">likelihood_map_circinc</span> <span class="o">=</span> <span class="n">XLikelihood</span><span class="o">.</span><span class="n">circinc</span><span class="p">(</span><span class="n">tfmaps</span><span class="p">,</span> <span class="n">mpp</span><span class="p">,</span> <span class="n">mcc</span><span class="p">,</span> <span class="n">projected_asds</span><span class="p">)</span>
 
-<span class="gp">In [157]: </span><span class="n">likelihood_map_circnullinc</span> <span class="o">=</span> <span class="n">XLikelihood</span><span class="o">.</span><span class="n">circnullinc</span><span class="p">(</span><span class="n">tfmaps</span><span class="p">,</span> <span class="n">mpp</span><span class="p">,</span> <span class="n">mcc</span><span class="p">,</span> <span class="n">projected_asds</span><span class="p">)</span>
+<span class="gp">In [159]: </span><span class="n">likelihood_map_circnullinc</span> <span class="o">=</span> <span class="n">XLikelihood</span><span class="o">.</span><span class="n">circnullinc</span><span class="p">(</span><span class="n">tfmaps</span><span class="p">,</span> <span class="n">mpp</span><span class="p">,</span> <span class="n">mcc</span><span class="p">,</span> <span class="n">projected_asds</span><span class="p">)</span>
 
-<span class="gp">In [158]: </span><span class="n">likelihood_map_circnullenergy</span> <span class="o">=</span> <span class="n">XLikelihood</span><span class="o">.</span><span class="n">circnullenergy</span><span class="p">(</span><span class="n">mpp</span><span class="p">,</span> <span class="n">mcc</span><span class="p">,</span> <span class="n">wfptimefrequencymap</span><span class="p">,</span> <span class="n">wfctimefrequencymap</span><span class="p">)</span>
+<span class="gp">In [160]: </span><span class="n">likelihood_map_circnullenergy</span> <span class="o">=</span> <span class="n">XLikelihood</span><span class="o">.</span><span class="n">circnullenergy</span><span class="p">(</span><span class="n">mpp</span><span class="p">,</span> <span class="n">mcc</span><span class="p">,</span> <span class="n">wfptimefrequencymap</span><span class="p">,</span> <span class="n">wfctimefrequencymap</span><span class="p">)</span>
 
-<span class="gp">In [159]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">likelihood_map_standard</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;standard&#39;</span><span class="p">)</span>
+<span class="gp">In [161]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">likelihood_map_standard</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;standard&#39;</span><span class="p">)</span>
 
-<span class="gp">In [160]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">likelihood_map_circinc</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;circinc&#39;</span><span class="p">)</span>
-<span class="gh">Out[160]: </span><span class="go">&lt;matplotlib.image.AxesImage at 0x121456f98&gt;</span>
+<span class="gp">In [162]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">likelihood_map_circinc</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;circinc&#39;</span><span class="p">)</span>
+<span class="gh">Out[162]: </span><span class="go">&lt;matplotlib.image.AxesImage at 0x11ce3c978&gt;</span>
 
-<span class="gp">In [161]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">likelihood_map_circnullenergy</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;circnullenergy&#39;</span><span class="p">)</span>
-<span class="go">                                                      Out[161]: &lt;matplotlib.image.AxesImage at 0x1213bf6a0&gt;</span>
+<span class="gp">In [163]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">likelihood_map_circnullenergy</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;circnullenergy&#39;</span><span class="p">)</span>
+<span class="go">                                                      Out[163]: &lt;matplotlib.image.AxesImage at 0x11d9d9358&gt;</span>
 
-<span class="gp">In [162]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">likelihood_map_circnullinc</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;circnullinc&#39;</span><span class="p">)</span>
-<span class="go">                                                                                                            Out[162]: &lt;matplotlib.image.AxesImage at 0x12145b390&gt;</span>
+<span class="gp">In [164]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">likelihood_map_circnullinc</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;circnullinc&#39;</span><span class="p">)</span>
+<span class="go">                                                                                                            Out[164]: &lt;matplotlib.image.AxesImage at 0x11d9f0d68&gt;</span>
 
-<span class="gp">In [163]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">likelihood_map_circenergy</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;circenergy&#39;</span><span class="p">)</span>
-<span class="go">                                                                                                                                                                  Out[163]: &lt;matplotlib.image.AxesImage at 0x121474748&gt;</span>
+<span class="gp">In [165]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_spectrogram</span><span class="p">(</span><span class="n">likelihood_map_circenergy</span><span class="p">,</span> <span class="n">newax</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;circenergy&#39;</span><span class="p">)</span>
+<span class="go">                                                                                                                                                                  Out[165]: &lt;matplotlib.image.AxesImage at 0x11da0d7b8&gt;</span>
 
-<span class="gp">In [164]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+<span class="gp">In [166]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
 <span class="gp">   .....: </span>    <span class="n">plot</span><span class="o">.</span><span class="n">add_colorbar</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
 <span class="gp">   .....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">peak_time</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="n">peak_time</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">)</span>
 <span class="gp">   .....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">peak_time</span><span class="p">)</span>
@@ -710,8 +760,8 @@ an injected signal in there. Well let us look at what the likelihoods look like 
 <span class="gp">   .....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
 <span class="gp">   .....: </span>
 
-<span class="gp">In [165]: </span><span class="n">plot</span>
-<span class="gh">Out[165]: </span><span class="go">&lt;SpectrogramPlot size 1200x800 with 10 Axes&gt;</span>
+<span class="gp">In [167]: </span><span class="n">plot</span>
+<span class="gh">Out[167]: </span><span class="go">&lt;SpectrogramPlot size 1200x800 with 10 Axes&gt;</span>
 </pre></div>
 </div>
 <img alt="../_images/chirplet-time-frequency-map.png" src="../_images/chirplet-time-frequency-map.png" />

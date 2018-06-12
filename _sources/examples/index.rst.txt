@@ -134,7 +134,7 @@ of the timefrequencymap, here we do each of these methods.
 
 The Dominant Polarization Frame
 -------------------------------
-Now the we have a sky location assosciated with the event we can project every time-freqeuncy pixel
+Now the we have a sky location assosciated with the event we can proclustersum.clustersum_wrapperject every time-freqeuncy pixel
 into the Dominant Polarization Frame (DPF). What this means is the is we assume the GW has a plus and cross
 polarization there is some orthoganal projection of the pixels onto the plus-cross plane for 2 or more detectors
 
@@ -150,7 +150,7 @@ polarization there is some orthoganal projection of the pixels onto the plus-cro
 
     In [16]: frequencies = np.in1d(asds['L1:GDS-CALIB_STRAIN'].xindex.to_value(),tfmaps['L1:GDS-CALIB_STRAIN'].yindex.to_value())
 
-    In [17]: sliced_asds = asds.slice_frequencies(frequencies) 
+    In [17]: sliced_asds = asds.slice_frequencies(frequencies)
 
     In [18]: projected_asds = sliced_asds.project_onto_antenna_patterns(antenna_patterns, to_dominant_polarization_frame=True)
 
@@ -234,7 +234,7 @@ column 3: minimum frequency of cluster
 column 4: weighted center frequency of cluster
 column 5: maximum frequency of cluster
 column 6: number of pixels in cluster
-column 7-?: sum-over-cluster map values for each likelihood 
+column 7-?: sum-over-cluster map values for each likelihood
 
 .. ipython::
 
@@ -242,13 +242,13 @@ column 7-?: sum-over-cluster map values for each likelihood
 
     In [34]: import numpy
 
-    In [35]: zeroed_map = tfmaps.blackout_pixels(99)
+    In [35]: tfmaps_ts_shifted = tfmaps_ts_shifted.blackout_pixels(99)
 
-    In [35]: tf_pixel_labels = {k: numpy.argwhere(v).T for k, v in zeroed_map.items()}
+    In [35]: coh_map = tfmaps_ts_shifted.to_coherent() 
 
-    In [35]: pixels = tf_pixel_labels['L1:GDS-CALIB_STRAIN']
+    In [35]: pixels = numpy.argwhere(coh_map).T
 
-    In [37]: coord_dim_array = zeroed_map.to_coherent().shape
+    In [37]: coord_dim_array = coh_map.shape
 
     In [38]: npixels = pixels.shape[1]; connectivity = 8;
 
@@ -256,31 +256,53 @@ column 7-?: sum-over-cluster map values for each likelihood
 
     In [40]: print(labelled_map)
 
-    In [41]: from xpipeline.cluster import clusterproperties 
+Now the we have labelled are remaining pixels (the non-zeroed out pixels), let's extract
+some fo the cluster properites of these clusters. i.e. how many piels are in the clsuter
+the bounding box of the cluster (i.e. [[min-time, max-time], [min-freq, max-freq]] and the
+sum of energy over the cluster.
 
-    In [41]: total_energy = zeroed_map['L1:GDS-CALIB_STRAIN'][pixels[0,:], pixels[1,:]]
+Specifically the function `clusterproperities` outputs the following information
+
+column 0: minimum time of cluster
+column 1: weighted center time of cluster
+column 2: maximum time of cluster
+column 3: minimum frequency of cluster
+column 4: weighted center frequency of cluster
+column 5: maximum frequency of cluster
+column 6: number of pixels in cluster
+column 7-?: sum-over-cluster map values for each likelihood
+
+.. ipython::
+
+    In [41]: from xpipeline.cluster import clusterproperties
+
+    In [41]: from gwpy.table import EventTable
+
+    In [41]: total_energy = coh_map[pixels[0,:], pixels[1,:]] 
 
     In [43]: dim_array = numpy.array([total_energy.shape[0], 1, 2.0])
 
     In [42]: cluster_array = clusterproperties.clusterproperities_wrapper(dim_array, labelled_map, total_energy, pixels[0,:] + 1, pixels[1,:] + 1).T
 
-    In [43]: cluster_array[:,0:3] = cluster_array[:,0:3] * tfmaps['L1:GDS-CALIB_STRAIN'].dx + tfmaps['L1:GDS-CALIB_STRAIN'].t0 #  minimum time of cluster, weighted center time of cluster, maximum time of cluster
+    In [43]: cluster_array[:,0:3] = cluster_array[:,0:3]  * coh_map.dx + coh_map.t0
 
-    In [44]: cluster_array[:,3:6] = cluster_array[:,3:6] * tfmaps['L1:GDS-CALIB_STRAIN'].dy + tfmaps['L1:GDS-CALIB_STRAIN'].y0 #  minimum frequency of cluster, weighted center frequency of cluster, maximum frequency of cluster
+    In [44]: cluster_array[:,3:6] = cluster_array[:,3:6] * coh_map.dy + coh_map.y0
 
-    In [45]: cluster_array[:,6] # Number of pixels in cluster
+    In [67]: clusters = EventTable(cluster_array,
+       ....:                       names=['min_time_of_cluster',
+       ....:                              'weighted_center_time', 'max_time_of_cluster',
+       ....:                              'min_frequency_of_cluster',
+       ....:                              'weighted_center_frequency',
+       ....:                              'max_frequency_of_cluster',
+       ....:                              'number_of_pixels', 'energy_of_cluster'])
 
-    In [46]: cluster_array[:,7] # sum-over-cluster map values for each likelihood
+    In [47]: print(clusters)
 
-    In [47]: loudest_cluster_idx = cluster_array[:, 7].argmax()
+    In [47]: loudest_cluster_idx = clusters['energy_of_cluster'].argmax()
 
-    In [48]: min_time = cluster_array[loudest_cluster_idx, 0]; max_time = cluster_array[loudest_cluster_idx, 2]
+    In [48]: min_time = clusters['min_time_of_cluster'][loudest_cluster_idx]; max_time = clusters['max_time_of_cluster'][loudest_cluster_idx]; weighted_center_time = clusters['weighted_center_time'][loudest_cluster_idx]; min_freq = clusters['min_frequency_of_cluster'][loudest_cluster_idx]; max_freq = clusters['max_frequency_of_cluster'][loudest_cluster_idx];
 
-    In [48]: weighted_center_time = cluster_array[loudest_cluster_idx, 1]
-
-    In [48]: min_freq = cluster_array[loudest_cluster_idx, 3]; max_freq = cluster_array[loudest_cluster_idx, 5]
-
-    In [50]: plot = zeroed_map['L1:GDS-CALIB_STRAIN'].plot()
+    In [50]: plot = coh_map.plot()
 
     In [51]: for ax in plot.axes:
        ....:     ax.set_xlim(min_time, max_time)
@@ -290,6 +312,18 @@ column 7-?: sum-over-cluster map values for each likelihood
 
     @savefig loudest-cluster-gw150914.png
     In [32]: plot
+
+
+Alright, we now have a labelling of all pixels into clusters and likelihood maps.
+So, let us calculated the likelihood of the clusters
+
+.. ipython::
+
+    In [41]: from xpipeline.cluster import clustersum
+
+    In [42]: clustersum.clustersum_wrapper
+
+    In [43]: likelihood = clustersum.clustersum_wrapper(labelled_map, likelihood_map_standard[pixels[0,:], pixels[1,:]])
 
 
 The Waveform
@@ -377,7 +411,7 @@ just like we do for the data.
 
     In [9]: plot.set_xlim([peak_time - 0.1, peak_time + 0.1])
 
-    @savefig chirplet-h1-l1-v1.png 
+    @savefig chirplet-h1-l1-v1.png
     In [10]: plot
 
 Now let's inject this into some data, we could use real data but let's just generate
@@ -391,7 +425,7 @@ some data and scale it to an amplitude where we would expect this waveform to sh
        ....:                                  block_time=block_time,
        ....:                                  channel_names=channel_names,
        ....:                                  sample_frequency=sample_frequency)
-       ....:  
+       ....:
 
     In [13]: for det, series in data.items():
        ....:     data[det] = series * 1e-21
@@ -404,7 +438,7 @@ some data and scale it to an amplitude where we would expect this waveform to sh
 
     In [17]: plot.add_legend()
 
-    @savefig chirplet-h1-l1-v1-in-data.png 
+    @savefig chirplet-h1-l1-v1-in-data.png
     In [17]: plot
 
 Now you can see where the injection went in terms of the entire length of data
@@ -416,7 +450,7 @@ we are analyzing (a 256 second block) but let us zoom in a bit.
 
     In [19]: plot.set_xlim([peak_time - 0.1, peak_time + 0.1])
 
-    @savefig chirplet-h1-l1-v1-in-data-zoom.png 
+    @savefig chirplet-h1-l1-v1-in-data-zoom.png
     In [20]: plot
 
 You will notice that just like int he case where we read in the data surrounding GW150914
@@ -491,7 +525,7 @@ an injected signal in there. Well let us look at what the likelihoods look like 
 
     In [16]: frequencies = np.in1d(asds['L1'].xindex.to_value(), tfmaps_ts_shifted['L1'].yindex.to_value())
 
-    In [17]: sliced_asds = asds.slice_frequencies(frequencies) 
+    In [17]: sliced_asds = asds.slice_frequencies(frequencies)
 
     In [18]: projected_asds = sliced_asds.project_onto_antenna_patterns(antenna_patterns, to_dominant_polarization_frame=True)
 
