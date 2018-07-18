@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.core.xdetector &mdash; xpipeline 0+untagged.85.gcf75ef0.dirty documentation</title>
+  <title>xpipeline.core.xdetector &mdash; xpipeline 0+untagged.94.gd8906ca.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.85.gcf75ef0.dirty
+                0+untagged.94.gd8906ca.dirty
               </div>
             
           
@@ -83,7 +83,7 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">xpipeline-workflow</span></code> on the command line</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">xpipeline an explanation</a></li>
 </ul>
 
@@ -183,6 +183,8 @@
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="k">import</span> <span class="n">cos</span><span class="p">,</span> <span class="n">sin</span>
 <span class="kn">from</span> <span class="nn">gwpy.timeseries</span> <span class="k">import</span> <span class="n">TimeSeries</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Detector&#39;</span><span class="p">,</span> <span class="s1">&#39;effective_distance&#39;</span><span class="p">,</span> <span class="s1">&#39;compute_antenna_patterns&#39;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="Detector"><a class="viewcode-back" href="../../../api/xpipeline.core.xdetector.html#xpipeline.core.xdetector.Detector">[docs]</a><span class="k">class</span> <span class="nc">Detector</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;A gravitaional wave detector</span>
@@ -333,7 +335,7 @@
         <span class="k">return</span> <span class="n">ra</span><span class="p">,</span> <span class="n">dec</span></div></div>
 
 
-<div class="viewcode-block" id="overhead_antenna_pattern"><a class="viewcode-back" href="../../../api/xpipeline.core.xdetector.html#xpipeline.core.xdetector.overhead_antenna_pattern">[docs]</a><span class="k">def</span> <span class="nf">overhead_antenna_pattern</span><span class="p">(</span><span class="n">right_ascension</span><span class="p">,</span> <span class="n">declination</span><span class="p">,</span> <span class="n">polarization</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">overhead_antenna_pattern</span><span class="p">(</span><span class="n">right_ascension</span><span class="p">,</span> <span class="n">declination</span><span class="p">,</span> <span class="n">polarization</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return the detector response where (0, 0) indicates an overhead source.</span>
 <span class="sd">    This functions uses coordinates such that the detector can be thought to</span>
 <span class="sd">    be on the north pole.</span>
@@ -358,7 +360,7 @@
                 <span class="n">cos</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">right_ascension</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span> <span class="p">(</span><span class="mf">2.0</span><span class="o">*</span> <span class="n">polarization</span><span class="p">)</span> <span class="o">-</span> \
                 <span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">right_ascension</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">polarization</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">f_plus</span><span class="p">,</span> <span class="n">f_cross</span></div>
+    <span class="k">return</span> <span class="n">f_plus</span><span class="p">,</span> <span class="n">f_cross</span>
 
 
 <div class="viewcode-block" id="effective_distance"><a class="viewcode-back" href="../../../api/xpipeline.core.xdetector.html#xpipeline.core.xdetector.effective_distance">[docs]</a><span class="k">def</span> <span class="nf">effective_distance</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="n">inclination</span><span class="p">,</span> <span class="n">f_plus</span><span class="p">,</span> <span class="n">f_cross</span><span class="p">):</span>
@@ -444,7 +446,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0+untagged.85.gcf75ef0.dirty',
+            VERSION:'0+untagged.94.gd8906ca.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

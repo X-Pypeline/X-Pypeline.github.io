@@ -9,6 +9,7 @@ Subpackages
     xpipeline.cluster
     xpipeline.core
     xpipeline.io
+    xpipeline.likelihood
     xpipeline.setuputils
     xpipeline.skyutils
     xpipeline.waveform

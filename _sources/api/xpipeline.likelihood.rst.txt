@@ -1,0 +1,17 @@
+xpipeline.likelihood package
+============================
+
+Submodules
+----------
+
+.. toctree::
+
+   xpipeline.likelihood.xlikelihood
+
+Module contents
+---------------
+
+.. automodule:: xpipeline.likelihood
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,4 +1,4 @@
-.. automodule:: xpipeline.core.xwaveform
+.. automodule:: xpipeline.cluster.cluster
     :members:
     :undoc-members:
     :show-inheritance:

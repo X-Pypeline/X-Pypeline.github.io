@@ -9,7 +9,6 @@ Submodules
    xpipeline.core.xdetector
    xpipeline.core.xevent
    xpipeline.core.xfrequencyseries
-   xpipeline.core.xlikelihood
    xpipeline.core.xtimefrequencymap
    xpipeline.core.xtimeseries
 

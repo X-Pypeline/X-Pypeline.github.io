@@ -13,6 +13,7 @@ Submodules
 
 .. toctree::
 
+   xpipeline.waveform.injectsignal
    xpipeline.waveform.waveform
    xpipeline.waveform.xinjectsignal
    xpipeline.waveform.xoptimalsnr

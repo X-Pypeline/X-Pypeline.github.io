@@ -1,6 +1,13 @@
 xpipeline.cluster package
 =========================
 
+Submodules
+----------
+
+.. toctree::
+
+   xpipeline.cluster.cluster
+
 Module contents
 ---------------
 

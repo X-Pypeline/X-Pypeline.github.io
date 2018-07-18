@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Running setupJobs on the command line &mdash; xpipeline 0+untagged.85.gcf75ef0.dirty documentation</title>
+  <title>Running xpipeline-workflow on the command line &mdash; xpipeline 0+untagged.94.gd8906ca.dirty documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0+untagged.85.gcf75ef0.dirty
+                0+untagged.94.gd8906ca.dirty
               </div>
             
           
@@ -85,7 +85,7 @@
             
             
               <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Running <code class="docutils literal notranslate"><span class="pre">xpipeline-workflow</span></code> on the command line</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#basic-instructions">Basic instructions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#detailed-instructions">Detailed instructions</a></li>
 </ul>
@@ -136,7 +136,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</li>
+      <li>Running <code class="docutils literal notranslate"><span class="pre">xpipeline-workflow</span></code> on the command line</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -155,26 +155,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="running-setupjobs-on-the-command-line">
-<span id="command-line"></span><h1>Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line<a class="headerlink" href="#running-setupjobs-on-the-command-line" title="Permalink to this headline">¶</a></h1>
-<p>As described on the home page, the main interface to the setUpJobs algorithm is the command-line executable <code class="docutils literal notranslate"><span class="pre">setUpJobs</span></code>.</p>
+  <div class="section" id="running-xpipeline-workflow-on-the-command-line">
+<span id="command-line"></span><h1>Running <code class="docutils literal notranslate"><span class="pre">xpipeline-workflow</span></code> on the command line<a class="headerlink" href="#running-xpipeline-workflow-on-the-command-line" title="Permalink to this headline">¶</a></h1>
+<p>As described on the home page, the main interface to the xpipeline-workflow algorithm is the command-line executable <code class="docutils literal notranslate"><span class="pre">xpipeline-workflow</span></code>.</p>
 <div class="section" id="basic-instructions">
 <h2>Basic instructions<a class="headerlink" href="#basic-instructions" title="Permalink to this headline">¶</a></h2>
-<p>Basic instructions on running <code class="docutils literal notranslate"><span class="pre">setUpJobs</span></code> can be gained by looking at the <code class="docutils literal notranslate"><span class="pre">--help</span></code> menu:</p>
-<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ setUpJobs --help
-usage: setUpJobs [-h] -s SEARCH_TYPE -p PARAMS_FILE -n GRB_NAME -g
-                 TRIGGER_TIME -r RA -d DECL -i DETECTOR [DETECTOR ...]
-                 [--FAR FAR] [--FAP FAP] [-e SKY_POS_ERR] [-t GRID_TYPE]
-                 [--right-ascension2 RA2] [--declination2 DECL2]
-                 [--sky-pos-err2 SKY_POS_ERR2] [-f GRID_SIM_FILE]
-                 [--network-selection] [--injdistrib INJDISTRIB]
-                 [--injdistrib2 INJDISTRIB2] [--elognormal ELOGNORMAL]
-                 [--elognormal2 ELOGNORMAL2] [--priority CONDORPRIORITY]
-                 [--end-offset MANUALENDOFFSET] [-m MDC_PATH]
-                 [--disable-fast-injections] [-c CATALOG_DIR]
-                 [--big-mem MINIMALMEM] [--use-merging-cuts MERGINGCUTSPATH]
-                 [--reuse-inj] [--xtmva] [--off-source-inj] [--long-inj]
-                 [--smart-cluster] [-v | -q]
+<p>Basic instructions on running <code class="docutils literal notranslate"><span class="pre">xpipeline-workflow</span></code> can be gained by looking at the <code class="docutils literal notranslate"><span class="pre">--help</span></code> menu:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>$ xpipeline-workflow --help
+/Users/scottcoughlin/Documents/virtualenvs/X-Pypeline-py35/lib/python3.5/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+usage: xpipeline-workflow [-h] -s SEARCH_TYPE -p PARAMS_FILE -n GRB_NAME -g
+                          TRIGGER_TIME -r RA -d DECL -i DETECTOR
+                          [DETECTOR ...] [--FAR FAR] [--FAP FAP]
+                          [-e SKY_POS_ERR] [-t GRID_TYPE]
+                          [--right-ascension2 RA2] [--declination2 DECL2]
+                          [--sky-pos-err2 SKY_POS_ERR2] [-f GRID_SIM_FILE]
+                          [--network-selection] [--injdistrib INJDISTRIB]
+                          [--injdistrib2 INJDISTRIB2]
+                          [--elognormal ELOGNORMAL]
+                          [--elognormal2 ELOGNORMAL2]
+                          [--priority CONDORPRIORITY]
+                          [--end-offset MANUALENDOFFSET] [-m MDC_PATH]
+                          [--disable-fast-injections] [-c CATALOG_DIR]
+                          [--big-mem MINIMALMEM]
+                          [--use-merging-cuts MERGINGCUTSPATH] [--reuse-inj]
+                          [--xtmva] [--off-source-inj] [--long-inj]
+                          [--smart-cluster] [-v | -q]
 
 Script for setting up X-Pipeline triggered search jobs.
 
@@ -350,7 +356,7 @@ required named arguments:
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.85.gcf75ef0.dirty',
+            VERSION:'0+untagged.94.gd8906ca.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

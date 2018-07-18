@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.core.xfrequencyseries &mdash; xpipeline 0+untagged.85.gcf75ef0.dirty documentation</title>
+  <title>xpipeline.core.xfrequencyseries &mdash; xpipeline 0+untagged.94.gd8906ca.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.85.gcf75ef0.dirty
+                0+untagged.94.gd8906ca.dirty
               </div>
             
           
@@ -83,7 +83,7 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">xpipeline-workflow</span></code> on the command line</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">xpipeline an explanation</a></li>
 </ul>
 
@@ -229,7 +229,7 @@
 
 
 <div class="viewcode-block" id="XFrequencySeriesDict.to_array"><a class="viewcode-back" href="../../../api/xpipeline.core.xfrequencyseries.html#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_array">[docs]</a>    <span class="k">def</span> <span class="nf">to_array</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Convert to number of freq bins by number of detctors array</span>
+        <span class="sd">&quot;&quot;&quot;Convert to number of freq bins by number of detectors array</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">number_of_frequencies</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span>
         <span class="n">number_of_detectors</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
@@ -243,11 +243,14 @@
 <div class="viewcode-block" id="XFrequencySeriesDict.to_m_ab"><a class="viewcode-back" href="../../../api/xpipeline.core.xfrequencyseries.html#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_m_ab">[docs]</a>    <span class="k">def</span> <span class="nf">to_m_ab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Matrix M_AB components.</span>
 
-<span class="sd">           These are the dot products of wFp, with</span>
-<span class="sd">           themselves and each other, for each frequency, computed in</span>
-<span class="sd">           the DP frame.</span>
+<span class="sd">           This is the dot product of the projected_asds, with</span>
+<span class="sd">           itself, summed accross detectors.</span>
+
+<span class="sd">           Returns:</span>
+<span class="sd">               `gwpy.frequencyseries.FrequencySeries`</span>
+<span class="sd">                   Units Hz</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_array</span><span class="p">()</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">v</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">())])</span></div>
 
 
 <div class="viewcode-block" id="XFrequencySeriesDict.slice_frequencies"><a class="viewcode-back" href="../../../api/xpipeline.core.xfrequencyseries.html#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.slice_frequencies">[docs]</a>    <span class="k">def</span> <span class="nf">slice_frequencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
@@ -330,7 +333,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0+untagged.85.gcf75ef0.dirty',
+            VERSION:'0+untagged.94.gd8906ca.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

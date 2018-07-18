@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.waveform.xwaveform &mdash; xpipeline 0+untagged.85.gcf75ef0.dirty documentation</title>
+  <title>xpipeline.waveform.xwaveform &mdash; xpipeline 0+untagged.94.gd8906ca.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.85.gcf75ef0.dirty
+                0+untagged.94.gd8906ca.dirty
               </div>
             
           
@@ -83,7 +83,7 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">xpipeline-workflow</span></code> on the command line</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">xpipeline an explanation</a></li>
 </ul>
 
@@ -956,6 +956,30 @@
         <span class="k">if</span> <span class="n">distance</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">hp</span> <span class="o">=</span> <span class="mf">10.</span> <span class="o">/</span> <span class="n">distance</span> <span class="o">*</span> <span class="n">hp</span>
             <span class="n">hc</span> <span class="o">=</span> <span class="mf">10.</span> <span class="o">/</span> <span class="n">distance</span> <span class="o">*</span> <span class="n">hc</span>
+
+
+    <span class="k">elif</span> <span class="n">family</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;morozova2018&#39;</span><span class="p">]:</span>
+
+        <span class="c1"># ----  Burrows 2018 2D SN waveform (pregenerated).</span>
+        <span class="n">distance</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">pregen</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># Read hplus</span>
+        <span class="n">hp</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filedir</span><span class="p">,</span> <span class="n">family</span> <span class="o">+</span> <span class="s1">&#39;.hdf5&#39;</span><span class="p">),</span>
+                             <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{1}</span><span class="s1">/hp&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">family</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+
+
+        <span class="n">pregen_fs</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">sample_rate</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">pregen_T</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="c1"># ---- Read waveform, which is defined at a range of 1cm.</span>
+        <span class="c1">#      therefore we convert it first to 1 kpc then divide</span>
+        <span class="c1">#      through by provided distance</span>
+        <span class="c1">#      Make sure h is same type of vector (column) as t.</span>
+        <span class="n">hp</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">distance</span> <span class="o">*</span> <span class="n">hp</span>
+        <span class="n">hc</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">hp</span><span class="o">.</span><span class="n">sample_rate</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
 
     <span class="k">elif</span> <span class="n">family</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;mono&#39;</span><span class="p">,</span> <span class="s1">&#39;mono-a&#39;</span><span class="p">,</span> <span class="s1">&#39;mono-b&#39;</span><span class="p">,</span> <span class="s1">&#39;mono-c&#39;</span><span class="p">,</span>
@@ -1974,11 +1998,11 @@
         <span class="c1">#      specifying vector &quot;t&quot;.)  Use spline rather than linear</span>
         <span class="c1">#      interpolation the latter effectively acts as a low-pass-filter</span>
         <span class="c1">#      which causes problems with high-frequency waveforms.</span>
-        <span class="n">hp_interp</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">hp</span><span class="o">.</span><span class="n">sample_rate</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="n">hp_interp</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">fs</span><span class="p">,</span>
                                <span class="n">name</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="n">hc_interp</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">hp</span><span class="o">.</span><span class="n">sample_rate</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="n">hc_interp</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">fs</span><span class="p">,</span>
                                <span class="n">name</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-        <span class="n">hb_interp</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">hp</span><span class="o">.</span><span class="n">sample_rate</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+        <span class="n">hb_interp</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">fs</span><span class="p">,</span>
                                <span class="n">name</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
         <span class="n">hp_interp_function</span> <span class="o">=</span> <span class="n">CubicSpline</span><span class="p">(</span><span class="n">pregen_t</span><span class="p">,</span> <span class="n">hp</span><span class="p">)</span>
@@ -2038,7 +2062,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0+untagged.85.gcf75ef0.dirty',
+            VERSION:'0+untagged.94.gd8906ca.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

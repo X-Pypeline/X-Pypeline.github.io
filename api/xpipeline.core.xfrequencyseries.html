@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.85.gcf75ef0.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.94.gd8906ca.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.85.gcf75ef0.dirty
+                0+untagged.94.gd8906ca.dirty
               </div>
             
           
@@ -83,7 +83,7 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">xpipeline-workflow</span></code> on the command line</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/index.html">xpipeline an explanation</a></li>
 </ul>
 
@@ -152,7 +152,7 @@
   <span class="target" id="module-xpipeline.core.xfrequencyseries"></span><dl class="class">
 <dt id="xpipeline.core.xfrequencyseries.XFrequencySeriesDict">
 <em class="property">class </em><code class="descclassname">xpipeline.core.xfrequencyseries.</code><code class="descname">XFrequencySeriesDict</code><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a></p>
 <dl class="method">
 <dt id="xpipeline.core.xfrequencyseries.XFrequencySeriesDict.project_onto_antenna_patterns">
 <code class="descname">project_onto_antenna_patterns</code><span class="sig-paren">(</span><em>antenna_responses</em>, <em>to_dominant_polarization_frame=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict.project_onto_antenna_patterns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.project_onto_antenna_patterns" title="Permalink to this definition">¶</a></dt>
@@ -223,16 +223,23 @@ of <cite>XFrequencySeriesDict</cite></dd>
 <dl class="method">
 <dt id="xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_array">
 <code class="descname">to_array</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict.to_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_array" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert to number of freq bins by number of detctors array</p>
+<dd><p>Convert to number of freq bins by number of detectors array</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_m_ab">
 <code class="descname">to_m_ab</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict.to_m_ab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_m_ab" title="Permalink to this definition">¶</a></dt>
 <dd><p>Matrix M_AB components.</p>
-<p>These are the dot products of wFp, with
-themselves and each other, for each frequency, computed in
-the DP frame.</p>
+<p>This is the dot product of the projected_asds, with
+itself, summed accross detectors.</p>
+<dl class="docutils">
+<dt>Returns:</dt>
+<dd><dl class="first last docutils">
+<dt><cite>gwpy.frequencyseries.FrequencySeries</cite></dt>
+<dd>Units Hz</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -290,7 +297,7 @@ the DP frame.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.85.gcf75ef0.dirty',
+            VERSION:'0+untagged.94.gd8906ca.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.85.gcf75ef0.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.94.gd8906ca.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.85.gcf75ef0.dirty
+                0+untagged.94.gd8906ca.dirty
               </div>
             
           
@@ -83,7 +83,7 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">xpipeline-workflow</span></code> on the command line</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/index.html">xpipeline an explanation</a></li>
 </ul>
 
@@ -165,6 +165,30 @@
 <blockquote>
 <div><p>either a <cite>dict</cite> of (channel, <cite>float</cite>) pairs for key-wise
 asd calc, or a single float/int to compute as of all items.</p>
+</div></blockquote>
+<p><strong>**kwargs</strong></p>
+<blockquote class="last">
+<div><p>other keyword arguments to pass to each item’s asd
+method.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.core.xtimeseries.XTimeSeries.fftgram">
+<code class="descname">fftgram</code><span class="sig-paren">(</span><em>fftlength</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.fftgram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.fftgram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain the spectrograms of items in this dict.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>fftlength</strong> : <cite>dict</cite>, <cite>float</cite></p>
+<blockquote>
+<div><p>either a <cite>dict</cite> of (channel, <cite>float</cite>) pairs for key-wise
+asd calc, or a single float/int to computer as of all items.</p>
 </div></blockquote>
 <p><strong>**kwargs</strong></p>
 <blockquote class="last">
@@ -372,7 +396,7 @@ method.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.85.gcf75ef0.dirty',
+            VERSION:'0+untagged.94.gd8906ca.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

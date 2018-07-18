@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.85.gcf75ef0.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.94.gd8906ca.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.85.gcf75ef0.dirty
+                0+untagged.94.gd8906ca.dirty
               </div>
             
           
@@ -83,7 +83,7 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">setupJobs</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">xpipeline-workflow</span></code> on the command line</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/index.html">xpipeline an explanation</a></li>
 </ul>
 
@@ -155,7 +155,7 @@ This was grabbed from
 <dl class="class">
 <dt id="xpipeline.core.xdetector.Detector">
 <em class="property">class </em><code class="descclassname">xpipeline.core.xdetector.</code><code class="descname">Detector</code><span class="sig-paren">(</span><em>detector_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#Detector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.Detector" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A gravitaional wave detector</p>
 <dl class="method">
 <dt id="xpipeline.core.xdetector.Detector.compute_antenna_response">
@@ -247,6 +247,11 @@ other detector. Note that this would return the same value as
 </dd></dl>
 
 <dl class="function">
+<dt id="xpipeline.core.xdetector.effective_distance">
+<code class="descclassname">xpipeline.core.xdetector.</code><code class="descname">effective_distance</code><span class="sig-paren">(</span><em>distance</em>, <em>inclination</em>, <em>f_plus</em>, <em>f_cross</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#effective_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.effective_distance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
 <dt id="xpipeline.core.xdetector.compute_antenna_patterns">
 <code class="descclassname">xpipeline.core.xdetector.</code><code class="descname">compute_antenna_patterns</code><span class="sig-paren">(</span><em>detectors</em>, <em>phi</em>, <em>theta</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#compute_antenna_patterns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.compute_antenna_patterns" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the antenna patterns for a set of detectors and a sky location</p>
@@ -284,28 +289,6 @@ values are <cite>XFrequencyDicts</cite></p>
 </table>
 </dd></dl>
 
-<dl class="function">
-<dt id="xpipeline.core.xdetector.effective_distance">
-<code class="descclassname">xpipeline.core.xdetector.</code><code class="descname">effective_distance</code><span class="sig-paren">(</span><em>distance</em>, <em>inclination</em>, <em>f_plus</em>, <em>f_cross</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#effective_distance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.effective_distance" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="xpipeline.core.xdetector.overhead_antenna_pattern">
-<code class="descclassname">xpipeline.core.xdetector.</code><code class="descname">overhead_antenna_pattern</code><span class="sig-paren">(</span><em>right_ascension</em>, <em>declination</em>, <em>polarization</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#overhead_antenna_pattern"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.overhead_antenna_pattern" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the detector response where (0, 0) indicates an overhead source.
-This functions uses coordinates such that the detector can be thought to
-be on the north pole.
-Parameters
-———-
-right_ascention: float
-declination: float
-polarization: float
-Returns
-——-
-f_plus: float
-f_cros: float</p>
-</dd></dl>
-
 
 
            </div>
@@ -340,7 +323,7 @@ f_cros: float</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.85.gcf75ef0.dirty',
+            VERSION:'0+untagged.94.gd8906ca.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
