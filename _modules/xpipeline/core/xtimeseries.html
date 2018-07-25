@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.core.xtimeseries &mdash; xpipeline 0+untagged.94.gd8906ca.dirty documentation</title>
+  <title>xpipeline.core.xtimeseries &mdash; xpipeline 0+untagged.97.gafaa967.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.94.gd8906ca.dirty
+                0+untagged.97.gafaa967.dirty
               </div>
             
           
@@ -223,12 +223,18 @@
                            <span class="n">start_time</span><span class="p">,</span> <span class="n">stop_time</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
                           <span class="p">)</span>
         <span class="k">except</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">fetch_open_data</span><span class="p">(</span>
-                                       <span class="n">channel_names</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
-                                       <span class="n">start_time</span><span class="p">,</span> <span class="n">stop_time</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
-                                      <span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">channel_names</span><span class="p">:</span>
+                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="n">det</span> <span class="p">:</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">fetch_open_data</span><span class="p">(</span>
+                                                              <span class="n">det</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+                                           <span class="n">start_time</span><span class="p">,</span> <span class="n">stop_time</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+                                           <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_frequency</span>
+                                          <span class="p">)</span>
+                             <span class="p">})</span>
 
-        <span class="n">data</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">sample_frequency</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">series</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">series</span><span class="o">.</span><span class="n">sample_rate</span><span class="o">.</span><span class="n">decompose</span><span class="p">()</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="n">sample_frequency</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">sample_frequency</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="p">(</span><span class="n">idet</span><span class="p">,</span> <span class="n">iseries</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="c1"># set epoch of timeseries to the event_time</span>
@@ -291,6 +297,56 @@
 
         <span class="k">return</span> <span class="n">data</span></div>
 
+<div class="viewcode-block" id="XTimeSeries.generate_noise_from_file"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimeseries.html#xpipeline.core.xtimeseries.XTimeSeries.generate_noise_from_file">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">generate_noise_from_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">file_name</span><span class="p">,</span> <span class="n">event_time</span><span class="p">,</span> <span class="n">block_time</span><span class="p">,</span>
+                                 <span class="n">channel_names</span><span class="p">,</span> <span class="n">sample_frequency</span><span class="p">,</span>
+                                 <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtain data for either on source, off source, or injections.</span>
+
+<span class="sd">        This uses the gwpy `TimeSeriesDict.get` method</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        event_time : (`float)</span>
+<span class="sd">            trigger time of event to be processing</span>
+
+<span class="sd">        block_time : (`int`)</span>
+<span class="sd">            length of data to be processed</span>
+
+<span class="sd">        channel_names (`list`) :</span>
+<span class="sd">            required data channels.</span>
+
+<span class="sd">        sample_frequency (`int`):</span>
+<span class="sd">            sample rate of the data desired</span>
+
+<span class="sd">        verbose : `bool`, optional</span>
+<span class="sd">            print verbose output about NDS progress.</span>
+
+<span class="sd">        Returns:</span>
+
+<span class="sd">            `TimeSeriesDict` :</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#----- Start and stop time for this event.</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">event_time</span> <span class="o">-</span> <span class="n">block_time</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="n">stop_time</span> <span class="o">=</span> <span class="n">event_time</span> <span class="o">+</span> <span class="n">block_time</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+
+        <span class="c1"># Retrieve data and then resample and set epoch</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">channel_names</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">det</span><span class="p">]</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span>
+                                        <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/noise/aLIGOZeroDetHighPower&#39;</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">XTimeSeries</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="n">idet</span><span class="p">,</span> <span class="n">iseries</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="c1"># set epoch of timeseries to the event_time</span>
+            <span class="n">iseries</span><span class="o">.</span><span class="n">t0</span> <span class="o">=</span> <span class="n">start_time</span>
+
+        <span class="c1"># set one of the detectors to be the reference detecotr</span>
+        <span class="c1"># for any future coherent combinations</span>
+
+        <span class="k">return</span> <span class="n">data</span></div>
+
 <div class="viewcode-block" id="XTimeSeries.asd"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimeseries.html#xpipeline.core.xtimeseries.XTimeSeries.asd">[docs]</a>    <span class="k">def</span> <span class="nf">asd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fftlength</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Obtain the asd of items in this dict.</span>
 
@@ -310,6 +366,7 @@
 
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">fftlen</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">fftlength</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="n">asds</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">asd</span><span class="p">(</span><span class="n">fftlength</span><span class="o">=</span><span class="n">fftlen</span><span class="p">,</span>
+                                      <span class="n">overlap</span><span class="o">=</span><span class="n">fftlen</span><span class="o">*</span><span class="mf">0.5</span><span class="p">,</span>
                                       <span class="n">method</span><span class="o">=</span><span class="s1">&#39;lal_median_mean&#39;</span>
                                      <span class="p">)</span>
 
@@ -332,6 +389,7 @@
         <span class="k">for</span> <span class="p">(</span><span class="n">idet</span><span class="p">,</span> <span class="n">iseries</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="n">dt</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="n">asds</span><span class="p">[</span><span class="n">idet</span><span class="p">]</span><span class="o">.</span><span class="n">dx</span>
             <span class="n">whitened</span> <span class="o">=</span> <span class="n">iseries</span><span class="o">.</span><span class="n">whiten</span><span class="p">(</span><span class="n">fftlength</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span>
+                                      <span class="n">overlap</span><span class="o">=</span><span class="n">dt</span><span class="o">*</span><span class="mf">0.5</span><span class="p">,</span>
                                       <span class="n">asd</span><span class="o">=</span><span class="n">asds</span><span class="p">[</span><span class="n">idet</span><span class="p">])</span>
             <span class="n">whitened_timeseries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                                        <span class="p">{</span><span class="n">idet</span> <span class="p">:</span> <span class="n">whitened</span><span class="p">}</span>
@@ -451,7 +509,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0+untagged.94.gd8906ca.dirty',
+            VERSION:'0+untagged.97.gafaa967.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

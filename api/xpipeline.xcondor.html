@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.94.gd8906ca.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.97.gafaa967.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.94.gd8906ca.dirty
+                0+untagged.97.gafaa967.dirty
               </div>
             
           
@@ -149,7 +149,160 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  
+  <span class="target" id="module-xpipeline.xcondor"></span><dl class="class">
+<dt id="xpipeline.xcondor.XmergeClusteredJob">
+<em class="property">class </em><code class="descclassname">xpipeline.xcondor.</code><code class="descname">XmergeClusteredJob</code><span class="sig-paren">(</span><em>cp</em>, <em>nDet</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XmergeClusteredJob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XmergeClusteredJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.CondorDAGJob</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.AnalysisJob</span></code></p>
+<p>An x merge clustered job</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xpipeline.xcondor.XmergeClusteredNode">
+<em class="property">class </em><code class="descclassname">xpipeline.xcondor.</code><code class="descname">XmergeClusteredNode</code><span class="sig-paren">(</span><em>job</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XmergeClusteredNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XmergeClusteredNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.CondorDAGNode</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.AnalysisNode</span></code></p>
+<p>cluster and merge results that were cut into blocks of less than maxInjNum jobs</p>
+<dl class="method">
+<dt id="xpipeline.xcondor.XmergeClusteredNode.get_dir_prefix">
+<code class="descname">get_dir_prefix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XmergeClusteredNode.get_dir_prefix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XmergeClusteredNode.get_dir_prefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.xcondor.XmergeClusteredNode.get_sc_flag">
+<code class="descname">get_sc_flag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XmergeClusteredNode.get_sc_flag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XmergeClusteredNode.get_sc_flag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.xcondor.XmergeClusteredNode.get_sn_flag">
+<code class="descname">get_sn_flag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XmergeClusteredNode.get_sn_flag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XmergeClusteredNode.get_sn_flag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.xcondor.XmergeClusteredNode.set_dir_prefix">
+<code class="descname">set_dir_prefix</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XmergeClusteredNode.set_dir_prefix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XmergeClusteredNode.set_dir_prefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.xcondor.XmergeClusteredNode.set_sc_flag">
+<code class="descname">set_sc_flag</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XmergeClusteredNode.set_sc_flag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XmergeClusteredNode.set_sc_flag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.xcondor.XmergeClusteredNode.set_sn_flag">
+<code class="descname">set_sn_flag</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XmergeClusteredNode.set_sn_flag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XmergeClusteredNode.set_sn_flag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="xpipeline.xcondor.XmergeJob">
+<em class="property">class </em><code class="descclassname">xpipeline.xcondor.</code><code class="descname">XmergeJob</code><span class="sig-paren">(</span><em>cp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XmergeJob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XmergeJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.CondorDAGJob</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.AnalysisJob</span></code></p>
+<p>An x merge job</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xpipeline.xcondor.XmergeNode">
+<em class="property">class </em><code class="descclassname">xpipeline.xcondor.</code><code class="descname">XmergeNode</code><span class="sig-paren">(</span><em>job</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XmergeNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XmergeNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.CondorDAGNode</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.AnalysisNode</span></code></p>
+<p>merge results that were cut into blocks of less than maxInjNum jobs</p>
+<dl class="method">
+<dt id="xpipeline.xcondor.XmergeNode.get_dir_prefix">
+<code class="descname">get_dir_prefix</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XmergeNode.get_dir_prefix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XmergeNode.get_dir_prefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.xcondor.XmergeNode.get_sn_flag">
+<code class="descname">get_sn_flag</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XmergeNode.get_sn_flag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XmergeNode.get_sn_flag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.xcondor.XmergeNode.set_dir_prefix">
+<code class="descname">set_dir_prefix</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XmergeNode.set_dir_prefix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XmergeNode.set_dir_prefix" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.xcondor.XmergeNode.set_sn_flag">
+<code class="descname">set_sn_flag</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XmergeNode.set_sn_flag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XmergeNode.set_sn_flag" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="xpipeline.xcondor.XsearchGPUJob">
+<em class="property">class </em><code class="descclassname">xpipeline.xcondor.</code><code class="descname">XsearchGPUJob</code><span class="sig-paren">(</span><em>cp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XsearchGPUJob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XsearchGPUJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.CondorDAGJob</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.AnalysisJob</span></code></p>
+<p>An x search job</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xpipeline.xcondor.XsearchJob">
+<em class="property">class </em><code class="descclassname">xpipeline.xcondor.</code><code class="descname">XsearchJob</code><span class="sig-paren">(</span><em>cp</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XsearchJob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XsearchJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.CondorDAGJob</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.AnalysisJob</span></code></p>
+<p>An x search job</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xpipeline.xcondor.XsearchNode">
+<em class="property">class </em><code class="descclassname">xpipeline.xcondor.</code><code class="descname">XsearchNode</code><span class="sig-paren">(</span><em>job</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XsearchNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XsearchNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.CondorDAGNode</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.AnalysisNode</span></code></p>
+<p>xsearch node</p>
+<dl class="method">
+<dt id="xpipeline.xcondor.XsearchNode.get_output_dir">
+<code class="descname">get_output_dir</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XsearchNode.get_output_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XsearchNode.get_output_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.xcondor.XsearchNode.get_param_file">
+<code class="descname">get_param_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XsearchNode.get_param_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XsearchNode.get_param_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.xcondor.XsearchNode.get_x_injnum">
+<code class="descname">get_x_injnum</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XsearchNode.get_x_injnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XsearchNode.get_x_injnum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.xcondor.XsearchNode.get_x_jobnum">
+<code class="descname">get_x_jobnum</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XsearchNode.get_x_jobnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XsearchNode.get_x_jobnum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.xcondor.XsearchNode.set_output_dir">
+<code class="descname">set_output_dir</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XsearchNode.set_output_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XsearchNode.set_output_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.xcondor.XsearchNode.set_param_file">
+<code class="descname">set_param_file</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XsearchNode.set_param_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XsearchNode.set_param_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.xcondor.XsearchNode.set_x_injnum">
+<code class="descname">set_x_injnum</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XsearchNode.set_x_injnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XsearchNode.set_x_injnum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.xcondor.XsearchNode.set_x_jobnum">
+<code class="descname">set_x_jobnum</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XsearchNode.set_x_jobnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XsearchNode.set_x_jobnum" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="xpipeline.xcondor.XtmvaJob">
+<em class="property">class </em><code class="descclassname">xpipeline.xcondor.</code><code class="descname">XtmvaJob</code><span class="sig-paren">(</span><em>cp</em>, <em>nDet</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XtmvaJob"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XtmvaJob" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.CondorDAGJob</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.AnalysisJob</span></code></p>
+<p>An xtmva classification job.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xpipeline.xcondor.XtmvaNode">
+<em class="property">class </em><code class="descclassname">xpipeline.xcondor.</code><code class="descname">XtmvaNode</code><span class="sig-paren">(</span><em>job</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/xcondor.html#XtmvaNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.xcondor.XtmvaNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.CondorDAGNode</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">glue.pipeline.AnalysisNode</span></code></p>
+<p>cluster and merge results that were cut into blocks of less than maxInjNum jobs</p>
+</dd></dl>
+
+
 
            </div>
            
@@ -183,7 +336,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.94.gd8906ca.dirty',
+            VERSION:'0+untagged.97.gafaa967.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.94.gd8906ca.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.97.gafaa967.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.94.gd8906ca.dirty
+                0+untagged.97.gafaa967.dirty
               </div>
             
           
@@ -240,6 +240,45 @@ method.</p>
 </table>
 </dd></dl>
 
+<dl class="classmethod">
+<dt id="xpipeline.core.xtimeseries.XTimeSeries.generate_noise_from_file">
+<em class="property">classmethod </em><code class="descname">generate_noise_from_file</code><span class="sig-paren">(</span><em>file_name</em>, <em>event_time</em>, <em>block_time</em>, <em>channel_names</em>, <em>sample_frequency</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.generate_noise_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.generate_noise_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtain data for either on source, off source, or injections.</p>
+<p>This uses the gwpy <cite>TimeSeriesDict.get</cite> method</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>event_time</strong> : (<a href="#id3"><span class="problematic" id="id4">`</span></a>float)</p>
+<blockquote>
+<div><p>trigger time of event to be processing</p>
+</div></blockquote>
+<p><strong>block_time</strong> : (<cite>int</cite>)</p>
+<blockquote>
+<div><p>length of data to be processed</p>
+</div></blockquote>
+<p><strong>channel_names (`list`) :</strong></p>
+<blockquote>
+<div><p>required data channels.</p>
+</div></blockquote>
+<p><strong>sample_frequency (`int`):</strong></p>
+<blockquote>
+<div><p>sample rate of the data desired</p>
+</div></blockquote>
+<p><strong>verbose</strong> : <cite>bool</cite>, optional</p>
+<blockquote>
+<div><p>print verbose output about NDS progress.</p>
+</div></blockquote>
+<p><strong>Returns:</strong></p>
+<blockquote class="last">
+<div><p><cite>TimeSeriesDict</cite> :</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="xpipeline.core.xtimeseries.XTimeSeries.inject">
 <code class="descname">inject</code><span class="sig-paren">(</span><em>injection_data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.inject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.inject" title="Permalink to this definition">¶</a></dt>
@@ -279,7 +318,7 @@ method.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>event_time</strong> : (<a href="#id3"><span class="problematic" id="id4">`</span></a>float)</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>event_time</strong> : (<a href="#id5"><span class="problematic" id="id6">`</span></a>float)</p>
 <blockquote>
 <div><p>trigger time of event to be processing</p>
 </div></blockquote>
@@ -396,7 +435,7 @@ method.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.94.gd8906ca.dirty',
+            VERSION:'0+untagged.97.gafaa967.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

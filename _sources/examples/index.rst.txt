@@ -377,30 +377,48 @@ on at the time too.
 
     In [1]: from xpipeline.waveform import xinjectsignal
 
-    In [2]: detectors = ['H1', 'L1', 'V1']; catalogdirectory='../waveforms/';
+    In [3]: start_time = 1156609396.0; block_time = 256; channels = ['H1', 'L1']; sample_rate = 8192; injection_file_name ='examples/injection_Morozova.txt'; injection_number=0; catalogdirectory='../waveforms/'; 
 
-    In [6]: injection_data = xinjectsignal.xinjectsignal(family='Morozova2018',start_time=int(gps), block_time=256,
-       ...:                                detectors=detectors, sample_rate=1024,
-       ...:                                phi=phi, theta=theta, psi=0,
-       ...:                                parameters=[10, 'M10_LS220'],
-       ...:                                catalogdirectory=catalogdirectory)
-
-    In [5]: for det, series in injection_data.items():
-       ...:     injection_data[det] = series * 4.87
+    In [4]: [injection_data, gps_s, gps_ns, phi, theta, psi] = xinjectsignal.xinjectsignal_fromfile(start_time=start_time, block_time=block_time, channels=channels, injection_file_name=injection_file_name, injection_number=injection_number, sample_rate= sample_rate, catalogdirectory=catalogdirectory)
 
     In [6]: from gwpy.plotter import TimeSeriesPlot
 
     In [7]: plot = TimeSeriesPlot()
 
-    In [8]: for k, v in injection_data:
+    In [8]: for k, v in injection_data.items():
        ...:     plot.add_timeseries(v, label=k)
 
-    In [9]: plot.set_xlim([int(gps), gps+1])
+    In [9]: plot.set_xlim([gps_s, gps_s+1])
 
     In [10]: plot.add_legend()
 
-    @savefig chirplet-h1-l1-v1.png
+    @savefig Morozova2018-h1-l1.png
     In [10]: plot
 
 Now let's inject this into some data, we could use real data but let's just generate
-some data and scale it to an amplitude where we would expect this waveform to show up.
+some data and color it to look like gaussian distributed aLIGO noise.
+
+.. ipython::
+
+    In [1]: colored_gaussian_noise = XTimeSeries.generate_noise_from_file('../noise/aLIGOZeroDetHighPower.h5', event_time=start_time, block_time=256, channel_names=['H1', 'L1'], sample_frequency=8192)
+
+    In [2]: data_plus_signal = colored_gaussian_noise.inject(injection_data)
+
+    In [3]: asds = data_plus_signal.asd(1.0)
+
+    In [4]: whitened_timeseries = data_plus_signal.whiten(asds)
+
+    In [5]: fft_maps = whitened_timeseries.fftgram(1. /64)
+
+    In [6]: energy_maps = fft_maps.abs() 
+
+    In [7]: plot = energy_maps.plot(figsize=[ 12, 6])
+
+    In [8]: for ax in plot.axes:
+       ...:     ax.set_xlim(gps_s - 0.15, gps_s + 1.0)
+       ...:     ax.set_epoch(gps_s)
+       ...:     ax.set_xlabel('Time [milliseconds]')
+       ...:     ax.set_ylim(20, 3000)
+
+    @savefig energy-map-Morozova2018.png
+    In [10]: plot
