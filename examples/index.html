@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline an explanation &mdash; xpipeline 0+untagged.97.gafaa967.dirty documentation</title>
+  <title>xpipeline an explanation &mdash; xpipeline 0+untagged.99.g8960fa3.dirty documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.97.gafaa967.dirty
+                0+untagged.99.g8960fa3.dirty
               </div>
             
           
@@ -578,7 +578,7 @@ of GW150914 from above, but since this is a simulation let us imagine VIRGO was
 on at the time too.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [67]: </span><span class="kn">from</span> <span class="nn">xpipeline.waveform</span> <span class="kn">import</span> <span class="n">xinjectsignal</span>
 
-<span class="gp">In [68]: </span><span class="n">start_time</span> <span class="o">=</span> <span class="mf">1156609396.0</span><span class="p">;</span> <span class="n">block_time</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span> <span class="n">channels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">];</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">8192</span><span class="p">;</span> <span class="n">injection_file_name</span> <span class="o">=</span><span class="s1">&#39;examples/injection_Morozova.txt&#39;</span><span class="p">;</span> <span class="n">injection_number</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">catalogdirectory</span><span class="o">=</span><span class="s1">&#39;../waveforms/&#39;</span><span class="p">;</span>
+<span class="gp">In [68]: </span><span class="n">start_time</span> <span class="o">=</span> <span class="mf">1156609396.0</span><span class="p">;</span> <span class="n">block_time</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span> <span class="n">channels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">];</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">8192</span><span class="p">;</span> <span class="n">injection_file_name</span> <span class="o">=</span><span class="s1">&#39;examples/injection_Morozova.txt&#39;</span><span class="p">;</span> <span class="n">injection_number</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span> <span class="n">catalogdirectory</span><span class="o">=</span><span class="s1">&#39;../waveforms/&#39;</span><span class="p">;</span>
 
 <span class="gp">In [69]: </span><span class="p">[</span><span class="n">injection_data</span><span class="p">,</span> <span class="n">gps_s</span><span class="p">,</span> <span class="n">gps_ns</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">]</span> <span class="o">=</span> <span class="n">xinjectsignal</span><span class="o">.</span><span class="n">xinjectsignal_fromfile</span><span class="p">(</span><span class="n">start_time</span><span class="o">=</span><span class="n">start_time</span><span class="p">,</span> <span class="n">block_time</span><span class="o">=</span><span class="n">block_time</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="n">channels</span><span class="p">,</span> <span class="n">injection_file_name</span><span class="o">=</span><span class="n">injection_file_name</span><span class="p">,</span> <span class="n">injection_number</span><span class="o">=</span><span class="n">injection_number</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">catalogdirectory</span><span class="o">=</span><span class="n">catalogdirectory</span><span class="p">)</span>
 
@@ -590,10 +590,10 @@ on at the time too.</p>
 <span class="gp">   ....: </span>    <span class="n">plot</span><span class="o">.</span><span class="n">add_timeseries</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
 <span class="gp">   ....: </span>
 
-<span class="gp">In [73]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">gps_s</span><span class="p">,</span> <span class="n">gps_s</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">In [73]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">gps_s</span><span class="p">,</span> <span class="n">gps_s</span> <span class="o">+</span> <span class="mi">2</span><span class="p">])</span>
 
 <span class="gp">In [74]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
-<span class="gh">Out[74]: </span><span class="go">&lt;matplotlib.legend.Legend at 0x11e79cc18&gt;</span>
+<span class="gh">Out[74]: </span><span class="go">&lt;matplotlib.legend.Legend at 0x11dccf4a8&gt;</span>
 
 <span class="gp">In [75]: </span><span class="n">plot</span>
 <span class="go">                                                   Out[75]: &lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
@@ -672,7 +672,7 @@ some data and color it to look like gaussian distributed aLIGO noise.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.97.gafaa967.dirty',
+            VERSION:'0+untagged.99.g8960fa3.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

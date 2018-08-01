@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.waveform.xinjectsignal &mdash; xpipeline 0+untagged.97.gafaa967.dirty documentation</title>
+  <title>xpipeline.waveform.xinjectsignal &mdash; xpipeline 0+untagged.99.g8960fa3.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.97.gafaa967.dirty
+                0+untagged.99.g8960fa3.dirty
               </div>
             
           
@@ -438,12 +438,12 @@
         <span class="c1"># ---- Apply taper to start and end of snippet to avoid</span>
         <span class="c1">#      discontinuous turn-on/off of very long signals.</span>
         <span class="c1"># Only taper if there is an signal to taper</span>
-        <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">hp</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
-            <span class="n">hp</span><span class="o">.</span><span class="n">taper</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">hc</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
-            <span class="n">hc</span><span class="o">.</span><span class="n">taper</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">hb</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
-            <span class="n">hb</span><span class="o">.</span><span class="n">taper</span><span class="p">()</span>
+        <span class="c1">#if numpy.where(hp != 0)[0].size:</span>
+        <span class="c1">#    hp.taper()</span>
+        <span class="c1">#if numpy.where(hc != 0)[0].size:</span>
+        <span class="c1">#    hc.taper()</span>
+        <span class="c1">#if numpy.where(hb != 0)[0].size:</span>
+        <span class="c1">#    hb.taper()</span>
 
         <span class="c1">#----- Reset t to GPS time.</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">peak_time</span><span class="p">)</span> <span class="o">-</span> <span class="n">snippet_pad</span>
@@ -516,7 +516,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0+untagged.97.gafaa967.dirty',
+            VERSION:'0+untagged.99.g8960fa3.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
