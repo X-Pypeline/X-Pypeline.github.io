@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.waveform.xinjectsignal &mdash; xpipeline 0+untagged.99.g8960fa3.dirty documentation</title>
+  <title>xpipeline.waveform.xinjectsignal &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.99.g8960fa3.dirty
+                0+untagged.111.g8030ebd.dirty
               </div>
             
           
@@ -159,6 +159,54 @@
 
 <div class="viewcode-block" id="xinjectsignal"><a class="viewcode-back" href="../../../api/xpipeline.waveform.xinjectsignal.html#xpipeline.waveform.xinjectsignal.xinjectsignal">[docs]</a><span class="k">def</span> <span class="nf">xinjectsignal</span><span class="p">(</span><span class="n">family</span><span class="p">,</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">block_time</span><span class="p">,</span> <span class="n">detectors</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span>
                   <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create simulated signals using a file defining the parameters</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        family (str):</span>
+<span class="sd">            waveform family name to be generated</span>
+
+<span class="sd">        start_time (int):</span>
+<span class="sd">            Start time of the data being analysed.</span>
+
+<span class="sd">        block_time (int):</span>
+<span class="sd">            Duration (s) of the data being analysed.</span>
+
+<span class="sd">        channel (str)</span>
+<span class="sd">            channel[j] holds the name of the</span>
+<span class="sd">            jth detector channel being analysed.  The detector name is</span>
+<span class="sd">            inferred from the first character of the channel name, and</span>
+<span class="sd">            must be one of the names recognized by LoadDetectorData.</span>
+
+<span class="sd">        sample_rate (int):</span>
+<span class="sd">            Sample rates corresponding to channels.</span>
+
+<span class="sd">        phi (float):</span>
+<span class="sd">            Earth fixed coordinate</span>
+
+<span class="sd">        theta (float):</span>
+<span class="sd">            Earth fixed coordinate</span>
+
+<span class="sd">        **kwargs:</span>
+<span class="sd">            catalog_directory (optional, str):</span>
+<span class="sd">                Path to directory containing pregenerated waveforms</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        injection_data:</span>
+<span class="sd">            `XTimeSeries`</span>
+<span class="sd">        </span>
+<span class="sd">    Notes:</span>
+
+<span class="sd">        The coordinate system is explained in ComputeAntennaResponse. It is</span>
+<span class="sd">        assumed that the sky positions in the injection file are supplied in this</span>
+<span class="sd">        coordinate system.  For glitch injections the reported times and angles</span>
+<span class="sd">        are those for the injection into the first detector.</span>
+
+<span class="sd">        Any portion of any signal which lies outside the interval</span>
+<span class="sd">        [start_time, start_time+block_time] will be clipped. Otherwise, XINJECTSIGNAL</span>
+<span class="sd">        will inject any signal of duration up to block_time without clipping.</span>
+<span class="sd">        The edges of long-duration signals will be tapered with</span>
+<span class="sd">        a hann window to avoid turn-on/off transients.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># ---- Check for optional arguments.</span>
     <span class="n">catalogdirectory</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;catalogdirectory&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
     <span class="n">parameters</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">,</span> <span class="p">[])</span>
@@ -240,100 +288,74 @@
 <div class="viewcode-block" id="xinjectsignal_fromfile"><a class="viewcode-back" href="../../../api/xpipeline.waveform.xinjectsignal.html#xpipeline.waveform.xinjectsignal.xinjectsignal_fromfile">[docs]</a><span class="k">def</span> <span class="nf">xinjectsignal_fromfile</span><span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">block_time</span><span class="p">,</span> <span class="n">channels</span><span class="p">,</span> <span class="n">sample_rate</span><span class="p">,</span>
                   <span class="n">injection_file_name</span><span class="p">,</span> <span class="n">rescale_by_antenna_response</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                   <span class="n">injection_number</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Create simulated data streams containing simulated signals</span>
+    <span class="sd">&quot;&quot;&quot;Create simulated signals using a file defining the parameters</span>
 
-<span class="sd">    for the specified network of gravitational-wave detectors.</span>
+<span class="sd">    Parameters:</span>
+<span class="sd">        start_time (int):</span>
+<span class="sd">            Start time of the data being analysed.</span>
 
-<span class="sd">      [injection_data, gps_s, gps_ns, phi, theta, psi] = xinjectsignal( ...</span>
-<span class="sd">        start_time,block_time,channel,sample_rate,injection_file_name, ...</span>
-<span class="sd">        rescale_by_antenna_response,injection_number,varargin)</span>
+<span class="sd">        block_time (int):</span>
+<span class="sd">            Duration (s) of the data being analysed.</span>
 
-<span class="sd">      start_time    Scalar.  Start time of the data being analysed.</span>
-<span class="sd">      block_time    Scalar.  Duration (s) of the data being analysed.</span>
-<span class="sd">      channel      Cell array of strings.  channel{j} holds the name of the</span>
-<span class="sd">                   jth detector channel being analysed.  The detector name is</span>
-<span class="sd">                   inferred from the first character of the channel name, and</span>
-<span class="sd">                   must be one of the names recognized by LoadDetectorData.</span>
-<span class="sd">      sample_rate   length(channel)x1 vector.  Sample rates corresponding to</span>
-<span class="sd">                   channels.</span>
-<span class="sd">      injection_file_name</span>
-<span class="sd">                   String.  Name of file specifying simulated signals to be</span>
-<span class="sd">                   injected.</span>
-<span class="sd">      rescale_by_antenna_response</span>
-<span class="sd">                   Scalar.  Optional.  If nonzero then rescale each injection</span>
-<span class="sd">                   amplitude by 1/(sum over detectors of Fp^2)^0.5, where Fp</span>
-<span class="sd">                   is calculated for each detector using the sky angles of the</span>
-<span class="sd">                   injection into the first detector.  This rescaling is</span>
-<span class="sd">                   useful for injecting linearly polarized GWBs into identical</span>
-<span class="sd">                   detectors so that the sum-squared SNR is held fixed.</span>
-<span class="sd">                   WARNING: It is probably not a good idea to use</span>
-<span class="sd">                   this rescaling for: (1) glitches simulated using different</span>
-<span class="sd">                   sky positions for each detector (2) waveforms with 2</span>
-<span class="sd">                   polarizations (3) detectors that are not identical.</span>
-<span class="sd">      injection_number</span>
-<span class="sd">                   Array (positive integer).  Optional.  If given then only</span>
-<span class="sd">                   the injections specified on rows &quot;injection_number&quot; of the</span>
-<span class="sd">                   injection file are injected.  This over-rides the default</span>
-<span class="sd">                   behaviour, which is to inject all injections in the file</span>
-<span class="sd">                  (including those outside the interval [start_time,start_time+block_time]!).</span>
-<span class="sd">      varargin     Optional &#39;name&#39;,&#39;value&#39; pairs.  Recognized options are:</span>
-<span class="sd">                     &#39;do_not_inject&#39;,logical</span>
-<span class="sd">    # ----- Speed of light (m/s).</span>
-<span class="sd">    c = 299792458</span>
+<span class="sd">        channel (str)</span>
+<span class="sd">            channel[j] holds the name of the</span>
+<span class="sd">            jth detector channel being analysed.  The detector name is</span>
+<span class="sd">            inferred from the first character of the channel name, and</span>
+<span class="sd">            must be one of the names recognized by LoadDetectorData.</span>
 
-<span class="sd">    # ----- Parse channel list and load info on corresponding detectors.</span>
-<span class="sd">    detector_dict = {}</span>
-<span class="sd">    for det in channels:</span>
-<span class="sd">        detector_dict[det] = Detector(det)</span>
+<span class="sd">        sample_rate (int):</span>
+<span class="sd">            Sample rates corresponding to channels.</span>
 
-<span class="sd">    # ----- Create appropraite columns for reading the injection</span>
-<span class="sd">    #       file based on detectors supplied above</span>
-<span class="sd">    injection_file_columns = []</span>
-<span class="sd">    for det in channels:</span>
-<span class="sd">        for columns in [&#39;gps_s&#39;,&#39;gps_ns&#39;, &#39;phi&#39;, &#39;theta&#39;, &#39;psi&#39;, &#39;gwb_type&#39;,</span>
-<span class="sd">                         &#39;gwb_params&#39;]:</span>
-<span class="sd">            injection_file_columns.append(columns + &#39;_&#39; + det)</span>
+<span class="sd">        injection_file_name (str):</span>
+<span class="sd">            Name of file specifying simulated signals to be</span>
+<span class="sd">            injected.</span>
 
+<span class="sd">        injection_number</span>
+<span class="sd">            Array (positive integer).  Optional.  If given then only</span>
+<span class="sd">            the injections specified on rows &quot;injection_number&quot; of the</span>
+<span class="sd">            injection file are injected.  This over-rides the default</span>
+<span class="sd">            behaviour, which is to inject all injections in the file</span>
+<span class="sd">            (including those outside the interval [start_time,start_time+block_time]!).</span>
 
-<span class="sd">    #----- Read injection file and extract parameters of injections</span>
-<span class="sd">    injection_file_parameters = Table.read(injection_file_name, format=&#39;ascii&#39;,</span>
-<span class="sd">                                           names=injection_file_columns)</span>
+<span class="sd">        **kwargs:</span>
+<span class="sd">            catalog_directory (optional, str):</span>
+<span class="sd">                Path to directory containing pregenerated waveforms</span>
 
+<span class="sd">    Returns:</span>
+<span class="sd">        injection_data:</span>
+<span class="sd">            `XTimeSeries`</span>
+<span class="sd">        </span>
+<span class="sd">        gps_s:</span>
+<span class="sd">            Vector of peak time (GPS seconds, integer part) of each</span>
+<span class="sd">            injection at the center of the Earth.</span>
 
-<span class="sd">    #----- If specific injections are specified then keep only those injections.</span>
-<span class="sd">    injection_file_parameters = injection_file_parameters[injection_number]                       If set to true, waveform is not injected injection</span>
-<span class="sd">                       parameters are calculated only.</span>
-<span class="sd">                     &#39;catalogdirectory&#39;,string</span>
-<span class="sd">                       Absolute path to the directory containing astrophysical</span>
-<span class="sd">                       waveform catalogs (e.g., DFM, OB, or ZM).  If not</span>
-<span class="sd">                       supplied when constructing such a waveform,</span>
-<span class="sd">                       xmakewaveform will attempt to load the appropriate</span>
-<span class="sd">                       catalog from a hard-coded location.</span>
+<span class="sd">        gps_ns:</span>
+<span class="sd">            Vector of peak time (GPS seconds, nanosecond part) of each</span>
+<span class="sd">            injection at the center of the Earth.</span>
 
-<span class="sd">      injection_data</span>
-<span class="sd">                   length(channel)x1 cell array of column vectors.</span>
-<span class="sd">                   injection_data{j} is a column vector holding the signal data</span>
-<span class="sd">                   for the jth detector.</span>
-<span class="sd">      gps_s        Vector of peak time (GPS seconds, integer part) of each</span>
-<span class="sd">                   injection at the center of the Earth.</span>
-<span class="sd">      gps_ns       Vector of peak time (GPS seconds, nanosecond part) of each</span>
-<span class="sd">                   injection at the center of the Earth.</span>
-<span class="sd">      phi          Vector of azimuthal sky coordinate of each injection</span>
-<span class="sd">                   (radians, Earth-fixed coordinates).</span>
-<span class="sd">      theta        Vector of polar sky coordinate of each injection</span>
-<span class="sd">      psi          Vector of polarization angle of each injection</span>
-<span class="sd">                   (radians Earth-fixed coordinates).</span>
+<span class="sd">        phi:</span>
+<span class="sd">            Vector of azimuthal sky coordinate of each injection</span>
+<span class="sd">            (radians, Earth-fixed coordinates).</span>
 
-<span class="sd">     The coordinate system is explained in ComputeAntennaResponse. It is</span>
-<span class="sd">     assumed that the sky positions in the injection file are supplied in this</span>
-<span class="sd">     coordinate system.  For glitch injections the reported times and angles</span>
-<span class="sd">     are those for the injection into the first detector.</span>
+<span class="sd">        theta:</span>
+<span class="sd">            Vector of polar sky coordinate of each injection</span>
 
-<span class="sd">     Any portion of any signal which lies outside the interval</span>
-<span class="sd">     [start_time, start_time+block_time] will be clipped. Otherwise, XINJECTSIGNAL</span>
-<span class="sd">     will inject any signal of duration up to block_time without clipping.</span>
-<span class="sd">     The edges of long-duration signals will be tapered with</span>
-<span class="sd">     a hann window to avoid turn-on/off transients.</span>
+<span class="sd">        psi:</span>
+<span class="sd">            Vector of polarization angle of each injection</span>
+<span class="sd">            (radians Earth-fixed coordinates).</span>
+
+<span class="sd">    Notes:</span>
+
+<span class="sd">        The coordinate system is explained in ComputeAntennaResponse. It is</span>
+<span class="sd">        assumed that the sky positions in the injection file are supplied in this</span>
+<span class="sd">        coordinate system.  For glitch injections the reported times and angles</span>
+<span class="sd">        are those for the injection into the first detector.</span>
+
+<span class="sd">        Any portion of any signal which lies outside the interval</span>
+<span class="sd">        [start_time, start_time+block_time] will be clipped. Otherwise, XINJECTSIGNAL</span>
+<span class="sd">        will inject any signal of duration up to block_time without clipping.</span>
+<span class="sd">        The edges of long-duration signals will be tapered with</span>
+<span class="sd">        a hann window to avoid turn-on/off transients.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># ---- Check for optional arguments.</span>
@@ -516,7 +538,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0+untagged.99.g8960fa3.dirty',
+            VERSION:'0+untagged.111.g8030ebd.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline an explanation &mdash; xpipeline 0+untagged.99.g8960fa3.dirty documentation</title>
+  <title>xpipeline an explanation &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.99.g8960fa3.dirty
+                0+untagged.111.g8030ebd.dirty
               </div>
             
           
@@ -245,7 +245,7 @@ let us go through the whole process.</p>
 <span class="gp">   ...: </span>
 
 <span class="gp">In [10]: </span><span class="n">plot</span>
-<span class="gh">Out[10]: </span><span class="go">&lt;SpectrogramPlot size 1200x600 with 2 Axes&gt;</span>
+<span class="gh">Out[10]: </span><span class="go">&lt;Plot size 1200x600 with 2 Axes&gt;</span>
 </pre></div>
 </div>
 <img alt="../_images/plot-time-frequency-map.png" src="../_images/plot-time-frequency-map.png" />
@@ -288,7 +288,7 @@ of the timefrequencymap, here we physically shift the livingston data.</p>
 <span class="gp">   ....: </span>
 
 <span class="gp">In [21]: </span><span class="n">plot</span>
-<span class="gh">Out[21]: </span><span class="go">&lt;SpectrogramPlot size 1200x600 with 2 Axes&gt;</span>
+<span class="gh">Out[21]: </span><span class="go">&lt;Plot size 1200x600 with 2 Axes&gt;</span>
 
 <span class="gp">In [22]: </span><span class="n">coh_energy_maps</span> <span class="o">=</span> <span class="n">energy_maps</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span>
 
@@ -335,7 +335,7 @@ is a nearest neighbor cpp wrapped algorithm called fastlabel.</p>
 <span class="gp">   ....: </span>
 
 <span class="gp">In [29]: </span><span class="n">plot</span>
-<span class="gh">Out[29]: </span><span class="go">&lt;SpectrogramPlot size 1200x600 with 2 Axes&gt;</span>
+<span class="gh">Out[29]: </span><span class="go">&lt;Plot size 1200x600 with 2 Axes&gt;</span>
 
 <span class="gp">In [30]: </span><span class="n">coh_map</span> <span class="o">=</span> <span class="n">energy_map_zeroed</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span>
 
@@ -355,69 +355,69 @@ is a nearest neighbor cpp wrapped algorithm called fastlabel.</p>
 
 <span class="gp">In [36]: </span><span class="k">print</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
 <span class="go">      min_time_of_cluster  weighted_center_time  max_time_of_cluster  min_frequency_of_cluster  weighted_center_frequency  max_frequency_of_cluster  number_of_pixels  energy_of_cluster</span>
-<span class="go">0            1.126259e+09          1.126259e+09         1.126259e+09                     352.0                 384.000000                     416.0               1.0           0.005643</span>
-<span class="go">1            1.126259e+09          1.126259e+09         1.126259e+09                     288.0                 320.000000                     352.0               1.0           0.003935</span>
-<span class="go">2            1.126259e+09          1.126259e+09         1.126259e+09                     416.0                 448.000000                     480.0               1.0           0.005139</span>
-<span class="go">3            1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.003143</span>
-<span class="go">4            1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.004165</span>
-<span class="go">5            1.126259e+09          1.126259e+09         1.126259e+09                     416.0                 503.588957                     608.0               3.0           0.012433</span>
-<span class="go">6            1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.004864</span>
-<span class="go">7            1.126259e+09          1.126259e+09         1.126259e+09                     224.0                 256.000000                     288.0               1.0           0.004321</span>
-<span class="go">8            1.126259e+09          1.126259e+09         1.126259e+09                     224.0                 256.000000                     288.0               1.0           0.004506</span>
-<span class="go">9            1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.003757</span>
-<span class="go">10           1.126259e+09          1.126259e+09         1.126259e+09                     224.0                 256.000000                     288.0               1.0           0.004201</span>
-<span class="go">11           1.126259e+09          1.126259e+09         1.126259e+09                     352.0                 419.883403                     480.0               2.0           0.008429</span>
-<span class="go">12           1.126259e+09          1.126259e+09         1.126259e+09                     224.0                 287.467397                     352.0               2.0           0.008531</span>
-<span class="go">13           1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 545.204538                     608.0               2.0           0.012489</span>
-<span class="go">14           1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 544.379939                     608.0               2.0           0.009983</span>
-<span class="go">15           1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.003333</span>
-<span class="go">16           1.126259e+09          1.126259e+09         1.126259e+09                     416.0                 448.000000                     480.0               1.0           0.004619</span>
-<span class="go">17           1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.003570</span>
-<span class="go">18           1.126259e+09          1.126259e+09         1.126259e+09                     416.0                 478.178499                     544.0               2.0           0.008983</span>
-<span class="go">19           1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 546.685147                     608.0               2.0           0.009002</span>
-<span class="go">20           1.126259e+09          1.126259e+09         1.126259e+09                     288.0                 320.000000                     352.0               1.0           0.003493</span>
-<span class="go">21           1.126259e+09          1.126259e+09         1.126259e+09                     288.0                 320.000000                     352.0               1.0           0.004594</span>
-<span class="go">22           1.126259e+09          1.126259e+09         1.126259e+09                     288.0                 349.999050                     416.0               2.0           0.009899</span>
-<span class="go">23           1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.004006</span>
-<span class="go">24           1.126259e+09          1.126259e+09         1.126259e+09                     416.0                 448.000000                     480.0               1.0           0.003919</span>
-<span class="go">25           1.126259e+09          1.126259e+09         1.126259e+09                     224.0                 289.060481                     352.0               2.0           0.009638</span>
-<span class="go">26           1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.003205</span>
-<span class="go">27           1.126259e+09          1.126259e+09         1.126259e+09                     160.0                 192.000000                     224.0               1.0           0.003570</span>
-<span class="go">28           1.126259e+09          1.126259e+09         1.126259e+09                     288.0                 349.473616                     416.0               2.0           0.010108</span>
-<span class="go">29           1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 543.551804                     608.0               2.0           0.007351</span>
+<span class="go">0            1.126259e+09          1.126259e+09         1.126259e+09                     224.0                 256.000000                     288.0               1.0           0.002100</span>
+<span class="go">1            1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 545.467973                     608.0               2.0           0.006397</span>
+<span class="go">2            1.126259e+09          1.126259e+09         1.126259e+09                     288.0                 320.000000                     352.0               1.0           0.001648</span>
+<span class="go">3            1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 545.683435                     608.0               2.0           0.005583</span>
+<span class="go">4            1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.001842</span>
+<span class="go">5            1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 546.602403                     608.0               2.0           0.004550</span>
+<span class="go">6            1.126259e+09          1.126259e+09         1.126259e+09                     288.0                 320.000000                     352.0               1.0           0.002317</span>
+<span class="go">7            1.126259e+09          1.126259e+09         1.126259e+09                     288.0                 349.535202                     416.0               2.0           0.004935</span>
+<span class="go">8            1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.002112</span>
+<span class="go">9            1.126259e+09          1.126259e+09         1.126259e+09                     416.0                 448.000000                     480.0               1.0           0.001945</span>
+<span class="go">10           1.126259e+09          1.126259e+09         1.126259e+09                     224.0                 290.028525                     352.0               2.0           0.004932</span>
+<span class="go">11           1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.001852</span>
+<span class="go">12           1.126259e+09          1.126259e+09         1.126259e+09                     160.0                 192.000000                     224.0               1.0           0.001716</span>
+<span class="go">13           1.126259e+09          1.126259e+09         1.126259e+09                     352.0                 384.000000                     416.0               1.0           0.002354</span>
+<span class="go">14           1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 544.266014                     608.0               2.0           0.003861</span>
+<span class="go">15           1.126259e+09          1.126259e+09         1.126259e+09                     160.0                 192.000000                     224.0               1.0           0.001763</span>
+<span class="go">16           1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.002226</span>
+<span class="go">17           1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 546.739553                     608.0               2.0           0.004073</span>
+<span class="go">18           1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.002016</span>
+<span class="go">19           1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.001894</span>
+<span class="go">20           1.126259e+09          1.126259e+09         1.126259e+09                      96.0                 158.858313                     224.0               2.0           0.005966</span>
+<span class="go">21           1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 512.000000                     544.0               1.0           0.002391</span>
+<span class="go">22           1.126259e+09          1.126259e+09         1.126259e+09                     160.0                 224.739681                     288.0               2.0           0.005748</span>
+<span class="go">23           1.126259e+09          1.126259e+09         1.126259e+09                     352.0                 384.000000                     416.0               1.0           0.002671</span>
+<span class="go">24           1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 512.000000                     544.0               1.0           0.001986</span>
+<span class="go">25           1.126259e+09          1.126259e+09         1.126259e+09                     288.0                 320.000000                     352.0               1.0           0.002220</span>
+<span class="go">26           1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.002163</span>
+<span class="go">27           1.126259e+09          1.126259e+09         1.126259e+09                     160.0                 192.000000                     224.0               1.0           0.002742</span>
+<span class="go">28           1.126259e+09          1.126259e+09         1.126259e+09                     224.0                 291.074894                     352.0               2.0           0.005127</span>
+<span class="go">29           1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.002154</span>
 <span class="go">...                   ...                   ...                  ...                       ...                        ...                       ...               ...                ...</span>
-<span class="go">4360         1.126260e+09          1.126260e+09         1.126260e+09                     480.0                 550.483030                     608.0               2.0           0.009068</span>
-<span class="go">4361         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.005350</span>
-<span class="go">4362         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 448.000000                     480.0               1.0           0.003765</span>
-<span class="go">4363         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.005137</span>
-<span class="go">4364         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.004813</span>
-<span class="go">4365         1.126260e+09          1.126260e+09         1.126260e+09                     352.0                 384.000000                     416.0               1.0           0.004061</span>
-<span class="go">4366         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.004547</span>
-<span class="go">4367         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 448.000000                     480.0               1.0           0.003775</span>
-<span class="go">4368         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.004073</span>
-<span class="go">4369         1.126260e+09          1.126260e+09         1.126260e+09                     288.0                 350.994046                     416.0               2.0           0.009694</span>
-<span class="go">4370         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 448.000000                     480.0               1.0           0.005020</span>
-<span class="go">4371         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.004732</span>
-<span class="go">4372         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.003947</span>
-<span class="go">4373         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.004673</span>
-<span class="go">4374         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.004403</span>
-<span class="go">4375         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 448.000000                     480.0               1.0           0.003591</span>
-<span class="go">4376         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 482.572551                     544.0               2.0           0.007921</span>
-<span class="go">4377         1.126260e+09          1.126260e+09         1.126260e+09                     352.0                 384.000000                     416.0               1.0           0.003609</span>
-<span class="go">4378         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 476.278025                     544.0               2.0           0.008425</span>
-<span class="go">4379         1.126260e+09          1.126260e+09         1.126260e+09                     288.0                 320.000000                     352.0               1.0           0.005852</span>
-<span class="go">4380         1.126260e+09          1.126260e+09         1.126260e+09                     288.0                 352.303467                     416.0               2.0           0.011275</span>
-<span class="go">4381         1.126260e+09          1.126260e+09         1.126260e+09                     352.0                 418.057645                     480.0               2.0           0.009032</span>
-<span class="go">4382         1.126260e+09          1.126260e+09         1.126260e+09                     224.0                 289.985734                     352.0               2.0           0.009464</span>
-<span class="go">4383         1.126260e+09          1.126260e+09         1.126260e+09                     288.0                 320.000000                     352.0               1.0           0.005937</span>
-<span class="go">4384         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.004679</span>
-<span class="go">4385         1.126260e+09          1.126260e+09         1.126260e+09                      96.0                 163.241496                     224.0               2.0           0.008354</span>
-<span class="go">4386         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.003992</span>
-<span class="go">4387         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.003627</span>
-<span class="go">4388         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.003405</span>
-<span class="go">4389         1.126260e+09          1.126260e+09         1.126260e+09                     288.0                 320.000000                     352.0               1.0           0.003649</span>
+<span class="go">4328         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.001540</span>
+<span class="go">4329         1.126260e+09          1.126260e+09         1.126260e+09                     480.0                 512.000000                     544.0               1.0           0.002301</span>
+<span class="go">4330         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.002121</span>
+<span class="go">4331         1.126260e+09          1.126260e+09         1.126260e+09                     224.0                 256.000000                     288.0               1.0           0.001962</span>
+<span class="go">4332         1.126260e+09          1.126260e+09         1.126260e+09                     288.0                 355.795632                     416.0               2.0           0.004650</span>
+<span class="go">4333         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.002012</span>
+<span class="go">4334         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 478.206855                     544.0               2.0           0.004046</span>
+<span class="go">4335         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.002251</span>
+<span class="go">4336         1.126260e+09          1.126260e+09         1.126260e+09                      96.0                 162.458873                     224.0               2.0           0.005761</span>
+<span class="go">4337         1.126260e+09          1.126260e+09         1.126260e+09                     224.0                 256.000000                     288.0               1.0           0.001990</span>
+<span class="go">4338         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.002520</span>
+<span class="go">4339         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 448.000000                     480.0               1.0           0.002186</span>
+<span class="go">4340         1.126260e+09          1.126260e+09         1.126260e+09                     480.0                 549.178185                     608.0               2.0           0.004416</span>
+<span class="go">4341         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.001803</span>
+<span class="go">4342         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.002589</span>
+<span class="go">4343         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 448.000000                     480.0               1.0           0.001921</span>
+<span class="go">4344         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.002585</span>
+<span class="go">4345         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.002379</span>
+<span class="go">4346         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.002197</span>
+<span class="go">4347         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.001863</span>
+<span class="go">4348         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 448.000000                     480.0               1.0           0.001889</span>
+<span class="go">4349         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.001994</span>
+<span class="go">4350         1.126260e+09          1.126260e+09         1.126260e+09                     288.0                 350.806400                     416.0               2.0           0.004721</span>
+<span class="go">4351         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 448.000000                     480.0               1.0           0.002611</span>
+<span class="go">4352         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.002437</span>
+<span class="go">4353         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.002030</span>
+<span class="go">4354         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.002346</span>
+<span class="go">4355         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 448.000000                     480.0               1.0           0.001837</span>
+<span class="go">4356         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 448.000000                     480.0               1.0           0.001912</span>
+<span class="go">4357         1.126260e+09          1.126260e+09         1.126260e+09                     352.0                 384.000000                     416.0               1.0           0.001747</span>
 
-<span class="go">[4390 rows x 8 columns]</span>
+<span class="go">[4358 rows x 8 columns]</span>
 </pre></div>
 </div>
 <img alt="../_images/plot-sparse-ind-tfmaps.png" src="../_images/plot-sparse-ind-tfmaps.png" />
@@ -593,7 +593,7 @@ on at the time too.</p>
 <span class="gp">In [73]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">gps_s</span><span class="p">,</span> <span class="n">gps_s</span> <span class="o">+</span> <span class="mi">2</span><span class="p">])</span>
 
 <span class="gp">In [74]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
-<span class="gh">Out[74]: </span><span class="go">&lt;matplotlib.legend.Legend at 0x11dccf4a8&gt;</span>
+<span class="gh">Out[74]: </span><span class="go">&lt;matplotlib.legend.Legend at 0x10fff6438&gt;</span>
 
 <span class="gp">In [75]: </span><span class="n">plot</span>
 <span class="go">                                                   Out[75]: &lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
@@ -624,7 +624,7 @@ some data and color it to look like gaussian distributed aLIGO noise.</p>
 <span class="gp">   ....: </span>
 
 <span class="gp">In [84]: </span><span class="n">plot</span>
-<span class="gh">Out[84]: </span><span class="go">&lt;SpectrogramPlot size 1200x600 with 2 Axes&gt;</span>
+<span class="gh">Out[84]: </span><span class="go">&lt;Plot size 1200x600 with 2 Axes&gt;</span>
 </pre></div>
 </div>
 <img alt="../_images/energy-map-Morozova2018.png" src="../_images/energy-map-Morozova2018.png" />
@@ -672,7 +672,7 @@ some data and color it to look like gaussian distributed aLIGO noise.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.99.g8960fa3.dirty',
+            VERSION:'0+untagged.111.g8030ebd.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

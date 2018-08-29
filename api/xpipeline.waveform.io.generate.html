@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.99.g8960fa3.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
   
 
   
@@ -58,7 +58,7 @@
             
             
               <div class="version">
-                0+untagged.99.g8960fa3.dirty
+                0+untagged.111.g8030ebd.dirty
               </div>
             
           
@@ -149,67 +149,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <span class="target" id="module-xpipeline.waveform.io.generate"></span><p>Fetch registration for database queries</p>
-<dl class="function">
-<dt id="xpipeline.waveform.io.generate.get_generator">
-<code class="descclassname">xpipeline.waveform.io.generate.</code><code class="descname">get_generator</code><span class="sig-paren">(</span><em>data_format</em>, <em>data_class</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/waveform/io/generate.html#get_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.waveform.io.generate.get_generator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the <code class="xref py py-meth docutils literal notranslate"><span class="pre">generate()</span></code> function for the given format</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data_format</strong> : <cite>str</cite></p>
-<blockquote>
-<div><p>name of the format</p>
-</div></blockquote>
-<p><strong>data_class</strong> : <cite>type</cite></p>
-<blockquote>
-<div><p>the class that the generator returns</p>
-</div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first"><strong>astropy.io.registry.IORegistryError</strong></p>
-<blockquote class="last">
-<div><p>if not registration is found matching <code class="docutils literal notranslate"><span class="pre">data_format</span></code></p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="xpipeline.waveform.io.generate.register_generator">
-<code class="descclassname">xpipeline.waveform.io.generate.</code><code class="descname">register_generator</code><span class="sig-paren">(</span><em>data_format</em>, <em>data_class</em>, <em>function</em>, <em>force=False</em>, <em>usage=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/waveform/io/generate.html#register_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.waveform.io.generate.register_generator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Register a new method to EventTable.generate() for a given format</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data_format</strong> : <cite>str</cite></p>
-<blockquote>
-<div><p>name of the format to be registered</p>
-</div></blockquote>
-<p><strong>data_class</strong> : <cite>type</cite></p>
-<blockquote>
-<div><p>the class that the generator returns</p>
-</div></blockquote>
-<p><strong>function</strong> : <cite>callable</cite></p>
-<blockquote>
-<div><p>the method to call from <code class="xref py py-meth docutils literal notranslate"><span class="pre">EventTable.generate()</span></code></p>
-</div></blockquote>
-<p><strong>force</strong> : <cite>bool</cite>, optional</p>
-<blockquote class="last">
-<div><p>overwrite existing registration for <code class="docutils literal notranslate"><span class="pre">data_format</span></code> if found,
-default: <cite>False</cite></p>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-
+  
 
            </div>
            
@@ -243,7 +183,7 @@ default: <cite>False</cite></p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0+untagged.99.g8960fa3.dirty',
+            VERSION:'0+untagged.111.g8030ebd.dirty',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

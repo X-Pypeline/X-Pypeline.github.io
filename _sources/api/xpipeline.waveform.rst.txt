@@ -1,20 +1,11 @@
 xpipeline.waveform package
 ==========================
 
-Subpackages
------------
-
-.. toctree::
-
-    xpipeline.waveform.io
-
 Submodules
 ----------
 
 .. toctree::
 
-   xpipeline.waveform.injectsignal
-   xpipeline.waveform.waveform
    xpipeline.waveform.xinjectsignal
    xpipeline.waveform.xoptimalsnr
    xpipeline.waveform.xwaveform
