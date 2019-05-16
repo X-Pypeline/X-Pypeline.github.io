@@ -10,8 +10,10 @@ Subpackages
     xpipeline.core
     xpipeline.io
     xpipeline.likelihood
+    xpipeline.postprocess
     xpipeline.setuputils
     xpipeline.skyutils
+    xpipeline.utils
     xpipeline.waveform
 
 Submodules

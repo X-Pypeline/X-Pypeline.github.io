@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.core.xtimeseries &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
+  <title>xpipeline.core.xtimeseries &mdash; xpipeline 0+untagged.178.gddc1b81.dirty documentation</title>
   
 
   
@@ -17,34 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/xpipeline-docs.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -58,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.111.g8030ebd.dirty
+                0+untagged.178.gddc1b81.dirty
               </div>
             
           
@@ -171,6 +172,7 @@
 
 <span class="kn">from</span> <span class="nn">gwpy.timeseries</span> <span class="k">import</span> <span class="n">TimeSeriesDict</span>
 <span class="kn">from</span> <span class="nn">gwpy.timeseries</span> <span class="k">import</span> <span class="n">TimeSeries</span>
+<span class="kn">from</span> <span class="nn">gwpy.signal</span> <span class="k">import</span> <span class="n">filter_design</span>
 <span class="kn">from</span> <span class="nn">.xfrequencyseries</span> <span class="k">import</span> <span class="n">XFrequencySeriesDict</span>
 <span class="kn">from</span> <span class="nn">.xtimefrequencymap</span> <span class="k">import</span> <span class="n">XTimeFrequencyMapDict</span><span class="p">,</span> <span class="n">XTimeFrequencyMap</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
@@ -182,7 +184,7 @@
 <div class="viewcode-block" id="XTimeSeries.retrieve_data"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimeseries.html#xpipeline.core.xtimeseries.XTimeSeries.retrieve_data">[docs]</a>    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">retrieve_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">event_time</span><span class="p">,</span> <span class="n">block_time</span><span class="p">,</span>
                       <span class="n">channel_names</span><span class="p">,</span> <span class="n">sample_frequency</span><span class="p">,</span>
-                      <span class="n">frame_types</span><span class="o">=</span><span class="p">[],</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                      <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Obtain data for either on source, off source, or injections.</span>
 
 <span class="sd">        This uses the gwpy `TimeSeriesDict.get` method</span>
@@ -201,9 +203,8 @@
 <span class="sd">        sample_frequency (`int`):</span>
 <span class="sd">            sample rate of the data desired</span>
 
-<span class="sd">        frame_types : `str`, optional</span>
-<span class="sd">            name of frametype in which this channel is stored, by default</span>
-<span class="sd">            will search for all required frame types</span>
+<span class="sd">        frame_types : `dict`, optional</span>
+<span class="sd">            key channel and value frametype in whcih the channel is stored</span>
 
 <span class="sd">        verbose : `bool`, optional</span>
 <span class="sd">            print verbose output about NDS progress.</span>
@@ -212,33 +213,54 @@
 
 <span class="sd">            `TimeSeriesDict` :</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Default is you do not want a timeslided dictionary</span>
+        <span class="c1"># of timeseries</span>
+        <span class="n">time_slides</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;time_slides&#39;</span><span class="p">,</span> <span class="p">{</span><span class="n">det</span> <span class="p">:</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">channel_names</span><span class="p">})</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">time_slides</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;time_slides must be supplied &quot;</span>
+                              <span class="s2">&quot;in the form of a dict &quot;</span>
+                              <span class="s2">&quot;with key channel and value integer &quot;</span>
+                              <span class="s2">&quot;time to slide start and stop time&quot;</span><span class="p">)</span>
+
+        <span class="c1"># If frametype is None then make dictionary</span>
+        <span class="c1"># of key channel and value None</span>
+        <span class="n">frame_types</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;frame_types&#39;</span><span class="p">,</span> <span class="p">{</span><span class="n">det</span> <span class="p">:</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">channel_names</span><span class="p">})</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">frame_types</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;frame_types must be supplied &quot;</span>
+                              <span class="s2">&quot;in the form of a dict &quot;</span>
+                              <span class="s2">&quot;with key channel and value frametype &quot;</span>
+                              <span class="s2">&quot;assosciated with that channel&quot;</span><span class="p">)</span>
+
         <span class="c1">#----- Start and stop time for this event.</span>
         <span class="n">start_time</span> <span class="o">=</span> <span class="n">event_time</span> <span class="o">-</span> <span class="n">block_time</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
         <span class="n">stop_time</span> <span class="o">=</span> <span class="n">event_time</span> <span class="o">+</span> <span class="n">block_time</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
 
-        <span class="c1"># Retrieve data and then resample and set epoch</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
-                           <span class="n">channel_names</span><span class="p">,</span>
-                           <span class="n">start_time</span><span class="p">,</span> <span class="n">stop_time</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
-                          <span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">channel_names</span><span class="p">:</span>
+                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="n">det</span> <span class="p">:</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">det</span><span class="p">,</span>
+                                           <span class="n">start_time</span> <span class="o">+</span> <span class="n">time_slides</span><span class="p">[</span><span class="n">det</span><span class="p">],</span>
+                                           <span class="n">stop_time</span> <span class="o">+</span> <span class="n">time_slides</span><span class="p">[</span><span class="n">det</span><span class="p">],</span>
+                                           <span class="n">frametype</span><span class="o">=</span><span class="n">frame_types</span><span class="p">[</span><span class="n">det</span><span class="p">],</span>
+                                           <span class="o">**</span><span class="n">kwargs</span>
+                                          <span class="p">)</span>
+                             <span class="p">})</span>
         <span class="k">except</span><span class="p">:</span>
+            <span class="c1"># Retrieve data useing the get classmethod </span>
             <span class="n">data</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">det</span> <span class="ow">in</span> <span class="n">channel_names</span><span class="p">:</span>
                 <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="n">det</span> <span class="p">:</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">fetch_open_data</span><span class="p">(</span>
                                                               <span class="n">det</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
-                                           <span class="n">start_time</span><span class="p">,</span> <span class="n">stop_time</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
-                                           <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_frequency</span>
+                                           <span class="n">start_time</span> <span class="o">+</span> <span class="n">time_slides</span><span class="p">[</span><span class="n">det</span><span class="p">],</span>
+                                           <span class="n">stop_time</span> <span class="o">+</span> <span class="n">time_slides</span><span class="p">[</span><span class="n">det</span><span class="p">],</span>
+                                           <span class="n">sample_rate</span><span class="o">=</span><span class="n">sample_frequency</span><span class="p">,</span>
+                                           <span class="o">**</span><span class="n">kwargs</span>
                                           <span class="p">)</span>
-                             <span class="p">})</span>
+                                 <span class="p">})</span>
 
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">series</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="k">if</span> <span class="n">series</span><span class="o">.</span><span class="n">sample_rate</span><span class="o">.</span><span class="n">decompose</span><span class="p">()</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="n">sample_frequency</span><span class="p">:</span>
                 <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">series</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="n">sample_frequency</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="p">(</span><span class="n">idet</span><span class="p">,</span> <span class="n">iseries</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
-            <span class="c1"># set epoch of timeseries to the event_time</span>
-            <span class="n">iseries</span><span class="o">.</span><span class="n">epoch</span> <span class="o">=</span> <span class="n">start_time</span>
 
         <span class="c1"># set one of the detectors to be the reference detecotr</span>
         <span class="c1"># for any future coherent combinations</span>
@@ -397,6 +419,19 @@
 
         <span class="k">return</span> <span class="n">whitened_timeseries</span></div>
 
+<div class="viewcode-block" id="XTimeSeries.highpass"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimeseries.html#xpipeline.core.xtimeseries.XTimeSeries.highpass">[docs]</a>    <span class="k">def</span> <span class="nf">highpass</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frequency</span><span class="p">,</span> <span class="n">corruption</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Design a high-pass filter.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fhigh : `float`</span>
+<span class="sd">            high-pass corner frequency</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">ts_hp</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">highpass</span><span class="p">(</span><span class="n">frequency</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">ts_hp</span><span class="o">.</span><span class="n">crop</span><span class="p">(</span><span class="o">*</span><span class="n">ts_hp</span><span class="o">.</span><span class="n">span</span><span class="o">.</span><span class="n">contract</span><span class="p">(</span><span class="n">corruption</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
 
 <div class="viewcode-block" id="XTimeSeries.spectrogram"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimeseries.html#xpipeline.core.xtimeseries.XTimeSeries.spectrogram">[docs]</a>    <span class="k">def</span> <span class="nf">spectrogram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fftlength</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Obtain the spectrograms of items in this dict.</span>
@@ -487,7 +522,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Scott Coughlin.
+        &copy; Copyright 2018, Scott Coughlin
 
     </p>
   </div>
@@ -504,35 +539,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'0+untagged.111.g8030ebd.dirty',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

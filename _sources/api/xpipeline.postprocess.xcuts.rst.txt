@@ -1,0 +1,4 @@
+.. automodule:: xpipeline.postprocess.xcuts
+    :members:
+    :undoc-members:
+    :show-inheritance:

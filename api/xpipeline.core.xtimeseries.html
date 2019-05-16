@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.178.gddc1b81.dirty documentation</title>
   
 
   
@@ -17,34 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/xpipeline-docs.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -58,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.111.g8030ebd.dirty
+                0+untagged.178.gddc1b81.dirty
               </div>
             
           
@@ -155,50 +156,42 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">gwpy.timeseries.timeseries.TimeSeriesDict</span></code></p>
 <dl class="method">
 <dt id="xpipeline.core.xtimeseries.XTimeSeries.asd">
-<code class="descname">asd</code><span class="sig-paren">(</span><em>fftlength</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.asd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.asd" title="Permalink to this definition">¶</a></dt>
+<code class="descname">asd</code><span class="sig-paren">(</span><em>self</em>, <em>fftlength</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.asd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.asd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtain the asd of items in this dict.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>fftlength</strong> : <cite>dict</cite>, <cite>float</cite></p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fftlength</strong> : <cite>dict</cite>, <cite>float</cite></p>
 <blockquote>
 <div><p>either a <cite>dict</cite> of (channel, <cite>float</cite>) pairs for key-wise
 asd calc, or a single float/int to compute as of all items.</p>
 </div></blockquote>
 <p><strong>**kwargs</strong></p>
-<blockquote class="last">
+<blockquote>
 <div><p>other keyword arguments to pass to each item’s asd
 method.</p>
 </div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xtimeseries.XTimeSeries.fftgram">
-<code class="descname">fftgram</code><span class="sig-paren">(</span><em>fftlength</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.fftgram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.fftgram" title="Permalink to this definition">¶</a></dt>
+<code class="descname">fftgram</code><span class="sig-paren">(</span><em>self</em>, <em>fftlength</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.fftgram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.fftgram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtain the spectrograms of items in this dict.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>fftlength</strong> : <cite>dict</cite>, <cite>float</cite></p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fftlength</strong> : <cite>dict</cite>, <cite>float</cite></p>
 <blockquote>
 <div><p>either a <cite>dict</cite> of (channel, <cite>float</cite>) pairs for key-wise
 asd calc, or a single float/int to computer as of all items.</p>
 </div></blockquote>
 <p><strong>**kwargs</strong></p>
-<blockquote class="last">
+<blockquote>
 <div><p>other keyword arguments to pass to each item’s asd
 method.</p>
 </div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="classmethod">
@@ -206,11 +199,9 @@ method.</p>
 <em class="property">classmethod </em><code class="descname">generate_data</code><span class="sig-paren">(</span><em>event_time</em>, <em>block_time</em>, <em>channel_names</em>, <em>sample_frequency</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.generate_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.generate_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtain data for either on source, off source, or injections.</p>
 <p>This uses the gwpy <cite>TimeSeriesDict.get</cite> method</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>event_time</strong> : (<a href="#id1"><span class="problematic" id="id2">`</span></a>float)</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>event_time</strong> : (<a href="#id1"><span class="problematic" id="id2">`</span></a>float)</p>
 <blockquote>
 <div><p>trigger time of event to be processing</p>
 </div></blockquote>
@@ -231,13 +222,11 @@ method.</p>
 <div><p>print verbose output about NDS progress.</p>
 </div></blockquote>
 <p><strong>Returns:</strong></p>
-<blockquote class="last">
+<blockquote>
 <div><p><cite>TimeSeriesDict</cite> :</p>
 </div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="classmethod">
@@ -245,11 +234,9 @@ method.</p>
 <em class="property">classmethod </em><code class="descname">generate_noise_from_file</code><span class="sig-paren">(</span><em>file_name</em>, <em>event_time</em>, <em>block_time</em>, <em>channel_names</em>, <em>sample_frequency</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.generate_noise_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.generate_noise_from_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtain data for either on source, off source, or injections.</p>
 <p>This uses the gwpy <cite>TimeSeriesDict.get</cite> method</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>event_time</strong> : (<a href="#id3"><span class="problematic" id="id4">`</span></a>float)</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>event_time</strong> : (<a href="#id3"><span class="problematic" id="id4">`</span></a>float)</p>
 <blockquote>
 <div><p>trigger time of event to be processing</p>
 </div></blockquote>
@@ -270,26 +257,36 @@ method.</p>
 <div><p>print verbose output about NDS progress.</p>
 </div></blockquote>
 <p><strong>Returns:</strong></p>
-<blockquote class="last">
+<blockquote>
 <div><p><cite>TimeSeriesDict</cite> :</p>
 </div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.core.xtimeseries.XTimeSeries.highpass">
+<code class="descname">highpass</code><span class="sig-paren">(</span><em>self</em>, <em>frequency</em>, <em>corruption=2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.highpass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.highpass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Design a high-pass filter.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fhigh</strong> : <cite>float</cite></p>
+<blockquote>
+<div><p>high-pass corner frequency</p>
+</div></blockquote>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xtimeseries.XTimeSeries.inject">
-<code class="descname">inject</code><span class="sig-paren">(</span><em>injection_data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.inject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.inject" title="Permalink to this definition">¶</a></dt>
+<code class="descname">inject</code><span class="sig-paren">(</span><em>self</em>, <em>injection_data</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.inject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.inject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take an injection time series and inject into <cite>XTimeSeries</cite></p>
 <p>This is essentially a wrapper arounf the very useful
 <cite>gwpy.timeseries.TimeSeries.inject</cite> method</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>injection_data</strong> : <cite>XTimeSeries</cite>,</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>injection_data</strong> : <cite>XTimeSeries</cite>,</p>
 <blockquote>
 <div><p>A <cite>XtimeSeries</cite> containing the same keys as
 the <cite>XTimeSeries</cite> you are injecting into
@@ -299,26 +296,22 @@ data then your injeciton data
 should have the same keys</p>
 </div></blockquote>
 <p><strong>**kwargs</strong></p>
-<blockquote class="last">
+<blockquote>
 <div><p>other keyword arguments to pass to each item’s asd
 method.</p>
 </div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="xpipeline.core.xtimeseries.XTimeSeries.retrieve_data">
-<em class="property">classmethod </em><code class="descname">retrieve_data</code><span class="sig-paren">(</span><em>event_time</em>, <em>block_time</em>, <em>channel_names</em>, <em>sample_frequency</em>, <em>frame_types=[]</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.retrieve_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.retrieve_data" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">retrieve_data</code><span class="sig-paren">(</span><em>event_time</em>, <em>block_time</em>, <em>channel_names</em>, <em>sample_frequency</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.retrieve_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.retrieve_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtain data for either on source, off source, or injections.</p>
 <p>This uses the gwpy <cite>TimeSeriesDict.get</cite> method</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>event_time</strong> : (<a href="#id5"><span class="problematic" id="id6">`</span></a>float)</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>event_time</strong> : (<a href="#id5"><span class="problematic" id="id6">`</span></a>float)</p>
 <blockquote>
 <div><p>trigger time of event to be processing</p>
 </div></blockquote>
@@ -334,69 +327,57 @@ method.</p>
 <blockquote>
 <div><p>sample rate of the data desired</p>
 </div></blockquote>
-<p><strong>frame_types</strong> : <cite>str</cite>, optional</p>
+<p><strong>frame_types</strong> : <cite>dict</cite>, optional</p>
 <blockquote>
-<div><p>name of frametype in which this channel is stored, by default
-will search for all required frame types</p>
+<div><p>key channel and value frametype in whcih the channel is stored</p>
 </div></blockquote>
 <p><strong>verbose</strong> : <cite>bool</cite>, optional</p>
 <blockquote>
 <div><p>print verbose output about NDS progress.</p>
 </div></blockquote>
 <p><strong>Returns:</strong></p>
-<blockquote class="last">
+<blockquote>
 <div><p><cite>TimeSeriesDict</cite> :</p>
 </div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xtimeseries.XTimeSeries.spectrogram">
-<code class="descname">spectrogram</code><span class="sig-paren">(</span><em>fftlength</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.spectrogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.spectrogram" title="Permalink to this definition">¶</a></dt>
+<code class="descname">spectrogram</code><span class="sig-paren">(</span><em>self</em>, <em>fftlength</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.spectrogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.spectrogram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtain the spectrograms of items in this dict.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>fftlength</strong> : <cite>dict</cite>, <cite>float</cite></p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fftlength</strong> : <cite>dict</cite>, <cite>float</cite></p>
 <blockquote>
 <div><p>either a <cite>dict</cite> of (channel, <cite>float</cite>) pairs for key-wise
 asd calc, or a single float/int to computer as of all items.</p>
 </div></blockquote>
 <p><strong>**kwargs</strong></p>
-<blockquote class="last">
+<blockquote>
 <div><p>other keyword arguments to pass to each item’s asd
 method.</p>
 </div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xtimeseries.XTimeSeries.whiten">
-<code class="descname">whiten</code><span class="sig-paren">(</span><em>asds</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.whiten"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.whiten" title="Permalink to this definition">¶</a></dt>
+<code class="descname">whiten</code><span class="sig-paren">(</span><em>self</em>, <em>asds</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimeseries.html#XTimeSeries.whiten"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimeseries.XTimeSeries.whiten" title="Permalink to this definition">¶</a></dt>
 <dd><p>White this <cite>XTimeSeries</cite> against its own ASD</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>asds</strong> : <cite>dict</cite></p>
-<blockquote class="last">
-<div><dl class="docutils">
-<dt>a <cite>dict</cite> of (channel, <cite>XFrequencySeries</cite>) pairs for key-wise</dt>
-<dd><p class="first last">whitened of the timeseries</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>asds</strong> : <cite>dict</cite></p>
+<blockquote>
+<div><dl class="simple">
+<dt>a <cite>dict</cite> of (channel, <cite>XFrequencySeries</cite>) pairs for key-wise</dt><dd><p>whitened of the timeseries</p>
 </dd>
 </dl>
 </div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -413,7 +394,7 @@ method.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Scott Coughlin.
+        &copy; Copyright 2018, Scott Coughlin
 
     </p>
   </div>
@@ -430,35 +411,16 @@ method.</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'0+untagged.111.g8030ebd.dirty',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

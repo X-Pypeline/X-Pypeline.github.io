@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.178.gddc1b81.dirty documentation</title>
   
 
   
@@ -17,34 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/xpipeline-docs.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -58,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.111.g8030ebd.dirty
+                0+untagged.178.gddc1b81.dirty
               </div>
             
           
@@ -152,24 +153,67 @@
   <span class="target" id="module-xpipeline.core.xtimefrequencymap"></span><dl class="class">
 <dt id="xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap">
 <em class="property">class </em><code class="descclassname">xpipeline.core.xtimefrequencymap.</code><code class="descname">csc_XSparseTimeFrequencyMap</code><span class="sig-paren">(</span><em>matrix</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#csc_XSparseTimeFrequencyMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csc.csc_matrix</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="xpipeline.core.sparse.html#xpipeline.core.sparse.csc_sparse_map" title="xpipeline.core.sparse.csc_sparse_map"><code class="xref py py-class docutils literal notranslate"><span class="pre">xpipeline.core.sparse.csc_sparse_map</span></code></a></p>
+<dl class="method">
+<dt id="xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap.cluster">
+<code class="descname">cluster</code><span class="sig-paren">(</span><em>self</em>, <em>method='nearest_neighbors'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#csc_XSparseTimeFrequencyMap.cluster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap.cluster" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert dict fo sparse matrix to <cite>XTimeFrequencyMapDict</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap.label">
+<code class="descname">label</code><span class="sig-paren">(</span><em>self</em>, <em>connectivity=8</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#csc_XSparseTimeFrequencyMap.label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap.label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert dict fo sparse matrix to <cite>XTimeFrequencyMapDict</cite></p>
+</dd></dl>
+
 <dl class="method">
 <dt id="xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap.plot">
-<code class="descname">plot</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#csc_XSparseTimeFrequencyMap.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap.plot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">plot</code><span class="sig-paren">(</span><em>self</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#csc_XSparseTimeFrequencyMap.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot the data for this <cite>XTimeFrequencyMapDict</cite>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>**kwargs</strong></p>
-<blockquote class="last">
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong></p>
+<blockquote>
 <div><p>all other keyword arguments are passed to the plotter as
 appropriate</p>
 </div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap.read">
+<em class="property">classmethod </em><code class="descname">read</code><span class="sig-paren">(</span><em>row</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#csc_XSparseTimeFrequencyMap.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>This can table a row of a PyTable and return a sparse tf map.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>row (`tables.Table.row`):</strong></p>
+<blockquote>
+<div><p>The is a row of a <cite>tables.Table</cite> generated by
+xpipeline-analysis</p>
+</div></blockquote>
+<p><strong>**kwargs</strong></p>
+<blockquote>
+<div><p>all other keyword arguments are passed to the plotter as
+appropriate</p>
+</div></blockquote>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>self</em>, <em>filename</em>, <em>path</em>, <em>table_description=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#csc_XSparseTimeFrequencyMap.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the data for this <cite>XTimeFrequencyMapDict</cite>.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong></p>
+<blockquote>
+<div><p>all other keyword arguments are passed to the plotter as
+appropriate</p>
+</div></blockquote>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -185,115 +229,73 @@ appropriate</p>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">gwpy.spectrogram.spectrogram.Spectrogram</span></code></p>
 <dl class="method">
 <dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.blackout_pixels">
-<code class="descname">blackout_pixels</code><span class="sig-paren">(</span><em>blackpixel_percentile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.blackout_pixels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.blackout_pixels" title="Permalink to this definition">¶</a></dt>
+<code class="descname">blackout_pixels</code><span class="sig-paren">(</span><em>self</em>, <em>blackpixel_percentile</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.blackout_pixels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.blackout_pixels" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set pixels below certain energy level to zero</p>
 <p>Parameters:</p>
-<dl class="docutils">
-<dt>blackpixel_percentile <span class="classifier-delimiter">:</span> <span class="classifier"><cite>int</cite></span></dt>
-<dd>the x-percentile loudest tile all pixels
-below which will be set to energy of 0</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.circular_time_slide">
-<code class="descname">circular_time_slide</code><span class="sig-paren">(</span><em>npixels_to_shift</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.circular_time_slide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.circular_time_slide" title="Permalink to this definition">¶</a></dt>
-<dd><p>Slide the TF pixels of this map</p>
-<p>This should move the appropriate number of time bins
-such that slide represents a slide in seconds.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>seconds</strong> : <cite>int</cite>,</p>
-<blockquote>
-<div><p>How many seconds we are sliding the map</p>
-</div></blockquote>
-<p><strong>sample_frequency</strong> : <cite>float</cite></p>
-<blockquote>
-<div><p>what is the sample frequency of the data</p>
-</div></blockquote>
-<p><strong>offset</strong> : <cite>float</cite></p>
-<blockquote>
-<div><p>what offset was used to make this spectrogram</p>
-</div></blockquote>
-<p><strong>Returns:</strong></p>
-<blockquote class="last">
-<div><dl class="docutils">
-<dt><cite>XTimeFrequencyMap</cite>:</dt>
-<dd><p class="first last">A time frequency map slide by the appropriate number
-of seconds</p>
+<dl>
+<dt>blackpixel_percentile<span class="classifier"><cite>int</cite></span></dt><dd><p>the x-percentile loudest tile all pixels
+below which will be set to energy of 0</p>
 </dd>
 </dl>
-</div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.gaussianity">
-<code class="descname">gaussianity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.gaussianity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.gaussianity" title="Permalink to this definition">¶</a></dt>
+<code class="descname">gaussianity</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.gaussianity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.gaussianity" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the gaussianity of this map</p>
 <p>(.abs().percentile(99)/ .abs().median(0))**2
 Returns:</p>
 <blockquote>
-<div><dl class="docutils">
-<dt><cite>gwpy.frequency.FrequencySeries</cite>:</dt>
-<dd>The gaussianity measure of each frequency bin</dd>
+<div><dl class="simple">
+<dt><cite>gwpy.frequency.FrequencySeries</cite>:</dt><dd><p>The gaussianity measure of each frequency bin</p>
+</dd>
 </dl>
 </div></blockquote>
 </dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.phaseshift">
-<code class="descname">phaseshift</code><span class="sig-paren">(</span><em>delta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.phaseshift"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.phaseshift" title="Permalink to this definition">¶</a></dt>
+<code class="descname">phaseshift</code><span class="sig-paren">(</span><em>self</em>, <em>delta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.phaseshift"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.phaseshift" title="Permalink to this definition">¶</a></dt>
 <dd><p>Phase shift this <cite>spectrogram</cite> by <code class="docutils literal notranslate"><span class="pre">delta</span></code></p>
 <p>This modifies the spectrogram in-place.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>delta</strong> : <cite>float</cite>, <cite>~astropy.units.Quantity</cite>, <cite>str</cite></p>
-<blockquote class="last">
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>delta</strong> : <cite>float</cite>, <cite>~astropy.units.Quantity</cite>, <cite>str</cite></p>
+<blockquote>
 <div><p>The amount by which to shift (in seconds if <cite>float</cite>), give
 a negative value to shift backwards in time</p>
 </div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.to_dominant_polarization_frame">
-<code class="descname">to_dominant_polarization_frame</code><span class="sig-paren">(</span><em>dpf_asd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.to_dominant_polarization_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.to_dominant_polarization_frame" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_dominant_polarization_frame</code><span class="sig-paren">(</span><em>self</em>, <em>dpf_asd</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.to_dominant_polarization_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.to_dominant_polarization_frame" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.to_sparse">
-<code class="descname">to_sparse</code><span class="sig-paren">(</span><em>tindex</em>, <em>findex</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.to_sparse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.to_sparse" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_sparse</code><span class="sig-paren">(</span><em>self</em>, <em>tindex</em>, <em>findex</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xtimefrequencymap.html#XTimeFrequencyMap.to_sparse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.to_sparse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parameters:</p>
 <blockquote>
-<div><dl class="docutils">
-<dt>tindex <span class="classifier-delimiter">:</span> <span class="classifier"><cite>array</cite>,</span></dt>
-<dd>an array of the time indices to extract for the
+<div><dl>
+<dt>tindex<span class="classifier"><cite>array</cite>,</span></dt><dd><p>an array of the time indices to extract for the
 creation of a dict of sparse tfmaps from
-a dict of full tfmaps</dd>
-<dt>findex <span class="classifier-delimiter">:</span> <span class="classifier"><cite>dict</cite>,</span></dt>
-<dd>an array of the frequency indices to extract for the
+a dict of full tfmaps</p>
+</dd>
+<dt>findex<span class="classifier"><cite>dict</cite>,</span></dt><dd><p>an array of the frequency indices to extract for the
 creation of a dict of sparse tfmaps from
-a dict of full tfmaps</dd>
+a dict of full tfmaps</p>
+</dd>
 </dl>
 </div></blockquote>
-<dl class="docutils">
-<dt>Returns:</dt>
-<dd><dl class="first last docutils">
-<dt><cite>XSparseTimeFrequencyMapDict</cite>:</dt>
-<dd>Sparse matrices using supplied t-f indices
+<dl class="simple">
+<dt>Returns:</dt><dd><dl class="simple">
+<dt><cite>XSparseTimeFrequencyMapDict</cite>:</dt><dd><p>Sparse matrices using supplied t-f indices
 and extracting the data at those points
-from the full tfmap.</dd>
+from the full tfmap.</p>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -313,7 +315,7 @@ from the full tfmap.</dd>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Scott Coughlin.
+        &copy; Copyright 2018, Scott Coughlin
 
     </p>
   </div>
@@ -330,35 +332,16 @@ from the full tfmap.</dd>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'0+untagged.111.g8030ebd.dirty',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

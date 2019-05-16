@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.178.gddc1b81.dirty documentation</title>
   
 
   
@@ -17,34 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/xpipeline-docs.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -58,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.111.g8030ebd.dirty
+                0+untagged.178.gddc1b81.dirty
               </div>
             
           
@@ -153,38 +154,35 @@
 <dt id="xpipeline.waveform.xinjectsignal.xinjectsignal">
 <code class="descclassname">xpipeline.waveform.xinjectsignal.</code><code class="descname">xinjectsignal</code><span class="sig-paren">(</span><em>family</em>, <em>start_time</em>, <em>block_time</em>, <em>detectors</em>, <em>sample_rate</em>, <em>phi</em>, <em>theta</em>, <em>psi=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/waveform/xinjectsignal.html#xinjectsignal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.waveform.xinjectsignal.xinjectsignal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create simulated signals using a file defining the parameters</p>
-<dl class="docutils">
-<dt>Parameters:</dt>
-<dd><dl class="first last docutils">
-<dt>family (str):</dt>
-<dd>waveform family name to be generated</dd>
-<dt>start_time (int):</dt>
-<dd>Start time of the data being analysed.</dd>
-<dt>block_time (int):</dt>
-<dd>Duration (s) of the data being analysed.</dd>
-<dt>channel (str)</dt>
-<dd>channel[j] holds the name of the
+<dl class="simple">
+<dt>Parameters:</dt><dd><dl class="simple">
+<dt>family (str):</dt><dd><p>waveform family name to be generated</p>
+</dd>
+<dt>start_time (int):</dt><dd><p>Start time of the data being analysed.</p>
+</dd>
+<dt>block_time (int):</dt><dd><p>Duration (s) of the data being analysed.</p>
+</dd>
+<dt>channel (str)</dt><dd><p>channel[j] holds the name of the
 jth detector channel being analysed.  The detector name is
 inferred from the first character of the channel name, and
-must be one of the names recognized by LoadDetectorData.</dd>
-<dt>sample_rate (int):</dt>
-<dd>Sample rates corresponding to channels.</dd>
-<dt>phi (float):</dt>
-<dd>Earth fixed coordinate</dd>
-<dt>theta (float):</dt>
-<dd>Earth fixed coordinate</dd>
-<dt><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs:</dt>
-<dd><dl class="first last docutils">
-<dt>catalog_directory (optional, str):</dt>
-<dd>Path to directory containing pregenerated waveforms</dd>
-</dl>
+must be one of the names recognized by LoadDetectorData.</p>
+</dd>
+<dt>sample_rate (int):</dt><dd><p>Sample rates corresponding to channels.</p>
+</dd>
+<dt>phi (float):</dt><dd><p>Earth fixed coordinate</p>
+</dd>
+<dt>theta (float):</dt><dd><p>Earth fixed coordinate</p>
+</dd>
+<dt><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs:</dt><dd><dl class="simple">
+<dt>catalog_directory (optional, str):</dt><dd><p>Path to directory containing pregenerated waveforms</p>
 </dd>
 </dl>
 </dd>
-<dt>Returns:</dt>
-<dd><dl class="first last docutils">
-<dt>injection_data:</dt>
-<dd><cite>XTimeSeries</cite></dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>injection_data:</dt><dd><p><cite>XTimeSeries</cite></p>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -206,55 +204,52 @@ a hann window to avoid turn-on/off transients.</p>
 <dt id="xpipeline.waveform.xinjectsignal.xinjectsignal_fromfile">
 <code class="descclassname">xpipeline.waveform.xinjectsignal.</code><code class="descname">xinjectsignal_fromfile</code><span class="sig-paren">(</span><em>start_time</em>, <em>block_time</em>, <em>channels</em>, <em>sample_rate</em>, <em>injection_file_name</em>, <em>rescale_by_antenna_response=False</em>, <em>injection_number=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/waveform/xinjectsignal.html#xinjectsignal_fromfile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.waveform.xinjectsignal.xinjectsignal_fromfile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create simulated signals using a file defining the parameters</p>
-<dl class="docutils">
-<dt>Parameters:</dt>
-<dd><dl class="first last docutils">
-<dt>start_time (int):</dt>
-<dd>Start time of the data being analysed.</dd>
-<dt>block_time (int):</dt>
-<dd>Duration (s) of the data being analysed.</dd>
-<dt>channel (str)</dt>
-<dd>channel[j] holds the name of the
+<dl class="simple">
+<dt>Parameters:</dt><dd><dl class="simple">
+<dt>start_time (int):</dt><dd><p>Start time of the data being analysed.</p>
+</dd>
+<dt>block_time (int):</dt><dd><p>Duration (s) of the data being analysed.</p>
+</dd>
+<dt>channel (str)</dt><dd><p>channel[j] holds the name of the
 jth detector channel being analysed.  The detector name is
 inferred from the first character of the channel name, and
-must be one of the names recognized by LoadDetectorData.</dd>
-<dt>sample_rate (int):</dt>
-<dd>Sample rates corresponding to channels.</dd>
-<dt>injection_file_name (str):</dt>
-<dd>Name of file specifying simulated signals to be
-injected.</dd>
-<dt>injection_number</dt>
-<dd>Array (positive integer).  Optional.  If given then only
+must be one of the names recognized by LoadDetectorData.</p>
+</dd>
+<dt>sample_rate (int):</dt><dd><p>Sample rates corresponding to channels.</p>
+</dd>
+<dt>injection_file_name (str):</dt><dd><p>Name of file specifying simulated signals to be
+injected.</p>
+</dd>
+<dt>injection_number</dt><dd><p>Array (positive integer).  Optional.  If given then only
 the injections specified on rows “injection_number” of the
 injection file are injected.  This over-rides the default
 behaviour, which is to inject all injections in the file
-(including those outside the interval [start_time,start_time+block_time]!).</dd>
-<dt><a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs:</dt>
-<dd><dl class="first last docutils">
-<dt>catalog_directory (optional, str):</dt>
-<dd>Path to directory containing pregenerated waveforms</dd>
-</dl>
+(including those outside the interval [start_time,start_time+block_time]!).</p>
+</dd>
+<dt><a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs:</dt><dd><dl class="simple">
+<dt>catalog_directory (optional, str):</dt><dd><p>Path to directory containing pregenerated waveforms</p>
 </dd>
 </dl>
 </dd>
-<dt>Returns:</dt>
-<dd><dl class="first last docutils">
-<dt>injection_data:</dt>
-<dd><cite>XTimeSeries</cite></dd>
-<dt>gps_s:</dt>
-<dd>Vector of peak time (GPS seconds, integer part) of each
-injection at the center of the Earth.</dd>
-<dt>gps_ns:</dt>
-<dd>Vector of peak time (GPS seconds, nanosecond part) of each
-injection at the center of the Earth.</dd>
-<dt>phi:</dt>
-<dd>Vector of azimuthal sky coordinate of each injection
-(radians, Earth-fixed coordinates).</dd>
-<dt>theta:</dt>
-<dd>Vector of polar sky coordinate of each injection</dd>
-<dt>psi:</dt>
-<dd>Vector of polarization angle of each injection
-(radians Earth-fixed coordinates).</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>injection_data:</dt><dd><p><cite>XTimeSeries</cite></p>
+</dd>
+<dt>gps_s:</dt><dd><p>Vector of peak time (GPS seconds, integer part) of each
+injection at the center of the Earth.</p>
+</dd>
+<dt>gps_ns:</dt><dd><p>Vector of peak time (GPS seconds, nanosecond part) of each
+injection at the center of the Earth.</p>
+</dd>
+<dt>phi:</dt><dd><p>Vector of azimuthal sky coordinate of each injection
+(radians, Earth-fixed coordinates).</p>
+</dd>
+<dt>theta:</dt><dd><p>Vector of polar sky coordinate of each injection</p>
+</dd>
+<dt>psi:</dt><dd><p>Vector of polarization angle of each injection
+(radians Earth-fixed coordinates).</p>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -284,7 +279,7 @@ a hann window to avoid turn-on/off transients.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Scott Coughlin.
+        &copy; Copyright 2018, Scott Coughlin
 
     </p>
   </div>
@@ -301,35 +296,16 @@ a hann window to avoid turn-on/off transients.</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'0+untagged.111.g8030ebd.dirty',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

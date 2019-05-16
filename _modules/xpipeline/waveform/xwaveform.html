@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.waveform.xwaveform &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
+  <title>xpipeline.waveform.xwaveform &mdash; xpipeline 0+untagged.178.gddc1b81.dirty documentation</title>
   
 
   
@@ -17,34 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/xpipeline-docs.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -58,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.111.g8030ebd.dirty
+                0+untagged.178.gddc1b81.dirty
               </div>
             
           
@@ -158,6 +159,8 @@
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">lal</span>
+<span class="kn">import</span> <span class="nn">lalsimulation</span>
 
 <span class="c1">###########################################################################</span>
 <span class="c1">#   Physical constants.</span>
@@ -357,6 +360,8 @@
 
     <span class="c1">#----- Time in column vector.</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="mf">1.</span><span class="o">/</span><span class="n">fs</span><span class="p">)</span>
+
+    <span class="n">hb</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1">#----- If parameters are supplied as tilde-delimited string, then convert</span>
     <span class="c1">#      to cell or double array.</span>
@@ -623,30 +628,34 @@
         <span class="n">pregen</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">elif</span> <span class="n">family</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;inspiral&#39;</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        import lal</span>
-<span class="sd">        import lalsimulation</span>
+        <span class="n">mass1</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">mass2</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">inclination</span>  <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">dist</span>  <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">hp</span><span class="p">,</span> <span class="n">hc</span> <span class="o">=</span> <span class="n">lalsimulation</span><span class="o">.</span><span class="n">SimInspiralTD</span><span class="p">(</span>
+                    <span class="c1"># Masses</span>
+                    <span class="n">mass1</span> <span class="o">*</span> <span class="n">lal</span><span class="o">.</span><span class="n">MSUN_SI</span><span class="p">,</span> <span class="n">mass2</span> <span class="o">*</span> <span class="n">lal</span><span class="o">.</span><span class="n">MSUN_SI</span><span class="p">,</span>
+                    <span class="c1"># Spins</span>
+                    <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="c1"># distance and inclination</span>
+                    <span class="n">dist</span> <span class="o">*</span> <span class="mf">1e6</span> <span class="o">*</span> <span class="n">lal</span><span class="o">.</span><span class="n">PC_SI</span><span class="p">,</span> <span class="n">inclination</span><span class="p">,</span>
+                    <span class="c1"># These are eccentricity and other orbital parameters</span>
+                    <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>
+                    <span class="c1"># frequency binning params</span>
+                    <span class="mf">1.</span><span class="o">/</span><span class="n">fs</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span>
+                    <span class="c1"># Other extraneous options</span>
+                    <span class="n">params</span><span class="p">,</span>
+                    <span class="n">lalsimulation</span><span class="o">.</span><span class="n">SimInspiralGetApproximantFromString</span><span class="p">(</span><span class="s1">&#39;TaylorT2&#39;</span><span class="p">))</span>
+        <span class="n">hp</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">from_lal</span><span class="p">(</span><span class="n">hp</span><span class="p">)</span>
+        <span class="n">hp</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">family</span>
+        <span class="n">hc</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">from_lal</span><span class="p">(</span><span class="n">hc</span><span class="p">)</span>
+        <span class="n">hc</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">family</span>
+        <span class="n">hb</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">hp</span><span class="o">.</span><span class="n">sample_rate</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">pregen</span> <span class="o">=</span> <span class="mi">0</span>
 
-<span class="sd">        # ---- Post-Newtonian inspiral waveform, using INSPIRAL2PN.</span>
-<span class="sd">        mass1 = parameters[0]</span>
-<span class="sd">        mass2 = parameters[1]</span>
-<span class="sd">        iota  = numpy.arccos(parameters[2])</span>
-<span class="sd">        dist  = parameters[3]</span>
-
-<span class="sd">        lalsimulation.SimInspiralChooseTDWaveform(m1=mass1, m2=mass2,</span>
-<span class="sd">                                                  s1x=0, s1y=0, s1z=0, s2x=0,</span>
-<span class="sd">                                                  s2y=0, s2z=0, distance=dist,</span>
-<span class="sd">                                                  inclination=iota, phiRef=0,</span>
-<span class="sd">                      longAscNodes=0, eccentricity=0, meanPerAno=0,</span>
-<span class="sd">                      deltaT=1./fs, f_min =20, f_ref=20,</span>
-<span class="sd">                      params=lal.CreateDict(),</span>
-<span class="sd">                      approximant=lalsimulation.TaylorF2) </span>
-<span class="sd">        [hp, hc] = inspiral2pn(mass1,mass2,iota,dist,fs,T,T0)</span>
-
-<span class="sd">        # ---- Turn off default interpolation (leave coalescence time</span>
-<span class="sd">        #      intact).</span>
-<span class="sd">        pregen = 0</span>
-<span class="sd">        &quot;&quot;&quot;</span>
     <span class="k">elif</span> <span class="n">family</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;inspiralsmooth&#39;</span><span class="p">,</span> <span class="s1">&#39;inspiralgated&#39;</span><span class="p">]:</span>
 
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1200,6 +1209,29 @@
         <span class="n">hp</span> <span class="o">=</span> <span class="mf">100.</span><span class="o">/</span><span class="n">dist</span> <span class="o">*</span> <span class="n">hp</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">ciota</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
         <span class="n">hc</span> <span class="o">=</span> <span class="mf">100.</span><span class="o">/</span><span class="n">dist</span> <span class="o">*</span> <span class="n">hc</span> <span class="o">*</span> <span class="n">ciota</span>
 
+    <span class="k">elif</span> <span class="n">family</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;oconnorcouch2018&#39;</span><span class="p">]:</span>
+
+        <span class="c1"># ----  Burrows 2018 2D SN waveform (pregenerated).</span>
+        <span class="n">distance</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">pregen</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># Read hplus</span>
+        <span class="n">hp</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filedir</span><span class="p">,</span> <span class="n">family</span> <span class="o">+</span> <span class="s1">&#39;.hdf5&#39;</span><span class="p">),</span>
+                             <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{1}</span><span class="s1">/hp&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">family</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+        <span class="n">hc</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filedir</span><span class="p">,</span> <span class="n">family</span> <span class="o">+</span> <span class="s1">&#39;.hdf5&#39;</span><span class="p">),</span>
+                             <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{1}</span><span class="s1">/hc&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">family</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+
+
+        <span class="n">pregen_fs</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">sample_rate</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">pregen_T</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="c1"># ---- Read waveform, which is defined at a range of 1 kiloparsec.</span>
+        <span class="c1"># and scale by distance (distance should be in kiloparsecs)</span>
+        <span class="n">hp</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">distance</span> <span class="o">*</span> <span class="n">hp</span>
+        <span class="n">hc</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">distance</span> <span class="o">*</span> <span class="n">hc</span>
+        <span class="n">hb</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">hp</span><span class="o">.</span><span class="n">sample_rate</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
     <span class="k">elif</span> <span class="n">family</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;onecyclesine&#39;</span><span class="p">]:</span>
 
@@ -1356,6 +1388,54 @@
 
         <span class="n">hp</span> <span class="o">=</span> <span class="n">hp</span> <span class="o">/</span> <span class="p">(</span><span class="n">distance</span><span class="o">/</span><span class="mf">20.</span><span class="p">)</span>
         <span class="n">hc</span> <span class="o">=</span> <span class="n">hc</span> <span class="o">/</span> <span class="p">(</span><span class="n">distance</span><span class="o">/</span><span class="mf">20.</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">family</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;powell2018&#39;</span><span class="p">]:</span>
+
+        <span class="c1"># ----  Burrows 2018 2D SN waveform (pregenerated).</span>
+        <span class="n">distance</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">pregen</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># Read hplus</span>
+        <span class="n">hp</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filedir</span><span class="p">,</span> <span class="n">family</span> <span class="o">+</span> <span class="s1">&#39;.hdf5&#39;</span><span class="p">),</span>
+                             <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{1}</span><span class="s1">/hp&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">family</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+        <span class="n">hc</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filedir</span><span class="p">,</span> <span class="n">family</span> <span class="o">+</span> <span class="s1">&#39;.hdf5&#39;</span><span class="p">),</span>
+                             <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{1}</span><span class="s1">/hc&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">family</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+
+
+        <span class="n">pregen_fs</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">sample_rate</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">pregen_T</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="c1"># ---- Read waveform, which is defined at a range of 1 kiloparsec.</span>
+        <span class="c1"># and scale by distance (distance should be in kiloparsecs)</span>
+        <span class="n">hp</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">distance</span> <span class="o">*</span> <span class="n">hp</span>
+        <span class="n">hc</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">distance</span> <span class="o">*</span> <span class="n">hc</span>
+        <span class="n">hb</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">hp</span><span class="o">.</span><span class="n">sample_rate</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">family</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;yakunin2017&#39;</span><span class="p">]:</span>
+
+        <span class="c1"># ----  Burrows 2018 2D SN waveform (pregenerated).</span>
+        <span class="n">distance</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">pregen</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># Read hplus</span>
+        <span class="n">hp</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filedir</span><span class="p">,</span> <span class="n">family</span> <span class="o">+</span> <span class="s1">&#39;.hdf5&#39;</span><span class="p">),</span>
+                             <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{1}</span><span class="s1">/hp&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">family</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+        <span class="n">hc</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filedir</span><span class="p">,</span> <span class="n">family</span> <span class="o">+</span> <span class="s1">&#39;.hdf5&#39;</span><span class="p">),</span>
+                             <span class="n">path</span><span class="o">=</span><span class="s1">&#39;/</span><span class="si">{0}</span><span class="s1">/</span><span class="si">{1}</span><span class="s1">/hc&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">family</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span>
+
+
+        <span class="n">pregen_fs</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">sample_rate</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">pregen_T</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">duration</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="c1"># ---- Read waveform, which is defined at a range of 1 kiloparsec.</span>
+        <span class="c1"># and scale by distance (distance should be in kiloparsecs)</span>
+        <span class="n">hp</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">distance</span> <span class="o">*</span> <span class="n">hp</span>
+        <span class="n">hc</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">distance</span> <span class="o">*</span> <span class="n">hc</span>
+        <span class="n">hb</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">hp</span><span class="o">.</span><span class="n">sample_rate</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                        <span class="n">name</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
 
     <span class="k">elif</span> <span class="n">family</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;scalarchirplet&#39;</span><span class="p">]:</span>
 
@@ -1993,6 +2073,11 @@
     <span class="k">else</span><span class="p">:</span>
        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Waveform family not recognized&quot;</span><span class="p">)</span>
 
+    <span class="c1"># this waveform very well may not ave the scalar polarization defined.</span>
+    <span class="c1"># therefore make it a time series of zeros</span>
+    <span class="k">if</span> <span class="n">hb</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+         <span class="n">hb</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">hp</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="n">dx</span><span class="o">=</span><span class="mi">1</span><span class="o">/</span><span class="n">hp</span><span class="o">.</span><span class="n">sample_rate</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="n">hp</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
     <span class="c1">###########################################################################</span>
     <span class="c1">#   Process pre-generated waveforms.</span>
     <span class="c1">###########################################################################</span>
@@ -2070,7 +2155,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Scott Coughlin.
+        &copy; Copyright 2018, Scott Coughlin
 
     </p>
   </div>
@@ -2087,35 +2172,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'0+untagged.111.g8030ebd.dirty',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

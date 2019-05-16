@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline an explanation &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
+  <title>xpipeline an explanation &mdash; xpipeline 0+untagged.178.gddc1b81.dirty documentation</title>
   
 
   
@@ -17,35 +17,36 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/xpipeline-docs.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="prev" title="Running xpipeline-workflow on the command line" href="../command-line/index.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -59,7 +60,7 @@
             
             
               <div class="version">
-                0+untagged.111.g8030ebd.dirty
+                0+untagged.178.gddc1b81.dirty
               </div>
             
           
@@ -262,7 +263,7 @@ or Supernova counterpart you were following up.</p>
 <p>The way we can accomplish this is by either physically shifting the data of N-1 detectors
 relative to a baseline detector some delta T amount or we can phase shift the pixels
 of the timefrequencymap, here we physically shift the livingston data.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [11]: </span><span class="kn">from</span> <span class="nn">xpipeline.core.xdetector</span> <span class="kn">import</span> <span class="n">Detector</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [11]: </span><span class="kn">from</span> <span class="nn">xpipeline.core.xdetector</span> <span class="kn">import</span> <span class="n">Detector</span><span class="p">;</span> <span class="kn">import</span> <span class="nn">numpy</span>
 
 <span class="gp">In [12]: </span><span class="n">hanford</span> <span class="o">=</span> <span class="n">Detector</span><span class="p">(</span><span class="s1">&#39;H1&#39;</span><span class="p">)</span>
 
@@ -270,9 +271,9 @@ of the timefrequencymap, here we physically shift the livingston data.</p>
 
 <span class="gp">In [14]: </span><span class="n">phi</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.3801</span><span class="p">;</span> <span class="n">theta</span> <span class="o">=</span> <span class="mf">2.7477</span> <span class="c1"># Earth fixed coordinates</span>
 
-<span class="gp">In [15]: </span><span class="n">time_shift</span> <span class="o">=</span> <span class="n">hanford</span><span class="o">.</span><span class="n">time_delay_from_earth_center_phi_theta</span><span class="p">([</span><span class="n">phi</span><span class="p">],</span> <span class="p">[</span><span class="n">theta</span><span class="p">])</span> <span class="o">-</span> <span class="n">livingston</span><span class="o">.</span><span class="n">time_delay_from_earth_center_phi_theta</span><span class="p">([</span><span class="n">phi</span><span class="p">],</span> <span class="p">[</span><span class="n">theta</span><span class="p">])</span>
+<span class="gp">In [15]: </span><span class="n">time_shift</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">round</span><span class="p">((</span><span class="n">livingston</span><span class="o">.</span><span class="n">time_delay_from_earth_center_phi_theta</span><span class="p">([</span><span class="n">phi</span><span class="p">],</span> <span class="p">[</span><span class="n">theta</span><span class="p">])</span> <span class="o">-</span> <span class="n">hanford</span><span class="o">.</span><span class="n">time_delay_from_earth_center_phi_theta</span><span class="p">([</span><span class="n">phi</span><span class="p">],</span> <span class="p">[</span><span class="n">theta</span><span class="p">]))</span><span class="o">*</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;H1:GDS-CALIB_STRAIN&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sample_rate</span><span class="p">)</span>
 
-<span class="gp">In [16]: </span><span class="n">whitened_timeseries</span><span class="p">[</span><span class="s1">&#39;L1:GDS-CALIB_STRAIN&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">time_shift</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># In place shift</span>
+<span class="gp">In [16]: </span><span class="n">whitened_timeseries</span><span class="p">[</span><span class="s1">&#39;L1:GDS-CALIB_STRAIN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">whitened_timeseries</span><span class="p">[</span><span class="s1">&#39;L1:GDS-CALIB_STRAIN&#39;</span><span class="p">],</span> <span class="o">-</span><span class="n">time_shift</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
 
 <span class="gp">In [17]: </span><span class="n">fft_grams</span> <span class="o">=</span> <span class="n">whitened_timeseries</span><span class="o">.</span><span class="n">fftgram</span><span class="p">(</span><span class="mf">1.</span> <span class="o">/</span><span class="mi">64</span><span class="p">)</span>
 
@@ -339,7 +340,7 @@ is a nearest neighbor cpp wrapped algorithm called fastlabel.</p>
 
 <span class="gp">In [30]: </span><span class="n">coh_map</span> <span class="o">=</span> <span class="n">energy_map_zeroed</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span>
 
-<span class="gp">In [31]: </span><span class="n">tf_indices</span> <span class="o">=</span> <span class="n">coh_map</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()</span>
+<span class="gp">In [31]: </span><span class="n">tf_indices</span> <span class="o">=</span> <span class="n">coh_map</span><span class="o">.</span><span class="n">nonzero</span><span class="p">()</span> <span class="c1"># find the union of pixels from the sparse in coherent maps</span>
 
 <span class="gp">In [32]: </span><span class="n">tindex</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">tf_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gp">   ....: </span>          <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">energy_maps</span><span class="p">}</span>
@@ -351,73 +352,73 @@ is a nearest neighbor cpp wrapped algorithm called fastlabel.</p>
 
 <span class="gp">In [34]: </span><span class="n">energy_map_zeroed</span> <span class="o">=</span> <span class="n">energy_maps</span><span class="o">.</span><span class="n">to_sparse</span><span class="p">(</span><span class="n">tindex</span><span class="p">,</span> <span class="n">findex</span><span class="p">)</span>
 
-<span class="gp">In [35]: </span><span class="n">clusters</span> <span class="o">=</span> <span class="n">energy_map_zeroed</span><span class="o">.</span><span class="n">cluster</span><span class="p">()</span>
+<span class="gp">In [35]: </span><span class="n">clusters</span> <span class="o">=</span> <span class="n">energy_map_zeroed</span><span class="o">.</span><span class="n">cluster</span><span class="p">()</span> <span class="c1"># cluster over the coherent pixels</span>
 
 <span class="gp">In [36]: </span><span class="k">print</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
-<span class="go">      min_time_of_cluster  weighted_center_time  max_time_of_cluster  min_frequency_of_cluster  weighted_center_frequency  max_frequency_of_cluster  number_of_pixels  energy_of_cluster</span>
-<span class="go">0            1.126259e+09          1.126259e+09         1.126259e+09                     224.0                 256.000000                     288.0               1.0           0.002100</span>
-<span class="go">1            1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 545.467973                     608.0               2.0           0.006397</span>
-<span class="go">2            1.126259e+09          1.126259e+09         1.126259e+09                     288.0                 320.000000                     352.0               1.0           0.001648</span>
-<span class="go">3            1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 545.683435                     608.0               2.0           0.005583</span>
-<span class="go">4            1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.001842</span>
-<span class="go">5            1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 546.602403                     608.0               2.0           0.004550</span>
-<span class="go">6            1.126259e+09          1.126259e+09         1.126259e+09                     288.0                 320.000000                     352.0               1.0           0.002317</span>
-<span class="go">7            1.126259e+09          1.126259e+09         1.126259e+09                     288.0                 349.535202                     416.0               2.0           0.004935</span>
-<span class="go">8            1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.002112</span>
-<span class="go">9            1.126259e+09          1.126259e+09         1.126259e+09                     416.0                 448.000000                     480.0               1.0           0.001945</span>
-<span class="go">10           1.126259e+09          1.126259e+09         1.126259e+09                     224.0                 290.028525                     352.0               2.0           0.004932</span>
-<span class="go">11           1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.001852</span>
-<span class="go">12           1.126259e+09          1.126259e+09         1.126259e+09                     160.0                 192.000000                     224.0               1.0           0.001716</span>
-<span class="go">13           1.126259e+09          1.126259e+09         1.126259e+09                     352.0                 384.000000                     416.0               1.0           0.002354</span>
-<span class="go">14           1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 544.266014                     608.0               2.0           0.003861</span>
-<span class="go">15           1.126259e+09          1.126259e+09         1.126259e+09                     160.0                 192.000000                     224.0               1.0           0.001763</span>
-<span class="go">16           1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.002226</span>
-<span class="go">17           1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 546.739553                     608.0               2.0           0.004073</span>
-<span class="go">18           1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.002016</span>
-<span class="go">19           1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.001894</span>
-<span class="go">20           1.126259e+09          1.126259e+09         1.126259e+09                      96.0                 158.858313                     224.0               2.0           0.005966</span>
-<span class="go">21           1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 512.000000                     544.0               1.0           0.002391</span>
-<span class="go">22           1.126259e+09          1.126259e+09         1.126259e+09                     160.0                 224.739681                     288.0               2.0           0.005748</span>
-<span class="go">23           1.126259e+09          1.126259e+09         1.126259e+09                     352.0                 384.000000                     416.0               1.0           0.002671</span>
-<span class="go">24           1.126259e+09          1.126259e+09         1.126259e+09                     480.0                 512.000000                     544.0               1.0           0.001986</span>
-<span class="go">25           1.126259e+09          1.126259e+09         1.126259e+09                     288.0                 320.000000                     352.0               1.0           0.002220</span>
-<span class="go">26           1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.002163</span>
-<span class="go">27           1.126259e+09          1.126259e+09         1.126259e+09                     160.0                 192.000000                     224.0               1.0           0.002742</span>
-<span class="go">28           1.126259e+09          1.126259e+09         1.126259e+09                     224.0                 291.074894                     352.0               2.0           0.005127</span>
-<span class="go">29           1.126259e+09          1.126259e+09         1.126259e+09                     544.0                 576.000000                     608.0               1.0           0.002154</span>
-<span class="go">...                   ...                   ...                  ...                       ...                        ...                       ...               ...                ...</span>
-<span class="go">4328         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.001540</span>
-<span class="go">4329         1.126260e+09          1.126260e+09         1.126260e+09                     480.0                 512.000000                     544.0               1.0           0.002301</span>
-<span class="go">4330         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.002121</span>
-<span class="go">4331         1.126260e+09          1.126260e+09         1.126260e+09                     224.0                 256.000000                     288.0               1.0           0.001962</span>
-<span class="go">4332         1.126260e+09          1.126260e+09         1.126260e+09                     288.0                 355.795632                     416.0               2.0           0.004650</span>
-<span class="go">4333         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.002012</span>
-<span class="go">4334         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 478.206855                     544.0               2.0           0.004046</span>
-<span class="go">4335         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.002251</span>
-<span class="go">4336         1.126260e+09          1.126260e+09         1.126260e+09                      96.0                 162.458873                     224.0               2.0           0.005761</span>
-<span class="go">4337         1.126260e+09          1.126260e+09         1.126260e+09                     224.0                 256.000000                     288.0               1.0           0.001990</span>
-<span class="go">4338         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.002520</span>
-<span class="go">4339         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 448.000000                     480.0               1.0           0.002186</span>
-<span class="go">4340         1.126260e+09          1.126260e+09         1.126260e+09                     480.0                 549.178185                     608.0               2.0           0.004416</span>
-<span class="go">4341         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.001803</span>
-<span class="go">4342         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.002589</span>
-<span class="go">4343         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 448.000000                     480.0               1.0           0.001921</span>
-<span class="go">4344         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.002585</span>
-<span class="go">4345         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.002379</span>
-<span class="go">4346         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.002197</span>
-<span class="go">4347         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.001863</span>
-<span class="go">4348         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 448.000000                     480.0               1.0           0.001889</span>
-<span class="go">4349         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.001994</span>
-<span class="go">4350         1.126260e+09          1.126260e+09         1.126260e+09                     288.0                 350.806400                     416.0               2.0           0.004721</span>
-<span class="go">4351         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 448.000000                     480.0               1.0           0.002611</span>
-<span class="go">4352         1.126260e+09          1.126260e+09         1.126260e+09                     160.0                 192.000000                     224.0               1.0           0.002437</span>
-<span class="go">4353         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.002030</span>
-<span class="go">4354         1.126260e+09          1.126260e+09         1.126260e+09                     544.0                 576.000000                     608.0               1.0           0.002346</span>
-<span class="go">4355         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 448.000000                     480.0               1.0           0.001837</span>
-<span class="go">4356         1.126260e+09          1.126260e+09         1.126260e+09                     416.0                 448.000000                     480.0               1.0           0.001912</span>
-<span class="go">4357         1.126260e+09          1.126260e+09         1.126260e+09                     352.0                 384.000000                     416.0               1.0           0.001747</span>
+<span class="go">     min_time_of_cluster  weighted_center_time  max_time_of_cluster  min_frequency_of_cluster  ...  number_of_pixels  energy_of_cluster        dt     df</span>
+<span class="go">0           1.126259e+09          1.126259e+09         1.126259e+09                      32.0  ...              20.0           4.091381  0.070312  384.0</span>
+<span class="go">1           1.126260e+09          1.126260e+09         1.126260e+09                     288.0  ...               6.0           0.600904  0.015625  320.0</span>
+<span class="go">2           1.126259e+09          1.126259e+09         1.126259e+09                     352.0  ...               6.0           0.596569  0.023438  256.0</span>
+<span class="go">3           1.126260e+09          1.126260e+09         1.126260e+09                     416.0  ...               5.0           0.588640  0.015625  192.0</span>
+<span class="go">4           1.126260e+09          1.126260e+09         1.126260e+09                     416.0  ...               6.0           0.575486  0.023438  192.0</span>
+<span class="go">5           1.126260e+09          1.126260e+09         1.126260e+09                     288.0  ...               5.0           0.525573  0.015625  320.0</span>
+<span class="go">6           1.126259e+09          1.126259e+09         1.126259e+09                     160.0  ...               5.0           0.514066  0.015625  320.0</span>
+<span class="go">7           1.126259e+09          1.126259e+09         1.126259e+09                     352.0  ...               4.0           0.511123  0.007812  256.0</span>
+<span class="go">8           1.126260e+09          1.126260e+09         1.126260e+09                     160.0  ...               5.0           0.504162  0.031250  192.0</span>
+<span class="go">9           1.126259e+09          1.126259e+09         1.126259e+09                      96.0  ...               5.0           0.498445  0.015625  192.0</span>
+<span class="go">10          1.126259e+09          1.126259e+09         1.126259e+09                      32.0  ...               5.0           0.483718  0.015625  256.0</span>
+<span class="go">11          1.126259e+09          1.126259e+09         1.126259e+09                     416.0  ...               5.0           0.476363  0.023438  192.0</span>
+<span class="go">12          1.126260e+09          1.126260e+09         1.126260e+09                     288.0  ...               4.0           0.475867  0.015625  256.0</span>
+<span class="go">13          1.126259e+09          1.126259e+09         1.126259e+09                     224.0  ...               5.0           0.473756  0.007812  320.0</span>
+<span class="go">14          1.126259e+09          1.126259e+09         1.126259e+09                     416.0  ...               4.0           0.471334  0.015625  192.0</span>
+<span class="go">15          1.126259e+09          1.126259e+09         1.126259e+09                     416.0  ...               4.0           0.469871  0.015625  192.0</span>
+<span class="go">16          1.126259e+09          1.126259e+09         1.126259e+09                     288.0  ...               5.0           0.444777  0.023438  192.0</span>
+<span class="go">17          1.126259e+09          1.126259e+09         1.126259e+09                     480.0  ...               4.0           0.438836  0.015625  128.0</span>
+<span class="go">18          1.126260e+09          1.126260e+09         1.126260e+09                     480.0  ...               4.0           0.437304  0.015625  128.0</span>
+<span class="go">19          1.126259e+09          1.126259e+09         1.126259e+09                     416.0  ...               4.0           0.436201  0.015625  192.0</span>
+<span class="go">20          1.126260e+09          1.126260e+09         1.126260e+09                     160.0  ...               4.0           0.434081  0.023438  192.0</span>
+<span class="go">21          1.126259e+09          1.126259e+09         1.126259e+09                     224.0  ...               4.0           0.432303  0.015625  192.0</span>
+<span class="go">22          1.126259e+09          1.126259e+09         1.126259e+09                     288.0  ...               4.0           0.431066  0.015625  256.0</span>
+<span class="go">23          1.126259e+09          1.126259e+09         1.126259e+09                     480.0  ...               4.0           0.429848  0.023438  128.0</span>
+<span class="go">24          1.126259e+09          1.126259e+09         1.126259e+09                     352.0  ...               4.0           0.427331  0.007812  256.0</span>
+<span class="go">25          1.126259e+09          1.126259e+09         1.126259e+09                      96.0  ...               4.0           0.425198  0.015625  256.0</span>
+<span class="go">26          1.126259e+09          1.126259e+09         1.126259e+09                     288.0  ...               4.0           0.420571  0.023438  192.0</span>
+<span class="go">27          1.126259e+09          1.126259e+09         1.126259e+09                      96.0  ...               4.0           0.419265  0.015625  256.0</span>
+<span class="go">28          1.126259e+09          1.126259e+09         1.126259e+09                      96.0  ...               4.0           0.419227  0.015625  192.0</span>
+<span class="go">29          1.126260e+09          1.126260e+09         1.126260e+09                      96.0  ...               4.0           0.419072  0.015625  256.0</span>
+<span class="go">..                   ...                   ...                  ...                       ...  ...               ...                ...       ...    ...</span>
+<span class="go">410         1.126260e+09          1.126260e+09         1.126260e+09                     288.0  ...               2.0           0.224290  0.007812  128.0</span>
+<span class="go">411         1.126259e+09          1.126259e+09         1.126259e+09                     288.0  ...               2.0           0.224192  0.007812  128.0</span>
+<span class="go">412         1.126260e+09          1.126260e+09         1.126260e+09                     160.0  ...               2.0           0.224183  0.007812  128.0</span>
+<span class="go">413         1.126259e+09          1.126259e+09         1.126259e+09                     416.0  ...               2.0           0.224139  0.015625   64.0</span>
+<span class="go">414         1.126259e+09          1.126259e+09         1.126259e+09                     224.0  ...               2.0           0.223967  0.007812  128.0</span>
+<span class="go">415         1.126260e+09          1.126260e+09         1.126260e+09                     160.0  ...               2.0           0.223742  0.007812  128.0</span>
+<span class="go">416         1.126260e+09          1.126260e+09         1.126260e+09                     416.0  ...               2.0           0.223625  0.007812  128.0</span>
+<span class="go">417         1.126260e+09          1.126260e+09         1.126260e+09                     480.0  ...               2.0           0.223332  0.007812  128.0</span>
+<span class="go">418         1.126259e+09          1.126259e+09         1.126259e+09                     224.0  ...               2.0           0.223289  0.015625  128.0</span>
+<span class="go">419         1.126260e+09          1.126260e+09         1.126260e+09                     480.0  ...               2.0           0.223233  0.007812  128.0</span>
+<span class="go">420         1.126260e+09          1.126260e+09         1.126260e+09                      96.0  ...               2.0           0.223163  0.015625  128.0</span>
+<span class="go">421         1.126259e+09          1.126259e+09         1.126259e+09                     224.0  ...               2.0           0.223101  0.007812  128.0</span>
+<span class="go">422         1.126259e+09          1.126259e+09         1.126259e+09                     480.0  ...               2.0           0.223035  0.007812  128.0</span>
+<span class="go">423         1.126259e+09          1.126259e+09         1.126259e+09                     416.0  ...               2.0           0.222940  0.007812  128.0</span>
+<span class="go">424         1.126259e+09          1.126259e+09         1.126259e+09                     224.0  ...               2.0           0.222831  0.015625   64.0</span>
+<span class="go">425         1.126260e+09          1.126260e+09         1.126260e+09                     224.0  ...               2.0           0.222340  0.015625   64.0</span>
+<span class="go">426         1.126259e+09          1.126259e+09         1.126259e+09                     288.0  ...               2.0           0.222337  0.007812  128.0</span>
+<span class="go">427         1.126259e+09          1.126259e+09         1.126259e+09                     352.0  ...               2.0           0.221887  0.007812  128.0</span>
+<span class="go">428         1.126260e+09          1.126260e+09         1.126260e+09                     480.0  ...               2.0           0.221638  0.007812  128.0</span>
+<span class="go">429         1.126260e+09          1.126260e+09         1.126260e+09                     480.0  ...               2.0           0.221473  0.007812  128.0</span>
+<span class="go">430         1.126259e+09          1.126259e+09         1.126259e+09                     480.0  ...               2.0           0.221261  0.007812  128.0</span>
+<span class="go">431         1.126259e+09          1.126259e+09         1.126259e+09                     160.0  ...               2.0           0.221158  0.007812  128.0</span>
+<span class="go">432         1.126260e+09          1.126260e+09         1.126260e+09                     480.0  ...               2.0           0.221042  0.007812  128.0</span>
+<span class="go">433         1.126260e+09          1.126260e+09         1.126260e+09                     480.0  ...               2.0           0.221036  0.007812  128.0</span>
+<span class="go">434         1.126259e+09          1.126259e+09         1.126259e+09                     480.0  ...               2.0           0.221036  0.007812  128.0</span>
+<span class="go">435         1.126260e+09          1.126260e+09         1.126260e+09                     416.0  ...               2.0           0.220916  0.007812  128.0</span>
+<span class="go">436         1.126259e+09          1.126259e+09         1.126259e+09                     288.0  ...               2.0           0.220749  0.007812  128.0</span>
+<span class="go">437         1.126259e+09          1.126259e+09         1.126259e+09                     352.0  ...               2.0           0.220685  0.007812  128.0</span>
+<span class="go">438         1.126260e+09          1.126260e+09         1.126260e+09                     352.0  ...               2.0           0.220512  0.007812  128.0</span>
+<span class="go">439         1.126260e+09          1.126260e+09         1.126260e+09                      96.0  ...               2.0           0.220464  0.007812  128.0</span>
 
-<span class="go">[4358 rows x 8 columns]</span>
+<span class="go">[440 rows x 10 columns]</span>
 </pre></div>
 </div>
 <img alt="../_images/plot-sparse-ind-tfmaps.png" src="../_images/plot-sparse-ind-tfmaps.png" />
@@ -428,35 +429,33 @@ sum of energy over the cluster.</p>
 <p>Specifically, the cpp wrapped function <cite>clusterproperities</cite> outputs the following information</p>
 <blockquote>
 <div><ul class="simple">
-<li>column 0: minimum time of cluster</li>
-<li>column 1: weighted center time of cluster</li>
-<li>column 2: maximum time of cluster</li>
-<li>column 3: minimum frequency of cluster</li>
-<li>column 4: weighted center frequency of cluster</li>
-<li>column 5: maximum frequency of cluster</li>
-<li>column 6: number of pixels in cluster</li>
-<li>column 7: sum-over-cluster map values for each likelihood</li>
+<li><p>column 0: minimum time of cluster</p></li>
+<li><p>column 1: weighted center time of cluster</p></li>
+<li><p>column 2: maximum time of cluster</p></li>
+<li><p>column 3: minimum frequency of cluster</p></li>
+<li><p>column 4: weighted center frequency of cluster</p></li>
+<li><p>column 5: maximum frequency of cluster</p></li>
+<li><p>column 6: number of pixels in cluster</p></li>
+<li><p>column 7: sum-over-cluster map values for each likelihood</p></li>
 </ul>
 </div></blockquote>
 <p>Before we do this though, we must re-make our sparse maps.
 for we have zeroed out some pixels in either map that are now part of our
 clusters. i.e. some pixels may have been in the top 1 percent of one but not
 all maps.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [37]: </span><span class="n">loudest_cluster_idx</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;energy_of_cluster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [37]: </span><span class="n">min_time</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;min_time_of_cluster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="n">max_time</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;max_time_of_cluster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="n">weighted_center_time</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;weighted_center_time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="n">min_freq</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;min_frequency_of_cluster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="n">max_freq</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;max_frequency_of_cluster&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 
-<span class="gp">In [38]: </span><span class="n">min_time</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;min_time_of_cluster&#39;</span><span class="p">][</span><span class="n">loudest_cluster_idx</span><span class="p">];</span> <span class="n">max_time</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;max_time_of_cluster&#39;</span><span class="p">][</span><span class="n">loudest_cluster_idx</span><span class="p">];</span> <span class="n">weighted_center_time</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;weighted_center_time&#39;</span><span class="p">][</span><span class="n">loudest_cluster_idx</span><span class="p">];</span> <span class="n">min_freq</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;min_frequency_of_cluster&#39;</span><span class="p">][</span><span class="n">loudest_cluster_idx</span><span class="p">];</span> <span class="n">max_freq</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="s1">&#39;max_frequency_of_cluster&#39;</span><span class="p">][</span><span class="n">loudest_cluster_idx</span><span class="p">];</span>
+<span class="gp">In [38]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">energy_map_zeroed</span><span class="o">.</span><span class="n">to_xtimefrequencymapdict</span><span class="p">()</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 
-<span class="gp">In [39]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">energy_map_zeroed</span><span class="o">.</span><span class="n">to_xtimefrequencymapdict</span><span class="p">()</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
-
-<span class="gp">In [40]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+<span class="gp">In [39]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
 <span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">min_time</span><span class="p">,</span> <span class="n">max_time</span><span class="p">)</span>
 <span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">weighted_center_time</span><span class="p">)</span>
 <span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time [milliseconds]&#39;</span><span class="p">)</span>
 <span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">min_freq</span><span class="p">,</span> <span class="n">max_freq</span><span class="p">)</span>
 <span class="gp">   ....: </span>
 
-<span class="gp">In [41]: </span><span class="n">plot</span>
-<span class="gh">Out[41]: </span><span class="go">&lt;Plot size 1200x600 with 1 Axes&gt;</span>
+<span class="gp">In [40]: </span><span class="n">plot</span>
+<span class="gh">Out[40]: </span><span class="go">&lt;Plot size 1200x600 with 1 Axes&gt;</span>
 </pre></div>
 </div>
 <img alt="../_images/loudest-cluster-gw150914.png" src="../_images/loudest-cluster-gw150914.png" />
@@ -466,44 +465,44 @@ all maps.</p>
 <p>Now the we have a sky location assosciated with the event we can project every time-freqeuncy pixel
 into the Dominant Polarization Frame (DPF). What this means is that we assume the GW has a plus and cross
 polarization there is some orthoganal projection of the pixels onto the plus-cross plane for 2 or more detectors</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [42]: </span><span class="kn">from</span> <span class="nn">xpipeline.core.xdetector</span> <span class="kn">import</span> <span class="n">compute_antenna_patterns</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [41]: </span><span class="kn">from</span> <span class="nn">xpipeline.core.xdetector</span> <span class="kn">import</span> <span class="n">compute_antenna_patterns</span>
 
-<span class="gp">In [43]: </span><span class="n">phi</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.3801</span><span class="p">;</span> <span class="n">theta</span> <span class="o">=</span> <span class="mf">2.7477</span> <span class="c1"># Earth fixed coordinates</span>
+<span class="gp">In [42]: </span><span class="n">phi</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.3801</span><span class="p">;</span> <span class="n">theta</span> <span class="o">=</span> <span class="mf">2.7477</span> <span class="c1"># Earth fixed coordinates</span>
 
-<span class="gp">In [44]: </span><span class="n">antenna_patterns</span> <span class="o">=</span> <span class="n">compute_antenna_patterns</span><span class="p">([</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">],</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">antenna_patterns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">,</span> <span class="s1">&#39;f_cross&#39;</span><span class="p">,</span> <span class="s1">&#39;f_scalar&#39;</span><span class="p">])</span>
+<span class="gp">In [43]: </span><span class="n">antenna_patterns</span> <span class="o">=</span> <span class="n">compute_antenna_patterns</span><span class="p">([</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">],</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">antenna_patterns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">,</span> <span class="s1">&#39;f_cross&#39;</span><span class="p">,</span> <span class="s1">&#39;f_scalar&#39;</span><span class="p">])</span>
 
-<span class="gp">In [45]: </span><span class="n">projected_asds</span> <span class="o">=</span> <span class="n">asds</span><span class="o">.</span><span class="n">project_onto_antenna_patterns</span><span class="p">(</span><span class="n">antenna_patterns</span><span class="p">,</span> <span class="n">to_dominant_polarization_frame</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="gp">In [44]: </span><span class="n">projected_asds</span> <span class="o">=</span> <span class="n">asds</span><span class="o">.</span><span class="n">project_onto_antenna_patterns</span><span class="p">(</span><span class="n">antenna_patterns</span><span class="p">,</span> <span class="n">to_dominant_polarization_frame</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-<span class="gp">In [46]: </span><span class="n">projected_fftmaps</span> <span class="o">=</span> <span class="n">fft_grams</span><span class="o">.</span><span class="n">to_dominant_polarization_frame</span><span class="p">(</span><span class="n">projected_asds</span><span class="p">)</span>
+<span class="gp">In [45]: </span><span class="n">projected_fftmaps</span> <span class="o">=</span> <span class="n">fft_grams</span><span class="o">.</span><span class="n">to_dominant_polarization_frame</span><span class="p">(</span><span class="n">projected_asds</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Now that we have projected each pixels onto the plus and cross phase + amplitude space
 Let’s see what it looks like if we simply take these projections and plot them.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [47]: </span><span class="n">sparse_projected_fftmaps</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">to_sparse</span><span class="p">(</span><span class="n">tindex</span><span class="p">,</span> <span class="n">findex</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">projected_fftmaps</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [46]: </span><span class="n">sparse_projected_fftmaps</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">to_sparse</span><span class="p">(</span><span class="n">tindex</span><span class="p">,</span> <span class="n">findex</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">projected_fftmaps</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
 
-<span class="gp">In [48]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">sparse_projected_fftmaps</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_xtimefrequencymapdict</span><span class="p">()</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="gp">In [47]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">sparse_projected_fftmaps</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_xtimefrequencymapdict</span><span class="p">()</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 
-<span class="gp">In [49]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+<span class="gp">In [48]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
 <span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">min_time</span><span class="p">,</span> <span class="n">max_time</span><span class="p">)</span>
 <span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">weighted_center_time</span><span class="p">)</span>
 <span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time [milliseconds]&#39;</span><span class="p">)</span>
 <span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">min_freq</span><span class="p">,</span> <span class="n">max_freq</span><span class="p">)</span>
 <span class="gp">   ....: </span>
 
-<span class="gp">In [50]: </span><span class="n">plot</span>
-<span class="gh">Out[50]: </span><span class="go">&lt;Plot size 1200x600 with 1 Axes&gt;</span>
+<span class="gp">In [49]: </span><span class="n">plot</span>
+<span class="gh">Out[49]: </span><span class="go">&lt;Plot size 1200x600 with 1 Axes&gt;</span>
 
-<span class="gp">In [51]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">sparse_projected_fftmaps</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_xtimefrequencymapdict</span><span class="p">()</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="gp">In [50]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">sparse_projected_fftmaps</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_xtimefrequencymapdict</span><span class="p">()</span><span class="o">.</span><span class="n">to_coherent</span><span class="p">()</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 
-<span class="gp">In [52]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
+<span class="gp">In [51]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
 <span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">min_time</span><span class="p">,</span> <span class="n">max_time</span><span class="p">)</span>
 <span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">weighted_center_time</span><span class="p">)</span>
 <span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time [milliseconds]&#39;</span><span class="p">)</span>
 <span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">min_freq</span><span class="p">,</span> <span class="n">max_freq</span><span class="p">)</span>
 <span class="gp">   ....: </span>
 
-<span class="gp">In [53]: </span><span class="n">plot</span>
-<span class="gh">Out[53]: </span><span class="go">&lt;Plot size 1200x600 with 1 Axes&gt;</span>
+<span class="gp">In [52]: </span><span class="n">plot</span>
+<span class="gh">Out[52]: </span><span class="go">&lt;Plot size 1200x600 with 1 Axes&gt;</span>
 </pre></div>
 </div>
 <img alt="../_images/fplus-gw150914.png" src="../_images/fplus-gw150914.png" />
@@ -523,24 +522,27 @@ gravitational wave clusters instead of random noise fluctations or <cite>glitche
 inject a number of fake gravitational wave like signals.</p>
 <p>This involves to steps, generating a gravitational-wave like waveform on the fly
 and then injecting that signal into a stretch of data.</p>
-<p>The parametrs that go into xmakewaveform are the <cite>family</cite> of waveform, a set of parameters specific for that
+<p>The parameters that go into xmakewaveform are the <cite>family</cite> of waveform, a set of parameters specific for that
 waveform. In this case, the hrss is the quadrature sum of the RSS amplitudes of the plus and cross
 polarizations, tau is the duration, f0 is the central frequency, alpha is
 the chirp parameter, and delta is the phase at the peak of the envelope.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [54]: </span><span class="kn">from</span> <span class="nn">xpipeline.waveform</span> <span class="kn">import</span> <span class="n">xwaveform</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [53]: </span><span class="kn">from</span> <span class="nn">xpipeline.waveform</span> <span class="kn">import</span> <span class="n">xwaveform</span>
 
-<span class="gp">In [55]: </span><span class="kn">from</span> <span class="nn">gwpy.plotter</span> <span class="kn">import</span> <span class="n">TimeSeriesPlot</span>
+<span class="gp">In [54]: </span><span class="kn">from</span> <span class="nn">gwpy.plot</span> <span class="kn">import</span> <span class="n">Plot</span>
 
-<span class="gp">In [56]: </span><span class="n">t</span><span class="p">,</span> <span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">,</span> <span class="n">hb</span> <span class="o">=</span> <span class="n">xwaveform</span><span class="o">.</span><span class="n">xmakewaveform</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="s1">&#39;chirplet&#39;</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-22</span><span class="p">,</span> <span class="mf">0.0033</span><span class="p">,</span> <span class="mf">300.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">T</span><span class="o">=</span><span class="mi">513</span><span class="p">,</span> <span class="n">T0</span><span class="o">=</span><span class="mf">256.6161</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+<span class="gp">In [55]: </span><span class="n">t</span><span class="p">,</span> <span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">,</span> <span class="n">hb</span> <span class="o">=</span> <span class="n">xwaveform</span><span class="o">.</span><span class="n">xmakewaveform</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="s1">&#39;chirplet&#39;</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="mf">1e-22</span><span class="p">,</span> <span class="mf">0.0033</span><span class="p">,</span> <span class="mf">300.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">T</span><span class="o">=</span><span class="mi">513</span><span class="p">,</span> <span class="n">T0</span><span class="o">=</span><span class="mf">256.6161</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
 
-<span class="gp">In [57]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">TimeSeriesPlot</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">)</span>
+<span class="gp">In [56]: </span><span class="n">fig</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">)</span>
 
-<span class="gp">In [58]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="mf">256.6161</span><span class="p">)</span>
+<span class="gp">In [57]: </span><span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
 
-<span class="gp">In [59]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mf">256.6161</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">256.6161</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">])</span>
+<span class="gp">In [58]: </span><span class="n">ax</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="mf">256.6161</span><span class="p">)</span>
+
+<span class="gp">In [59]: </span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mf">256.6161</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">256.6161</span> <span class="o">+</span> <span class="mf">0.05</span><span class="p">])</span>
+<span class="gh">Out[59]: </span><span class="go">(256.5661, 256.6661)</span>
 
 <span class="gp">In [60]: </span><span class="n">plot</span>
-<span class="gh">Out[60]: </span><span class="go">&lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
+<span class="go">                              Out[60]: &lt;Plot size 1200x600 with 1 Axes&gt;</span>
 </pre></div>
 </div>
 <img alt="../_images/chirplet.png" src="../_images/chirplet.png" />
@@ -550,22 +552,25 @@ the waveforms folder of X-Pypeline repository houses a number of hdf5 files
 full of pregenerated waveforms.</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [61]: </span><span class="kn">from</span> <span class="nn">xpipeline.waveform</span> <span class="kn">import</span> <span class="n">xwaveform</span>
 
-<span class="gp">In [62]: </span><span class="kn">from</span> <span class="nn">gwpy.plotter</span> <span class="kn">import</span> <span class="n">TimeSeriesPlot</span>
+<span class="gp">In [62]: </span><span class="kn">from</span> <span class="nn">gwpy.plot</span> <span class="kn">import</span> <span class="n">Plot</span>
 
 <span class="gp">In [63]: </span><span class="n">t</span><span class="p">,</span> <span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">,</span> <span class="n">hb</span> <span class="o">=</span> <span class="n">xwaveform</span><span class="o">.</span><span class="n">xmakewaveform</span><span class="p">(</span><span class="n">family</span><span class="o">=</span><span class="s1">&#39;Morozova2018&#39;</span><span class="p">,</span>
-<span class="gp">   ....: </span>    <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="s1">&#39;M10_LS220&#39;</span><span class="p">],</span>
-<span class="gp">   ....: </span>    <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">T0</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="mi">16384</span><span class="p">,</span> <span class="n">catalogdirectory</span><span class="o">=</span><span class="s1">&#39;../waveforms/&#39;</span><span class="p">)</span>
+<span class="gp">   ....: </span>    <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;M10_LS220&#39;</span><span class="p">],</span>
+<span class="gp">   ....: </span>    <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">T0</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fs</span><span class="o">=</span><span class="mi">16384</span><span class="p">,</span> <span class="n">catalogdirectory</span><span class="o">=</span><span class="s1">&#39;../waveforms/xpipeline-waveforms&#39;</span><span class="p">)</span>
 <span class="gp">   ....: </span>
 
-<span class="gp">In [64]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">TimeSeriesPlot</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">)</span>
+<span class="gp">In [64]: </span><span class="n">fig</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">(</span><span class="n">hp</span><span class="p">,</span> <span class="n">hc</span><span class="p">)</span>
 
-<span class="gp">In [65]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+<span class="gp">In [65]: </span><span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
 
-<span class="gp">In [66]: </span><span class="n">plot</span>
-<span class="gh">Out[66]: </span><span class="go">&lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
+<span class="gp">In [66]: </span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="gh">Out[66]: </span><span class="go">(0.0, 1.0)</span>
+
+<span class="gp">In [67]: </span><span class="n">plot</span>
+<span class="go">                    Out[67]: &lt;Plot size 1200x600 with 1 Axes&gt;</span>
 </pre></div>
 </div>
-<img alt="../_images/supernova-R4E1FC_L_theta2.094_phi2.094.png" src="../_images/supernova-R4E1FC_L_theta2.094_phi2.094.png" />
+<img alt="../_images/supernova-M10_LS220.png" src="../_images/supernova-M10_LS220.png" />
 </div>
 <div class="section" id="the-injection">
 <h3>The Injection<a class="headerlink" href="#the-injection" title="Permalink to this headline">¶</a></h3>
@@ -576,58 +581,33 @@ just like we do for the data. Let us say we have the SN waveform from above
 now we will assume this SN signal occurred at the same earth fixed coordinates
 of GW150914 from above, but since this is a simulation let us imagine VIRGO was
 on at the time too.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [67]: </span><span class="kn">from</span> <span class="nn">xpipeline.waveform</span> <span class="kn">import</span> <span class="n">xinjectsignal</span>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [68]: </span><span class="kn">from</span> <span class="nn">xpipeline.waveform</span> <span class="kn">import</span> <span class="n">xinjectsignal</span>
 
-<span class="gp">In [68]: </span><span class="n">start_time</span> <span class="o">=</span> <span class="mf">1156609396.0</span><span class="p">;</span> <span class="n">block_time</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span> <span class="n">channels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">];</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">8192</span><span class="p">;</span> <span class="n">injection_file_name</span> <span class="o">=</span><span class="s1">&#39;examples/injection_Morozova.txt&#39;</span><span class="p">;</span> <span class="n">injection_number</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span> <span class="n">catalogdirectory</span><span class="o">=</span><span class="s1">&#39;../waveforms/&#39;</span><span class="p">;</span>
+<span class="gp">In [69]: </span><span class="n">start_time</span> <span class="o">=</span> <span class="mf">1156609396.0</span><span class="p">;</span> <span class="n">block_time</span> <span class="o">=</span> <span class="mi">256</span><span class="p">;</span> <span class="n">channels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">];</span> <span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">16384</span><span class="p">;</span> <span class="n">injection_file_name</span> <span class="o">=</span><span class="s1">&#39;examples/injection_Morozova.txt&#39;</span><span class="p">;</span> <span class="n">injection_number</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span> <span class="n">catalogdirectory</span><span class="o">=</span><span class="s1">&#39;../waveforms/xpipeline-waveforms&#39;</span><span class="p">;</span>
 
-<span class="gp">In [69]: </span><span class="p">[</span><span class="n">injection_data</span><span class="p">,</span> <span class="n">gps_s</span><span class="p">,</span> <span class="n">gps_ns</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">]</span> <span class="o">=</span> <span class="n">xinjectsignal</span><span class="o">.</span><span class="n">xinjectsignal_fromfile</span><span class="p">(</span><span class="n">start_time</span><span class="o">=</span><span class="n">start_time</span><span class="p">,</span> <span class="n">block_time</span><span class="o">=</span><span class="n">block_time</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="n">channels</span><span class="p">,</span> <span class="n">injection_file_name</span><span class="o">=</span><span class="n">injection_file_name</span><span class="p">,</span> <span class="n">injection_number</span><span class="o">=</span><span class="n">injection_number</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">catalogdirectory</span><span class="o">=</span><span class="n">catalogdirectory</span><span class="p">)</span>
+<span class="gp">In [70]: </span><span class="p">[</span><span class="n">injection_data</span><span class="p">,</span> <span class="n">gps_s</span><span class="p">,</span> <span class="n">gps_ns</span><span class="p">,</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">psi</span><span class="p">]</span> <span class="o">=</span> <span class="n">xinjectsignal</span><span class="o">.</span><span class="n">xinjectsignal_fromfile</span><span class="p">(</span><span class="n">start_time</span><span class="o">=</span><span class="n">start_time</span><span class="p">,</span> <span class="n">block_time</span><span class="o">=</span><span class="n">block_time</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="n">channels</span><span class="p">,</span> <span class="n">injection_file_name</span><span class="o">=</span><span class="n">injection_file_name</span><span class="p">,</span> <span class="n">injection_number</span><span class="o">=</span><span class="n">injection_number</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span> <span class="n">sample_rate</span><span class="p">,</span> <span class="n">catalogdirectory</span><span class="o">=</span><span class="n">catalogdirectory</span><span class="p">)</span>
 
-<span class="gp">In [70]: </span><span class="kn">from</span> <span class="nn">gwpy.plotter</span> <span class="kn">import</span> <span class="n">TimeSeriesPlot</span>
+<span class="gp">In [71]: </span><span class="kn">from</span> <span class="nn">gwpy.plot</span> <span class="kn">import</span> <span class="n">Plot</span>
 
-<span class="gp">In [71]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">TimeSeriesPlot</span><span class="p">()</span>
+<span class="gp">In [72]: </span><span class="n">fig</span> <span class="o">=</span> <span class="n">Plot</span><span class="p">()</span>
 
-<span class="gp">In [72]: </span><span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">injection_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-<span class="gp">   ....: </span>    <span class="n">plot</span><span class="o">.</span><span class="n">add_timeseries</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+<span class="gp">In [73]: </span><span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+
+<span class="gp">In [74]: </span><span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">injection_data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">k</span><span class="p">,)</span>
 <span class="gp">   ....: </span>
 
-<span class="gp">In [73]: </span><span class="n">plot</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">gps_s</span><span class="p">,</span> <span class="n">gps_s</span> <span class="o">+</span> <span class="mi">2</span><span class="p">])</span>
+<span class="gp">In [75]: </span><span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="n">gps_s</span><span class="p">,</span> <span class="n">gps_s</span> <span class="o">+</span> <span class="mi">2</span><span class="p">])</span>
+<span class="gh">Out[75]: </span><span class="go">(1156609400, 1156609402)</span>
 
-<span class="gp">In [74]: </span><span class="n">plot</span><span class="o">.</span><span class="n">add_legend</span><span class="p">()</span>
-<span class="gh">Out[74]: </span><span class="go">&lt;matplotlib.legend.Legend at 0x10fff6438&gt;</span>
+<span class="gp">In [76]: </span><span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="go">                                  Out[76]: &lt;matplotlib.legend.Legend at 0x10ec83cc0&gt;</span>
 
-<span class="gp">In [75]: </span><span class="n">plot</span>
-<span class="go">                                                   Out[75]: &lt;TimeSeriesPlot size 1200x600 with 1 Axes&gt;</span>
+<span class="gp">In [77]: </span><span class="n">plot</span>
+<span class="go">                                                                                     Out[77]: &lt;Plot size 1200x600 with 1 Axes&gt;</span>
 </pre></div>
 </div>
 <img alt="../_images/Morozova2018-h1-l1.png" src="../_images/Morozova2018-h1-l1.png" />
-<p>Now let’s inject this into some data, we could use real data but let’s just generate
-some data and color it to look like gaussian distributed aLIGO noise.</p>
-<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [76]: </span><span class="n">colored_gaussian_noise</span> <span class="o">=</span> <span class="n">XTimeSeries</span><span class="o">.</span><span class="n">generate_noise_from_file</span><span class="p">(</span><span class="s1">&#39;../noise/aLIGOZeroDetHighPower.h5&#39;</span><span class="p">,</span> <span class="n">event_time</span><span class="o">=</span><span class="n">start_time</span><span class="p">,</span> <span class="n">block_time</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">channel_names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;H1&#39;</span><span class="p">,</span> <span class="s1">&#39;L1&#39;</span><span class="p">],</span> <span class="n">sample_frequency</span><span class="o">=</span><span class="mi">8192</span><span class="p">)</span>
-
-<span class="gp">In [77]: </span><span class="n">data_plus_signal</span> <span class="o">=</span> <span class="n">colored_gaussian_noise</span><span class="o">.</span><span class="n">inject</span><span class="p">(</span><span class="n">injection_data</span><span class="p">)</span>
-
-<span class="gp">In [78]: </span><span class="n">asds</span> <span class="o">=</span> <span class="n">data_plus_signal</span><span class="o">.</span><span class="n">asd</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-
-<span class="gp">In [79]: </span><span class="n">whitened_timeseries</span> <span class="o">=</span> <span class="n">data_plus_signal</span><span class="o">.</span><span class="n">whiten</span><span class="p">(</span><span class="n">asds</span><span class="p">)</span>
-
-<span class="gp">In [80]: </span><span class="n">fft_maps</span> <span class="o">=</span> <span class="n">whitened_timeseries</span><span class="o">.</span><span class="n">fftgram</span><span class="p">(</span><span class="mf">1.</span> <span class="o">/</span><span class="mi">64</span><span class="p">)</span>
-
-<span class="gp">In [81]: </span><span class="n">energy_maps</span> <span class="o">=</span> <span class="n">fft_maps</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
-
-<span class="gp">In [82]: </span><span class="n">plot</span> <span class="o">=</span> <span class="n">energy_maps</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
-
-<span class="gp">In [83]: </span><span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">axes</span><span class="p">:</span>
-<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">gps_s</span> <span class="o">-</span> <span class="mf">0.15</span><span class="p">,</span> <span class="n">gps_s</span> <span class="o">+</span> <span class="mf">1.0</span><span class="p">)</span>
-<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_epoch</span><span class="p">(</span><span class="n">gps_s</span><span class="p">)</span>
-<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Time [milliseconds]&#39;</span><span class="p">)</span>
-<span class="gp">   ....: </span>    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">3000</span><span class="p">)</span>
-<span class="gp">   ....: </span>
-
-<span class="gp">In [84]: </span><span class="n">plot</span>
-<span class="gh">Out[84]: </span><span class="go">&lt;Plot size 1200x600 with 2 Axes&gt;</span>
-</pre></div>
-</div>
-<img alt="../_images/energy-map-Morozova2018.png" src="../_images/energy-map-Morozova2018.png" />
 </div>
 </div>
 </div>
@@ -641,7 +621,7 @@ some data and color it to look like gaussian distributed aLIGO noise.</p>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="../command-line/index.html" class="btn btn-neutral" title="Running xpipeline-workflow on the command line" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../command-line/index.html" class="btn btn-neutral float-left" title="Running xpipeline-workflow on the command line" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -650,7 +630,7 @@ some data and color it to look like gaussian distributed aLIGO noise.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Scott Coughlin.
+        &copy; Copyright 2018, Scott Coughlin
 
     </p>
   </div>
@@ -667,35 +647,16 @@ some data and color it to look like gaussian distributed aLIGO noise.</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'0+untagged.111.g8030ebd.dirty',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

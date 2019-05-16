@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.core.xfrequencyseries &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
+  <title>xpipeline.core.xfrequencyseries &mdash; xpipeline 0+untagged.178.gddc1b81.dirty documentation</title>
   
 
   
@@ -17,34 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/xpipeline-docs.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -58,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.111.g8030ebd.dirty
+                0+untagged.178.gddc1b81.dirty
               </div>
             
           
@@ -167,17 +168,22 @@
 <span class="c1"># along with hveto.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
 <span class="c1"># ---- Import standard modules to the python path.</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
 <span class="kn">from</span> <span class="nn">gwpy.frequencyseries</span> <span class="k">import</span> <span class="n">FrequencySeries</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Scott Coughlin &lt;scott.coughlin@ligo.org&gt;&#39;</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;XFrequencySeriesDict&#39;</span><span class="p">,</span> <span class="s1">&#39;convert_to_dominant_polarization_frame&#39;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;XFrequencySeriesDict&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;XAntennaProjectedFrequencySeriesDict&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;convert_to_dominant_polarization_frame&#39;</span><span class="p">]</span>
+
+<span class="n">SQRT_OF_NEG_1</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">))</span>
 
 <div class="viewcode-block" id="XFrequencySeriesDict"><a class="viewcode-back" href="../../../api/xpipeline.core.xfrequencyseries.html#xpipeline.core.xfrequencyseries.XFrequencySeriesDict">[docs]</a><span class="k">class</span> <span class="nc">XFrequencySeriesDict</span><span class="p">(</span><span class="n">OrderedDict</span><span class="p">):</span>
 <div class="viewcode-block" id="XFrequencySeriesDict.project_onto_antenna_patterns"><a class="viewcode-back" href="../../../api/xpipeline.core.xfrequencyseries.html#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.project_onto_antenna_patterns">[docs]</a>    <span class="k">def</span> <span class="nf">project_onto_antenna_patterns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">antenna_responses</span><span class="p">,</span>
-                                      <span class="n">to_dominant_polarization_frame</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                                      <span class="n">to_dominant_polarization_frame</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                      <span class="n">circular</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Shift timeseries by assosciated time delay</span>
 
 <span class="sd">            Parameters</span>
@@ -199,15 +205,14 @@
 <span class="sd">                relevant angle parameter that would project the data into</span>
 <span class="sd">                the orthogonal cross plus polarization frame.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">antenna_response_asds</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="n">antenna_response_asds</span> <span class="o">=</span> <span class="n">XAntennaProjectedFrequencySeriesDict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">pattern</span><span class="p">,</span> <span class="n">responses</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">antenna_responses</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
             <span class="n">antenna_weighted_asds</span> <span class="o">=</span> <span class="n">XFrequencySeriesDict</span><span class="p">()</span>
-            <span class="k">for</span> <span class="n">det</span><span class="p">,</span> <span class="n">asd</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
-                <span class="n">abbr_det</span> <span class="o">=</span> <span class="n">det</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="n">antenna_weighted_asds</span><span class="p">[</span><span class="n">det</span><span class="p">]</span> <span class="o">=</span> <span class="n">responses</span><span class="p">[</span><span class="n">abbr_det</span><span class="p">]</span> <span class="o">/</span> <span class="n">asd</span>
+            <span class="k">for</span> <span class="n">ifo</span><span class="p">,</span> <span class="n">asd</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                <span class="n">abbr_ifo</span> <span class="o">=</span> <span class="n">ifo</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">antenna_weighted_asds</span><span class="p">[</span><span class="n">ifo</span><span class="p">]</span> <span class="o">=</span> <span class="n">responses</span><span class="p">[</span><span class="n">abbr_ifo</span><span class="p">]</span> <span class="o">/</span> <span class="n">asd</span>
 
             <span class="n">antenna_response_asds</span><span class="p">[</span><span class="n">pattern</span><span class="p">]</span> <span class="o">=</span> <span class="n">antenna_weighted_asds</span>
-
 
         <span class="k">if</span> <span class="n">to_dominant_polarization_frame</span><span class="p">:</span>
             <span class="n">wfp</span> <span class="o">=</span> <span class="n">antenna_response_asds</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_array</span><span class="p">()</span>
@@ -216,14 +221,16 @@
             <span class="n">tmp</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">antenna_response_asds</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">detidx</span><span class="p">,</span> <span class="n">idet</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]):</span>
                 <span class="n">antenna_response_asds</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">][</span><span class="n">idet</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">psi</span><span class="p">[:,</span><span class="n">detidx</span><span class="p">])</span> <span class="o">*</span> <span class="n">tmp</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">][</span><span class="n">idet</span><span class="p">]</span> <span class="o">+</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">psi</span><span class="p">[:,</span><span class="n">detidx</span><span class="p">])</span> <span class="o">*</span> <span class="n">tmp</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">][</span><span class="n">idet</span><span class="p">]</span>
+                    <span class="n">numpy</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">psi</span><span class="p">[:,</span><span class="n">detidx</span><span class="p">])</span> <span class="o">*</span> <span class="n">tmp</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">][</span><span class="n">idet</span><span class="p">]</span> <span class="o">+</span>
+                    <span class="n">numpy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">psi</span><span class="p">[:,</span><span class="n">detidx</span><span class="p">])</span> <span class="o">*</span> <span class="n">tmp</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">][</span><span class="n">idet</span><span class="p">]</span>
                     <span class="p">)</span>
                 <span class="n">antenna_response_asds</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">][</span><span class="n">idet</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-                    <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">psi</span><span class="p">[:,</span><span class="n">detidx</span><span class="p">])</span> <span class="o">*</span> <span class="n">tmp</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">][</span><span class="n">idet</span><span class="p">]</span> <span class="o">+</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">psi</span><span class="p">[:,</span><span class="n">detidx</span><span class="p">])</span> <span class="o">*</span> <span class="n">tmp</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">][</span><span class="n">idet</span><span class="p">]</span>
+                    <span class="o">-</span><span class="n">numpy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">psi</span><span class="p">[:,</span><span class="n">detidx</span><span class="p">])</span> <span class="o">*</span> <span class="n">tmp</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">][</span><span class="n">idet</span><span class="p">]</span> <span class="o">+</span>
+                    <span class="n">numpy</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">psi</span><span class="p">[:,</span><span class="n">detidx</span><span class="p">])</span> <span class="o">*</span> <span class="n">tmp</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">][</span><span class="n">idet</span><span class="p">]</span>
                     <span class="p">)</span>
-            
+
+        <span class="k">if</span> <span class="n">circular</span><span class="p">:</span>
+            <span class="n">antenna_response_asds</span><span class="o">.</span><span class="n">to_circular</span><span class="p">()</span>
 
         <span class="k">return</span> <span class="n">antenna_response_asds</span></div>
 
@@ -233,14 +240,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">number_of_frequencies</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span>
         <span class="n">number_of_detectors</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">number_of_frequencies</span><span class="p">,</span> <span class="n">number_of_detectors</span><span class="p">])</span>
+        <span class="n">array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">number_of_frequencies</span><span class="p">,</span> <span class="n">number_of_detectors</span><span class="p">])</span>
         <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">asd</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
             <span class="n">array</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">asd</span>
 
         <span class="k">return</span> <span class="n">array</span></div>
 
 
-<div class="viewcode-block" id="XFrequencySeriesDict.to_m_ab"><a class="viewcode-back" href="../../../api/xpipeline.core.xfrequencyseries.html#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_m_ab">[docs]</a>    <span class="k">def</span> <span class="nf">to_m_ab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="XFrequencySeriesDict.calculate_magnitude"><a class="viewcode-back" href="../../../api/xpipeline.core.xfrequencyseries.html#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.calculate_magnitude">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_magnitude</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Matrix M_AB components.</span>
 
 <span class="sd">           This is the dot product of the projected_asds, with</span>
@@ -250,8 +257,7 @@
 <span class="sd">               `gwpy.frequencyseries.FrequencySeries`</span>
 <span class="sd">                   Units Hz</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">v</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">())])</span></div>
-
+        <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="n">v</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">())]))</span></div>
 
 <div class="viewcode-block" id="XFrequencySeriesDict.slice_frequencies"><a class="viewcode-back" href="../../../api/xpipeline.core.xfrequencyseries.html#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.slice_frequencies">[docs]</a>    <span class="k">def</span> <span class="nf">slice_frequencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;select a subset of frequencies from XFrequencySeriesDict</span>
@@ -270,6 +276,59 @@
 
         <span class="k">return</span> <span class="n">asd_subset</span></div></div>
 
+<div class="viewcode-block" id="XAntennaProjectedFrequencySeriesDict"><a class="viewcode-back" href="../../../api/xpipeline.core.xfrequencyseries.html#xpipeline.core.xfrequencyseries.XAntennaProjectedFrequencySeriesDict">[docs]</a><span class="k">class</span> <span class="nc">XAntennaProjectedFrequencySeriesDict</span><span class="p">(</span><span class="n">OrderedDict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Controls a dictionaries of projected asds</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="XAntennaProjectedFrequencySeriesDict.calculate_magnitude"><a class="viewcode-back" href="../../../api/xpipeline.core.xfrequencyseries.html#xpipeline.core.xfrequencyseries.XAntennaProjectedFrequencySeriesDict.calculate_magnitude">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_magnitude</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find unit vector of a series of asds</span>
+
+<span class="sd">           Returns:</span>
+<span class="sd">               `XAntennaProjectedFrequencySeriesDict`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">asds_magnitude</span> <span class="o">=</span> <span class="n">XFrequencySeriesDict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">asds_magnitude</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">calculate_magnitude</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">asds_magnitude</span></div>
+
+<div class="viewcode-block" id="XAntennaProjectedFrequencySeriesDict.to_unit"><a class="viewcode-back" href="../../../api/xpipeline.core.xfrequencyseries.html#xpipeline.core.xfrequencyseries.XAntennaProjectedFrequencySeriesDict.to_unit">[docs]</a>    <span class="k">def</span> <span class="nf">to_unit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find unit vector of a series of asds</span>
+
+<span class="sd">           Returns:</span>
+<span class="sd">               `XAntennaProjectedFrequencySeriesDict`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">unit_dpf_asds</span> <span class="o">=</span> <span class="n">XFrequencySeriesDict</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">k1</span><span class="p">,</span> <span class="n">v1</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+                <span class="n">unit_dpf_asds</span><span class="p">[</span><span class="n">k1</span><span class="p">]</span> <span class="o">=</span> <span class="n">v1</span> <span class="o">/</span> <span class="n">v</span><span class="o">.</span><span class="n">calculate_magnitude</span><span class="p">()</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">unit_dpf_asds</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="XAntennaProjectedFrequencySeriesDict.to_circular"><a class="viewcode-back" href="../../../api/xpipeline.core.xfrequencyseries.html#xpipeline.core.xfrequencyseries.XAntennaProjectedFrequencySeriesDict.to_circular">[docs]</a>    <span class="k">def</span> <span class="nf">to_circular</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find unit vector of a series of asds</span>
+
+<span class="sd">           Returns:</span>
+<span class="sd">               `XAntennaProjectedFrequencySeriesDict`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Initialize projected circular keys</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;f_left&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">XFrequencySeriesDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;f_right&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">XFrequencySeriesDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;f_left_null&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">XFrequencySeriesDict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;f_right_null&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">XFrequencySeriesDict</span><span class="p">()</span>
+
+        <span class="c1"># calculate the magntiude squared of the plus and cross projected asds</span>
+        <span class="n">f_plus_magnitude_squared</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">calculate_magnitude</span><span class="p">())</span>
+        <span class="n">f_cross_magnitude_squared</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">calculate_magnitude</span><span class="p">())</span>
+
+        <span class="k">for</span> <span class="n">f_plus</span><span class="p">,</span> <span class="n">f_cross</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;f_plus&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s1">&#39;f_cross&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())):</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;f_left&#39;</span><span class="p">][</span><span class="n">f_plus</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">f_plus</span> <span class="o">+</span> <span class="n">SQRT_OF_NEG_1</span> <span class="o">*</span> <span class="n">f_cross</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;f_right&#39;</span><span class="p">][</span><span class="n">f_plus</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">f_plus</span> <span class="o">-</span> <span class="n">SQRT_OF_NEG_1</span> <span class="o">*</span> <span class="n">f_cross</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;f_left_null&#39;</span><span class="p">][</span><span class="n">f_plus</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">f_plus</span> <span class="o">/</span> <span class="n">f_plus_magnitude_squared</span> <span class="o">-</span> <span class="n">SQRT_OF_NEG_1</span> <span class="o">*</span> <span class="n">f_cross</span> <span class="o">/</span> <span class="n">f_cross_magnitude_squared</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;f_right_null&#39;</span><span class="p">][</span><span class="n">f_plus</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">f_plus</span> <span class="o">/</span> <span class="n">f_plus_magnitude_squared</span> <span class="o">+</span> <span class="n">SQRT_OF_NEG_1</span> <span class="o">*</span> <span class="n">f_cross</span> <span class="o">/</span> <span class="n">f_cross_magnitude_squared</span>
+
+        <span class="k">return</span> <span class="bp">self</span></div></div>
 
 <div class="viewcode-block" id="convert_to_dominant_polarization_frame"><a class="viewcode-back" href="../../../api/xpipeline.core.xfrequencyseries.html#xpipeline.core.xfrequencyseries.convert_to_dominant_polarization_frame">[docs]</a><span class="k">def</span> <span class="nf">convert_to_dominant_polarization_frame</span><span class="p">(</span><span class="n">Fp</span><span class="p">,</span> <span class="n">Fc</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Take in stream of fplus and ≈f_cross and convert to DPF</span>
@@ -282,21 +341,21 @@
 <span class="sd">            Fc :  `float`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># ---- Compute rotation needed to reach DP frame.</span>
-    <span class="n">psi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">Fp</span><span class="p">),</span> <span class="mi">1</span><span class="p">])</span>
-    <span class="n">psi</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Fp</span><span class="o">*</span><span class="n">Fc</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="p">(</span>
-                    <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Fp</span><span class="o">*</span><span class="n">Fp</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Fc</span><span class="o">*</span><span class="n">Fc</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">psi</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">Fp</span><span class="p">),</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">psi</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Fp</span><span class="o">*</span><span class="n">Fc</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="p">(</span>
+                    <span class="n">numpy</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Fp</span><span class="o">*</span><span class="n">Fp</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">-</span><span class="n">numpy</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Fc</span><span class="o">*</span><span class="n">Fc</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
                     <span class="p">)</span>
     <span class="n">psi</span> <span class="o">=</span> <span class="n">psi</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">Fp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span>
 
     <span class="c1"># ---- Rotate to DP frame.</span>
-    <span class="n">FpDP</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">psi</span><span class="p">)</span><span class="o">*</span><span class="n">Fp</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">psi</span><span class="p">)</span><span class="o">*</span><span class="n">Fc</span>
-    <span class="n">FcDP</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">psi</span><span class="p">)</span><span class="o">*</span><span class="n">Fp</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">psi</span><span class="p">)</span><span class="o">*</span><span class="n">Fc</span>
+    <span class="n">FpDP</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">psi</span><span class="p">)</span><span class="o">*</span><span class="n">Fp</span> <span class="o">+</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">psi</span><span class="p">)</span><span class="o">*</span><span class="n">Fc</span>
+    <span class="n">FcDP</span> <span class="o">=</span> <span class="o">-</span><span class="n">numpy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">psi</span><span class="p">)</span><span class="o">*</span><span class="n">Fp</span> <span class="o">+</span> <span class="n">numpy</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">psi</span><span class="p">)</span><span class="o">*</span><span class="n">Fc</span>
 
     <span class="c1"># ---- Further rotate polarization by pi/4 if |Fp|&lt;|Fc|.</span>
     <span class="n">swapindex</span> <span class="o">=</span> <span class="p">(</span><span class="n">FpDP</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">FcDP</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">FpDP</span><span class="p">[</span><span class="n">swapindex</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">FcDP</span><span class="p">[</span><span class="n">swapindex</span><span class="p">,</span> <span class="p">:]</span>
     <span class="n">FcDP</span><span class="p">[</span><span class="n">swapindex</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="o">-</span><span class="n">FpDP</span><span class="p">[</span><span class="n">swapindex</span><span class="p">,</span> <span class="p">:]</span>
-    <span class="n">psi</span><span class="p">[</span><span class="n">swapindex</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">psi</span><span class="p">[</span><span class="n">swapindex</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span>
+    <span class="n">psi</span><span class="p">[</span><span class="n">swapindex</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">psi</span><span class="p">[</span><span class="n">swapindex</span><span class="p">,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">numpy</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">4</span>
 
     <span class="k">return</span> <span class="n">FpDP</span><span class="p">,</span> <span class="n">FcDP</span><span class="p">,</span> <span class="n">psi</span></div>
 </pre></div>
@@ -311,7 +370,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Scott Coughlin.
+        &copy; Copyright 2018, Scott Coughlin
 
     </p>
   </div>
@@ -328,35 +387,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'0+untagged.111.g8030ebd.dirty',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

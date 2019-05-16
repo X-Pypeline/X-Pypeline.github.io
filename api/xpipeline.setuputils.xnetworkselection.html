@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.178.gddc1b81.dirty documentation</title>
   
 
   
@@ -17,34 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/xpipeline-docs.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -58,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.111.g8030ebd.dirty
+                0+untagged.178.gddc1b81.dirty
               </div>
             
           
@@ -155,31 +156,32 @@
 <code class="descclassname">xpipeline.setuputils.xnetworkselection.</code><code class="descname">main</code><span class="sig-paren">(</span><em>detectorList</em>, <em>centerTimesFile</em>, <em>timeOffsetsFile</em>, <em>cat1_segment_file</em>, <em>cat24_segment_file</em>, <em>output_file</em>, <em>verbosity</em>, <em>windowBeginOffset</em>, <em>windowEndOffset</em>, <em>transientTime</em>, <em>windowLength</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/setuputils/xnetworkselection.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.setuputils.xnetworkselection.main" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><blockquote>
-<div><dl class="docutils">
-<dt>detectors_considered        cell array of ifos to be considered, e.g.,</dt>
-<dd>[‘H1’ ‘H2’ ‘L1’], size (1 * nIfo).</dd>
+<div><dl class="simple">
+<dt>detectors_considered        cell array of ifos to be considered, e.g.,</dt><dd><p>[‘H1’ ‘H2’ ‘L1’], size (1 * nIfo).</p>
+</dd>
 </dl>
 <p>centerTimes                 vector of segment center times, size (nJobs * 1).
 timeOffsets                 array of segment time offsets,</p>
 <blockquote>
-<div>size(nJobs * nIfo).</div></blockquote>
-<dl class="docutils">
-<dt>cat1_seglist                structure containing cat1 DQ segments (i.e., </dt>
-<dd>livetimes). 
+<div><p>size(nJobs * nIfo).</p>
+</div></blockquote>
+<dl class="simple">
+<dt>cat1_seglist                structure containing cat1 DQ segments (i.e., </dt><dd><p>livetimes). 
 cat1_seglist(nIfo).gpsStart()
-cat1_seglist(nIfo).duration()</dd>
-<dt>cat2_seglist                Similar to cat1_seglist but containing cat2 </dt>
-<dd>veto segments (deadtime).</dd>
-<dt>verbosity                   string used to control verbosity of output,</dt>
-<dd>either ‘verbose’ or ‘quiet’.</dd>
-<dt>output_file                  String. Name of file to which we will write</dt>
-<dd>the detector networks.</dd>
-<dt>windowBeginOffset            String. Offset [sec] between start of on-source</dt>
-<dd>window and trigger time, e.g., -600.</dd>
-<dt>windowEndOffset              String. Offset [sec] between end of on-source </dt>
-<dd>window and trigger time, e.g., 60.</dd>
-<dt>transientTime                String. Length of time [sec] discarded at </dt>
-<dd>beginning and end of each analysis block, e.g., 4.</dd>
+cat1_seglist(nIfo).duration()</p>
+</dd>
+<dt>cat2_seglist                Similar to cat1_seglist but containing cat2 </dt><dd><p>veto segments (deadtime).</p>
+</dd>
+<dt>verbosity                   string used to control verbosity of output,</dt><dd><p>either ‘verbose’ or ‘quiet’.</p>
+</dd>
+<dt>output_file                  String. Name of file to which we will write</dt><dd><p>the detector networks.</p>
+</dd>
+<dt>windowBeginOffset            String. Offset [sec] between start of on-source</dt><dd><p>window and trigger time, e.g., -600.</p>
+</dd>
+<dt>windowEndOffset              String. Offset [sec] between end of on-source </dt><dd><p>window and trigger time, e.g., 60.</p>
+</dd>
+<dt>transientTime                String. Length of time [sec] discarded at </dt><dd><p>beginning and end of each analysis block, e.g., 4.</p>
+</dd>
 </dl>
 <p>windowLength                 String. 2*transientTime+jobsPerWindow*(blockTime-2*transientTime)</p>
 </div></blockquote>
@@ -197,25 +199,26 @@ one line per event, of the form ‘H1L1V1’, or ‘H1H2’, etc.</p>
 <div><p>Our criteria for including an ifo in our network is as follows:w
 i) No deadtime incurred by category 1 flags in an interval [-128,+128]s</p>
 <blockquote>
-<div>about the GRB trigger time. 
+<div><p>about the GRB trigger time. 
 X-pipeline requires 256s in order to estimate the PSD, category 1 
 flags raised within these 256s will lead to inaccurate/incorrect PSD 
-estimation.</div></blockquote>
+estimation.</p>
+</div></blockquote>
 </div></blockquote>
 <ol class="lowerroman simple" start="2">
-<li>Less than 9s (5#) deadtime incurred by category 2 flags in the onsource, 
+<li><p>Less than 9s (5#) deadtime incurred by category 2 flags in the onsource, 
 i.e., an interval [-120,+60]s about the GRB trigger time. 
 We tune our glitch rejection cuts using calculation of the 90# UL on 
 hrss amplitude. If we lose much more than 5# deadtime in our (dummy) 
 onsource we may not be able to accurately estimate the hrss amplitude 
-leading to 90# detection efficiency.</li>
+leading to 90# detection efficiency.</p></li>
 </ol>
 </div></blockquote>
 <ol class="lowerroman simple" start="3">
-<li>No deadtime incurred by category 2 flags in an interval [-5,+1]s about 
+<li><p>No deadtime incurred by category 2 flags in an interval [-5,+1]s about 
 the GRB trigger time. Many GRB models predict similar arrival times of 
 EM and GW emission from a GRB. We therefore require that inclusion of 
-an ifo does not kill times close to the GRB trigger time.</li>
+an ifo does not kill times close to the GRB trigger time.</p></li>
 </ol>
 </dd></dl>
 
@@ -231,7 +234,7 @@ an ifo does not kill times close to the GRB trigger time.</li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Scott Coughlin.
+        &copy; Copyright 2018, Scott Coughlin
 
     </p>
   </div>
@@ -248,35 +251,16 @@ an ifo does not kill times close to the GRB trigger time.</li>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'0+untagged.111.g8030ebd.dirty',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

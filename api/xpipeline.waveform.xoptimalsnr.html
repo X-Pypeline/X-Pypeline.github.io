@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.178.gddc1b81.dirty documentation</title>
   
 
   
@@ -17,34 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/xpipeline-docs.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -58,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.111.g8030ebd.dirty
+                0+untagged.178.gddc1b81.dirty
               </div>
             
           
@@ -159,97 +160,94 @@ the wave amplitude are also provided.</p>
 <blockquote>
 <div><blockquote>
 <div><blockquote>
-<div><dl class="docutils">
-<dt>[SNR, h_rss, h_peak, Fchar, bw, Tchar, dur] = …</dt>
-<dd>xoptimalsnr(h,t0,fs,S,F0,dF,Fmin,Fmax)</dd>
-<dt>h      Array.  Waveform timeseries data.  Each column holds the</dt>
-<dd>timeseries for one of the GW polarizations.  (There may be any
+<div><dl class="simple">
+<dt>[SNR, h_rss, h_peak, Fchar, bw, Tchar, dur] = …</dt><dd><p>xoptimalsnr(h,t0,fs,S,F0,dF,Fmin,Fmax)</p>
+</dd>
+<dt>h      Array.  Waveform timeseries data.  Each column holds the</dt><dd><p>timeseries for one of the GW polarizations.  (There may be any
 number of polarisations, for the non-GR case.  The order of
 polarizations does not matter.)  The timeseries duration should
-be a power of 2.</dd>
-<dt>t0     Scalar.  Time at which the first waveform data point h(1,:) is</dt>
-<dd>sampled.</dd>
-<dt>fs     Scalar.  Sampling rate (Hz) of waveform data.  This should be a</dt>
-<dd>power of 2.</dd>
-<dt>S      Vector (optional).  Noise background one-sided POWER (not</dt>
-<dd>amplitude) spectrum.  If supplied, it must cover at least the
+be a power of 2.</p>
+</dd>
+<dt>t0     Scalar.  Time at which the first waveform data point h(1,:) is</dt><dd><p>sampled.</p>
+</dd>
+<dt>fs     Scalar.  Sampling rate (Hz) of waveform data.  This should be a</dt><dd><p>power of 2.</p>
+</dd>
+<dt>S      Vector (optional).  Noise background one-sided POWER (not</dt><dd><p>amplitude) spectrum.  If supplied, it must cover at least the
 range [Fmin, Fmax], and must be sampled in ascending
 order of frequency.  For noise-independent signal measures use
 S=f0=df=[].  In this case the constant spectrum S(f)=2 will be
-used (corresponding to a two-sided noise spectrum of unity).</dd>
-<dt>F0     Scalar or vector (optional).  Scalar: Frequency at which S(1) is</dt>
-<dd>sampled.  Vector: frequencies at which S is sampled.</dd>
-<dt>dF     Scalar (optional).  Frequency spacing of the noise spectrum S.</dt>
-<dd>If F0 is a vector then dF = [] must be used.</dd>
-<dt>Fmin   Scalar (optional).  Minimum frequency (Hz) to include in</dt>
-<dd>frequency-domain calculations.  Defaults to 0 if no noise
-spectrum specified, or minimum frequency of noise spectrum.</dd>
+used (corresponding to a two-sided noise spectrum of unity).</p>
+</dd>
+<dt>F0     Scalar or vector (optional).  Scalar: Frequency at which S(1) is</dt><dd><p>sampled.  Vector: frequencies at which S is sampled.</p>
+</dd>
+<dt>dF     Scalar (optional).  Frequency spacing of the noise spectrum S.</dt><dd><p>If F0 is a vector then dF = [] must be used.</p>
+</dd>
+<dt>Fmin   Scalar (optional).  Minimum frequency (Hz) to include in</dt><dd><p>frequency-domain calculations.  Defaults to 0 if no noise
+spectrum specified, or minimum frequency of noise spectrum.</p>
+</dd>
 </dl>
 </div></blockquote>
-<dl class="docutils">
-<dt>Fmax   Scalar (optional).  Maximum frequency (Hz) to include in</dt>
-<dd>frequency-domain calculations. Defaults to Nyquist if no noise
-spectrum specified, or maximum frequency of noise spectrum.</dd>
+<dl class="simple">
+<dt>Fmax   Scalar (optional).  Maximum frequency (Hz) to include in</dt><dd><p>frequency-domain calculations. Defaults to Nyquist if no noise
+spectrum specified, or maximum frequency of noise spectrum.</p>
+</dd>
 </dl>
 </div></blockquote>
 <p>Computations are done in the time domain (TD) and frequency
 domain (FD) using the energy distributions</p>
 <blockquote>
-<div>p_TD = h(:,1).^2 + h(:,2).^2
-p_FD = 2(<a href="#id1"><span class="problematic" id="id2">|FFT(h(:,1))|</span></a>.^2 + <a href="#id3"><span class="problematic" id="id4">|FFT(h(:,2))|</span></a>.^2)  # for f&gt;=0</div></blockquote>
-<dl class="docutils">
-<dt>With these conventions, the output is</dt>
-<dd><dl class="first last docutils">
-<dt>SNR    Signal-to-noise ratio of h in the given noise background,</dt>
-<dd><dl class="first last docutils">
-<dt>defined as</dt>
-<dd>SNR = (2 int_Fmin^Fmax df p_FD./S).^0.5</dd>
+<div><p>p_TD = h(:,1).^2 + h(:,2).^2
+p_FD = 2(<a href="#id1"><span class="problematic" id="id2">|FFT(h(:,1))|</span></a>.^2 + <a href="#id3"><span class="problematic" id="id4">|FFT(h(:,2))|</span></a>.^2)  # for f&gt;=0</p>
+</div></blockquote>
+<dl>
+<dt>With these conventions, the output is</dt><dd><dl>
+<dt>SNR    Signal-to-noise ratio of h in the given noise background,</dt><dd><dl class="simple">
+<dt>defined as</dt><dd><p>SNR = (2 int_Fmin^Fmax df p_FD./S).^0.5</p>
+</dd>
 </dl>
 </dd>
-<dt>h_rss  The root-sum-square amplitude (Hz^-0.5) of the waveform h:</dt>
-<dd>h_rss = int_Fmin^Fmax df p_FD</dd>
-<dt>h_peak The maximum absolute amplitude of the waveform h:</dt>
-<dd>h_peak = max(p_TD).^0.5</dd>
-<dt>Fchar  Characteristic frequency (Hz) of h in the given noise</dt>
-<dd><dl class="first docutils">
-<dt>background, defined as</dt>
-<dd><blockquote class="first">
-<div>int_Fmin^Fmax df f p_FD./S</div></blockquote>
-<dl class="last docutils">
-<dt>Fchar = —————————————-</dt>
-<dd>int_Fmin^Fmax df p_FD./S</dd>
+<dt>h_rss  The root-sum-square amplitude (Hz^-0.5) of the waveform h:</dt><dd><p>h_rss = int_Fmin^Fmax df p_FD</p>
+</dd>
+<dt>h_peak The maximum absolute amplitude of the waveform h:</dt><dd><p>h_peak = max(p_TD).^0.5</p>
+</dd>
+<dt>Fchar  Characteristic frequency (Hz) of h in the given noise</dt><dd><dl>
+<dt>background, defined as</dt><dd><blockquote>
+<div><p>int_Fmin^Fmax df f p_FD./S</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Fchar = —————————————-</dt><dd><p>int_Fmin^Fmax df p_FD./S</p>
+</dd>
 </dl>
 </dd>
 </dl>
-<p class="last">where Fmin = max(f) and   ilde(h) is the FFT of h.</p>
+<p>where Fmin = max(f) and   ilde(h) is the FFT of h.</p>
 </dd>
-<dt>bw     Effective bandwidth (Hz) of h in the given noise</dt>
-<dd><dl class="first docutils">
-<dt>background, defined as</dt>
-<dd><blockquote class="first">
-<div>int_Fmin^Fmax df (f-Fchar).^2 p_FD./S</div></blockquote>
-<dl class="last docutils">
-<dt>bw = —————————————————</dt>
-<dd>int_Fmin^Fmax df p_FD./S</dd>
-</dl>
+<dt>bw     Effective bandwidth (Hz) of h in the given noise</dt><dd><dl>
+<dt>background, defined as</dt><dd><blockquote>
+<div><p>int_Fmin^Fmax df (f-Fchar).^2 p_FD./S</p>
+</div></blockquote>
+<dl class="simple">
+<dt>bw = —————————————————</dt><dd><p>int_Fmin^Fmax df p_FD./S</p>
 </dd>
 </dl>
-<p class="last">where Fmin = max(f) and   ilde(h) is the FFT of h.</p>
 </dd>
-<dt>Tchar  Characteristic time at which the event occurs, defined as</dt>
-<dd><blockquote class="first">
-<div>int dt t p_TD(t)</div></blockquote>
-<dl class="last docutils">
-<dt>Tchar = —————–</dt>
-<dd>int dt p_TD(t)</dd>
+</dl>
+<p>where Fmin = max(f) and   ilde(h) is the FFT of h.</p>
+</dd>
+<dt>Tchar  Characteristic time at which the event occurs, defined as</dt><dd><blockquote>
+<div><p>int dt t p_TD(t)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Tchar = —————–</dt><dd><p>int dt p_TD(t)</p>
+</dd>
 </dl>
 </dd>
-<dt>dur    Duration of the signal, defined as</dt>
-<dd><blockquote class="first">
-<div>int dt (t-Tchar).^2 p_TD(t)</div></blockquote>
-<dl class="last docutils">
-<dt>Tchar = —————————-</dt>
-<dd>int dt p_TD(t)</dd>
+<dt>dur    Duration of the signal, defined as</dt><dd><blockquote>
+<div><p>int dt (t-Tchar).^2 p_TD(t)</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Tchar = —————————-</dt><dd><p>int dt p_TD(t)</p>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -282,7 +280,7 @@ transforms.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Scott Coughlin.
+        &copy; Copyright 2018, Scott Coughlin
 
     </p>
   </div>
@@ -299,35 +297,16 @@ transforms.</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'0+untagged.111.g8030ebd.dirty',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

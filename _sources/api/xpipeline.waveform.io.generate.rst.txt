@@ -1,4 +1,0 @@
-.. automodule:: xpipeline.waveform.io.generate
-    :members:
-    :undoc-members:
-    :show-inheritance:

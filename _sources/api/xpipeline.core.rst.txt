@@ -6,8 +6,8 @@ Submodules
 
 .. toctree::
 
+   xpipeline.core.sparse
    xpipeline.core.xdetector
-   xpipeline.core.xevent
    xpipeline.core.xfrequencyseries
    xpipeline.core.xtimefrequencymap
    xpipeline.core.xtimeseries

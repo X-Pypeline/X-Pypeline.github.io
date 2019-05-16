@@ -1,0 +1,4 @@
+.. automodule:: xpipeline.core.sparse
+    :members:
+    :undoc-members:
+    :show-inheritance:

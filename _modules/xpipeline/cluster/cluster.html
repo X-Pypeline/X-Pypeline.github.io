@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.cluster.cluster &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
+  <title>xpipeline.cluster.cluster &mdash; xpipeline 0+untagged.178.gddc1b81.dirty documentation</title>
   
 
   
@@ -17,34 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/xpipeline-docs.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -58,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.111.g8030ebd.dirty
+                0+untagged.178.gddc1b81.dirty
               </div>
             
           
@@ -170,6 +171,8 @@
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">import</span> <span class="nn">pandas</span>
 
+<span class="kn">from</span> <span class="nn">xpipeline.cluster</span> <span class="k">import</span> <span class="n">superclustertriggers</span>
+
 <span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Scott Coughlin &lt;scott.coughlin@ligo.org&gt;&#39;</span>
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;XCluster&#39;</span><span class="p">]</span>
 
@@ -199,7 +202,17 @@
         <span class="n">columns</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;columns&#39;</span><span class="p">,</span> <span class="n">_default_columns</span><span class="p">)</span>
         <span class="n">dtype</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;dtype&#39;</span><span class="p">,</span> <span class="n">_default_dtype</span><span class="p">)</span>
         <span class="n">tab</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">cluster_array</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">tab</span></div></div>
+        <span class="n">tab</span><span class="p">[</span><span class="s1">&#39;dt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tab</span><span class="o">.</span><span class="n">max_time_of_cluster</span> <span class="o">-</span> <span class="n">tab</span><span class="o">.</span><span class="n">min_time_of_cluster</span>
+        <span class="n">tab</span><span class="p">[</span><span class="s1">&#39;df&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tab</span><span class="o">.</span><span class="n">max_frequency_of_cluster</span> <span class="o">-</span> <span class="n">tab</span><span class="o">.</span><span class="n">min_frequency_of_cluster</span>
+        <span class="k">return</span> <span class="n">tab</span></div>
+
+<div class="viewcode-block" id="XCluster.supercluster"><a class="viewcode-back" href="../../../api/xpipeline.cluster.cluster.html#xpipeline.cluster.cluster.XCluster.supercluster">[docs]</a>    <span class="k">def</span> <span class="nf">supercluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">statistic_column</span><span class="o">=</span><span class="s1">&#39;energy_of_cluster&#39;</span><span class="p">):</span>
+        <span class="n">bounding_box_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;min_time_of_cluster&#39;</span><span class="p">,</span> <span class="s1">&#39;min_frequency_of_cluster&#39;</span><span class="p">,</span>
+                                 <span class="s1">&#39;dt&#39;</span><span class="p">,</span> <span class="s1">&#39;df&#39;</span><span class="p">]</span>
+        <span class="n">bounding_box_columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">statistic_column</span><span class="p">)</span>
+        <span class="n">bound_box</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">bounding_box_columns</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">superclustertriggers</span><span class="o">.</span><span class="n">fastsupercluster_wrapper</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bound_box</span><span class="p">),</span> <span class="n">bound_box</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span></div></div>
 </pre></div>
 
            </div>
@@ -212,7 +225,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Scott Coughlin.
+        &copy; Copyright 2018, Scott Coughlin
 
     </p>
   </div>
@@ -229,35 +242,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'0+untagged.111.g8030ebd.dirty',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

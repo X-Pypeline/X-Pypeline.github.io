@@ -1,0 +1,234 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.178.gddc1b81.dirty documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/xpipeline-docs.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> xpipeline
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.178.gddc1b81.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">xpipeline-workflow</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">xpipeline an explanation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">xpipeline</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>&lt;no title&gt;</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/xpipeline.postprocess.xcuts.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="module-xpipeline.postprocess.xcuts"></span><dl class="function">
+<dt id="xpipeline.postprocess.xcuts.apply_alpha_cuts_to_trial">
+<code class="descclassname">xpipeline.postprocess.xcuts.</code><code class="descname">apply_alpha_cuts_to_trial</code><span class="sig-paren">(</span><em>triggers</em>, <em>triggers_from_this_trial</em>, <em>alphaArrayPlus</em>, <em>alphaArrayCross</em>, <em>alphaArrayNull</em>, <em>alphaCutsPlus</em>, <em>alphaCutsCross</em>, <em>alphaCutsNull</em>, <em>detection_statistic_column_name</em>, <em>applying_to_injections</em>, <em>loudestBackgroundAlpha=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/postprocess/xcuts.html#apply_alpha_cuts_to_trial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.postprocess.xcuts.apply_alpha_cuts_to_trial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="xpipeline.postprocess.xcuts.apply_ratio_cuts_this_trial">
+<code class="descclassname">xpipeline.postprocess.xcuts.</code><code class="descname">apply_ratio_cuts_this_trial</code><span class="sig-paren">(</span><em>triggers</em>, <em>triggers_from_this_trial</em>, <em>typeOfCutPlus</em>, <em>ratioArrayPlus</em>, <em>ratioArrayCross</em>, <em>ratioArrayNull</em>, <em>ratioCutsPlus_repeated</em>, <em>ratioCutsCross_repeated</em>, <em>ratioCutsNull_repeated</em>, <em>ratioCutsPlus</em>, <em>ratioCutsCross</em>, <em>ratioCutsNull</em>, <em>detection_statistic_column_name</em>, <em>applying_to_injections</em>, <em>loudestBackgroundRatioJob=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/postprocess/xcuts.html#apply_ratio_cuts_this_trial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.postprocess.xcuts.apply_ratio_cuts_this_trial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="xpipeline.postprocess.xcuts.prep_triggers_for_alpha_cuts">
+<code class="descclassname">xpipeline.postprocess.xcuts.</code><code class="descname">prep_triggers_for_alpha_cuts</code><span class="sig-paren">(</span><em>triggers</em>, <em>ePlusIndex</em>, <em>eCrossIndex</em>, <em>eNullIndex</em>, <em>iPlusIndex</em>, <em>iCrossIndex</em>, <em>iNullIndex</em>, <em>vetoPlusRange2</em>, <em>vetoCrossRange2</em>, <em>vetoNullRange2</em>, <em>typeOfCutPlus</em>, <em>typeOfCutCross</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/postprocess/xcuts.html#prep_triggers_for_alpha_cuts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.postprocess.xcuts.prep_triggers_for_alpha_cuts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="xpipeline.postprocess.xcuts.prep_triggers_for_ratio">
+<code class="descclassname">xpipeline.postprocess.xcuts.</code><code class="descname">prep_triggers_for_ratio</code><span class="sig-paren">(</span><em>triggers</em>, <em>ePlusIndex</em>, <em>eCrossIndex</em>, <em>eNullIndex</em>, <em>iPlusIndex</em>, <em>iCrossIndex</em>, <em>iNullIndex</em>, <em>vetoPlusRange</em>, <em>vetoCrossRange</em>, <em>vetoNullRange</em>, <em>typeOfCutPlus</em>, <em>typeOfCutCross</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/postprocess/xcuts.html#prep_triggers_for_ratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.postprocess.xcuts.prep_triggers_for_ratio" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="xpipeline.postprocess.xcuts.xapplyalphacuts">
+<code class="descclassname">xpipeline.postprocess.xcuts.</code><code class="descname">xapplyalphacuts</code><span class="sig-paren">(</span><em>triggers</em>, <em>ePlusIndex</em>, <em>eCrossIndex</em>, <em>eNullIndex</em>, <em>iPlusIndex</em>, <em>iCrossIndex</em>, <em>iNullIndex</em>, <em>vetoPlusRange</em>, <em>vetoCrossRange</em>, <em>vetoNullRange</em>, <em>vetoPlusRange2</em>, <em>vetoCrossRange2</em>, <em>vetoNullRange2</em>, <em>FAR</em>, <em>typeOfCutPlus</em>, <em>typeOfCutCross</em>, <em>detection_statistic_column_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/postprocess/xcuts.html#xapplyalphacuts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.postprocess.xcuts.xapplyalphacuts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="xpipeline.postprocess.xcuts.xapplyalphacutsinjection">
+<code class="descclassname">xpipeline.postprocess.xcuts.</code><code class="descname">xapplyalphacutsinjection</code><span class="sig-paren">(</span><em>triggers</em>, <em>ePlusIndex</em>, <em>eCrossIndex</em>, <em>eNullIndex</em>, <em>iPlusIndex</em>, <em>iCrossIndex</em>, <em>iNullIndex</em>, <em>vetoPlusRange</em>, <em>vetoCrossRange</em>, <em>vetoNullRange</em>, <em>vetoPlusRange2</em>, <em>vetoCrossRange2</em>, <em>vetoNullRange2</em>, <em>loudestBackgroundAlpha</em>, <em>typeOfCutPlus</em>, <em>typeOfCutCross</em>, <em>detection_statistic_column_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/postprocess/xcuts.html#xapplyalphacutsinjection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.postprocess.xcuts.xapplyalphacutsinjection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="xpipeline.postprocess.xcuts.xapplyratiocuts">
+<code class="descclassname">xpipeline.postprocess.xcuts.</code><code class="descname">xapplyratiocuts</code><span class="sig-paren">(</span><em>triggers</em>, <em>ePlusIndex</em>, <em>eCrossIndex</em>, <em>eNullIndex</em>, <em>iPlusIndex</em>, <em>iCrossIndex</em>, <em>iNullIndex</em>, <em>vetoPlusRange</em>, <em>vetoCrossRange</em>, <em>vetoNullRange</em>, <em>FAR_Tuning</em>, <em>typeOfCutPlus</em>, <em>typeOfCutCross</em>, <em>detection_statistic_column_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/postprocess/xcuts.html#xapplyratiocuts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.postprocess.xcuts.xapplyratiocuts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="xpipeline.postprocess.xcuts.xapplyratiocutsinjections">
+<code class="descclassname">xpipeline.postprocess.xcuts.</code><code class="descname">xapplyratiocutsinjections</code><span class="sig-paren">(</span><em>triggers</em>, <em>ePlusIndex</em>, <em>eCrossIndex</em>, <em>eNullIndex</em>, <em>iPlusIndex</em>, <em>iCrossIndex</em>, <em>iNullIndex</em>, <em>vetoPlusRange</em>, <em>vetoCrossRange</em>, <em>vetoNullRange</em>, <em>loudestBackgroundRatioJob</em>, <em>typeOfCutPlus</em>, <em>typeOfCutCross</em>, <em>detection_statistic_column_name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/postprocess/xcuts.html#xapplyratiocutsinjections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.postprocess.xcuts.xapplyratiocutsinjections" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Scott Coughlin
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

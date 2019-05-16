@@ -1,0 +1,19 @@
+xpipeline.postprocess package
+=============================
+
+Submodules
+----------
+
+.. toctree::
+
+   xpipeline.postprocess.postprocess
+   xpipeline.postprocess.prep_data
+   xpipeline.postprocess.xcuts
+
+Module contents
+---------------
+
+.. automodule:: xpipeline.postprocess
+    :members:
+    :undoc-members:
+    :show-inheritance:

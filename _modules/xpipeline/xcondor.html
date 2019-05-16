@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.xcondor &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
+  <title>xpipeline.xcondor &mdash; xpipeline 0+untagged.178.gddc1b81.dirty documentation</title>
   
 
   
@@ -17,34 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/xpipeline-docs.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -58,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.111.g8030ebd.dirty
+                0+untagged.178.gddc1b81.dirty
               </div>
             
           
@@ -165,12 +166,12 @@
         <span class="c1"># ---- Get path to executable from parameters file.</span>
         <span class="c1"># self.__executable = cp.get(&#39;condor&#39;,&#39;xsearch&#39;)</span>
         <span class="c1"># ---- Get path to executable.</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;which xdetection &gt; path_file.txt&#39;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;which xpipeline-analysis &gt; path_file.txt&#39;</span><span class="p">)</span>
         <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;path_file.txt&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-        <span class="n">xdetectionstr</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">xpipeline_analysisstr</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;rm path_file.txt&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__executable</span> <span class="o">=</span> <span class="n">xdetectionstr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__executable</span> <span class="o">=</span> <span class="n">xpipeline_analysisstr</span>
         <span class="c1"># ---- Get condor universe from parameters file.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__universe</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;universe&#39;</span><span class="p">)</span>
         <span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGJob</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__universe</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__executable</span><span class="p">)</span>
@@ -178,10 +179,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__param_file</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="c1"># ---- Add required environment variables.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;environment&#39;</span><span class="p">,</span><span class="s2">&quot;USER=$ENV(USER);HOME=$ENV(HOME);&quot;</span> \
-            <span class="s2">&quot;LD_LIBRARY_PATH=$ENV(LD_LIBRARY_PATH);&quot;</span> \
-            <span class="s2">&quot;XPIPE_INSTALL_BIN=$ENV(XPIPE_INSTALL_BIN);&quot;</span> \
-            <span class="s2">&quot;PATH=/usr/bin:/bin&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_condor_cmd</span><span class="p">(</span><span class="s1">&#39;getenv&#39;</span><span class="p">,</span><span class="s2">&quot;true&quot;</span><span class="p">)</span>
 
         <span class="c1"># ----Add Accounting Group Flag</span>
         <span class="n">grouptag</span> <span class="o">=</span> <span class="s1">&#39;ligo.&#39;</span> <span class="o">+</span> \
@@ -204,10 +202,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_stdout_file</span><span class="p">(</span><span class="s1">&#39;logs/xsearch-$(cluster)-$(process).out&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_stderr_file</span><span class="p">(</span><span class="s1">&#39;logs/xsearch-$(cluster)-$(process).err&#39;</span><span class="p">)</span>
 
-        <span class="c1"># If on Atlas, use getenv=true to pass variables</span>
-        <span class="c1">#if atlasFlag:</span>
-        <span class="c1">#   self.add_condor_cmd(&#39;getenv&#39;,&quot;true&quot;)</span>
-
         <span class="c1"># ---- Name of condor job submission file to be written.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_sub_file</span><span class="p">(</span><span class="s1">&#39;xsearch.sub&#39;</span><span class="p">)</span></div>
 
@@ -224,12 +218,12 @@
         <span class="c1"># ---- Get path to executable from parameters file.</span>
         <span class="c1"># self.__executable = cp.get(&#39;condor&#39;,&#39;xsearch&#39;)</span>
         <span class="c1"># ---- Get path to executable.</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;which xdetection &gt; path_file.txt&#39;</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;which xpipeline-analysis &gt; path_file.txt&#39;</span><span class="p">)</span>
         <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;path_file.txt&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-        <span class="n">xdetectionstr</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">xpipeline_analysisstr</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
         <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s1">&#39;rm path_file.txt&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">__executable</span> <span class="o">=</span> <span class="n">xdetectionstr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__executable</span> <span class="o">=</span> <span class="n">xpipeline_analysisstr</span>
         <span class="c1"># ---- Get condor universe from parameters file.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__universe</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;condor&#39;</span><span class="p">,</span><span class="s1">&#39;universe&#39;</span><span class="p">)</span>
         <span class="n">pipeline</span><span class="o">.</span><span class="n">CondorDAGJob</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__universe</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">__executable</span><span class="p">)</span>
@@ -288,29 +282,29 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__x_injnum</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="c1"># ---- Set parameters file.</span>
-<div class="viewcode-block" id="XsearchNode.set_param_file"><a class="viewcode-back" href="../../api/xpipeline.xcondor.html#xpipeline.xcondor.XsearchNode.set_param_file">[docs]</a>    <span class="k">def</span> <span class="nf">set_param_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">path</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<div class="viewcode-block" id="XsearchNode.set_param_file"><a class="viewcode-back" href="../../api/xpipeline.xcondor.html#xpipeline.xcondor.XsearchNode.set_param_file">[docs]</a>    <span class="k">def</span> <span class="nf">set_param_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="s1">&#39;--parameter-file &#39;</span> <span class="o">+</span> <span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__param_file</span> <span class="o">=</span> <span class="n">path</span></div>
 
 <div class="viewcode-block" id="XsearchNode.get_param_file"><a class="viewcode-back" href="../../api/xpipeline.xcondor.html#xpipeline.xcondor.XsearchNode.get_param_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_param_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__param_file</span></div>
 
-<div class="viewcode-block" id="XsearchNode.set_x_jobnum"><a class="viewcode-back" href="../../api/xpipeline.xcondor.html#xpipeline.xcondor.XsearchNode.set_x_jobnum">[docs]</a>    <span class="k">def</span> <span class="nf">set_x_jobnum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<div class="viewcode-block" id="XsearchNode.set_x_jobnum"><a class="viewcode-back" href="../../api/xpipeline.xcondor.html#xpipeline.xcondor.XsearchNode.set_x_jobnum">[docs]</a>    <span class="k">def</span> <span class="nf">set_x_jobnum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="s1">&#39;--event-numbers &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__x_jobnum</span> <span class="o">=</span> <span class="n">n</span></div>
 
 <div class="viewcode-block" id="XsearchNode.get_x_jobnum"><a class="viewcode-back" href="../../api/xpipeline.xcondor.html#xpipeline.xcondor.XsearchNode.get_x_jobnum">[docs]</a>    <span class="k">def</span> <span class="nf">get_x_jobnum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__x_jobnum</span></div>
 
-<div class="viewcode-block" id="XsearchNode.set_output_dir"><a class="viewcode-back" href="../../api/xpipeline.xcondor.html#xpipeline.xcondor.XsearchNode.set_output_dir">[docs]</a>    <span class="k">def</span> <span class="nf">set_output_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">path</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<div class="viewcode-block" id="XsearchNode.set_output_dir"><a class="viewcode-back" href="../../api/xpipeline.xcondor.html#xpipeline.xcondor.XsearchNode.set_output_dir">[docs]</a>    <span class="k">def</span> <span class="nf">set_output_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="s1">&#39;--job-type &#39;</span> <span class="o">+</span> <span class="n">path</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__output_dir</span> <span class="o">=</span> <span class="n">path</span></div>
 
 <div class="viewcode-block" id="XsearchNode.get_output_dir"><a class="viewcode-back" href="../../api/xpipeline.xcondor.html#xpipeline.xcondor.XsearchNode.get_output_dir">[docs]</a>    <span class="k">def</span> <span class="nf">get_output_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">path</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__output_dir</span></div>
 
-<div class="viewcode-block" id="XsearchNode.set_x_injnum"><a class="viewcode-back" href="../../api/xpipeline.xcondor.html#xpipeline.xcondor.XsearchNode.set_x_injnum">[docs]</a>    <span class="k">def</span> <span class="nf">set_x_injnum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<div class="viewcode-block" id="XsearchNode.set_x_injnum"><a class="viewcode-back" href="../../api/xpipeline.xcondor.html#xpipeline.xcondor.XsearchNode.set_x_injnum">[docs]</a>    <span class="k">def</span> <span class="nf">set_x_injnum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_var_arg</span><span class="p">(</span><span class="s1">&#39;--injection-numbers &#39;</span> <span class="o">+</span> <span class="n">n</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__x_injnum</span> <span class="o">=</span> <span class="n">n</span></div>
 
 <div class="viewcode-block" id="XsearchNode.get_x_injnum"><a class="viewcode-back" href="../../api/xpipeline.xcondor.html#xpipeline.xcondor.XsearchNode.get_x_injnum">[docs]</a>    <span class="k">def</span> <span class="nf">get_x_injnum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -563,7 +557,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Scott Coughlin.
+        &copy; Copyright 2018, Scott Coughlin
 
     </p>
   </div>
@@ -580,35 +574,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../',
-            VERSION:'0+untagged.111.g8030ebd.dirty',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../_static/js/theme.js"></script>
-  
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

@@ -1,0 +1,665 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>xpipeline.postprocess.xcuts &mdash; xpipeline 0+untagged.178.gddc1b81.dirty documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/xpipeline-docs.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> xpipeline
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0+untagged.178.gddc1b81.dirty
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../command-line/index.html">Running <code class="docutils literal notranslate"><span class="pre">xpipeline-workflow</span></code> on the command line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/index.html">xpipeline an explanation</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">xpipeline</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>xpipeline.postprocess.xcuts</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for xpipeline.postprocess.xcuts</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># Copyright (C) Scott Coughlin (2017-)</span>
+<span class="c1">#</span>
+<span class="c1"># This file is part of the XPypeline python package.</span>
+<span class="c1">#</span>
+<span class="c1"># hveto is free software: you can redistribute it and/or modify</span>
+<span class="c1"># it under the terms of the GNU General Public License as published by</span>
+<span class="c1"># the Free Software Foundation, either version 3 of the License, or</span>
+<span class="c1"># (at your option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># hveto is distributed in the hope that it will be useful,</span>
+<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="c1"># GNU General Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License</span>
+<span class="c1"># along with hveto.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="c1"># ---- Import standard modules to the python path.</span>
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">import</span> <span class="nn">pandas</span>
+
+<div class="viewcode-block" id="prep_triggers_for_ratio"><a class="viewcode-back" href="../../../api/xpipeline.postprocess.xcuts.html#xpipeline.postprocess.xcuts.prep_triggers_for_ratio">[docs]</a><span class="k">def</span> <span class="nf">prep_triggers_for_ratio</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span> <span class="n">ePlusIndex</span><span class="p">,</span><span class="n">eCrossIndex</span><span class="p">,</span><span class="n">eNullIndex</span><span class="p">,</span>
+                            <span class="n">iPlusIndex</span><span class="p">,</span><span class="n">iCrossIndex</span><span class="p">,</span><span class="n">iNullIndex</span><span class="p">,</span>
+                            <span class="n">vetoPlusRange</span><span class="p">,</span><span class="n">vetoCrossRange</span><span class="p">,</span><span class="n">vetoNullRange</span><span class="p">,</span>
+                            <span class="n">typeOfCutPlus</span><span class="p">,</span><span class="n">typeOfCutCross</span><span class="p">,):</span>
+    <span class="c1"># Depending on wether you are requesting a two sided or one sided cut.</span>
+    <span class="c1"># construct specific ratio and cut arrays.</span>
+
+    <span class="c1"># Calculate all Ratio Values</span>
+    <span class="n">plusRatioEoverI</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">ePlusIndex</span><span class="p">]</span> <span class="o">/</span> <span class="n">triggers</span><span class="p">[</span><span class="n">iPlusIndex</span><span class="p">])</span>
+    <span class="n">crossRatioEoverI</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">eCrossIndex</span><span class="p">]</span> <span class="o">/</span> <span class="n">triggers</span><span class="p">[</span><span class="n">iCrossIndex</span><span class="p">])</span>
+    <span class="n">plusRatioIoverE</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">iPlusIndex</span><span class="p">]</span> <span class="o">/</span> <span class="n">triggers</span><span class="p">[</span><span class="n">ePlusIndex</span><span class="p">])</span>
+    <span class="n">crossRatioIoverE</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">iCrossIndex</span><span class="p">]</span> <span class="o">/</span> <span class="n">triggers</span><span class="p">[</span><span class="n">eCrossIndex</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">iNullIndex</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">triggers</span><span class="p">[</span><span class="s1">&#39;nullenergy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">plusRatioEoverI</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="n">nullRatioIoverE</span> <span class="o">=</span> <span class="n">triggers</span><span class="p">[</span><span class="s1">&#39;nullenergy&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">nullRatioIoverE</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">iNullIndex</span><span class="p">]</span> <span class="o">/</span> <span class="n">triggers</span><span class="p">[</span><span class="n">eNullIndex</span><span class="p">])</span>
+
+    <span class="n">ratioArrayNull</span> <span class="o">=</span> <span class="n">nullRatioIoverE</span>
+
+    <span class="k">if</span> <span class="n">typeOfCutPlus</span> <span class="o">==</span> <span class="s1">&#39;twosided&#39;</span><span class="p">:</span>
+
+        <span class="n">ratioCutsPlus</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">vetoPlusRange</span><span class="p">)</span>
+        <span class="n">ratioCutsCross</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">vetoCrossRange</span><span class="p">)</span>
+        <span class="n">ratioCutsNull</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">vetoNullRange</span><span class="p">)</span>
+
+        <span class="n">ratioCutsPlus_repeated</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ratioCutsPlus</span><span class="p">,</span><span class="n">ratioCutsPlus</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">ratioCutsCross_repeated</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ratioCutsCross</span><span class="p">,</span><span class="n">ratioCutsCross</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">ratioCutsNull_repeated</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">ratioCutsNull</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="n">ratioArrayPlus</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">plusRatioEoverI</span><span class="p">,</span> <span class="n">plusRatioIoverE</span><span class="p">),</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ratioArrayCross</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">crossRatioEoverI</span><span class="p">,</span> <span class="n">crossRatioIoverE</span><span class="p">),</span> <span class="n">join</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+
+        <span class="n">ratioCutsPlus</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">vetoPlusRange</span><span class="p">))</span>
+        <span class="n">ratioCutsCross</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">vetoCrossRange</span><span class="p">))</span>
+        <span class="n">ratioCutsNull</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">vetoNullRange</span><span class="p">))</span>
+
+        <span class="n">ratioCutsPlus_repeated</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">ratioCutsPlus</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">ratioCutsCross_repeated</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">ratioCutsCross</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">ratioCutsNull_repeated</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">ratioCutsNull</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="k">if</span> <span class="n">typeOfCutPlus</span> <span class="o">==</span> <span class="s1">&#39;EoverI&#39;</span><span class="p">:</span>
+            <span class="n">ratioArrayPlus</span> <span class="o">=</span> <span class="n">plusRatioEoverI</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ratioArrayPlus</span> <span class="o">=</span> <span class="n">plusRatioIoverE</span>
+
+        <span class="k">if</span> <span class="n">typeOfCutCross</span> <span class="o">==</span> <span class="s1">&#39;EoverI&#39;</span><span class="p">:</span>
+            <span class="n">ratioArrayCross</span> <span class="o">=</span> <span class="n">crossRatioEoverI</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ratioArrayCross</span> <span class="o">=</span> <span class="n">crossRatioIoverE</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">ratioArrayPlus</span><span class="p">,</span> <span class="n">ratioArrayCross</span><span class="p">,</span> <span class="n">ratioArrayNull</span><span class="p">,</span> <span class="n">ratioCutsPlus_repeated</span><span class="p">,</span> <span class="n">ratioCutsCross_repeated</span><span class="p">,</span> <span class="n">ratioCutsNull_repeated</span><span class="p">,</span>
+           <span class="n">ratioCutsPlus</span><span class="p">,</span> <span class="n">ratioCutsCross</span><span class="p">,</span> <span class="n">ratioCutsNull</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="apply_ratio_cuts_this_trial"><a class="viewcode-back" href="../../../api/xpipeline.postprocess.xcuts.html#xpipeline.postprocess.xcuts.apply_ratio_cuts_this_trial">[docs]</a><span class="k">def</span> <span class="nf">apply_ratio_cuts_this_trial</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span><span class="n">triggers_from_this_trial</span><span class="p">,</span><span class="n">typeOfCutPlus</span><span class="p">,</span>
+                                <span class="n">ratioArrayPlus</span><span class="p">,</span><span class="n">ratioArrayCross</span><span class="p">,</span><span class="n">ratioArrayNull</span><span class="p">,</span>
+                                <span class="n">ratioCutsPlus_repeated</span><span class="p">,</span> <span class="n">ratioCutsCross_repeated</span><span class="p">,</span> <span class="n">ratioCutsNull_repeated</span><span class="p">,</span>
+                                <span class="n">ratioCutsPlus</span><span class="p">,</span> <span class="n">ratioCutsCross</span><span class="p">,</span> <span class="n">ratioCutsNull</span><span class="p">,</span>
+                                <span class="n">detection_statistic_column_name</span><span class="p">,</span>
+                                <span class="n">applying_to_injections</span><span class="p">,</span><span class="n">loudestBackgroundRatioJob</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="n">detection_statistic</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">detection_statistic_column_name</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">triggers_from_this_trial</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+
+    <span class="n">ratioArrayPlusJobNumber</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">ratioArrayPlus</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">triggers_from_this_trial</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">ratioArrayCrossJobNumber</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">ratioArrayCross</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">triggers_from_this_trial</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="n">ratioArrayNullJobNumber</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">ratioArrayNull</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">triggers_from_this_trial</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+
+    <span class="c1"># Reshape Calculated Ratios and Cut Values such that they are the same size</span>
+    <span class="c1"># Specifically we will make it so that the shape is</span>
+    <span class="c1"># (# of cuts to apply by number of triggers), this means that to find</span>
+    <span class="c1"># that means that ratioArray we need to repeat the triggers by # of cuts</span>
+    <span class="c1"># and for veto* we need to repeat the threshold to be applied by how many triggers said threshold needs</span>
+    <span class="c1"># to be applied to.</span>
+
+    <span class="n">ratioArrayTempPlus</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">ratioArrayPlusJobNumber</span><span class="p">,</span>
+                                      <span class="nb">len</span><span class="p">(</span><span class="n">ratioCutsPlus</span><span class="p">),</span>
+                                      <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ratioArrayTempCross</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">ratioArrayCrossJobNumber</span><span class="p">,</span>
+                                       <span class="nb">len</span><span class="p">(</span><span class="n">ratioCutsCross</span><span class="p">),</span>
+                                       <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ratioArrayTempNull</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">ratioArrayNullJobNumber</span><span class="p">,</span>
+                                      <span class="nb">len</span><span class="p">(</span><span class="n">ratioCutsNull</span><span class="p">),</span>
+                                      <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">vetoPlusRep</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">ratioCutsPlus_repeated</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">ratioArrayPlusJobNumber</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
+    <span class="n">vetoCrossRep</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">ratioCutsCross_repeated</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">ratioArrayCrossJobNumber</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],)))</span>
+    <span class="n">vetoNullRep</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">ratioCutsNull_repeated</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">ratioArrayNullJobNumber</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],)))</span>
+
+    <span class="k">if</span> <span class="n">applying_to_injections</span><span class="p">:</span>
+        <span class="n">detection_statistic_tmp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">detection_statistic</span><span class="p">,</span>
+                                              <span class="nb">len</span><span class="p">(</span><span class="n">ratioCutsNull</span><span class="p">),</span>
+                                              <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">loudest_background_job</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">loudestBackgroundRatioJob</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                                            <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">detection_statistic</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],)))</span>
+
+    <span class="c1"># Determine what clusters passed all the Ratio cuts</span>
+    <span class="k">if</span> <span class="n">applying_to_injections</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">typeOfCutPlus</span> <span class="o">==</span> <span class="s1">&#39;twosided&#39;</span><span class="p">:</span>
+            <span class="n">ratioPassCut</span> <span class="o">=</span> <span class="p">(((</span><span class="n">ratioArrayTempPlus</span>  <span class="o">&gt;=</span> <span class="n">vetoPlusRep</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">ratioCutsPlus</span><span class="p">)]</span> <span class="o">|</span> <span class="p">(</span><span class="n">ratioArrayTempPlus</span>  <span class="o">&gt;=</span> <span class="n">vetoPlusRep</span><span class="p">)[</span><span class="nb">len</span><span class="p">(</span><span class="n">ratioCutsPlus</span><span class="p">)::])</span> <span class="o">&amp;</span> <span class="p">((</span><span class="n">ratioArrayTempCross</span>  <span class="o">&gt;=</span> <span class="n">vetoCrossRep</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">ratioCutsCross</span><span class="p">)]</span> <span class="o">|</span> <span class="p">(</span><span class="n">ratioArrayTempCross</span>  <span class="o">&gt;=</span> <span class="n">vetoCrossRep</span><span class="p">)[</span><span class="nb">len</span><span class="p">(</span><span class="n">ratioCutsCross</span><span class="p">)::])</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">ratioArrayTempNull</span> <span class="o">&gt;=</span> <span class="n">vetoNullRep</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">detection_statistic_tmp</span> <span class="o">&gt;</span> <span class="n">loudest_background_job</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ratioPassCut</span> <span class="o">=</span> <span class="p">((</span><span class="n">ratioArrayTempPlus</span>  <span class="o">&gt;=</span> <span class="n">vetoPlusRep</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="p">(</span><span class="n">ratioArrayTempCross</span>  <span class="o">&gt;=</span> <span class="n">vetoCrossRep</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="p">(</span><span class="n">ratioArrayTempNull</span> <span class="o">&gt;=</span> <span class="n">vetoNullRep</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="p">(</span><span class="n">detection_statistic_tmp</span> <span class="o">&gt;</span> <span class="n">loudest_background_job</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">typeOfCutPlus</span> <span class="o">==</span> <span class="s1">&#39;twosided&#39;</span><span class="p">:</span>
+            <span class="n">ratioPassCut</span> <span class="o">=</span> <span class="p">(((</span><span class="n">ratioArrayTempPlus</span>  <span class="o">&gt;=</span> <span class="n">vetoPlusRep</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">ratioCutsPlus</span><span class="p">)]</span> <span class="o">|</span> <span class="p">(</span><span class="n">ratioArrayTempPlus</span>  <span class="o">&gt;=</span> <span class="n">vetoPlusRep</span><span class="p">)[</span><span class="nb">len</span><span class="p">(</span><span class="n">ratioCutsPlus</span><span class="p">)::])</span> <span class="o">&amp;</span>
+            <span class="p">((</span><span class="n">ratioArrayTempCross</span>  <span class="o">&gt;=</span> <span class="n">vetoCrossRep</span><span class="p">)[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">ratioCutsCross</span><span class="p">)]</span> <span class="o">|</span> <span class="p">(</span><span class="n">ratioArrayTempCross</span>  <span class="o">&gt;=</span> <span class="n">vetoCrossRep</span><span class="p">)[</span><span class="nb">len</span><span class="p">(</span><span class="n">ratioCutsCross</span><span class="p">)::])</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">ratioArrayTempNull</span> <span class="o">&gt;=</span> <span class="n">vetoNullRep</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ratioPassCut</span> <span class="o">=</span> <span class="p">((</span><span class="n">ratioArrayTempPlus</span>  <span class="o">&gt;=</span> <span class="n">vetoPlusRep</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="p">(</span><span class="n">ratioArrayTempCross</span>  <span class="o">&gt;=</span> <span class="n">vetoCrossRep</span><span class="p">)</span> <span class="o">&amp;</span>
+                            <span class="p">(</span><span class="n">ratioArrayTempNull</span> <span class="o">&gt;=</span> <span class="n">vetoNullRep</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">ratioPassCut</span></div>
+
+<div class="viewcode-block" id="xapplyratiocuts"><a class="viewcode-back" href="../../../api/xpipeline.postprocess.xcuts.html#xpipeline.postprocess.xcuts.xapplyratiocuts">[docs]</a><span class="k">def</span> <span class="nf">xapplyratiocuts</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span> <span class="n">ePlusIndex</span><span class="p">,</span><span class="n">eCrossIndex</span><span class="p">,</span><span class="n">eNullIndex</span><span class="p">,</span>
+                    <span class="n">iPlusIndex</span><span class="p">,</span><span class="n">iCrossIndex</span><span class="p">,</span><span class="n">iNullIndex</span><span class="p">,</span>
+                    <span class="n">vetoPlusRange</span><span class="p">,</span><span class="n">vetoCrossRange</span><span class="p">,</span><span class="n">vetoNullRange</span><span class="p">,</span>
+                    <span class="n">FAR_Tuning</span><span class="p">,</span><span class="n">typeOfCutPlus</span><span class="p">,</span><span class="n">typeOfCutCross</span><span class="p">,</span>
+                    <span class="n">detection_statistic_column_name</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">FAR_Tuning</span><span class="p">)</span><span class="o">.</span><span class="n">is_integer</span><span class="p">():</span>
+        <span class="n">FAR_Tuning</span> <span class="o">=</span> <span class="p">(</span><span class="n">FAR_Tuning</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="c1"># Depending on what was asked prep triggers to apply ratio array</span>
+    <span class="n">ratioArrayPlus</span><span class="p">,</span> <span class="n">ratioArrayCross</span><span class="p">,</span> <span class="n">ratioArrayNull</span><span class="p">,</span> <span class="n">ratioCutsPlus_repeated</span><span class="p">,</span> <span class="n">ratioCutsCross_repeated</span><span class="p">,</span> <span class="n">ratioCutsNull_repeated</span><span class="p">,</span> <span class="n">ratioCutsPlus</span><span class="p">,</span> <span class="n">ratioCutsCross</span><span class="p">,</span> <span class="n">ratioCutsNull</span> <span class="o">=</span> \
+        <span class="n">prep_triggers_for_ratio</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span> <span class="n">ePlusIndex</span><span class="p">,</span><span class="n">eCrossIndex</span><span class="p">,</span><span class="n">eNullIndex</span><span class="p">,</span>
+                                <span class="n">iPlusIndex</span><span class="p">,</span><span class="n">iCrossIndex</span><span class="p">,</span><span class="n">iNullIndex</span><span class="p">,</span>
+                                <span class="n">vetoPlusRange</span><span class="p">,</span><span class="n">vetoCrossRange</span><span class="p">,</span><span class="n">vetoNullRange</span><span class="p">,</span>
+                                <span class="n">typeOfCutPlus</span><span class="p">,</span><span class="n">typeOfCutCross</span><span class="p">,)</span>
+
+    <span class="c1"># Determine how many indepdent trials there are</span>
+    <span class="n">background_trials</span> <span class="o">=</span> <span class="n">triggers</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;event&#39;</span><span class="p">,</span><span class="s1">&#39;internal_time_slide&#39;</span><span class="p">])</span>
+    <span class="n">number_of_trials</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">background_trials</span><span class="p">)</span>
+    <span class="n">indexFARBackground</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">number_of_trials</span><span class="o">*</span> <span class="n">FAR_Tuning</span><span class="p">))</span>
+    <span class="n">loudestBackgroundRatioJob</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">trial_name</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">background_trials</span><span class="p">:</span>
+        <span class="n">triggers_from_this_trial</span> <span class="o">=</span> <span class="n">background_trials</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
+
+        <span class="n">detection_statistic</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">detection_statistic_column_name</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">triggers_from_this_trial</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+
+        <span class="n">ratioPassCut</span> <span class="o">=</span> <span class="n">apply_ratio_cuts_this_trial</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span><span class="n">triggers_from_this_trial</span><span class="p">,</span><span class="n">typeOfCutPlus</span><span class="p">,</span>
+                                <span class="n">ratioArrayPlus</span><span class="p">,</span><span class="n">ratioArrayCross</span><span class="p">,</span><span class="n">ratioArrayNull</span><span class="p">,</span>
+                                <span class="n">ratioCutsPlus_repeated</span><span class="p">,</span> <span class="n">ratioCutsCross_repeated</span><span class="p">,</span> <span class="n">ratioCutsNull_repeated</span><span class="p">,</span>
+                                <span class="n">ratioCutsPlus</span><span class="p">,</span> <span class="n">ratioCutsCross</span><span class="p">,</span> <span class="n">ratioCutsNull</span><span class="p">,</span>
+                                <span class="n">detection_statistic_column_name</span><span class="p">,</span>
+                                <span class="kc">False</span><span class="p">,</span><span class="n">loudestBackgroundRatioJob</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="c1"># Find Surviving Offsource</span>
+        <span class="n">backGroundArray</span> <span class="o">=</span> <span class="n">ratioPassCut</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">detection_statistic</span><span class="p">,</span>
+                                                   <span class="nb">len</span><span class="p">(</span><span class="n">ratioCutsPlus</span><span class="p">),</span>
+                                                   <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Find loudest surviving trigger for this trial for the grid of applied cuts</span>
+        <span class="c1"># to do this we find the max over the columns</span>
+        <span class="c1">#(remember each row represented an applied a cut)</span>
+        <span class="n">loudestBackgroundRatioJob</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">backGroundArray</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">trial_name</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+    <span class="n">loudestBackgroundRatioJob</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">loudestBackgroundRatioJob</span><span class="p">)</span>
+    <span class="n">loudestBackgroundRatioJob</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">loudestBackgroundRatioJob</span><span class="p">[</span><span class="n">indexFARBackground</span><span class="p">,:]</span></div>
+
+<div class="viewcode-block" id="xapplyratiocutsinjections"><a class="viewcode-back" href="../../../api/xpipeline.postprocess.xcuts.html#xpipeline.postprocess.xcuts.xapplyratiocutsinjections">[docs]</a><span class="k">def</span> <span class="nf">xapplyratiocutsinjections</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span> <span class="n">ePlusIndex</span><span class="p">,</span><span class="n">eCrossIndex</span><span class="p">,</span><span class="n">eNullIndex</span><span class="p">,</span>
+                              <span class="n">iPlusIndex</span><span class="p">,</span><span class="n">iCrossIndex</span><span class="p">,</span><span class="n">iNullIndex</span><span class="p">,</span>
+                              <span class="n">vetoPlusRange</span><span class="p">,</span><span class="n">vetoCrossRange</span><span class="p">,</span><span class="n">vetoNullRange</span><span class="p">,</span>
+                              <span class="n">loudestBackgroundRatioJob</span><span class="p">,</span><span class="n">typeOfCutPlus</span><span class="p">,</span><span class="n">typeOfCutCross</span><span class="p">,</span>
+                              <span class="n">detection_statistic_column_name</span><span class="p">,):</span>
+
+    <span class="c1"># Depending on what was asked prep triggers to apply ratio array</span>
+    <span class="n">ratioArrayPlus</span><span class="p">,</span> <span class="n">ratioArrayCross</span><span class="p">,</span> <span class="n">ratioArrayNull</span><span class="p">,</span> <span class="n">ratioCutsPlus_repeated</span><span class="p">,</span> <span class="n">ratioCutsCross_repeated</span><span class="p">,</span> <span class="n">ratioCutsNull_repeated</span><span class="p">,</span> <span class="n">ratioCutsPlus</span><span class="p">,</span> <span class="n">ratioCutsCross</span><span class="p">,</span> <span class="n">ratioCutsNull</span> <span class="o">=</span> \
+        <span class="n">prep_triggers_for_ratio</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span> <span class="n">ePlusIndex</span><span class="p">,</span><span class="n">eCrossIndex</span><span class="p">,</span><span class="n">eNullIndex</span><span class="p">,</span>
+                                <span class="n">iPlusIndex</span><span class="p">,</span><span class="n">iCrossIndex</span><span class="p">,</span><span class="n">iNullIndex</span><span class="p">,</span>
+                                <span class="n">vetoPlusRange</span><span class="p">,</span><span class="n">vetoCrossRange</span><span class="p">,</span><span class="n">vetoNullRange</span><span class="p">,</span>
+                                <span class="n">typeOfCutPlus</span><span class="p">,</span><span class="n">typeOfCutCross</span><span class="p">,)</span>
+
+    <span class="n">injection_trials</span> <span class="o">=</span> <span class="n">triggers</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;injection_scale&#39;</span><span class="p">,</span><span class="s1">&#39;injection_number&#39;</span><span class="p">])</span>
+    <span class="n">all_ratio_boolean</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">all_indices</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">injection_trials</span><span class="p">:</span>
+        <span class="n">triggers_from_this_trial</span> <span class="o">=</span> <span class="n">injection_trials</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
+        <span class="n">ratioPassCut</span> <span class="o">=</span> <span class="n">apply_ratio_cuts_this_trial</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span><span class="n">triggers_from_this_trial</span><span class="p">,</span><span class="n">typeOfCutPlus</span><span class="p">,</span>
+                                <span class="n">ratioArrayPlus</span><span class="p">,</span><span class="n">ratioArrayCross</span><span class="p">,</span><span class="n">ratioArrayNull</span><span class="p">,</span>
+                                <span class="n">ratioCutsPlus_repeated</span><span class="p">,</span> <span class="n">ratioCutsCross_repeated</span><span class="p">,</span> <span class="n">ratioCutsNull_repeated</span><span class="p">,</span>
+                                <span class="n">ratioCutsPlus</span><span class="p">,</span> <span class="n">ratioCutsCross</span><span class="p">,</span> <span class="n">ratioCutsNull</span><span class="p">,</span>
+                                <span class="n">detection_statistic_column_name</span><span class="p">,</span>
+                                <span class="kc">True</span><span class="p">,</span><span class="n">loudestBackgroundRatioJob</span><span class="o">=</span><span class="n">loudestBackgroundRatioJob</span><span class="p">)</span>
+
+        <span class="n">all_ratio_boolean</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ratioPassCut</span><span class="p">)</span>
+        <span class="n">all_indices</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">triggers_from_this_trial</span><span class="p">)</span>
+
+    <span class="c1"># temporarly create a pandas dataframe indicating whether a given triggers passed</span>
+    <span class="c1"># one of the cut combinations and the loudest background trigger from that cut combination</span>
+    <span class="n">pass_ratio_cuts</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">all_ratio_boolean</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">all_indices</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">triggers</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pass_ratio_cuts</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="prep_triggers_for_alpha_cuts"><a class="viewcode-back" href="../../../api/xpipeline.postprocess.xcuts.html#xpipeline.postprocess.xcuts.prep_triggers_for_alpha_cuts">[docs]</a><span class="k">def</span> <span class="nf">prep_triggers_for_alpha_cuts</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span>
+                                <span class="n">ePlusIndex</span><span class="p">,</span><span class="n">eCrossIndex</span><span class="p">,</span><span class="n">eNullIndex</span><span class="p">,</span>
+                                <span class="n">iPlusIndex</span><span class="p">,</span><span class="n">iCrossIndex</span><span class="p">,</span><span class="n">iNullIndex</span><span class="p">,</span>
+                                <span class="n">vetoPlusRange2</span><span class="p">,</span><span class="n">vetoCrossRange2</span><span class="p">,</span><span class="n">vetoNullRange2</span><span class="p">,</span>
+                                <span class="n">typeOfCutPlus</span><span class="p">,</span><span class="n">typeOfCutCross</span><span class="p">,):</span>
+    <span class="c1"># Calculate all ratio values</span>
+    <span class="n">denominator_plus</span> <span class="o">=</span> <span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">ePlusIndex</span><span class="p">]</span> <span class="o">+</span> <span class="n">triggers</span><span class="p">[</span><span class="n">iPlusIndex</span><span class="p">])</span><span class="o">**</span><span class="mf">0.8</span>
+    <span class="n">denominator_cross</span> <span class="o">=</span> <span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">eCrossIndex</span><span class="p">]</span> <span class="o">+</span> <span class="n">triggers</span><span class="p">[</span><span class="n">iCrossIndex</span><span class="p">])</span><span class="o">**</span><span class="mf">0.8</span>
+
+    <span class="c1"># Calculate the so called alpha values</span>
+    <span class="n">plusAlphaEoverI</span>  <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">ePlusIndex</span><span class="p">]</span> <span class="o">-</span> <span class="n">triggers</span><span class="p">[</span><span class="n">iPlusIndex</span><span class="p">])</span><span class="o">/</span><span class="n">denominator_plus</span>
+    <span class="n">crossAlphaEoverI</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">eCrossIndex</span><span class="p">]</span> <span class="o">-</span> <span class="n">triggers</span><span class="p">[</span><span class="n">iCrossIndex</span><span class="p">])</span><span class="o">/</span><span class="n">denominator_cross</span>
+    <span class="n">plusAlphaIoverE</span>  <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">iPlusIndex</span><span class="p">]</span> <span class="o">-</span> <span class="n">triggers</span><span class="p">[</span><span class="n">ePlusIndex</span><span class="p">])</span><span class="o">/</span><span class="n">denominator_plus</span>
+    <span class="n">crossAlphaIoverE</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">iCrossIndex</span><span class="p">]</span> <span class="o">-</span> <span class="n">triggers</span><span class="p">[</span><span class="n">eCrossIndex</span><span class="p">])</span><span class="o">/</span><span class="n">denominator_cross</span>
+
+    <span class="k">if</span> <span class="n">iNullIndex</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">triggers</span><span class="p">[</span><span class="s1">&#39;nullenergy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">plusAlphaEoverI</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="n">nullAlphaIoverE</span> <span class="o">=</span> <span class="n">triggers</span><span class="p">[</span><span class="s1">&#39;nullenergy&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">nullAlphaIoverE</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">iNullIndex</span><span class="p">]</span>  <span class="o">-</span> <span class="n">triggers</span><span class="p">[</span><span class="n">eNullIndex</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">iNullIndex</span><span class="p">]</span> <span class="o">+</span> <span class="n">triggers</span><span class="p">[</span><span class="n">eNullIndex</span><span class="p">])</span><span class="o">**</span><span class="mf">0.8</span>
+
+    <span class="k">if</span> <span class="n">typeOfCutPlus</span> <span class="o">==</span> <span class="s1">&#39;twosided&#39;</span><span class="p">:</span>
+        <span class="n">alphaCutsPlus</span> <span class="o">=</span> <span class="n">vetoPlusRange2</span>
+        <span class="n">alphaCutsCross</span> <span class="o">=</span> <span class="n">vetoCrossRange2</span>
+        <span class="n">alphaCutsNull</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">vetoNullRange2</span><span class="p">)</span>
+        <span class="n">alphaArrayPlus</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">plusAlphaEoverI</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+        <span class="n">alphaArrayCross</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">crossAlphaEoverI</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+        <span class="n">alphaArrayNull</span> <span class="o">=</span> <span class="n">nullAlphaIoverE</span><span class="o">+</span><span class="mi">1</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">alphaCutsPlus</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">vetoPlusRange2</span><span class="p">)</span>
+        <span class="n">alphaCutsCross</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">vetoCrossRange2</span><span class="p">)</span>
+        <span class="n">alphaCutsNull</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">vetoNullRange2</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">typeOfCutPlus</span> <span class="o">==</span> <span class="s1">&#39;EoverI&#39;</span><span class="p">:</span>
+            <span class="n">alphaArrayPlus</span> <span class="o">=</span> <span class="n">plusAlphaEoverI</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">alphaArrayPlus</span> <span class="o">=</span> <span class="n">plusAlphaIoverE</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">typeOfCutCross</span> <span class="o">==</span> <span class="s1">&#39;EoverI&#39;</span><span class="p">:</span>
+            <span class="n">alphaArrayCross</span> <span class="o">=</span> <span class="n">crossAlphaEoverI</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">alphaArrayCross</span> <span class="o">=</span> <span class="n">crossAlphaIoverE</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="n">alphaArrayNull</span> <span class="o">=</span> <span class="n">nullAlphaIoverE</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">alphaArrayPlus</span><span class="p">,</span> <span class="n">alphaArrayCross</span><span class="p">,</span> <span class="n">alphaArrayNull</span><span class="p">,</span> <span class="n">alphaCutsPlus</span><span class="p">,</span> <span class="n">alphaCutsCross</span><span class="p">,</span> <span class="n">alphaCutsNull</span></div>
+
+<div class="viewcode-block" id="apply_alpha_cuts_to_trial"><a class="viewcode-back" href="../../../api/xpipeline.postprocess.xcuts.html#xpipeline.postprocess.xcuts.apply_alpha_cuts_to_trial">[docs]</a><span class="k">def</span> <span class="nf">apply_alpha_cuts_to_trial</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span><span class="n">triggers_from_this_trial</span><span class="p">,</span>
+                            <span class="n">alphaArrayPlus</span><span class="p">,</span><span class="n">alphaArrayCross</span><span class="p">,</span><span class="n">alphaArrayNull</span><span class="p">,</span>
+                            <span class="n">alphaCutsPlus</span><span class="p">,</span> <span class="n">alphaCutsCross</span><span class="p">,</span> <span class="n">alphaCutsNull</span><span class="p">,</span>
+                            <span class="n">detection_statistic_column_name</span><span class="p">,</span>
+                            <span class="n">applying_to_injections</span><span class="p">,</span><span class="n">loudestBackgroundAlpha</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+    <span class="n">detection_statistic</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">detection_statistic_column_name</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">triggers_from_this_trial</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+    <span class="c1"># Get all the relevant alpha ratios for triggers associated with this event</span>
+    <span class="n">alphaArrayPlusJobNumber</span> <span class="o">=</span> <span class="n">alphaArrayPlus</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">triggers_from_this_trial</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">alphaArrayCrossJobNumber</span> <span class="o">=</span> <span class="n">alphaArrayCross</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">triggers_from_this_trial</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="n">alphaArrayNullJobNumber</span> <span class="o">=</span> <span class="n">alphaArrayNull</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">triggers_from_this_trial</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+    <span class="c1"># Reshape Calculated Ratios and Cut Values such that they are the same size</span>
+    <span class="c1"># Specifically we will make it so that the shape is</span>
+    <span class="c1"># (# of cuts to apply by number of triggers), this means that to find</span>
+    <span class="c1"># that means that ratioArray we need to repeat the triggers by # of cuts</span>
+    <span class="c1"># and for veto* we need to repeat the threshold to be applied by how many triggers said threshold needs</span>
+    <span class="c1"># to be applied to.</span>
+
+    <span class="n">alphaArrayTempPlus</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">alphaArrayPlusJobNumber</span><span class="p">),</span>
+                                      <span class="nb">len</span><span class="p">(</span><span class="n">alphaCutsPlus</span><span class="p">),</span>
+                                      <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">alphaArrayTempCross</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">alphaArrayCrossJobNumber</span><span class="p">),</span>
+                                       <span class="nb">len</span><span class="p">(</span><span class="n">alphaCutsCross</span><span class="p">),</span>
+                                       <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">alphaArrayTempNull</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">alphaArrayNullJobNumber</span><span class="p">),</span>
+                                      <span class="nb">len</span><span class="p">(</span><span class="n">alphaCutsNull</span><span class="p">),</span>
+                                      <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">vetoPlusRange2Rep</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">alphaCutsPlus</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                                  <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">alphaArrayPlusJobNumber</span><span class="p">))))</span>
+    <span class="n">vetoCrossRange2Rep</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">alphaCutsCross</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                                  <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">alphaArrayCrossJobNumber</span><span class="p">),)))</span>
+    <span class="n">vetoNullRange2Rep</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">alphaCutsNull</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                                 <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">alphaArrayNullJobNumber</span><span class="p">),)))</span>
+
+    <span class="k">if</span> <span class="n">applying_to_injections</span><span class="p">:</span>
+        <span class="c1"># Now repeat the background</span>
+        <span class="n">detection_statistic_tmp</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">detection_statistic</span><span class="p">),</span>
+                                              <span class="nb">len</span><span class="p">(</span><span class="n">alphaCutsNull</span><span class="p">),</span>
+                                              <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">loudest_background_job</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">loudestBackgroundAlpha</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                                            <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span>  <span class="n">detection_statistic</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],)))</span>
+
+
+    <span class="c1"># Take absolute value of vetoRange2Rep.</span>
+    <span class="n">vetoPlusRange2Rep</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">vetoPlusRange2Rep</span><span class="p">)</span>
+    <span class="n">vetoCrossRange2Rep</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">vetoCrossRange2Rep</span><span class="p">)</span>
+    <span class="n">vetoNullRange2Rep</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">vetoNullRange2Rep</span><span class="p">)</span>
+
+    <span class="n">vetoPlusRange2Rep</span><span class="p">[</span><span class="n">vetoPlusRange2Rep</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">numpy</span><span class="o">.</span><span class="n">inf</span>
+    <span class="n">vetoCrossRange2Rep</span><span class="p">[</span><span class="n">vetoCrossRange2Rep</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">numpy</span><span class="o">.</span><span class="n">inf</span>
+    <span class="n">vetoNullRange2Rep</span><span class="p">[</span><span class="n">vetoNullRange2Rep</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">numpy</span><span class="o">.</span><span class="n">inf</span>
+
+    <span class="k">if</span> <span class="n">applying_to_injections</span><span class="p">:</span>
+        <span class="n">coherent_cuts</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="p">(</span><span class="n">alphaArrayTempPlus</span> <span class="o">&gt;=</span> <span class="n">vetoPlusRange2Rep</span><span class="p">)</span> <span class="o">&amp;</span>
+                        <span class="p">(</span><span class="n">alphaArrayTempCross</span> <span class="o">&gt;=</span> <span class="n">vetoCrossRange2Rep</span><span class="p">)</span> <span class="o">&amp;</span>
+                        <span class="p">(</span><span class="n">alphaArrayTempNull</span> <span class="o">&gt;=</span> <span class="n">vetoNullRange2Rep</span><span class="p">)</span> <span class="o">&amp;</span>
+                        <span class="p">(</span><span class="n">detection_statistic_tmp</span> <span class="o">&gt;</span> <span class="n">loudest_background_job</span><span class="p">)</span>
+                        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">coherent_cuts</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="p">(</span><span class="n">alphaArrayTempPlus</span> <span class="o">&gt;=</span> <span class="n">vetoPlusRange2Rep</span><span class="p">)</span> <span class="o">&amp;</span>
+                        <span class="p">(</span><span class="n">alphaArrayTempCross</span> <span class="o">&gt;=</span> <span class="n">vetoCrossRange2Rep</span><span class="p">)</span> <span class="o">&amp;</span>
+                        <span class="p">(</span><span class="n">alphaArrayTempNull</span> <span class="o">&gt;=</span> <span class="n">vetoNullRange2Rep</span><span class="p">)</span>
+                        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">coherent_cuts</span></div>
+
+<div class="viewcode-block" id="xapplyalphacuts"><a class="viewcode-back" href="../../../api/xpipeline.postprocess.xcuts.html#xpipeline.postprocess.xcuts.xapplyalphacuts">[docs]</a><span class="k">def</span> <span class="nf">xapplyalphacuts</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span>
+                    <span class="n">ePlusIndex</span><span class="p">,</span><span class="n">eCrossIndex</span><span class="p">,</span><span class="n">eNullIndex</span><span class="p">,</span>
+                    <span class="n">iPlusIndex</span><span class="p">,</span><span class="n">iCrossIndex</span><span class="p">,</span><span class="n">iNullIndex</span><span class="p">,</span>
+                    <span class="n">vetoPlusRange</span><span class="p">,</span><span class="n">vetoCrossRange</span><span class="p">,</span><span class="n">vetoNullRange</span><span class="p">,</span>
+                    <span class="n">vetoPlusRange2</span><span class="p">,</span><span class="n">vetoCrossRange2</span><span class="p">,</span><span class="n">vetoNullRange2</span><span class="p">,</span>
+                    <span class="n">FAR</span><span class="p">,</span><span class="n">typeOfCutPlus</span><span class="p">,</span><span class="n">typeOfCutCross</span><span class="p">,</span><span class="n">detection_statistic_column_name</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">FAR</span><span class="p">)</span><span class="o">.</span><span class="n">is_integer</span><span class="p">():</span>
+        <span class="n">FAR</span> <span class="o">=</span> <span class="p">(</span><span class="n">FAR</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="n">alphaArrayPlus</span><span class="p">,</span> <span class="n">alphaArrayCross</span><span class="p">,</span> <span class="n">alphaArrayNull</span><span class="p">,</span> <span class="n">alphaCutsPlus</span><span class="p">,</span> <span class="n">alphaCutsCross</span><span class="p">,</span> <span class="n">alphaCutsNull</span> <span class="o">=</span> \
+        <span class="n">prep_triggers_for_alpha_cuts</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span>
+                                <span class="n">ePlusIndex</span><span class="p">,</span><span class="n">eCrossIndex</span><span class="p">,</span><span class="n">eNullIndex</span><span class="p">,</span>
+                                <span class="n">iPlusIndex</span><span class="p">,</span><span class="n">iCrossIndex</span><span class="p">,</span><span class="n">iNullIndex</span><span class="p">,</span>
+                                <span class="n">vetoPlusRange2</span><span class="p">,</span><span class="n">vetoCrossRange2</span><span class="p">,</span><span class="n">vetoNullRange2</span><span class="p">,</span>
+                                <span class="n">typeOfCutPlus</span><span class="p">,</span><span class="n">typeOfCutCross</span><span class="p">,)</span>
+
+    <span class="c1"># Depending on what was asked prep triggers to apply ratio array</span>
+    <span class="n">ratioArrayPlus</span><span class="p">,</span> <span class="n">ratioArrayCross</span><span class="p">,</span> <span class="n">ratioArrayNull</span><span class="p">,</span> <span class="n">ratioCutsPlus_repeated</span><span class="p">,</span> <span class="n">ratioCutsCross_repeated</span><span class="p">,</span> <span class="n">ratioCutsNull_repeated</span><span class="p">,</span> <span class="n">ratioCutsPlus</span><span class="p">,</span> <span class="n">ratioCutsCross</span><span class="p">,</span> <span class="n">ratioCutsNull</span> <span class="o">=</span> \
+        <span class="n">prep_triggers_for_ratio</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span> <span class="n">ePlusIndex</span><span class="p">,</span><span class="n">eCrossIndex</span><span class="p">,</span><span class="n">eNullIndex</span><span class="p">,</span>
+                                <span class="n">iPlusIndex</span><span class="p">,</span><span class="n">iCrossIndex</span><span class="p">,</span><span class="n">iNullIndex</span><span class="p">,</span>
+                                <span class="n">vetoPlusRange</span><span class="p">,</span><span class="n">vetoCrossRange</span><span class="p">,</span><span class="n">vetoNullRange</span><span class="p">,</span>
+                                <span class="n">typeOfCutPlus</span><span class="p">,</span><span class="n">typeOfCutCross</span><span class="p">,)</span>
+
+    <span class="c1"># Depending on wether you are requesting a two sided or one sided cut.</span>
+    <span class="c1"># construct specific ratio and cut arrays.</span>
+
+    <span class="c1"># Determine how many indepdent trials there are</span>
+    <span class="n">background_trials</span> <span class="o">=</span> <span class="n">triggers</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;event&#39;</span><span class="p">,</span><span class="s1">&#39;internal_time_slide&#39;</span><span class="p">])</span>
+    <span class="n">number_of_trials</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">background_trials</span><span class="p">)</span>
+    <span class="n">indexFARBackground</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">number_of_trials</span><span class="o">*</span> <span class="n">FAR</span><span class="p">))</span>
+    <span class="n">loudest_background_that_survives_cut</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">trial_name</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">background_trials</span><span class="p">:</span>
+        <span class="n">triggers_from_this_trial</span> <span class="o">=</span> <span class="n">background_trials</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
+
+        <span class="c1"># Extract detction statisc for triggers associated with this event</span>
+        <span class="n">detection_statistic</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">triggers</span><span class="p">[</span><span class="n">detection_statistic_column_name</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">triggers_from_this_trial</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+
+        <span class="n">ratioPassCut</span> <span class="o">=</span> <span class="n">apply_ratio_cuts_this_trial</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span><span class="n">triggers_from_this_trial</span><span class="p">,</span><span class="n">typeOfCutPlus</span><span class="p">,</span>
+                                                <span class="n">ratioArrayPlus</span><span class="p">,</span><span class="n">ratioArrayCross</span><span class="p">,</span><span class="n">ratioArrayNull</span><span class="p">,</span>
+                                                <span class="n">ratioCutsPlus_repeated</span><span class="p">,</span> <span class="n">ratioCutsCross_repeated</span><span class="p">,</span> <span class="n">ratioCutsNull_repeated</span><span class="p">,</span>
+                                                <span class="n">ratioCutsPlus</span><span class="p">,</span> <span class="n">ratioCutsCross</span><span class="p">,</span> <span class="n">ratioCutsNull</span><span class="p">,</span>
+                                                <span class="n">detection_statistic_column_name</span><span class="p">,</span>
+                                                <span class="kc">False</span><span class="p">,</span><span class="n">loudestBackgroundRatioJob</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">alpha_cuts</span> <span class="o">=</span> <span class="n">apply_alpha_cuts_to_trial</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span><span class="n">triggers_from_this_trial</span><span class="p">,</span>
+                            <span class="n">alphaArrayPlus</span><span class="p">,</span><span class="n">alphaArrayCross</span><span class="p">,</span><span class="n">alphaArrayNull</span><span class="p">,</span>
+                            <span class="n">alphaCutsPlus</span><span class="p">,</span> <span class="n">alphaCutsCross</span><span class="p">,</span> <span class="n">alphaCutsNull</span><span class="p">,</span>
+                            <span class="n">detection_statistic_column_name</span><span class="p">,</span>
+                            <span class="kc">False</span><span class="p">,</span><span class="n">loudestBackgroundAlpha</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">coherent_cuts</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">ratioPassCut</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">alphaCutsNull</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">alpha_cuts</span>
+
+
+        <span class="c1"># Find loudest for each column</span>
+        <span class="c1"># Find Surviving Offsource</span>
+        <span class="n">backGroundArray</span> <span class="o">=</span> <span class="n">coherent_cuts</span><span class="o">*</span><span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">detection_statistic</span><span class="p">),</span>
+                                                          <span class="nb">len</span><span class="p">(</span><span class="n">alphaCutsPlus</span><span class="p">),</span>
+                                                          <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># Find loudest surviving trigger for this trial for the grid of applied cuts</span>
+        <span class="c1"># to do this we find the max over the columns</span>
+        <span class="c1">#(remember each row represented an applied a cut)</span>
+        <span class="n">loudest_background_that_survives_cut</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">backGroundArray</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">trial_name</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+    <span class="n">loudest_background_that_survives_cut</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">loudest_background_that_survives_cut</span><span class="p">)</span>
+    <span class="n">sorted_indices</span> <span class="o">=</span> <span class="n">loudest_background_that_survives_cut</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">loudest_background_that_survives_cut</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">loudest_background_that_survives_cut</span><span class="p">[</span><span class="n">indexFARBackground</span><span class="p">,:],</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">trial_name</span><span class="p">)[</span><span class="n">sorted_indices</span><span class="p">],</span> <span class="n">loudest_background_that_survives_cut</span></div>
+
+<div class="viewcode-block" id="xapplyalphacutsinjection"><a class="viewcode-back" href="../../../api/xpipeline.postprocess.xcuts.html#xpipeline.postprocess.xcuts.xapplyalphacutsinjection">[docs]</a><span class="k">def</span> <span class="nf">xapplyalphacutsinjection</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span>
+                    <span class="n">ePlusIndex</span><span class="p">,</span><span class="n">eCrossIndex</span><span class="p">,</span><span class="n">eNullIndex</span><span class="p">,</span>
+                    <span class="n">iPlusIndex</span><span class="p">,</span><span class="n">iCrossIndex</span><span class="p">,</span><span class="n">iNullIndex</span><span class="p">,</span>
+                    <span class="n">vetoPlusRange</span><span class="p">,</span><span class="n">vetoCrossRange</span><span class="p">,</span><span class="n">vetoNullRange</span><span class="p">,</span>
+                    <span class="n">vetoPlusRange2</span><span class="p">,</span><span class="n">vetoCrossRange2</span><span class="p">,</span><span class="n">vetoNullRange2</span><span class="p">,</span>
+                    <span class="n">loudestBackgroundAlpha</span><span class="p">,</span><span class="n">typeOfCutPlus</span><span class="p">,</span><span class="n">typeOfCutCross</span><span class="p">,</span><span class="n">detection_statistic_column_name</span><span class="p">):</span>
+
+    <span class="n">alphaArrayPlus</span><span class="p">,</span> <span class="n">alphaArrayCross</span><span class="p">,</span> <span class="n">alphaArrayNull</span><span class="p">,</span> <span class="n">alphaCutsPlus</span><span class="p">,</span> <span class="n">alphaCutsCross</span><span class="p">,</span> <span class="n">alphaCutsNull</span> <span class="o">=</span> \
+        <span class="n">prep_triggers_for_alpha_cuts</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span>
+                                <span class="n">ePlusIndex</span><span class="p">,</span><span class="n">eCrossIndex</span><span class="p">,</span><span class="n">eNullIndex</span><span class="p">,</span>
+                                <span class="n">iPlusIndex</span><span class="p">,</span><span class="n">iCrossIndex</span><span class="p">,</span><span class="n">iNullIndex</span><span class="p">,</span>
+                                <span class="n">vetoPlusRange2</span><span class="p">,</span><span class="n">vetoCrossRange2</span><span class="p">,</span><span class="n">vetoNullRange2</span><span class="p">,</span>
+                                <span class="n">typeOfCutPlus</span><span class="p">,</span><span class="n">typeOfCutCross</span><span class="p">,)</span>
+
+    <span class="c1"># Depending on what was asked prep triggers to apply ratio array</span>
+    <span class="n">ratioArrayPlus</span><span class="p">,</span> <span class="n">ratioArrayCross</span><span class="p">,</span> <span class="n">ratioArrayNull</span><span class="p">,</span> <span class="n">ratioCutsPlus_repeated</span><span class="p">,</span> <span class="n">ratioCutsCross_repeated</span><span class="p">,</span> <span class="n">ratioCutsNull_repeated</span><span class="p">,</span> <span class="n">ratioCutsPlus</span><span class="p">,</span> <span class="n">ratioCutsCross</span><span class="p">,</span> <span class="n">ratioCutsNull</span> <span class="o">=</span> \
+        <span class="n">prep_triggers_for_ratio</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span> <span class="n">ePlusIndex</span><span class="p">,</span><span class="n">eCrossIndex</span><span class="p">,</span><span class="n">eNullIndex</span><span class="p">,</span>
+                                <span class="n">iPlusIndex</span><span class="p">,</span><span class="n">iCrossIndex</span><span class="p">,</span><span class="n">iNullIndex</span><span class="p">,</span>
+                                <span class="n">vetoPlusRange</span><span class="p">,</span><span class="n">vetoCrossRange</span><span class="p">,</span><span class="n">vetoNullRange</span><span class="p">,</span>
+                                <span class="n">typeOfCutPlus</span><span class="p">,</span><span class="n">typeOfCutCross</span><span class="p">,)</span>
+
+    <span class="c1"># Determine how many indepdent trials there are</span>
+    <span class="n">injection_trials</span> <span class="o">=</span> <span class="n">triggers</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;injection_scale&#39;</span><span class="p">,</span><span class="s1">&#39;injection_number&#39;</span><span class="p">])</span>
+    <span class="n">all_alpha_boolean</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">all_indices</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">injection_trials</span><span class="p">:</span>
+        <span class="n">triggers_from_this_trial</span> <span class="o">=</span> <span class="n">injection_trials</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">index</span>
+
+        <span class="c1"># Extract detction statisc for triggers associated with this event</span>
+        <span class="n">detection_statistic</span> <span class="o">=</span> <span class="n">triggers</span><span class="p">[</span><span class="n">detection_statistic_column_name</span><span class="p">]</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">triggers_from_this_trial</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+        <span class="n">ratioPassCut</span> <span class="o">=</span> <span class="n">apply_ratio_cuts_this_trial</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span><span class="n">triggers_from_this_trial</span><span class="p">,</span><span class="n">typeOfCutPlus</span><span class="p">,</span>
+                                                <span class="n">ratioArrayPlus</span><span class="p">,</span><span class="n">ratioArrayCross</span><span class="p">,</span><span class="n">ratioArrayNull</span><span class="p">,</span>
+                                                <span class="n">ratioCutsPlus_repeated</span><span class="p">,</span> <span class="n">ratioCutsCross_repeated</span><span class="p">,</span> <span class="n">ratioCutsNull_repeated</span><span class="p">,</span>
+                                                <span class="n">ratioCutsPlus</span><span class="p">,</span> <span class="n">ratioCutsCross</span><span class="p">,</span> <span class="n">ratioCutsNull</span><span class="p">,</span>
+                                                <span class="n">detection_statistic_column_name</span><span class="p">,</span>
+                                                <span class="kc">True</span><span class="p">,</span><span class="n">loudestBackgroundRatioJob</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">alpha_cuts</span> <span class="o">=</span> <span class="n">apply_alpha_cuts_to_trial</span><span class="p">(</span><span class="n">triggers</span><span class="p">,</span><span class="n">triggers_from_this_trial</span><span class="p">,</span>
+                            <span class="n">alphaArrayPlus</span><span class="p">,</span><span class="n">alphaArrayCross</span><span class="p">,</span><span class="n">alphaArrayNull</span><span class="p">,</span>
+                            <span class="n">alphaCutsPlus</span><span class="p">,</span> <span class="n">alphaCutsCross</span><span class="p">,</span> <span class="n">alphaCutsNull</span><span class="p">,</span>
+                            <span class="n">detection_statistic_column_name</span><span class="p">,</span>
+                            <span class="kc">True</span><span class="p">,</span><span class="n">loudestBackgroundAlpha</span><span class="o">=</span><span class="n">loudestBackgroundAlpha</span><span class="p">)</span>
+
+        <span class="n">coherent_cuts</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">ratioPassCut</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">alphaCutsNull</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">alpha_cuts</span>
+
+        <span class="n">all_alpha_boolean</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coherent_cuts</span><span class="p">)</span>
+        <span class="n">all_indices</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">triggers_from_this_trial</span><span class="p">)</span>
+
+    <span class="c1"># temporarly create a pandas dataframe indicating whether a given triggers passed</span>
+    <span class="c1"># one of the cut combinations and the loudest background trigger from that cut combination</span>
+    <span class="n">pass_alpha_cuts</span> <span class="o">=</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">all_alpha_boolean</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">all_indices</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">triggers</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pass_alpha_cuts</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Scott Coughlin
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xpipeline.core.xtimefrequencymap &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
+  <title>xpipeline.core.xtimefrequencymap &mdash; xpipeline 0+untagged.178.gddc1b81.dirty documentation</title>
   
 
   
@@ -17,34 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/xpipeline-docs.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -58,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.111.g8030ebd.dirty
+                0+untagged.178.gddc1b81.dirty
               </div>
             
           
@@ -167,24 +168,25 @@
 <span class="c1"># along with hveto.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
 
 <span class="c1"># ---- Import standard modules to the python path.</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">reduce</span>
+
 <span class="kn">from</span> <span class="nn">gwpy.spectrogram</span> <span class="k">import</span> <span class="n">Spectrogram</span>
 <span class="kn">from</span> <span class="nn">gwpy.timeseries</span> <span class="k">import</span> <span class="n">TimeSeries</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
-<span class="kn">from</span> <span class="nn">gwpy.signal.fft.ui</span> <span class="k">import</span> <span class="n">seconds_to_samples</span>
-<span class="kn">from</span> <span class="nn">.xfrequencyseries</span> <span class="k">import</span> <span class="n">XFrequencySeriesDict</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">sparse</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">reduce</span>
 
 <span class="kn">from</span> <span class="nn">xpipeline.cluster</span> <span class="k">import</span> <span class="n">nearestneighbor</span>
 <span class="kn">from</span> <span class="nn">xpipeline.cluster</span> <span class="k">import</span> <span class="n">clusterproperties</span>
 <span class="kn">from</span> <span class="nn">..cluster.cluster</span> <span class="k">import</span> <span class="n">XCluster</span>
+<span class="kn">from</span> <span class="nn">.xfrequencyseries</span> <span class="k">import</span> <span class="n">XFrequencySeriesDict</span>
+<span class="kn">from</span> <span class="nn">.sparse</span> <span class="k">import</span> <span class="n">csc_sparse_map</span>
 
 <span class="kn">import</span> <span class="nn">operator</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
-
+<span class="kn">import</span> <span class="nn">h5py</span>
+<span class="kn">import</span> <span class="nn">tables</span>
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s1">&#39;Scott Coughlin &lt;scott.coughlin@ligo.org&gt;&#39;</span>
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;csc_XSparseTimeFrequencyMap&#39;</span><span class="p">,</span> 
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;csc_XSparseTimeFrequencyMap&#39;</span><span class="p">,</span>
            <span class="s1">&#39;XSparseTimeFrequencyMapDict&#39;</span>
            <span class="s1">&#39;XTimeFrequencyMapDict&#39;</span><span class="p">,</span>
            <span class="s1">&#39;residual_time_shift&#39;</span><span class="p">,</span> <span class="s1">&#39;XTimeFrequencyMap&#39;</span><span class="p">]</span>
@@ -198,6 +200,15 @@
 <span class="sd">                   power_map of all Fourier Grams in Dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">XTimeFrequencyMapDict</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">())})</span>
+
+    <span class="k">def</span> <span class="nf">power2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Take the absolute value of all maps in dict</span>
+
+<span class="sd">           Returns:</span>
+<span class="sd">               `XTimeFrequencyMapDict`:</span>
+<span class="sd">                   power_map of all Fourier Grams in Dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">XTimeFrequencyMapDict</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">())})</span>
 
     <span class="k">def</span> <span class="nf">to_coherent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sum all maps in the dict</span>
@@ -229,7 +240,7 @@
                 <span class="n">projected_time_frequency_maps</span><span class="p">[</span><span class="n">pattern</span><span class="p">][</span><span class="n">det</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">det</span><span class="p">]</span> <span class="o">*</span> <span class="n">asd</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">projected_time_frequency_maps</span>
 
-    <span class="k">def</span> <span class="nf">blackout_pixels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">blackout_pixels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set pixels below certain energy level to zero</span>
 
 <span class="sd">        Parameters:</span>
@@ -246,31 +257,10 @@
             <span class="n">blackpixel_percentile</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">c</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="p">)</span>
                                          <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">XSparseTimeFrequencyMapDict</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">blackout_pixels</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">XSparseTimeFrequencyMapDict</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">blackout_pixels</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
                                      <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">blackpixel_percentile</span><span class="o">.</span><span class="n">items</span><span class="p">())})</span>
 
-    <span class="k">def</span> <span class="nf">circular_time_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">npixels_to_shift</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;slide all maps in dict by specified number of pixels</span>
-
-<span class="sd">        Parameters:</span>
-
-<span class="sd">            npixels_to_shift : `dict`, `int`</span>
-<span class="sd">                either a `dict` of (channel, `int`) pairs for key-wise</span>
-<span class="sd">                internal time slide calc. Since it does not make sense</span>
-<span class="sd">                to slide all the tfmaps the same number of pixels</span>
-<span class="sd">                you must specify a dict with all detectors and pixels to slide.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            `dict`: key-wise pair of channel</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">npixels_to_shift</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must be a dict&quot;</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">XTimeFrequencyMapDict</span><span class="p">({</span><span class="n">key</span> <span class="p">:</span>
-                <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">circular_time_slide</span><span class="p">(</span><span class="n">npixels_to_shift</span><span class="o">=</span><span class="n">npix_to_shift</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">npix_to_shift</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">npixels_to_shift</span><span class="o">.</span><span class="n">items</span><span class="p">())})</span>
-
-    <span class="k">def</span> <span class="nf">to_sparse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tindex</span><span class="p">,</span> <span class="n">findex</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">to_sparse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tindex</span><span class="p">,</span> <span class="n">findex</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        Parameters:</span>
@@ -300,7 +290,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must be a dict&quot;</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">XSparseTimeFrequencyMapDict</span><span class="p">(</span>
-            <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">to_sparse</span><span class="p">(</span><span class="n">tindex</span><span class="o">=</span><span class="n">tindex</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">findex</span><span class="o">=</span><span class="n">findex</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+            <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">to_sparse</span><span class="p">(</span><span class="n">tindex</span><span class="o">=</span><span class="n">tindex</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">findex</span><span class="o">=</span><span class="n">findex</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">())})</span>
 
     <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -362,9 +352,30 @@
                                      <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">())}</span>
                                     <span class="p">)</span>
 
+    <span class="k">def</span> <span class="nf">crop_frequencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">low</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="kc">None</span><span class="p">,):</span>
+        <span class="sd">&quot;&quot;&quot;Crop this `Spectrogram` to the specified frequencies</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        low : `float`</span>
+<span class="sd">            lower frequency bound for cropped `Spectrogram`</span>
+<span class="sd">        high : `float`</span>
+<span class="sd">            upper frequency bound for cropped `Spectrogram`</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        spec : `Spectrogram`</span>
+<span class="sd">            A new `Spectrogram` with a subset of data from the frequency</span>
+<span class="sd">            axis</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">crop_frequencies</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="n">low</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">high</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span>
+
 
 <div class="viewcode-block" id="XTimeFrequencyMap"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap">[docs]</a><span class="k">class</span> <span class="nc">XTimeFrequencyMap</span><span class="p">(</span><span class="n">Spectrogram</span><span class="p">):</span>
-<div class="viewcode-block" id="XTimeFrequencyMap.blackout_pixels"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.blackout_pixels">[docs]</a>    <span class="k">def</span> <span class="nf">blackout_pixels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="p">):</span>
+<div class="viewcode-block" id="XTimeFrequencyMap.blackout_pixels"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.blackout_pixels">[docs]</a>    <span class="k">def</span> <span class="nf">blackout_pixels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blackpixel_percentile</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set pixels below certain energy level to zero</span>
 
 <span class="sd">           Parameters:</span>
@@ -385,7 +396,12 @@
                                            <span class="n">findex</span><span class="o">=</span><span class="n">freq</span><span class="p">,</span>
                                            <span class="n">energy</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
                                            <span class="n">xindex</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">xindex</span><span class="p">,</span>
-                                           <span class="n">yindex</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">yindex</span><span class="p">)</span></div>
+                                           <span class="n">yindex</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">yindex</span><span class="p">,</span>
+                                           <span class="n">dx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">xindex</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">xindex</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                           <span class="n">x0</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">xindex</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                           <span class="n">y0</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">yindex</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                           <span class="n">dy</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">yindex</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">yindex</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                           <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="XTimeFrequencyMap.gaussianity"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.gaussianity">[docs]</a>    <span class="k">def</span> <span class="nf">gaussianity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculate the gaussianity of this map</span>
@@ -409,47 +425,14 @@
 <span class="sd">            The amount by which to shift (in seconds if `float`), give</span>
 <span class="sd">            a negative value to shift backwards in time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">sqrt_of_neg_1</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">))</span>
         <span class="n">frequency_shift</span> <span class="o">=</span> <span class="n">residual_time_shift</span><span class="p">(</span><span class="n">delta</span><span class="p">,</span>
                                               <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="o">.</span><span class="n">to_value</span><span class="p">())</span>
         <span class="k">return</span> <span class="bp">self</span> <span class="o">*</span> <span class="n">frequency_shift</span></div>
 
-<div class="viewcode-block" id="XTimeFrequencyMap.circular_time_slide"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.circular_time_slide">[docs]</a>    <span class="k">def</span> <span class="nf">circular_time_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">npixels_to_shift</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Slide the TF pixels of this map</span>
-
-<span class="sd">        This should move the appropriate number of time bins</span>
-<span class="sd">        such that slide represents a slide in seconds.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        seconds : `int`,</span>
-<span class="sd">            How many seconds we are sliding the map</span>
-
-<span class="sd">        sample_frequency : `float`</span>
-<span class="sd">            what is the sample frequency of the data</span>
-
-<span class="sd">        offset : `float`</span>
-<span class="sd">            what offset was used to make this spectrogram</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            `XTimeFrequencyMap`:</span>
-<span class="sd">                A time frequency map slide by the appropriate number</span>
-<span class="sd">                of seconds</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">npixels_to_shift</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span>
-
-        <span class="n">idx</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xindex</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-                                 <span class="n">numpy</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xindex</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
-                                            <span class="n">npixels_to_shift</span>
-                                <span class="p">))</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span></div>
-
 <div class="viewcode-block" id="XTimeFrequencyMap.to_dominant_polarization_frame"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.to_dominant_polarization_frame">[docs]</a>    <span class="k">def</span> <span class="nf">to_dominant_polarization_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dpf_asd</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span> <span class="o">*</span> <span class="n">dpf_asd</span></div>
 
-<div class="viewcode-block" id="XTimeFrequencyMap.to_sparse"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.to_sparse">[docs]</a>    <span class="k">def</span> <span class="nf">to_sparse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tindex</span><span class="p">,</span> <span class="n">findex</span><span class="p">):</span>
+<div class="viewcode-block" id="XTimeFrequencyMap.to_sparse"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.XTimeFrequencyMap.to_sparse">[docs]</a>    <span class="k">def</span> <span class="nf">to_sparse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tindex</span><span class="p">,</span> <span class="n">findex</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        Parameters:</span>
@@ -475,7 +458,12 @@
         <span class="k">return</span> <span class="n">csc_XSparseTimeFrequencyMap</span><span class="p">((</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">tindex</span><span class="p">,</span> <span class="n">findex</span><span class="p">)),</span>
                                            <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span> <span class="n">yindex</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">yindex</span><span class="p">,</span>
                                            <span class="n">xindex</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">xindex</span><span class="p">,</span> <span class="n">tindex</span><span class="o">=</span><span class="n">tindex</span><span class="p">,</span>
-                                           <span class="n">findex</span><span class="o">=</span><span class="n">findex</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="n">data</span><span class="p">)</span></div></div>
+                                           <span class="n">findex</span><span class="o">=</span><span class="n">findex</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                                           <span class="n">dx</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">xindex</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">xindex</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                           <span class="n">dy</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">yindex</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">yindex</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                           <span class="n">x0</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">xindex</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                           <span class="n">y0</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">yindex</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                           <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
 
 <span class="k">class</span> <span class="nc">XSparseTimeFrequencyMapDict</span><span class="p">(</span><span class="n">OrderedDict</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">to_coherent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -487,6 +475,24 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
 
+    <span class="k">def</span> <span class="nf">abs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Take the absolute value of all maps in dict</span>
+
+<span class="sd">           Returns:</span>
+<span class="sd">               `XTimeFrequencyMapDict`:</span>
+<span class="sd">                   power_map of all Fourier Grams in Dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">XSparseTimeFrequencyMapDict</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">())})</span>
+
+    <span class="k">def</span> <span class="nf">power2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Take the absolute value of all maps in dict</span>
+
+<span class="sd">           Returns:</span>
+<span class="sd">               `XTimeFrequencyMapDict`:</span>
+<span class="sd">                   power_map of all Fourier Grams in Dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">XSparseTimeFrequencyMapDict</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="o">.</span><span class="n">power2</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">())})</span>
+
     <span class="k">def</span> <span class="nf">to_xtimefrequencymapdict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Convert dict fo sparse matrix to `XTimeFrequencyMapDict`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -494,6 +500,21 @@
                                       <span class="n">yindex</span><span class="o">=</span><span class="n">v</span><span class="o">.</span><span class="n">yindex</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">())}</span>
         <span class="k">return</span> <span class="n">XTimeFrequencyMapDict</span><span class="p">(</span><span class="n">maps</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert dict fo sparse matrix to `XTimeFrequencyMapDict`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tfmap</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">pixels</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">tfmap</span><span class="o">.</span><span class="n">tindex</span><span class="p">,</span> <span class="n">tfmap</span><span class="o">.</span><span class="n">findex</span><span class="p">])</span>
+        <span class="n">coord_dim_array</span> <span class="o">=</span> <span class="p">(</span><span class="n">tfmap</span><span class="o">.</span><span class="n">xindex</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">tfmap</span><span class="o">.</span><span class="n">yindex</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="n">npixels</span> <span class="o">=</span> <span class="n">pixels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">labelled_map</span> <span class="o">=</span> <span class="n">nearestneighbor</span><span class="o">.</span><span class="n">fastlabel_wrapper</span><span class="p">(</span><span class="n">pixels</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">coord_dim_array</span><span class="p">,</span>
+                                                         <span class="n">connectivity</span><span class="p">,</span> <span class="n">npixels</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">pixel_labels</span> <span class="o">=</span> <span class="n">labelled_map</span>
+        <span class="k">return</span>
+
 
     <span class="k">def</span> <span class="nf">cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest_neighbors&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Convert dict fo sparse matrix to `XTimeFrequencyMapDict`</span>
@@ -503,6 +524,8 @@
             <span class="n">total_energy</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
                 <span class="n">total_energy</span> <span class="o">+=</span> <span class="n">v</span><span class="o">.</span><span class="n">energy</span>
+
+            <span class="n">total_energy</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">total_energy</span><span class="p">)</span>
             <span class="n">pixels</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">v</span><span class="o">.</span><span class="n">tindex</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">findex</span><span class="p">])</span>
             <span class="n">coord_dim_array</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">xindex</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span><span class="n">yindex</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
 
@@ -510,17 +533,24 @@
 
             <span class="n">labelled_map</span> <span class="o">=</span> <span class="n">nearestneighbor</span><span class="o">.</span><span class="n">fastlabel_wrapper</span><span class="p">(</span><span class="n">pixels</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">coord_dim_array</span><span class="p">,</span> <span class="n">connectivity</span><span class="p">,</span> <span class="n">npixels</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
-            <span class="n">dim_array</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">total_energy</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">])</span>
+            <span class="n">cluster_array</span> <span class="o">=</span> <span class="n">clusterproperties</span><span class="o">.</span><span class="n">clusterproperities_wrapper</span><span class="p">(</span><span class="n">labelled_map</span><span class="p">,</span> <span class="n">total_energy</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pixels</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
-            <span class="n">cluster_array</span> <span class="o">=</span> <span class="n">clusterproperties</span><span class="o">.</span><span class="n">clusterproperities_wrapper</span><span class="p">(</span><span class="n">dim_array</span><span class="p">,</span> <span class="n">labelled_map</span><span class="p">,</span> <span class="n">total_energy</span><span class="p">,</span> <span class="n">pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pixels</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="n">cluster_array</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_array</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">v</span><span class="o">.</span><span class="n">dx</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="n">x0</span>
 
-            <span class="n">cluster_array</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_array</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">xindex</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="o">.</span><span class="n">xindex</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="n">xindex</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-            <span class="n">cluster_array</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_array</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">yindex</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="o">.</span><span class="n">yindex</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="n">yindex</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">cluster_array</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_array</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">*</span> <span class="n">v</span><span class="o">.</span><span class="n">dy</span> <span class="o">+</span> <span class="n">v</span><span class="o">.</span><span class="n">y0</span>
 
             <span class="k">return</span> <span class="n">XCluster</span><span class="o">.</span><span class="n">nearest_neighbor</span><span class="p">(</span><span class="n">cluster_array</span><span class="p">,</span> <span class="n">labelled_map</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Clustering method undefined&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">to_cnn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sum all maps in the dict</span>
+
+<span class="sd">           Returns:</span>
+<span class="sd">               `XTimeFrequencyMap`:</span>
+<span class="sd">                   A coherent TF-Map</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Plot the data for this `XTimeFrequencyMapDict`.</span>
@@ -543,76 +573,154 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_xtimefrequencymapdict</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<div class="viewcode-block" id="csc_XSparseTimeFrequencyMap"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap">[docs]</a><span class="k">class</span> <span class="nc">csc_XSparseTimeFrequencyMap</span><span class="p">(</span><span class="n">sparse</span><span class="o">.</span><span class="n">csc_matrix</span><span class="p">):</span>
-    <span class="n">_metadata_slots</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;energy&#39;</span><span class="p">,</span> <span class="s1">&#39;tindex&#39;</span><span class="p">,</span> <span class="s1">&#39;findex&#39;</span><span class="p">,</span> <span class="s1">&#39;yindex&#39;</span><span class="p">,</span> <span class="s1">&#39;xindex&#39;</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">matrix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">yindex</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;yindex&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">xindex</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;xindex&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tindex</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;tindex&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">findex</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;findex&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;energy&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">csc_XSparseTimeFrequencyMap</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot the data for this `XTimeFrequencyMapDict`.</span>
 
-    <span class="k">def</span> <span class="nf">_repr_helper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">print_</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">print_</span> <span class="ow">is</span> <span class="nb">repr</span><span class="p">:</span>
-            <span class="n">opstr</span> <span class="o">=</span> <span class="s1">&#39;=&#39;</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">opstr</span> <span class="o">=</span> <span class="s1">&#39;: &#39;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            all other keyword arguments are passed to the plotter as</span>
+<span class="sd">            appropriate</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">v</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span>
 
-        <span class="c1"># get prefix and suffix</span>
-        <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">(&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
-        <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;)&#39;</span>
-        <span class="k">if</span> <span class="n">print_</span> <span class="ow">is</span> <span class="nb">repr</span><span class="p">:</span>
-            <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;&lt;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
-            <span class="n">suffix</span> <span class="o">+=</span> <span class="s1">&#39;&gt;&#39;</span>
+<div class="viewcode-block" id="csc_XSparseTimeFrequencyMap"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap">[docs]</a><span class="k">class</span> <span class="nc">csc_XSparseTimeFrequencyMap</span><span class="p">(</span><span class="n">csc_sparse_map</span><span class="p">):</span>
+<div class="viewcode-block" id="csc_XSparseTimeFrequencyMap.write"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">table_description</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot the data for this `XTimeFrequencyMapDict`.</span>
 
-        <span class="n">indent</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        **kwargs</span>
+<span class="sd">            all other keyword arguments are passed to the plotter as</span>
+<span class="sd">            appropriate</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">table_description</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">table_description</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;dx&#39;</span> <span class="p">:</span> <span class="n">tables</span><span class="o">.</span><span class="n">Float64Col</span><span class="p">(),</span>
+            <span class="s1">&#39;dy&#39;</span> <span class="p">:</span> <span class="n">tables</span><span class="o">.</span><span class="n">Float64Col</span><span class="p">(),</span>
+            <span class="s1">&#39;x0&#39;</span> <span class="p">:</span> <span class="n">tables</span><span class="o">.</span><span class="n">Float64Col</span><span class="p">(),</span>
+            <span class="s1">&#39;y0&#39;</span> <span class="p">:</span> <span class="n">tables</span><span class="o">.</span><span class="n">Float64Col</span><span class="p">(),</span>
+            <span class="s1">&#39;shape&#39;</span> <span class="p">:</span> <span class="n">tables</span><span class="o">.</span><span class="n">Int64Col</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+            <span class="s1">&#39;phi&#39;</span> <span class="p">:</span> <span class="n">tables</span><span class="o">.</span><span class="n">Float64Col</span><span class="p">(),</span>
+            <span class="s1">&#39;theta&#39;</span> <span class="p">:</span> <span class="n">tables</span><span class="o">.</span><span class="n">Float64Col</span><span class="p">(),</span>
+            <span class="s1">&#39;map_type&#39;</span> <span class="p">:</span> <span class="n">tables</span><span class="o">.</span><span class="n">StringCol</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span>
+            <span class="s1">&#39;ifo&#39;</span> <span class="p">:</span> <span class="n">tables</span><span class="o">.</span><span class="n">StringCol</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+            <span class="s1">&#39;x&#39;</span> <span class="p">:</span> <span class="n">tables</span><span class="o">.</span><span class="n">Float64Col</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tindex</span><span class="o">.</span><span class="n">size</span><span class="p">),</span>
+            <span class="s1">&#39;y&#39;</span> <span class="p">:</span> <span class="n">tables</span><span class="o">.</span><span class="n">Float64Col</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">findex</span><span class="o">.</span><span class="n">size</span><span class="p">),</span>
+            <span class="s1">&#39;energy&#39;</span> <span class="p">:</span> <span class="n">tables</span><span class="o">.</span><span class="n">ComplexCol</span><span class="p">(</span><span class="n">itemsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">size</span><span class="p">),</span>
+            <span class="p">}</span>
 
-        <span class="c1"># format value</span>
-        <span class="n">nnz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getnnz</span><span class="p">()</span>
-        <span class="n">arrstr</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;&lt;</span><span class="si">%d</span><span class="s2">x</span><span class="si">%d</span><span class="s2"> sparse matrix of type &#39;</span><span class="si">%s</span><span class="s2">&#39;</span><span class="se">\n</span><span class="s2">&quot;</span>
-                 <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">with </span><span class="si">%d</span><span class="s2"> stored elements in </span><span class="si">%s</span><span class="s2"> format&gt;&quot;</span> <span class="o">%</span> \
-                 <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">nnz</span><span class="p">,</span> <span class="s2">&quot;Compressed Sparse Column&quot;</span><span class="p">)))</span>
-
-        <span class="c1"># format unit</span>
-        <span class="n">metadata</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;unit&#39;</span><span class="p">,</span> <span class="s1">&#39;dimensionless&#39;</span><span class="p">)]</span>
-
-        <span class="c1"># format other metadata</span>
+        <span class="n">h5file</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">open_file</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Sparse Time Frequency Maps&quot;</span><span class="p">)</span>
+        <span class="c1"># check if table already exists in this path</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_print_slots</span>
-        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
-            <span class="n">attrs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_metadata_slots</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">val</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-            <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
-                <span class="n">val</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="n">thisindent</span> <span class="o">=</span> <span class="n">indent</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">opstr</span><span class="p">))</span>
-            <span class="n">metadata</span><span class="o">.</span><span class="n">append</span><span class="p">((</span>
-                <span class="n">key</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">),</span>
-                <span class="n">print_</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">thisindent</span><span class="p">)),</span>
-            <span class="p">))</span>
-        <span class="n">metadata</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;,</span><span class="se">\n</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">indent</span><span class="p">))</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-            <span class="s1">&#39;</span><span class="si">{0}{1}{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">opstr</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">)</span>
+            <span class="n">table</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">h5file</span><span class="o">.</span><span class="n">walk_nodes</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;Table&quot;</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c1"># If these groups do not exist then create a new table inside of path</span>
+            <span class="n">table</span> <span class="o">=</span> <span class="n">h5file</span><span class="o">.</span><span class="n">create_table</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;event&#39;</span><span class="p">,</span> <span class="n">table_description</span><span class="p">,</span> <span class="s2">&quot;maps&quot;</span><span class="p">,</span> <span class="n">createparents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{0}{1}</span><span class="se">\n</span><span class="si">{2}{3}{4}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="n">prefix</span><span class="p">,</span> <span class="n">arrstr</span><span class="p">,</span> <span class="n">indent</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="n">event</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">row</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="n">x</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">tindex</span><span class="o">.</span><span class="n">size</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tindex</span>
 
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return a representation of this object</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="n">y</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">findex</span><span class="o">.</span><span class="n">size</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">findex</span>
 
-<span class="sd">        This just represents each of the metadata objects appropriately</span>
-<span class="sd">        after the core data array</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;complex&#39;</span><span class="p">)</span>
+        <span class="n">energy</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">size</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span>
+
+        <span class="n">event</span><span class="p">[</span><span class="s1">&#39;dx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">event</span><span class="p">[</span><span class="s1">&#39;dy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dy</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">event</span><span class="p">[</span><span class="s1">&#39;x0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x0</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">event</span><span class="p">[</span><span class="s1">&#39;y0&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y0</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">event</span><span class="p">[</span><span class="s1">&#39;phi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">phi</span>
+        <span class="n">event</span><span class="p">[</span><span class="s1">&#39;theta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span>
+        <span class="n">event</span><span class="p">[</span><span class="s1">&#39;shape&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">event</span><span class="p">[</span><span class="s1">&#39;map_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">map_type</span>
+        <span class="n">event</span><span class="p">[</span><span class="s1">&#39;ifo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">event</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="n">event</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="n">event</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">energy</span>
+        <span class="n">event</span><span class="o">.</span><span class="n">append</span><span class="p">()</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+        <span class="n">h5file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="csc_XSparseTimeFrequencyMap.read"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap.read">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This can table a row of a PyTable and return a sparse tf map.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        row (`tables.Table.row`):</span>
+<span class="sd">            The is a row of a `tables.Table` generated by</span>
+<span class="sd">            xpipeline-analysis</span>
+
+<span class="sd">        **kwargs</span>
+<span class="sd">            all other keyword arguments are passed to the plotter as</span>
+<span class="sd">            appropriate</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repr_helper</span><span class="p">(</span><span class="nb">repr</span><span class="p">)</span>
+        <span class="n">dx</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;dx&#39;</span><span class="p">]</span>
+        <span class="n">dy</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;dy&#39;</span><span class="p">]</span>
+        <span class="n">x0</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;x0&#39;</span><span class="p">]</span>
+        <span class="n">y0</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;y0&#39;</span><span class="p">]</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;phi&#39;</span><span class="p">]</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;theta&#39;</span><span class="p">]</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;shape&#39;</span><span class="p">]</span>
+        <span class="n">map_type</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;map_type&#39;</span><span class="p">]</span>
+        <span class="n">ifo</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;ifo&#39;</span><span class="p">]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span>
+        <span class="n">tf_map</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">((</span><span class="n">energy</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)),</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="o">=</span><span class="n">dy</span><span class="p">,</span>
+                    <span class="n">x0</span><span class="o">=</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="o">=</span><span class="n">y0</span><span class="p">,</span> <span class="n">map_type</span><span class="o">=</span><span class="n">map_type</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">ifo</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="n">theta</span><span class="p">)</span>
+        <span class="n">tf_map</span><span class="o">.</span><span class="n">tindex</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="n">tf_map</span><span class="o">.</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">tf_map</span><span class="o">.</span><span class="n">findex</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="n">tf_map</span><span class="o">.</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">tf_map</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span><span class="p">[:</span><span class="n">tf_map</span><span class="o">.</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">tf_map</span><span class="o">.</span><span class="n">xindex</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x0</span> <span class="o">+</span> <span class="n">dx</span><span class="o">*</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dx</span><span class="p">)</span>
+        <span class="n">tf_map</span><span class="o">.</span><span class="n">yindex</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">y0</span><span class="p">,</span> <span class="n">y0</span> <span class="o">+</span> <span class="n">dy</span><span class="o">*</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dy</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tf_map</span></div>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return a printable string format representation of this object</span>
-
-<span class="sd">        This just prints each of the metadata objects appropriately</span>
-<span class="sd">        after the core data array</span>
+<div class="viewcode-block" id="csc_XSparseTimeFrequencyMap.label"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap.label">[docs]</a>    <span class="k">def</span> <span class="nf">label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connectivity</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert dict fo sparse matrix to `XTimeFrequencyMapDict`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repr_helper</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+        <span class="n">pixels</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">tindex</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">findex</span><span class="p">])</span>
+        <span class="n">coord_dim_array</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xindex</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yindex</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="n">npixels</span> <span class="o">=</span> <span class="n">pixels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">labelled_map</span> <span class="o">=</span> <span class="n">nearestneighbor</span><span class="o">.</span><span class="n">fastlabel_wrapper</span><span class="p">(</span><span class="n">pixels</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">coord_dim_array</span><span class="p">,</span>
+                                                         <span class="n">connectivity</span><span class="p">,</span> <span class="n">npixels</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixel_labels</span> <span class="o">=</span> <span class="n">labelled_map</span>
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="csc_XSparseTimeFrequencyMap.cluster"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap.cluster">[docs]</a>    <span class="k">def</span> <span class="nf">cluster</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;nearest_neighbors&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert dict fo sparse matrix to `XTimeFrequencyMapDict`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">method</span><span class="o">==</span><span class="s1">&#39;nearest_neighbors&#39;</span><span class="p">:</span>
+            <span class="n">connectivity</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;connectivity&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+            <span class="n">total_energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span>
+            <span class="n">pixels</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">tindex</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">findex</span><span class="p">])</span>
+            <span class="n">coord_dim_array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shape</span>
+
+            <span class="n">npixels</span> <span class="o">=</span> <span class="n">pixels</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;pixel_labels&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">labelled_map</span> <span class="o">=</span> <span class="n">nearestneighbor</span><span class="o">.</span><span class="n">fastlabel_wrapper</span><span class="p">(</span><span class="n">pixels</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">coord_dim_array</span><span class="p">,</span> <span class="n">connectivity</span><span class="p">,</span> <span class="n">npixels</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">labelled_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixel_labels</span>
+
+            <span class="n">cluster_array</span> <span class="o">=</span> <span class="n">clusterproperties</span><span class="o">.</span><span class="n">clusterproperities_wrapper</span><span class="p">(</span><span class="n">labelled_map</span><span class="p">,</span> <span class="n">total_energy</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">pixels</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pixels</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="p">((</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;dx&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;dy&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span>
+                <span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;x0&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;y0&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)):</span>
+                <span class="n">cluster_array</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_array</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dx</span>  <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">x0</span>
+
+                <span class="n">cluster_array</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_array</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dy</span>  <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">y0</span>
+
+            <span class="k">return</span> <span class="n">XCluster</span><span class="o">.</span><span class="n">nearest_neighbor</span><span class="p">(</span><span class="n">cluster_array</span><span class="p">,</span> <span class="n">labelled_map</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Clustering method undefined&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="csc_XSparseTimeFrequencyMap.plot"><a class="viewcode-back" href="../../../api/xpipeline.core.xtimefrequencymap.html#xpipeline.core.xtimefrequencymap.csc_XSparseTimeFrequencyMap.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Plot the data for this `XTimeFrequencyMapDict`.</span>
@@ -645,7 +753,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Scott Coughlin.
+        &copy; Copyright 2018, Scott Coughlin
 
     </p>
   </div>
@@ -662,35 +770,16 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'0+untagged.111.g8030ebd.dirty',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

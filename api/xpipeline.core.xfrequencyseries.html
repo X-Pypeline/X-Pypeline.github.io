@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.178.gddc1b81.dirty documentation</title>
   
 
   
@@ -17,34 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/xpipeline-docs.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -58,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.111.g8030ebd.dirty
+                0+untagged.178.gddc1b81.dirty
               </div>
             
           
@@ -154,37 +155,45 @@
 <em class="property">class </em><code class="descclassname">xpipeline.core.xfrequencyseries.</code><code class="descname">XFrequencySeriesDict</code><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a></p>
 <dl class="method">
+<dt id="xpipeline.core.xfrequencyseries.XFrequencySeriesDict.calculate_magnitude">
+<code class="descname">calculate_magnitude</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict.calculate_magnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.calculate_magnitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Matrix M_AB components.</p>
+<p>This is the dot product of the projected_asds, with
+itself, summed accross detectors.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><dl class="simple">
+<dt><cite>gwpy.frequencyseries.FrequencySeries</cite></dt><dd><p>Units Hz</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="xpipeline.core.xfrequencyseries.XFrequencySeriesDict.project_onto_antenna_patterns">
-<code class="descname">project_onto_antenna_patterns</code><span class="sig-paren">(</span><em>antenna_responses</em>, <em>to_dominant_polarization_frame=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict.project_onto_antenna_patterns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.project_onto_antenna_patterns" title="Permalink to this definition">¶</a></dt>
+<code class="descname">project_onto_antenna_patterns</code><span class="sig-paren">(</span><em>self</em>, <em>antenna_responses</em>, <em>to_dominant_polarization_frame=False</em>, <em>circular=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict.project_onto_antenna_patterns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.project_onto_antenna_patterns" title="Permalink to this definition">¶</a></dt>
 <dd><p>Shift timeseries by assosciated time delay</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>antenna_responses</strong> : <cite>dict</cite></p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>antenna_responses</strong> : <cite>dict</cite></p>
 <blockquote>
 <div><p>key-wise pair of
 OrderedDict([(‘f_plus’,</p>
 <blockquote>
 <div><blockquote>
-<div><dl class="docutils">
-<dt>OrderedDict([(‘H1’, array([-0.02424373])),</dt>
-<dd><p class="first last">(‘L1’, array([0.3089992]))])),</p>
+<div><dl class="simple">
+<dt>OrderedDict([(‘H1’, array([-0.02424373])),</dt><dd><p>(‘L1’, array([0.3089992]))])),</p>
 </dd>
 </dl>
 </div></blockquote>
-<dl class="docutils">
-<dt>(‘f_cross’,</dt>
-<dd><dl class="first last docutils">
-<dt>OrderedDict([(‘H1’, array([-0.5677237])),</dt>
-<dd><p class="first last">(‘L1’, array([0.52872644]))])),</p>
+<dl class="simple">
+<dt>(‘f_cross’,</dt><dd><dl class="simple">
+<dt>OrderedDict([(‘H1’, array([-0.5677237])),</dt><dd><p>(‘L1’, array([0.52872644]))])),</p>
 </dd>
 </dl>
 </dd>
-<dt>(‘f_scalar’,</dt>
-<dd><dl class="first last docutils">
-<dt>OrderedDict([(‘H1’, array([0.12427263])),</dt>
-<dd><p class="first last">(‘L1’, array([-0.30016348]))]))])</p>
+<dt>(‘f_scalar’,</dt><dd><dl class="simple">
+<dt>OrderedDict([(‘H1’, array([0.12427263])),</dt><dd><p>(‘L1’, array([-0.30016348]))]))])</p>
 </dd>
 </dl>
 </dd>
@@ -192,52 +201,72 @@ OrderedDict([(‘f_plus’,</p>
 </div></blockquote>
 </div></blockquote>
 <p><strong>to_dominant_polarization_frame ” `bool`</strong></p>
-<blockquote class="last">
+<blockquote>
 <div><p>This boolean determines whether or not to calculate the
 relevant angle parameter that would project the data into
 the orthogonal cross plus polarization frame.</p>
 </div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xfrequencyseries.XFrequencySeriesDict.slice_frequencies">
-<code class="descname">slice_frequencies</code><span class="sig-paren">(</span><em>indices</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict.slice_frequencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.slice_frequencies" title="Permalink to this definition">¶</a></dt>
+<code class="descname">slice_frequencies</code><span class="sig-paren">(</span><em>self</em>, <em>indices</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict.slice_frequencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.slice_frequencies" title="Permalink to this definition">¶</a></dt>
 <dd><p>select a subset of frequencies from XFrequencySeriesDict</p>
-<dl class="docutils">
-<dt>Parameters:</dt>
-<dd><dl class="first last docutils">
-<dt>indices (array):</dt>
-<dd>an array of indexs to select from all elements
-of <cite>XFrequencySeriesDict</cite></dd>
+<dl class="simple">
+<dt>Parameters:</dt><dd><dl class="simple">
+<dt>indices (array):</dt><dd><p>an array of indexs to select from all elements
+of <cite>XFrequencySeriesDict</cite></p>
+</dd>
 </dl>
 </dd>
-<dt>Returns:</dt>
-<dd><cite>XFrequencySeriesDict</cite></dd>
+<dt>Returns:</dt><dd><p><cite>XFrequencySeriesDict</cite></p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_array">
-<code class="descname">to_array</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict.to_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_array" title="Permalink to this definition">¶</a></dt>
+<code class="descname">to_array</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict.to_array"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_array" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert to number of freq bins by number of detectors array</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="class">
+<dt id="xpipeline.core.xfrequencyseries.XAntennaProjectedFrequencySeriesDict">
+<em class="property">class </em><code class="descclassname">xpipeline.core.xfrequencyseries.</code><code class="descname">XAntennaProjectedFrequencySeriesDict</code><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XAntennaProjectedFrequencySeriesDict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XAntennaProjectedFrequencySeriesDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.html#collections.OrderedDict" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></a></p>
+<p>Controls a dictionaries of projected asds</p>
 <dl class="method">
-<dt id="xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_m_ab">
-<code class="descname">to_m_ab</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XFrequencySeriesDict.to_m_ab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XFrequencySeriesDict.to_m_ab" title="Permalink to this definition">¶</a></dt>
-<dd><p>Matrix M_AB components.</p>
-<p>This is the dot product of the projected_asds, with
-itself, summed accross detectors.</p>
-<dl class="docutils">
-<dt>Returns:</dt>
-<dd><dl class="first last docutils">
-<dt><cite>gwpy.frequencyseries.FrequencySeries</cite></dt>
-<dd>Units Hz</dd>
+<dt id="xpipeline.core.xfrequencyseries.XAntennaProjectedFrequencySeriesDict.calculate_magnitude">
+<code class="descname">calculate_magnitude</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XAntennaProjectedFrequencySeriesDict.calculate_magnitude"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XAntennaProjectedFrequencySeriesDict.calculate_magnitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find unit vector of a series of asds</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p><cite>XAntennaProjectedFrequencySeriesDict</cite></p>
+</dd>
 </dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.core.xfrequencyseries.XAntennaProjectedFrequencySeriesDict.to_circular">
+<code class="descname">to_circular</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XAntennaProjectedFrequencySeriesDict.to_circular"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XAntennaProjectedFrequencySeriesDict.to_circular" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find unit vector of a series of asds</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Returns:</dt><dd><p><cite>XAntennaProjectedFrequencySeriesDict</cite></p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="xpipeline.core.xfrequencyseries.XAntennaProjectedFrequencySeriesDict.to_unit">
+<code class="descname">to_unit</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#XAntennaProjectedFrequencySeriesDict.to_unit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.XAntennaProjectedFrequencySeriesDict.to_unit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find unit vector of a series of asds</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p><cite>XAntennaProjectedFrequencySeriesDict</cite></p>
 </dd>
 </dl>
 </dd></dl>
@@ -249,18 +278,14 @@ itself, summed accross detectors.</p>
 <code class="descclassname">xpipeline.core.xfrequencyseries.</code><code class="descname">convert_to_dominant_polarization_frame</code><span class="sig-paren">(</span><em>Fp</em>, <em>Fc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xfrequencyseries.html#convert_to_dominant_polarization_frame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xfrequencyseries.convert_to_dominant_polarization_frame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Take in stream of fplus and ≈f_cross and convert to DPF</p>
 <p>DPF is the Dominant Polarization Frame</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>Fp</strong> : <cite>float</cite></p>
-<blockquote class="last">
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>Fp</strong> : <cite>float</cite></p>
+<blockquote>
 <div><p>Fc :  <cite>float</cite></p>
 </div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 
@@ -275,7 +300,7 @@ itself, summed accross detectors.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Scott Coughlin.
+        &copy; Copyright 2018, Scott Coughlin
 
     </p>
   </div>
@@ -292,35 +317,16 @@ itself, summed accross detectors.</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'0+untagged.111.g8030ebd.dirty',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

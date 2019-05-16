@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.111.g8030ebd.dirty documentation</title>
+  <title>&lt;no title&gt; &mdash; xpipeline 0+untagged.178.gddc1b81.dirty documentation</title>
   
 
   
@@ -17,34 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/xpipeline-docs.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -58,7 +59,7 @@
             
             
               <div class="version">
-                0+untagged.111.g8030ebd.dirty
+                0+untagged.178.gddc1b81.dirty
               </div>
             
           
@@ -159,52 +160,51 @@ This was grabbed from
 <p>A gravitaional wave detector</p>
 <dl class="method">
 <dt id="xpipeline.core.xdetector.Detector.compute_antenna_response">
-<code class="descname">compute_antenna_response</code><span class="sig-paren">(</span><em>phi</em>, <em>theta</em>, <em>psi=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#Detector.compute_antenna_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.Detector.compute_antenna_response" title="Permalink to this definition">¶</a></dt>
+<code class="descname">compute_antenna_response</code><span class="sig-paren">(</span><em>self</em>, <em>phi</em>, <em>theta</em>, <em>psi=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#Detector.compute_antenna_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.Detector.compute_antenna_response" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the detector response.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xdetector.Detector.light_travel_time_to_detector">
-<code class="descname">light_travel_time_to_detector</code><span class="sig-paren">(</span><em>det</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#Detector.light_travel_time_to_detector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.Detector.light_travel_time_to_detector" title="Permalink to this definition">¶</a></dt>
+<code class="descname">light_travel_time_to_detector</code><span class="sig-paren">(</span><em>self</em>, <em>det</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#Detector.light_travel_time_to_detector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.Detector.light_travel_time_to_detector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the light travel time from this detector
 Parameters
 ———-
 detector: Detector</p>
 <blockquote>
-<div>The other detector to determine the light travel time to.</div></blockquote>
-<dl class="docutils">
-<dt>time: float</dt>
-<dd>The light travel time in seconds</dd>
+<div><p>The other detector to determine the light travel time to.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>time: float</dt><dd><p>The light travel time in seconds</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xdetector.Detector.optimal_orientation">
-<code class="descname">optimal_orientation</code><span class="sig-paren">(</span><em>t_gps</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#Detector.optimal_orientation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.Detector.optimal_orientation" title="Permalink to this definition">¶</a></dt>
+<code class="descname">optimal_orientation</code><span class="sig-paren">(</span><em>self</em>, <em>t_gps</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#Detector.optimal_orientation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.Detector.optimal_orientation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the optimal orientation in right ascension and declination
 for a given GPS time.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xdetector.Detector.project_wave">
-<code class="descname">project_wave</code><span class="sig-paren">(</span><em>hp</em>, <em>hc</em>, <em>longitude</em>, <em>latitude</em>, <em>polarization</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#Detector.project_wave"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.Detector.project_wave" title="Permalink to this definition">¶</a></dt>
+<code class="descname">project_wave</code><span class="sig-paren">(</span><em>self</em>, <em>hp</em>, <em>hc</em>, <em>longitude</em>, <em>latitude</em>, <em>polarization</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#Detector.project_wave"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.Detector.project_wave" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the strain of a wave with given amplitudes and angles as
 measured by the detector.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xdetector.Detector.time_delay_from_detector">
-<code class="descname">time_delay_from_detector</code><span class="sig-paren">(</span><em>other_detector</em>, <em>right_ascension</em>, <em>declination</em>, <em>t_gps</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#Detector.time_delay_from_detector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.Detector.time_delay_from_detector" title="Permalink to this definition">¶</a></dt>
+<code class="descname">time_delay_from_detector</code><span class="sig-paren">(</span><em>self</em>, <em>other_detector</em>, <em>right_ascension</em>, <em>declination</em>, <em>t_gps</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#Detector.time_delay_from_detector"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.Detector.time_delay_from_detector" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the time delay from the given to detector for a signal with
 the given sky location; i.e. return <cite>t1 - t2</cite> where <cite>t1</cite> is the
 arrival time in this detector and <cite>t2</cite> is the arrival time in the
 other detector. Note that this would return the same value as
 <cite>time_delay_from_earth_center</cite> if <cite>other_detector</cite> was geocentric.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>other_detector</strong> : detector.Detector</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other_detector</strong> : detector.Detector</p>
 <blockquote>
 <div><p>A detector instance.</p>
 </div></blockquote>
@@ -220,27 +220,25 @@ other detector. Note that this would return the same value as
 <blockquote>
 <div><p>The GPS time (in s) of the signal.</p>
 </div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>float :</strong></p>
-<blockquote class="last">
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>float :</p>
+<blockquote>
 <div><p>The arrival time difference between the detectors.</p>
 </div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xdetector.Detector.time_delay_from_earth_center">
-<code class="descname">time_delay_from_earth_center</code><span class="sig-paren">(</span><em>right_ascension</em>, <em>declination</em>, <em>t_gps</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#Detector.time_delay_from_earth_center"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.Detector.time_delay_from_earth_center" title="Permalink to this definition">¶</a></dt>
+<code class="descname">time_delay_from_earth_center</code><span class="sig-paren">(</span><em>self</em>, <em>right_ascension</em>, <em>declination</em>, <em>t_gps</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#Detector.time_delay_from_earth_center"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.Detector.time_delay_from_earth_center" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the time delay from the earth center</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="xpipeline.core.xdetector.Detector.time_delay_from_earth_center_phi_theta">
-<code class="descname">time_delay_from_earth_center_phi_theta</code><span class="sig-paren">(</span><em>phi</em>, <em>theta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#Detector.time_delay_from_earth_center_phi_theta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.Detector.time_delay_from_earth_center_phi_theta" title="Permalink to this definition">¶</a></dt>
+<code class="descname">time_delay_from_earth_center_phi_theta</code><span class="sig-paren">(</span><em>self</em>, <em>phi</em>, <em>theta</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#Detector.time_delay_from_earth_center_phi_theta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.Detector.time_delay_from_earth_center_phi_theta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the time delay from the earth center</p>
 </dd></dl>
 
@@ -255,38 +253,31 @@ other detector. Note that this would return the same value as
 <dt id="xpipeline.core.xdetector.compute_antenna_patterns">
 <code class="descclassname">xpipeline.core.xdetector.</code><code class="descname">compute_antenna_patterns</code><span class="sig-paren">(</span><em>detectors</em>, <em>phi</em>, <em>theta</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/xpipeline/core/xdetector.html#compute_antenna_patterns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#xpipeline.core.xdetector.compute_antenna_patterns" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the antenna patterns for a set of detectors and a sky location</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>detectors</strong> : <cite>list</cite></p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>detectors</strong> : <cite>list</cite></p>
 <blockquote>
 <div><blockquote>
 <div><p>A list of detector by there abbr i.e. H1, L1 etc.</p>
 </div></blockquote>
-<dl class="docutils">
-<dt>phi <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd><p class="first last">Earth fixed coordinate of signal</p>
+<dl>
+<dt>phi<span class="classifier">float</span></dt><dd><p>Earth fixed coordinate of signal</p>
 </dd>
-<dt>theta <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
-<dd><p class="first last">The earth fixed coordinate of signal.</p>
+<dt>theta<span class="classifier">float</span></dt><dd><p>The earth fixed coordinate of signal.</p>
 </dd>
-<dt>antenna_patterns <span class="classifier-delimiter">:</span> <span class="classifier"><cite>list</cite></span></dt>
-<dd><p class="first last">list of antenna patterns to calculate and return</p>
+<dt>antenna_patterns<span class="classifier"><cite>list</cite></span></dt><dd><p>list of antenna patterns to calculate and return</p>
 </dd>
 </dl>
 </div></blockquote>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>`dict` :</strong></p>
-<blockquote class="last">
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><cite>dict</cite> :</p>
+<blockquote>
 <div><p>key-wise dict were keys are antenna pattern name
 values are <cite>XFrequencyDicts</cite></p>
 </div></blockquote>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 
@@ -301,7 +292,7 @@ values are <cite>XFrequencyDicts</cite></p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Scott Coughlin.
+        &copy; Copyright 2018, Scott Coughlin
 
     </p>
   </div>
@@ -318,35 +309,16 @@ values are <cite>XFrequencyDicts</cite></p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'0+untagged.111.g8030ebd.dirty',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
